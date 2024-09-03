@@ -85,15 +85,6 @@ extern "C"
 #define ADC1_EXTCHSEL_BIT1                       (3U)
 #define ADC2_EXTCHSEL_BIT0                       (4U)
 #define ADC2_EXTCHSEL_BIT1                       (5U)
-#define ADC3_EXTCHSEL_BIT0                       (6U)
-#define ADC3_EXTCHSEL_BIT1                       (7U)
-#define ADC4_EXTCHSEL_BIT0                       (8U)
-#define ADC4_EXTCHSEL_BIT1                       (9U)
-#define ADC_R0_EXTCHSEL_BIT0                     (10U)
-#define ADC_R0_EXTCHSEL_BIT1                     (11U)
-#define ADC_R1_EXTCHSEL_BIT0                     (12U)
-#define ADC_R2_EXTCHSEL_BIT1                     (13U)
-
 
 #define ADC_EXTCHSELCT_DELAY_3_CYCLES            (0U)
 #define ADC_EXTCHSELCT_DELAY_6_CYCLES            (1U)
@@ -235,7 +226,7 @@ uint32_t SOC_getAdcReferenceStatus(uint32_t adcInstance);
 /**
  * @brief Enable or disable the OSD circuit over the ADC channels
  *
- * @param adcInstance [in] ADC instance [0 - 4] ADC_R instance [5,6]
+ * @param adcInstance [in] ADC instance [0 - 2]
  * @param channel     [in] Channel number for the ADC. [0 - 5]
  * @param enable      [in] TRUE to enable and FALSE to disable the OSD circuit.
  */
@@ -244,7 +235,7 @@ void SOC_enableAdcOsdChannel(uint32_t adcInstance, uint32_t channel, uint32_t en
 /**
  * @brief Sets the ADC OSD Configuration.
  *
- * @param adcInstance [in] ADC instance [0 - 4] ADC_R instance [5,6]
+ * @param adcInstance [in] ADC instance [0 - 2]
  * @param config      [in] configuration to be enabled of the OSD circuit.
  *
  * It is recommended to wait for atleast 1uS after configuration, before sampling
@@ -273,7 +264,7 @@ void SOC_setAdcOsdConfig(uint32_t adcInstance, uint32_t config);
 /**
  * @brief Enable or Disable the ADC instnace for Gloabl SW force.
  *
- * @param adcInstance [in] ADC instances [0 - 4] ADC_R instance [ 5 - 6]
+ * @param adcInstance [in] ADC instances [0 - 2]
  * @param enable      [in] TRUE to enable and FALSE to disable the GLobal Force Selection
  */
 void SOC_enableAdcGlobalForce(uint32_t adcInstance, uint32_t enable);
@@ -296,14 +287,6 @@ void SOC_adcSocGlobalForce(uint32_t socNumber);
  *                      ADC1_EXTCHSEL_BIT1
  *                      ADC2_EXTCHSEL_BIT0
  *                      ADC2_EXTCHSEL_BIT1
- *                      ADC3_EXTCHSEL_BIT0
- *                      ADC3_EXTCHSEL_BIT1
- *                      ADC4_EXTCHSEL_BIT0
- *                      ADC4_EXTCHSEL_BIT1
- *                      ADC_R0_EXTCHSEL_BIT0
- *                      ADC_R0_EXTCHSEL_BIT1
- *                      ADC_R1_EXTCHSEL_BIT0
- *                      ADC_R2_EXTCHSEL_BIT1
  */
 void SOC_selectAdcExtChXbar(uint32_t extChXbarOut, uint32_t extChXbarIn);
 
@@ -487,14 +470,14 @@ void SOC_ungateDacClock(void);
 /**
  * \brief Gate the ADC clock
  *
- * \param adcInstance [in] ADC instance number [0 - 4] or ADC_R instance [0 - 1]
+ * \param adcInstance [in] ADC instance number [0 - 2]
  */
 void SOC_gateAdcClock(uint32_t adcInstance);
 
 /**
  * \brief ungate the ADC clock
  *
- * \param adcInstance [in] ADC instance number [0 - 4] or ADC_R instance [5 - 6]
+ * \param adcInstance [in] ADC instance number [0 - 2]
  */
 void SOC_ungateAdcClock(uint32_t adcInstance);
 
@@ -543,7 +526,7 @@ void SOC_gateFsiPllClock(uint32_t fsiInstance);
 /**
  * \brief Generate ePWM reset
  *
- * \param ePWMInstance [in] ePWM instance number [0 - 31]
+ * \param ePWMInstance [in] ePWM instance number [0 - 10]
  */
 void SOC_generateEpwmReset(uint32_t ePWMInstance);
 
@@ -597,7 +580,7 @@ void SOC_generateDacReset(void);
 /**
  * \brief Generate ADC reset
  *
- * \param adcInstance [in] ADC instance number [0 - 4]
+ * \param adcInstance [in] ADC instance number [0 - 2]
  */
 void SOC_generateAdcReset(uint32_t adcInstance);
 
@@ -611,7 +594,7 @@ void SOC_generateRdcReset(uint32_t rdcInstance);
 /**
  * \brief Halt EPWM with corresponding cPU
  *
- * \param epwmInstance [in] EPWM instance number [0 - 31]
+ * \param epwmInstance [in] EPWM instance number [0 - 10]
  */
 
 void Soc_enableEPWMHalt (uint32_t epwmInstance);
@@ -619,10 +602,26 @@ void Soc_enableEPWMHalt (uint32_t epwmInstance);
 /**
  * \brief Halt EPWM with corresponding cPU
  *
- * \param epwmInstance [in] EPWM instance number [0 - 31]
+ * \param epwmInstance [in] EPWM instance number [0 - 10]
  */
 
 void Soc_disableEPWMHalt (uint32_t epwmInstance);
+
+/**
+ * \brief Halt ECAP with corresponding cPU
+ *
+ * \param ecapInstance [in] ECAP instance number [0 - 7]
+ */
+
+void Soc_enableECAPHalt (uint32_t ecapInstance);
+
+/**
+ * \brief Halt ECAP with corresponding cPU
+ *
+ * \param ecapInstance [in] ECAP instance number [0 - 7]
+ */
+
+void Soc_disableECAPHalt (uint32_t ecapInstance);
 
 /**
  * \brief Generate OTTO reset

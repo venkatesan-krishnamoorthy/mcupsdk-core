@@ -35,6 +35,7 @@
 #include <kernel/dpl/CpuIdP.h>
 
 #define EPWM_HALTEN_STEP  (CSL_CONTROLSS_CTRL_EPWM1_HALTEN - CSL_CONTROLSS_CTRL_EPWM0_HALTEN)
+#define ECAP_HALTEN_STEP  (CSL_CONTROLSS_CTRL_ECAP1_HALTEN - CSL_CONTROLSS_CTRL_ECAP0_HALTEN)
 
 #define EDMA_M4F_VIRT_TO_PHY_OFFSET             (0x20020000U)
 
@@ -1065,6 +1066,52 @@ void Soc_disableEPWMHalt (uint32_t epwmInstance)
 
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+}
+
+
+static inline void Soc_ECAPHalt(uint32_t ecapInstance, bool enable)
+{
+    uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ECAP0_HALTEN + (ECAP_HALTEN_STEP*ecapInstance);
+
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+    /* Get Core ID Info */
+    CSL_ArmR5CPUInfo cpuInfo;
+    CSL_armR5GetCpuID(&cpuInfo);
+
+    uint32_t shift = CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5A0_SHIFT;   // init with R5FSS0-0
+
+    if(cpuInfo.cpuID == CSL_ARM_R5_CPU_ID_0) /* R5SS0-0 */
+    {
+        shift = CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5A0_SHIFT;
+    }
+    else                                    /* R5SS0-1 */
+    {
+        shift = CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5B0_SHIFT;
+    }
+
+    if(true == enable)
+    {
+        CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5A0_MASK << shift);
+    }else
+    {
+        /* enable = false */
+        CSL_REG32_WR(baseAddr, CSL_REG32_RD(baseAddr) &  ~(CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5A0_MASK << shift));
+    }
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+}
+
+void Soc_enableECAPHalt (uint32_t ecapInstance)
+{
+    Soc_ECAPHalt(ecapInstance, true);
+}
+
+void Soc_disableECAPHalt (uint32_t ecapInstance)
+{
+    Soc_ECAPHalt(ecapInstance, false);
 }
 
 void SOC_generateOttoReset(uint32_t ottoInstance)

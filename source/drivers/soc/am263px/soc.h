@@ -655,6 +655,22 @@ void Soc_enableEPWMHalt (uint32_t epwmInstance);
 void Soc_disableEPWMHalt (uint32_t epwmInstance);
 
 /**
+ * \brief Halt ECAP with corresponding cPU
+ *
+ * \param ecapInstance [in] ECAP instance number [0 - 15]
+ */
+
+void Soc_enableECAPHalt (uint32_t ecapInstance);
+
+/**
+ * \brief Halt ECAP with corresponding cPU
+ *
+ * \param ecapInstance [in] ECAP instance number [0 - 15]
+ */
+
+void Soc_disableECAPHalt (uint32_t ecapInstance);
+
+/**
  * \brief Generate OTTO reset
  *
  * \param ottoInstance [in] OTTO instance number [0 - 3]
