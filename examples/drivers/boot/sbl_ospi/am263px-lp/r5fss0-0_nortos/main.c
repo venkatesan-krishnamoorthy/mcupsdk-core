@@ -1,6 +1,6 @@
 
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -45,7 +45,7 @@
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
-extern HsmClient_t gHSMClient ;
+extern HsmClient_t gHSMClient;
 
 /**
  * @brief Reset that flash to start from known default state.
@@ -123,6 +123,8 @@ int main(void)
         if (bootHandle != NULL)
         {
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+            OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
+
 
             /* Initialize CPUs and Load RPRC Image */
             if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))

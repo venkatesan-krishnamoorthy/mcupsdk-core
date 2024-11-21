@@ -1,6 +1,6 @@
 
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -46,7 +46,7 @@
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
-extern HsmClient_t gHSMClient ;
+extern HsmClient_t gHSMClient;
 
 /**
  * @brief Reset that flash to start from known default state.
@@ -60,13 +60,6 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle);
  * 
  */
 void board_flash_reset(OSPI_Handle oHandle);
-
-/**
- * @brief Configure OTFA and ECCM module
- * 
- * @param config bootloader config
- */
-void OTFAECCM_Config(Bootloader_OtfaConfig *config);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -144,7 +137,45 @@ int main(void)
                     /* OTFA configuration is in NOTE section. */
                     if(TRUE == otfaConfig.isOTFAECCMEnabled)
                     {
-                        OTFAECCM_Config(&otfaConfig);
+                        int32_t otfaConfigStatus;
+                        OTFA_Config_t otfaConfigInfo;
+
+                        otfaConfigInfo.masterEnable = otfaConfig.isOTFAECCMEnabled;
+                        otfaConfigInfo.macSize = otfaConfig.macSize;
+                        otfaConfigInfo.keySize = otfaConfig.aesKeySize;
+                        otfaConfigInfo.numRegions = otfaConfig.regionLen;
+
+                        for(uint8_t i = 0; i < otfaConfig.regionLen; i++)
+                        {
+                            otfaConfigInfo.OTFA_Reg[i].regionSize = otfaConfig.region[i].size;
+                            otfaConfigInfo.OTFA_Reg[i].regionStAddr = otfaConfig.region[i].startAddress;
+                            otfaConfigInfo.OTFA_Reg[i].reservedArea = 0x0;
+                            switch(otfaConfig.region[i].cryptoMode)
+                            {
+                                case CRYPTO_MODE_CCM:
+                                    otfaConfigInfo.OTFA_Reg[i].authMode = MAC_MODE_CBC_MAC;
+                                    otfaConfigInfo.OTFA_Reg[i].encMode  = ENC_MODE_AES_CTR;
+                                    break;
+
+                                case CRYPTO_MODE_GCM:
+                                default:
+                                    otfaConfigInfo.OTFA_Reg[i].authMode = MAC_MODE_GMAC;
+                                    otfaConfigInfo.OTFA_Reg[i].encMode  = ENC_MODE_AES_CTR;
+                                    break;
+                            }
+                            otfaConfigInfo.OTFA_Reg[i].encrKeyFetchMode = otfaConfig.region[i].keyFetchMode;
+                            otfaConfigInfo.OTFA_Reg[i].authKeyID = otfaConfig.region[i].authKeyID;
+                            otfaConfigInfo.OTFA_Reg[i].encrKeyID = otfaConfig.region[i].encKeyID;
+                            memset(otfaConfigInfo.OTFA_Reg[i].authAesKey,0x0,otfaConfig.aesKeySize);
+                            memset(otfaConfigInfo.OTFA_Reg[i].encrAesKey,0x0,otfaConfig.aesKeySize);
+                            memcpy(otfaConfigInfo.OTFA_Reg[i].regionIV,otfaConfig.region[i].iv,16U);
+                        }
+
+                        otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                        if(otfaConfigStatus == SystemP_SUCCESS)
+                        {
+                            DebugP_log("\r\n configuration of OTFA successfully done.\n");
+                        }
                     }
                 }
             }
@@ -217,32 +248,3 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle)
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }
-
-void OTFAECCM_Config(Bootloader_OtfaConfig *config)
-{
-    if(NULL != config)
-    {
-        uint8_t doEnableECC = FALSE;
-        FSS_disableECC();
-        for(unsigned int i = 0; i < config->regionLen; i++)
-        {   
-            if(config->region[i].eccEnable == TRUE)
-            {
-                OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
-                uint32_t dataBaseAddress = OSPI_getFlashDataBaseAddr(ospiHandle);
-                doEnableECC = TRUE;
-                FSS_ECCRegionConfig rc;
-                rc.size = config->region[i].size;
-                rc.startAddress = config->region[i].startAddress - dataBaseAddress;
-                rc.regionIndex = i;
-                FSS_configECCMRegion(&rc);
-            }
-        }
-        
-        if(doEnableECC == TRUE)
-        {
-            FSS_enableECC();
-        }
-    }    
-}
-
