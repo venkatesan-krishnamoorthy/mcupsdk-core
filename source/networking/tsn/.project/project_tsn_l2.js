@@ -15,7 +15,7 @@ const files = {
 		"avtpgcfg.c",
 		"tilld_ll_avtp_ethernet.c",
 		"xl4-extmod-xl4avtp.c",
-		"xl4-extmod-xl4avtp_runconf.c"
+		"xl4-extmod-xl4avtp_runconf.c",
 		// conl2 started
 		"aaf_avtpc_listener.c",
 		"aaf_avtpc_talker.c",

@@ -15,6 +15,7 @@ const files = {
         "cb_link_tilld.c",
         "cb_xtimer.c",
         "cb_rate_reporter.c",
+        "cb_lld_frer.c"
     ],
 };
 const filedirs = {
