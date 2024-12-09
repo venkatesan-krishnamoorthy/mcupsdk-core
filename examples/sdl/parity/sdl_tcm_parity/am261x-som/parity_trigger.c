@@ -67,13 +67,6 @@
 #define SDL_R5F0B0TCM1_MASK							(0x7000U)
 #define	SDL_R5F0B1TCM1_MASK							(0x700000U)
 
-#define SDL_R5F1ATCM0_MASK							(0x7U)
-#define SDL_R5F1B0TCM0_MASK							(0x700U)
-#define	SDL_R5F1B1TCM0_MASK							(0x70000U)
-
-#define SDL_R5F1ATCM1_MASK							(0x70U)
-#define SDL_R5F1B0TCM1_MASK							(0x7000U)
-#define	SDL_R5F1B1TCM1_MASK							(0x700000U)
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -81,18 +74,12 @@ static uint32_t arg;
 SDL_ESM_config Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x0003C000u, 0x00000000u, 0x00000010u, 0x00000000u,
+    .enableBitmap = {0x00000000u, 0x00000018u, 0x00000018u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-    /**< All events enable: except clkstop events for unused clocks
-    *   and PCIE events */
-    .priorityBitmap = {0x0000C000u, 0x000000000u, 0x00000010u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x00000018u, 0x00000018u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-    /**< All events high priority: except clkstop events for unused clocks
-    *   and PCIE events */
-    .errorpinBitmap = {0x0003C000u, 0x00000000u, 0x00000010u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x00000018u, 0x00000018u, 0x00000018u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-    /**< All events high priority: except clkstop for unused clocks
-    *   and PCIE events */
 };
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
@@ -294,144 +281,6 @@ static int32_t Parity_sdlFuncTest(void)
         {
 			retVal = 0;
 			DebugP_log("\r\nR5FSS0_1 B1TCM1 Parity : Completed\r\n");
-		}
-	}
-
-/* R5FSS1_0 */
-
-	if (retVal == 0)
-    {
-		DebugP_log("\r\nTCM PARITY:R5FSS1_0\r\n");
-		DebugP_log("\r\nTCM PARITY : ATCM0 Started\r\n");
-        result = SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM,\
-								 SDL_R5FSS1_CORE0_ATCM0,\
-								 SDL_R5F1ATCM0_MASK);
-		/* Wait until ESM interrupt happens */
-		while(esmError !=true);
-		esmError = false;
-		DebugP_log("\r\nTCM Parity Status for ATCM0 = 0x%x\r\n", statusRegValue2);
-		if (result != SDL_PASS)
-		{
-			retVal = -1;
-			DebugP_log("\r\nR5FSS1_0 ATCM0 Parity : Failed\r\n");
-		}
-		else
-        {
-			retVal = 0;
-			DebugP_log("\r\nR5FSS1_0 ATCM0 Parity : Completed\r\n");
-		}
-	}
-
-	if (retVal == 0)
-    {
-		DebugP_log("\r\nTCM PARITY:B0TCM0 Started\r\n");
-        result = SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM,\
-								 SDL_R5FSS1_CORE0_B0TCM0,\
-								 SDL_R5F1B0TCM0_MASK);
-		/* Wait until ESM interrupt happens */
-		while(esmError !=true);
-		esmError = false;
-		DebugP_log("\r\nTCM Parity Status for B0TCM0 = 0x%x\r\n", statusRegValue2);
-		if (result != SDL_PASS)
-		{
-			retVal = -1;
-			DebugP_log("\r\nR5FSS1_0 B0TCM0 Parity : Failed\r\n");
-		}
-		else
-        {
-			retVal = 0;
-			DebugP_log("\r\nR5FSS1_0 B0TCM0 Parity : Completed\r\n");
-		}
-	}
-
-	if (retVal == 0)
-    {
-		DebugP_log("\r\nTCM PARITY : B1TCM0 Started\r\n");
-        result = SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM,\
-								 SDL_R5FSS1_CORE0_B1TCM0,\
-								 SDL_R5F1B1TCM0_MASK);
-		/* Wait until ESM interrupt happens */
-		while(esmError !=true);
-		esmError = false;
-		DebugP_log("\r\nTCM Parity Status for B1TCM0 = 0x%x\r\n", statusRegValue2);
-		if (result != SDL_PASS)
-		{
-			retVal = -1;
-			DebugP_log("\r\nR5FSS1_0 B1TCM0 Parity : Failed\r\n");
-		}
-		else
-        {
-			retVal = 0;
-			DebugP_log("\r\nR5FSS1_0 B1TCM0 Parity : Completed\r\n");
-		}
-	}
-
-/* R5FSS1_1 */
-
-	if (retVal == 0)
-    {
-		DebugP_log("\r\nTCM PARITY:R5FSS1_1\r\n");
-		DebugP_log("\r\nTCM PARITY:ATCM1 Started\r\n");
-        result = SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM,\
-								 SDL_R5FSS1_CORE1_ATCM1,\
-								 SDL_R5F1ATCM1_MASK);
-		/* Wait until ESM interrupt happens */
-		while(esmError !=true);
-		esmError = false;
-		DebugP_log("\r\nTCM Parity Status for ATCM1 = 0x%x\r\n", statusRegValue3);
-		if (result != SDL_PASS)
-		{
-			retVal = -1;
-			DebugP_log("\r\nR5FSS1_1 ATCM1 Parity : Failed\r\n");
-		}
-		else
-        {
-			retVal = 0;
-			DebugP_log("\r\nR5FSS1_1 ATCM1 Parity : Completed\r\n");
-		}
-	}
-
-	if (retVal == 0)
-    {
-		DebugP_log("\r\nTCM PARITY : B0TCM1 Started\r\n");
-        result = SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM,\
-								 SDL_R5FSS1_CORE1_B0TCM1,\
-								 SDL_R5F1B0TCM1_MASK);
-		/* Wait until ESM interrupt happens */
-		while(esmError !=true);
-		esmError = false;
-		DebugP_log("\r\nTCM Parity Status for B0TCM1 = 0x%x\r\n", statusRegValue3);
-		if (result != SDL_PASS)
-		{
-			retVal = -1;
-			DebugP_log("\r\nR5FSS1_1 B0TCM1 Parity : Failed\r\n");
-		}
-		else
-        {
-			retVal = 0;
-			DebugP_log("\r\nR5FSS1_1 B0TCM1 Parity : Completed\r\n");
-		}
-	}
-
-	if (retVal == 0)
-    {
-		DebugP_log("\r\nTCM PARITY : B1TCM1 Started\r\n");
-        result = SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM,\
-								 SDL_R5FSS1_CORE1_B1TCM1,\
-								 SDL_R5F1B1TCM1_MASK);
-		/* Wait until ESM interrupt happens */
-		while(esmError !=true);
-		esmError = false;
-		DebugP_log("\r\nTCM Parity Status for B1TCM1 = 0x%x\r\n", statusRegValue3);
-		if (result != SDL_PASS)
-		{
-			retVal = -1;
-			DebugP_log("\r\nR5FSS1_1 B1TCM1 Parity : Failed\r\n");
-		}
-		else
-        {
-			retVal = 0;
-			DebugP_log("\r\nR5FSS1_1 B1TCM1 Parity : Completed\r\n");
 		}
 	}
 

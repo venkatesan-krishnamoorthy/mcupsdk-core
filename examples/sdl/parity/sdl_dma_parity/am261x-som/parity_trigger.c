@@ -66,18 +66,12 @@ static uint32_t arg;
 SDL_ESM_config Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x00000000u, 0x80000000u, 0x00000010u, 0x00000000u,
+    .enableBitmap = {0x00000000u, 0x00002000u, 0x00000004u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-    /**< All events enable: except clkstop events for unused clocks
-    *   and PCIE events */
-    .priorityBitmap = {0x00000000u, 0x80000000u, 0x00000010u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x00002000u, 0x00000004u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-    /**< All events high priority: except clkstop events for unused clocks
-    *   and PCIE events */
-    .errorpinBitmap = {0x00000000u, 0x80000000u, 0x00000010u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x00002000u, 0x00000004u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-    /**< All events high priority: except clkstop for unused clocks
-    *   and PCIE events */
 };
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,

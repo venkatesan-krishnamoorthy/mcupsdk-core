@@ -92,8 +92,6 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
 	statusRegValue0 = SDL_REG32_RD(SDL_R5FSS0_CORE0_TCM_ERR_STATUS);
 	statusRegValue1 = SDL_REG32_RD(SDL_R5FSS0_CORE1_TCM_ERR_STATUS);
-	statusRegValue2 = SDL_REG32_RD(SDL_R5FSS1_CORE0_TCM_ERR_STATUS);
-	statusRegValue3 = SDL_REG32_RD(SDL_R5FSS1_CORE1_TCM_ERR_STATUS);
 
 	SDL_cleartcmStatusRegs(SetValue);
 
