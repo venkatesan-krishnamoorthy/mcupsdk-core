@@ -51,6 +51,7 @@
 #include <stdbool.h>
 
 #include "sdl_common.h"
+#include <sdl/include/soc_config.h>
 #include <sdl/ecc/sdl_ip_ecc.h>
 #if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
