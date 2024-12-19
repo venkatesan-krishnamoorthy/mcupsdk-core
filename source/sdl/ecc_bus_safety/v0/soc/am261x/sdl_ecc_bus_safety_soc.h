@@ -189,50 +189,45 @@ extern "C" {
 #define SDL_DAP_U_BASE                              (0x48000000U)
 #define SDL_DAP_U_BASE_END                          (0x4803FFFFU-8U)
 
+#define SDL_GPMC0_CFG_U_BASE_END                    (SDL_GPMC0_CFG_U_BASE+0X3FCU-DWORD)
+
 /* Macro defines Ecc Bus Safety Nodes in the MSS Subsystem */
 
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD            0U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD            1U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_WR            2U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR            3U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S             4U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S             5U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD             6U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD             7U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR             8U
-#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR             9U
-#define SDL_ECC_BUS_SAFETY_MSS_CPSW                   10U
-#define SDL_ECC_BUS_SAFETY_DAP                        11U
-#define SDL_ECC_BUS_SAFETY_MSS_L2_A                   12U
-#define SDL_ECC_BUS_SAFETY_MSS_L2_B                   13U
-#define SDL_ECC_BUS_SAFETY_MSS_L2_C                   14U
-#define SDL_ECC_BUS_SAFETY_MSS_MBOX                   15U
-#define SDL_ECC_BUS_SAFETY_MSS_STM_STIM               16U
-#define SDL_ECC_BUS_SAFETY_MSS_HSM_TPTC0_RD           17U
-#define SDL_ECC_BUS_SAFETY_MSS_HSM_TPTC1_RD           18U
-#define SDL_ECC_BUS_SAFETY_MSS_HSM_TPTC0_WR           19U
-#define SDL_ECC_BUS_SAFETY_MSS_HSM_TPTC1_WR           20U
-#define SDL_ECC_BUS_SAFETY_MSS_OSPI0                  21U
-#define SDL_ECC_BUS_SAFETY_MSS_HSM_DTHE               22U
-#define SDL_ECC_BUS_SAFETY_MSS_MMC                    23U
-#define SDL_ECC_BUS_SAFETY_MSS_SCRP0                  24U
-#define SDL_ECC_BUS_SAFETY_MSS_SCRP1                  25U
-#define SDL_ECC_BUS_SAFETY_MSS_MCRC                   26U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB               27U
-#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB               28U
-#define SDL_ECC_BUS_SAFETY_MSS_HSM_M                  29U
-#define SDL_ECC_BUS_SAFETY_MSS_HSM_S                  30U
-#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S               31U
-#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0           32U
-#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1           33U
-#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0           35U
-#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1           36U
-#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S               37U
-#define SDL_ECC_BUS_SAFETY_MSS_USBSS_RD               38U
-#define SDL_ECC_BUS_SAFETY_MSS_USBSS_WR               39U
-#define SDL_ECC_BUS_SAFETY_MSS_GPMC0                  40U
-#define SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP             41U
-#define SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP             42U
+#define SDL_ECC_BUS_SAFETY_MSS_MBOX            0U
+#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD      1U
+#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD      2U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_RD     3U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD     4U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_S      5U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S      6U
+#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_WR      7U
+#define SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_WR      8U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB        9U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB        10U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5A_AXI_WR     11U
+#define SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR     12U
+#define SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP      13U
+#define SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP      14U
+#define SDL_ECC_BUS_SAFETY_MSS_OSPI0           15U
+#define SDL_ECC_BUS_SAFETY_MSS_CPSW            16U
+#define SDL_ECC_BUS_SAFETY_MSS_MCRC            17U
+#define SDL_ECC_BUS_SAFETY_MSS_L2_A            18U
+#define SDL_ECC_BUS_SAFETY_MSS_L2_B            19U
+#define SDL_ECC_BUS_SAFETY_MSS_L2_C            20U
+#define SDL_ECC_BUS_SAFETY_DAP                 21U
+#define SDL_ECC_BUS_SAFETY_MSS_MMC             22U
+#define SDL_ECC_BUS_SAFETY_MSS_SCRP0           23U
+#define SDL_ECC_BUS_SAFETY_MSS_SCRP1           24U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0    25U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1    26U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S        27U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0    28U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1    29U
+#define SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S        30U
+#define SDL_ECC_BUS_SAFETY_MSS_USBSS_RD        31U
+#define SDL_ECC_BUS_SAFETY_MSS_USBSS_WR        32U
+#define SDL_ECC_BUS_SAFETY_MSS_GPMC            33U
+#define SDL_ECC_BUS_SAFETY_MSS_STM_STIM        34U
 
 #ifdef _cplusplus
 }

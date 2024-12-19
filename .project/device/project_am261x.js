@@ -275,7 +275,7 @@ const example_file_list = [
     "examples/sdl/ecc/sdl_ecc_r5f_i-data/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_r5f_i-tag/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_r5_d-tag/.project/project.js",
-	// "examples/sdl/ecc_bus_safety/ecc_bus_safety_main/.project/project.js",
+	"examples/sdl/ecc_bus_safety/ecc_bus_safety_main/.project/project.js",
 	"examples/sdl/mcrc/mcrc_auto_cpu/.project/project.js",
 	"examples/sdl/mcrc/mcrc_full_cpu/.project/project.js",
 	"examples/sdl/mcrc/mcrc_semi_cpu/.project/project.js",

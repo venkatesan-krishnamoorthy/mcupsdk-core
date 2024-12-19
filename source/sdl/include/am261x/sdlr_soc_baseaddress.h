@@ -110,7 +110,7 @@ extern "C"
 #define SDL_ICSS_M_ICSSM_0_PR1_PDSP1_IRAM_RAM_U_BASE	            (0x48038000U)
 #define SDL_ICSSM0_ECC_U_BASE	            						(0x48100000U)
 #define SDL_MMC0_U_BASE	            								(0x48300000U)
-#define SDL_GPMC0_CFG	            								(0x48400000U)
+#define SDL_GPMC0_CFG_U_BASE                                        (0x48400000U)
 #define SDL_ICSSM1_INTERNAL	        								(0x48600000U)
 #define SDL_ICSS_M_ICSSM_1_DRAM1_SLV_RAM_U_BASE	            		(0x48602000U)
 #define SDL_ICSS_M_ICSSM_1_RAT_SLICE0_CFG_U_BASE	            	(0x48608000U)

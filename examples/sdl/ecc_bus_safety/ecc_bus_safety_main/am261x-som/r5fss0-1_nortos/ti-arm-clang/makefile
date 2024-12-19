@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_eccBusSafetyFuncTest.$(PROFILE).out
-COREOUTNAME:=test_eccBusSafetyFuncTest.$(PROFILE).optishare.out
+OUTNAME:=sdl_ecc_bus_safety_example.$(PROFILE).out
+COREOUTNAME:=sdl_ecc_bus_safety_example.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_eccBusSafetyFuncTest.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_eccBusSafetyFuncTest.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=test_eccBusSafetyFuncTest.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME:=sdl_ecc_bus_safety_example.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=sdl_ecc_bus_safety_example.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=sdl_ecc_bus_safety_example.$(PROFILE).appimage.signed
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=test_eccBusSafetyFuncTest.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=test_eccBusSafetyFuncTest.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=test_eccBusSafetyFuncTest.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_eccBusSafetyFuncTest.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_eccBusSafetyFuncTest.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_eccBusSafetyFuncTest.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_eccBusSafetyFuncTest.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_MCELF:=sdl_ecc_bus_safety_example.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=sdl_ecc_bus_safety_example.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=sdl_ecc_bus_safety_example.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=sdl_ecc_bus_safety_example.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=sdl_ecc_bus_safety_example.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=sdl_ecc_bus_safety_example.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=sdl_ecc_bus_safety_example.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -45,10 +45,11 @@ endif
 
 FILES_common := \
 	ecc_bus_safety_main.c \
-	sdl_ecc_bus_safety.c \
+	ecc_bus_safety_polling.c \
+	ecc_bus_safety_Interrupt.c \
 	ecc_bus_safety_common.c \
-	dpl_interface.c \
 	main.c \
+	dpl_interface.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -66,8 +67,8 @@ FILES_PATH_common = \
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
-	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
-	-I${MCU_PLUS_SDK_PATH}/test/sdl/dpl/ \
+	-I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/ \
+	-I${MCU_PLUS_SDK_PATH}/examples/sdl/ecc_bus_safety/ecc_bus_safety_main/ \
 	-Igenerated \
 
 DEFINES_common := \
@@ -110,14 +111,14 @@ LNK_FILES_common = \
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lnortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
@@ -132,7 +133,7 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
@@ -140,7 +141,7 @@ LIBS_NAME = \
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	${CG_TOOL_ROOT}/lib \
 
@@ -171,11 +172,11 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am261x:r5fss0-0:nortos:ti-arm-clang $(OUTNAME): $<
+	@echo  Compiling: am261x:r5fss0-1:nortos:ti-arm-clang $(OUTNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am261x:r5fss0-0:nortos:ti-arm-clang $(LIBNAME): $<
+	@echo  Compiling: am261x:r5fss0-1:nortos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 all: $(TARGETS)
@@ -197,21 +198,21 @@ endif
 
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Linking: am261x:r5fss0-0:nortos:ti-arm-clang $@ ...
+	@echo  Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml
-	@echo  Linking: am261x:r5fss0-0:nortos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 coreout: $(COREOUTNAME)
 $(COREOUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Relinking Linking: am261x:r5fss0-0:nortos:ti-arm-clang $@ with OptiShare SSO..
+	@echo  Relinking Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ with OptiShare SSO..
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml -Wl,--import_sso=$(SSO_PATH)
 	@echo  Relinking with optishare: am261x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am261x:r5fss0-0:nortos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am261x:r5fss0-1:nortos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -223,7 +224,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang test_eccBusSafetyFuncTest ...
+	@echo  Scrubing: am261x:r5fss0-1:nortos:ti-arm-clang sdl_ecc_bus_safety_example ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -268,11 +269,11 @@ $(SYSCFG_GEN_FILES): syscfg
 ifeq ($(SYSTEM_FLAG), false)
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-1 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-1 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -312,13 +313,13 @@ endif
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \
-	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_IMAGE_PARAMS_XIP = \
-	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
@@ -330,9 +331,9 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
-	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-1):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
 	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
 
@@ -364,8 +365,8 @@ else
 	$(RM) $(BOOTIMAGE_NAME_MCELF)-enc
 endif
 endif
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
 	@echo  .
 endif
 
@@ -373,12 +374,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for test_eccBusSafetyFuncTest.$(PROFILE) ...
+	@echo Creating Coverage Report for sdl_ecc_bus_safety_example.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o test_eccBusSafetyFuncTest.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_eccBusSafetyFuncTest.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=test_eccBusSafetyFuncTest.$(PROFILE).profdata > coverage/test_eccBusSafetyFuncTest.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/test_eccBusSafetyFuncTest.$(PROFILE).profdata.json --output-json=coverage/test_eccBusSafetyFuncTest.$(PROFILE).analysis.json --output=../test_eccBusSafetyFuncTest.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sdl_ecc_bus_safety_example.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdl_ecc_bus_safety_example.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sdl_ecc_bus_safety_example.$(PROFILE).profdata > coverage/sdl_ecc_bus_safety_example.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sdl_ecc_bus_safety_example.$(PROFILE).profdata.json --output-json=coverage/sdl_ecc_bus_safety_example.$(PROFILE).analysis.json --output=../sdl_ecc_bus_safety_example.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))
