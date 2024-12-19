@@ -60,12 +60,9 @@ The following GPIO pins can be monitored with an oscilloscope to view the genera
 \endcond
 # Watch Variables
 
-The following variables can be monitored to observe the eQEP measurements:
+The following variables can be monitored by pausing the program to observe the eQEP measurements:
 
-- currentEncoderPos: Current absolute encoder position (increments with CW, decrements with CCW)
-- direction: Current direction (1 = CW, -1 = CCW)
-- freq: Pulse frequency in Hz
-- speed: Motor speed in RPM
+- gEncoderState: Global structure for all calculations
 
 # Supported Combinations
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
@@ -95,14 +92,13 @@ The example will display position, direction, frequency and speed measurements v
 
 \code
 EQEP Position Speed Test Started ...
-All tests have passed!!
+EQEP Validation Passed
+Results:
+  Frequency: 2500 Hz
+  Speed: 150.00 RPM
+  Direction: Counter-clockwise
+All tests passed successfully!
 \endcode
-
-\imageStyle{am26x_eqep_cw_output.png,width:50%}
- \image html am26x_eqep_cw_output.png "EQEP CW Output"
-
-\imageStyle{am26x_eqep_ccw_output.png,width:50%}
- \image html am26x_eqep_ccw_output.png "EQEP CCW Output"
 
 
 # See Also
