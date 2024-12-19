@@ -222,6 +222,9 @@ int main(void)
                 UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
             }
 
+            /* Power of the MMCSD after loading the images, leave it in clean state for applications  */
+            SOC_moduleClockEnable(TISCI_DEV_MMCSD0, 0);
+
             /* Run CPUs */
             /* Do not run M4 when MCU domain is reset isolated */
             if (!Bootloader_socIsMCUResetIsoEnabled())
