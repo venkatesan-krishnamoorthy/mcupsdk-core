@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Texas Instruments Incorporated
+ * Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -49,29 +49,6 @@
 #include <drivers/fsi.h>
 #include <drivers/fsi/v1/fsi_tx_hld.h>
 #include <drivers/fsi/v1/dma/edma/fsi_dma_edma.h>
-
-/* Need to be removed */
-#define CONFIG_FSI_TX0_CLK (500000000U)
-/* FSI TXCLK - 50 MHz */
-#define FSI_APP_TXCLK_FREQ              (50 * 1000 * 1000)
-/* FSI module input clock - 500 MHz */
-#define FSI_APP_CLK_FREQ                (CONFIG_FSI_TX0_CLK)
-/* FSI TX prescaler value for TXCLKIN of 100 MHz. / 2 is provided as TXCLK = TXCLKIN/2 */
-#define FSI_APP_TX_PRESCALER_VAL        (FSI_APP_CLK_FREQ / FSI_APP_TXCLK_FREQ / 2U)
-
-#define FSI_APP_LOOP_COUNT              (100U)
-/* User data to be sent with Data frame */
-#define FSI_APP_TX_USER_DATA            (0x07U)
-/* Configuring Frame - can be between 1-16U */
-#define FSI_APP_FRAME_DATA_WORD_SIZE    (16U)
-/* 0x0U for 1 lane and 0x1U for two lane */
-#define FSI_APP_N_LANES                 (0x0U)
-#define FSI_APP_TX_DATA_FRAME_TAG       (0x1U)
-
-
-/* AD_Review : Need to remove the following macros */
-/* Configuring Frame - can be between 1-16U */
-#define FSI_APP_FRAME_DATA_WORD_COUNT   (16U)
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -165,6 +142,39 @@ void FSI_Tx_deinit(void)
     return;
 }
 
+void FSI_HLD_TxParams_init(FSI_Tx_Params *prms)
+{
+    if(prms != NULL)
+    {
+        prms->userData = 7;
+        prms->frameDataSize = 16;
+        prms->numLane = FSI_DATA_WIDTH_1_LANE;
+        prms->frameTag = FSI_FRAME_TAG1;
+        prms->frameType = FSI_FRAME_TYPE_NWORD_DATA;
+    }
+}
+
+uint32_t FSI_Tx_getBaseAddr(FSI_Tx_Handle handle)
+{
+    FSI_Tx_Config       *config;
+    FSI_Tx_Attrs        *attrs;
+    uint32_t           baseAddr;
+
+    /* Check parameters */
+    if (NULL_PTR == handle)
+    {
+        baseAddr = 0U;
+    }
+    else
+    {
+        config = (FSI_Tx_Config *) handle;
+        attrs = config->attrs;
+        baseAddr = attrs->baseAddr;
+    }
+
+    return baseAddr;
+}
+
 /*
  * Provides delay based on requested count. Needed while performing reset and
  * flush sequence, sufficient delay ensures reliability in operation.
@@ -218,12 +228,12 @@ FSI_Tx_Handle FSI_Tx_open(uint32_t index, FSI_Tx_Params *prms)
             if(FSI_TX_OPER_MODE_INTERRUPT == attrs->operMode)
             {
                 HwiP_Params_init(&hwiPrms);
-                hwiPrms.intNum      = attrs->intrNum;
+                hwiPrms.intNum      = attrs->intrLine;
                 hwiPrms.priority    = attrs->intrPriority;
                 hwiPrms.callback    = &FSI_Tx_Isr;
                 hwiPrms.args        = (void *) handle;
                 status += HwiP_construct(&obj->hwiObj, &hwiPrms);
-                status += FSI_enableTxInterrupt(attrs->baseAddr, FSI_INT1, FSI_TX_EVT_FRAME_DONE);
+                status += FSI_enableTxInterrupt(attrs->baseAddr, attrs->intrNum, FSI_TX_EVT_FRAME_DONE);
             }
         }
 
@@ -243,12 +253,14 @@ void FSI_Tx_close(FSI_Tx_Handle handle)
 {
     FSI_Tx_Config        *config;
     FSI_Tx_Object        *obj;
+    const FSI_Tx_Attrs   *attrs;
     int32_t           status = SystemP_FAILURE;
 
     if(NULL != handle)
     {
         config = (FSI_Tx_Config *)handle;
         obj    = config->object;
+        attrs  = config->attrs;
         DebugP_assert(NULL_PTR != obj);
         DebugP_assert(NULL_PTR != config->attrs);
         DebugP_assert(NULL_PTR != gFsiTxDrvObj.lock);
@@ -266,6 +278,12 @@ void FSI_Tx_close(FSI_Tx_Handle handle)
         {
             HwiP_destruct(&obj->hwiObj);
             obj->hwiHandle = NULL;
+        }
+        /* Register interrupt */
+        if(FSI_TX_OPER_MODE_INTERRUPT == attrs->operMode)
+        {
+            status += FSI_disableTxInterrupt(attrs->baseAddr, FSI_INT1, FSI_TX_EVTMASK);
+            DebugP_assert(SystemP_SUCCESS == status);
         }
 
         SemaphoreP_post(&gFsiTxDrvObj.lockObj);
@@ -305,23 +323,21 @@ static int32_t FSI_Tx_configInstance(FSI_Tx_Handle handle)
         fsiTxObj = config->object;
 
         /* TX init and reset */
-        status = FSI_performTxInitialization(baseAddr, FSI_APP_TX_PRESCALER_VAL);
-        status += FSI_resetTxModule(baseAddr, FSI_TX_MAIN_CORE_RESET);
-        FSI_clearTxModuleReset(baseAddr, FSI_TX_MAIN_CORE_RESET);
+        status = FSI_performTxInitialization(baseAddr, attrs->preScalarVal);
 
         /* Setting for requested transfer params */
-        status += FSI_setTxSoftwareFrameSize(baseAddr, 16);
-        status += FSI_setTxDataWidth(baseAddr, 0);
+        status += FSI_setTxSoftwareFrameSize(baseAddr, fsiTxObj->params->frameDataSize);
+        status += FSI_setTxDataWidth(baseAddr, fsiTxObj->params->numLane);
 
         if(attrs->operMode != FSI_TX_OPER_MODE_DMA)
         {
             /*In case of NON-DMA transmission */
             /* Setting frame config */
-            status += FSI_setTxUserDefinedData(baseAddr, FSI_APP_TX_USER_DATA);
-            status += FSI_setTxFrameTag(baseAddr, FSI_APP_TX_DATA_FRAME_TAG);
+            status += FSI_setTxUserDefinedData(baseAddr, fsiTxObj->params->userData);
+            status += FSI_setTxFrameTag(baseAddr, fsiTxObj->params->frameTag);
         }
 
-        status += FSI_setTxFrameType(baseAddr, FSI_FRAME_TYPE_NWORD_DATA);
+        status += FSI_setTxFrameType(baseAddr, fsiTxObj->params->frameType);
 
         /* Initialize dma mode if the dma handle is not NULL */
         if (status == SystemP_SUCCESS)
@@ -353,13 +369,17 @@ static int32_t FSI_Tx_deConfigInstance(FSI_Tx_Handle handle)
         {
            status = FSI_Tx_dmaClose(handle, fsiTxObj->fsiTxDmaChCfg);
         }
+        else
+        {
+            status = SystemP_SUCCESS;
+        }
     }
 
     return status;
 }
 
 int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData, 
-                    uint16_t dataSize, uint16_t bufIdx)
+                    uint16_t bufIdx)
 {
     int32_t                 retVal = SystemP_FAILURE;
     const FSI_Tx_Attrs      *attrs;
@@ -377,11 +397,11 @@ int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
         {
             if(FSI_TX_OPER_MODE_INTERRUPT == attrs->operMode)
             {
-                retVal = FSI_Tx_Intr(handle, txBufData, NULL, dataSize, bufIdx);
+                retVal = FSI_Tx_Intr(handle, txBufData, NULL, bufIdx);
             }
             else
             {
-                retVal = FSI_Tx_Dma(handle, txBufData, txBufTagAndUserData, dataSize, bufIdx);
+                retVal = FSI_Tx_Dma(handle, txBufData, txBufTagAndUserData, bufIdx);
             }
             if (retVal == SystemP_SUCCESS)
             {
@@ -402,7 +422,7 @@ int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
         }
         else
         {
-            retVal = FSI_Tx_Poll(handle, txBufData, NULL, dataSize, bufIdx);
+            retVal = FSI_Tx_Poll(handle, txBufData, NULL, bufIdx);
         }
     }
 
@@ -410,19 +430,24 @@ int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
 }
 
 int32_t FSI_Tx_Poll(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData,
-                    uint16_t dataSize, uint16_t bufIdx)
+                    uint16_t bufIdx)
 {
     int32_t     status = SystemP_SUCCESS;
     uint32_t    baseAddr = 0;
+    uint16_t    dataSize = 0;
     const FSI_Tx_Attrs *attrs;
     FSI_Tx_Config *config = NULL;
+    FSI_Tx_Object *obj = NULL;
     uint16_t    txEvtSts;
 
     if(handle != NULL)
     {
         config = (FSI_Tx_Config *)handle;
         attrs = config->attrs;
+        obj = config->object;
         baseAddr = attrs->baseAddr;
+        dataSize = obj->params->frameDataSize;
+
         /* Transmit data */
         status = FSI_setTxBufferPtr(baseAddr, bufIdx);
         status += FSI_writeTxBuffer(baseAddr, txBufData, dataSize, bufIdx);
@@ -443,18 +468,23 @@ int32_t FSI_Tx_Poll(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTa
 }
 
 int32_t FSI_Tx_Intr(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData,
-                    uint16_t dataSize, uint16_t bufIdx)
+                    uint16_t bufIdx)
 {
     int32_t     status = SystemP_SUCCESS;
     uint32_t    baseAddr = 0;
+    uint16_t dataSize = 0;
     const FSI_Tx_Attrs *attrs;
     FSI_Tx_Config *config = NULL;
+    FSI_Tx_Object *obj = NULL;
 
     if(handle != NULL)
     {
         config = (FSI_Tx_Config *)handle;
         attrs = config->attrs;
+        obj = config->object;
         baseAddr = attrs->baseAddr;
+        dataSize = obj->params->frameDataSize;
+
         /* Transmit data */
         status = FSI_setTxBufferPtr(baseAddr, bufIdx);
         status += FSI_writeTxBuffer(baseAddr, txBufData, dataSize, bufIdx);
@@ -466,10 +496,11 @@ int32_t FSI_Tx_Intr(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTa
 }
 
 int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData, 
-                    uint16_t dataSize, uint16_t bufIdx)
+                    uint16_t bufIdx)
 {
     int32_t     status = SystemP_SUCCESS;
     uint32_t    baseAddr, regionId, txBufBaseAddr, txFrameTagData;
+    uint16_t dataSize = 0, loopCnt = 0;
     const FSI_Tx_Attrs *attrs;
     FSI_Tx_Config *config = NULL;
     FSI_Tx_Object *object = NULL;
@@ -483,6 +514,8 @@ int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
         config = (FSI_Tx_Config *)handle;
         attrs = config->attrs;
         object = config->object;
+        dataSize = object->params->frameDataSize;
+        loopCnt = object->params->loopCnt;
         edmaChCfg = (FSI_Tx_EdmaChConfig *)object->fsiTxDmaChCfg;
         baseAddr = attrs->baseAddr;
         txBufBaseAddr = baseAddr + CSL_FSI_TX_CFG_TX_BUF_BASE(bufIdx);
@@ -505,7 +538,7 @@ int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
             status += FSI_Tx_edmaChInit(object, 0, &param0, NULL);
             status += FSI_Tx_configureDma(object, &dmaCh0, (void *)txBufData,
                         (void *)txBufBaseAddr,
-                            NULL, &param0, regionId, sizeof(uint16_t), FSI_APP_FRAME_DATA_WORD_COUNT, 1U,
+                            NULL, &param0, regionId, sizeof(uint16_t), dataSize, 1U,
                             sizeof(uint16_t), sizeof(uint16_t), 0U, 0U, EDMA_TRIG_MODE_MANUAL);
 
             status += FSI_Tx_edmaChInit(object, 1, &param1, &tccTx);
@@ -514,13 +547,13 @@ int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
                             NULL, &param1, regionId, sizeof(uint16_t), 1U, 1U, 0U, 0U, sizeof(uint16_t), 0U, EDMA_TRIG_MODE_MANUAL);
 
             /* Copy rest of the data with event based */
-            status += FSI_Tx_configureDma(object, &dmaCh0, (void *)(txBufData + FSI_APP_FRAME_DATA_WORD_COUNT),
+            status += FSI_Tx_configureDma(object, &dmaCh0, (void *)(txBufData + dataSize),
                         (void *)txBufBaseAddr,
-                            NULL, &param0, regionId, sizeof(uint16_t), FSI_APP_FRAME_DATA_WORD_COUNT, FSI_APP_LOOP_COUNT - 1U,
-                            sizeof(uint16_t), sizeof(uint16_t), sizeof(uint16_t) * FSI_APP_FRAME_DATA_WORD_COUNT, 0U, EDMA_TRIG_MODE_EVENT);
+                            NULL, &param0, regionId, sizeof(uint16_t), dataSize, loopCnt - 1U,
+                            sizeof(uint16_t), sizeof(uint16_t), sizeof(uint16_t) * dataSize, 0U, EDMA_TRIG_MODE_EVENT);
             status += FSI_Tx_configureDma(object, &dmaCh1, (void *)&txBufTagAndUserData[1U],
                             (void *)txFrameTagData,
-                            &tccTx, &param1, regionId, sizeof(uint16_t), 1U, FSI_APP_LOOP_COUNT - 1U, 0U, 0U, sizeof(uint16_t), 0U, EDMA_TRIG_MODE_EVENT);
+                            &tccTx, &param1, regionId, sizeof(uint16_t), 1U, loopCnt - 1U, 0U, 0U, sizeof(uint16_t), 0U, EDMA_TRIG_MODE_EVENT);
         }
 
         status = FSI_Tx_edmaIntrInit(object, tccTx);
@@ -536,7 +569,7 @@ int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
 
             /* Transmit data */
             /* Send Flush Sequence to sync, after every rx soft reset */
-            status = FSI_executeTxFlushSequence(baseAddr, FSI_APP_TX_PRESCALER_VAL);
+            status = FSI_executeTxFlushSequence(baseAddr, attrs->preScalarVal);
             DebugP_assert(status == SystemP_SUCCESS);
             status = FSI_setTxStartMode(baseAddr, FSI_TX_START_FRAME_CTRL_OR_UDATA_TAG);
             FSI_enableTxDMAEvent(baseAddr);

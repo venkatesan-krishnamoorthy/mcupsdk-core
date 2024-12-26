@@ -61,41 +61,38 @@
  * Once the transfer completes, it compares the source and destination buffers for any data mismatch.
  */
 
-/* FSI TXCLK - 50 MHz */
-#define FSI_APP_TXCLK_FREQ              (50 * 1000 * 1000)
-/* FSI module input clock - 500 MHz */
-#define FSI_APP_CLK_FREQ                (CONFIG_FSI_TX0_CLK)
-/* FSI TX prescaler value for TXCLKIN of 100 MHz. / 2 is provided as TXCLK = TXCLKIN/2 */
-#define FSI_APP_TX_PRESCALER_VAL        (FSI_APP_CLK_FREQ / FSI_APP_TXCLK_FREQ / 2U)
-
+/* Loop count */
 #define FSI_APP_LOOP_COUNT              (100U)
-/* User data to be sent with Data frame */
-#define FSI_APP_TX_USER_DATA            (0x07U)
-/* Configuring Frame - can be between 1-16U */
-#define FSI_APP_FRAME_DATA_WORD_COUNT   (16U)
-/* 0x0U for 1 lane and 0x1U for two lane */
-#define FSI_APP_N_LANES                 (0x0U)
+
+/* FSI TX Data frame Tag */
 #define FSI_APP_TX_DATA_FRAME_TAG       (0x1U)
 
-/* Event queue to be used for EDMA transfer */
-#define EDMA_TEST_EVT_QUEUE_NO          (0U)
-
 /* Index of FSI TX/RX buffer, gBudIdx + FSI_APP_FRAME_DATA_WORD_COUNT should be <= 16 */
-uint16_t gRxBufData[FSI_APP_FRAME_DATA_WORD_COUNT * FSI_APP_LOOP_COUNT] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+uint16_t gRxBufData[(FSI_MAX_VALUE_BUF_PTR_OFF + 1) * FSI_APP_LOOP_COUNT] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
 /* Tag and User data is per frame */
 uint16_t gRxBufTagAndUserData[FSI_APP_LOOP_COUNT] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
-uint16_t gTxBufData[FSI_APP_FRAME_DATA_WORD_COUNT * FSI_APP_LOOP_COUNT] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+uint16_t gTxBufData[(FSI_MAX_VALUE_BUF_PTR_OFF + 1) * FSI_APP_LOOP_COUNT] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
 uint16_t gTxBufTagAndUserData[FSI_APP_LOOP_COUNT] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
 
-static int32_t  Fsi_appCompareData(uint16_t *txBufPtr, uint16_t *rxBufPtr);
+extern FSI_Rx_Params rxParams[CONFIG_FSI_RX0];
+
+static int32_t Fsi_appCompareData(uint16_t *txBufPtr, uint16_t *rxBufPtr, uint8_t app_userData);
 
 void *fsi_hld_loopback_dma_main(void *args)
 {
     int32_t     status;
-    uint32_t    rxBaseAddr;
+    uint32_t    tx_baseAddr, rx_baseAddr;
     uint16_t    numWords, bufIdx;
     uint32_t    appLoopCnt;
-    uint32_t    txBaseAddr;
+    uint8_t     userData;
+
+    FSI_Rx_Config *rx_config = NULL;
+    FSI_Rx_Object *rx_object = NULL;
+    FSI_Rx_Attrs  *rx_attrs   = NULL;
+
+    FSI_Tx_Config *tx_config = NULL;
+    FSI_Tx_Object *tx_object = NULL;
+    FSI_Tx_Attrs  *tx_attrs   = NULL;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
@@ -104,12 +101,17 @@ void *fsi_hld_loopback_dma_main(void *args)
     DebugP_log("[FSI] Loopback Dma application started ...\r\n");
 
     /* Test parameters */
-    rxBaseAddr = CONFIG_FSI_RX0_BASE_ADDR;
-    txBaseAddr = CONFIG_FSI_TX0_BASE_ADDR;
-    numWords   = FSI_APP_FRAME_DATA_WORD_COUNT;
+    numWords   = rxParams[CONFIG_FSI_RX0].frameDataSize;
     appLoopCnt = FSI_APP_LOOP_COUNT;
     bufIdx     = 0U;
 
+    /* Tx parameters */
+    tx_config = (FSI_Tx_Config *)gFsiTxHandle[CONFIG_FSI_TX0];
+    tx_attrs = tx_config->attrs;
+    tx_baseAddr = tx_attrs->baseAddr;
+    tx_object = tx_config->object;
+
+    userData = tx_object->params->userData;
     /* Memset TX buffer with new data for every loop */
     for(uint32_t i = 0; i < (numWords * appLoopCnt); i++)
     {
@@ -120,52 +122,57 @@ void *fsi_hld_loopback_dma_main(void *args)
     for(uint32_t i = 0; i < appLoopCnt; i++)
     {
         gTxBufTagAndUserData[i] = (((FSI_APP_TX_DATA_FRAME_TAG << CSL_FSI_TX_CFG_TX_FRAME_TAG_UDATA_FRAME_TAG_SHIFT) & CSL_FSI_TX_CFG_TX_FRAME_TAG_UDATA_FRAME_TAG_MASK) |
-                             ((FSI_APP_TX_USER_DATA << CSL_FSI_TX_CFG_TX_FRAME_TAG_UDATA_USER_DATA_SHIFT) & CSL_FSI_TX_CFG_TX_FRAME_TAG_UDATA_USER_DATA_MASK));
+                             ((userData << CSL_FSI_TX_CFG_TX_FRAME_TAG_UDATA_USER_DATA_SHIFT) & CSL_FSI_TX_CFG_TX_FRAME_TAG_UDATA_USER_DATA_MASK));
         gRxBufTagAndUserData[i] = 0U;
     }
 
     /* Perform a cache write back to the result buffers */
-    CacheP_wb((void *)gTxBufData, ((FSI_APP_FRAME_DATA_WORD_COUNT * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
+    CacheP_wb((void *)gTxBufData, ((numWords * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
     CacheP_wb((void *)&gTxBufTagAndUserData, (FSI_APP_LOOP_COUNT * sizeof(uint16_t)) , CacheP_TYPE_ALL);
-    CacheP_wb((void *)gRxBufData, ((FSI_APP_FRAME_DATA_WORD_COUNT * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
+    CacheP_wb((void *)gRxBufData, ((numWords * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
     CacheP_wb((void *)&gRxBufTagAndUserData, (FSI_APP_LOOP_COUNT * sizeof(uint16_t)), CacheP_TYPE_ALL);
 
+    /* Initialize the FSI Rx parameter */
+    rx_config = (FSI_Rx_Config *)gFsiRxHandle[CONFIG_FSI_RX0];
+    rx_object = rx_config->object;
+    rx_attrs = rx_config->attrs;
+    rx_baseAddr = rx_attrs->baseAddr;
+
     /* Enable loopback */
-    status = FSI_enableRxInternalLoopback(rxBaseAddr);
+    status = FSI_enableRxInternalLoopback(rx_baseAddr);
     DebugP_assert(status == SystemP_SUCCESS);
 
     /* Transmit data */
-    status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, gTxBufTagAndUserData, 0, bufIdx);
+    tx_object->params->loopCnt = FSI_APP_LOOP_COUNT;
+
+    status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, gTxBufTagAndUserData, bufIdx);
     DebugP_assert(status == SystemP_SUCCESS);
 
     /* Receive data */
-    status = FSI_Rx_hld(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData, gRxBufTagAndUserData, 0, bufIdx);
+    rx_object->params->loopCnt = FSI_APP_LOOP_COUNT;
+    status = FSI_Rx_hld(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData, gRxBufTagAndUserData, bufIdx);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    status += FSI_startTxTransmit(txBaseAddr);
+    status += FSI_startTxTransmit(tx_baseAddr);
     DebugP_assert(status == SystemP_SUCCESS);
 
     FSI_Tx_pendDmaCompletion();
     FSI_Rx_pendDmaCompletion();
 
     /* Perform a cache invalidate of result buffers */
-    CacheP_inv((void *)gTxBufData, ((FSI_APP_FRAME_DATA_WORD_COUNT * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
+    CacheP_inv((void *)gTxBufData, ((numWords * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
     CacheP_inv((void *)&gTxBufTagAndUserData, (FSI_APP_LOOP_COUNT * sizeof(uint16_t)), CacheP_TYPE_ALL);
-    CacheP_inv((void *)gRxBufData, ((FSI_APP_FRAME_DATA_WORD_COUNT * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
+    CacheP_inv((void *)gRxBufData, ((numWords * FSI_APP_LOOP_COUNT) * sizeof(uint16_t)), CacheP_TYPE_ALL);
     CacheP_inv((void *)&gRxBufTagAndUserData, (FSI_APP_LOOP_COUNT * sizeof(uint16_t)), CacheP_TYPE_ALL);
 
-    status = Fsi_appCompareData(gTxBufData, gRxBufData);
+    status = Fsi_appCompareData(gTxBufData, gRxBufData, userData);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    if(SystemP_SUCCESS == status)
-    {
-        DebugP_log("[FSI] %d frames successfully received!!!\r\n", FSI_APP_LOOP_COUNT);
-        DebugP_log("All tests have passed!!\r\n");
-    }
-    else
-    {
-        DebugP_log("Some tests have failed!!\r\n");
-    }
+    status = FSI_disableRxInternalLoopback(rx_baseAddr);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    DebugP_log("[FSI] %d frames successfully received!!!\r\n", FSI_APP_LOOP_COUNT);
+    DebugP_log("All tests have passed!!\r\n");
 
     Board_driversClose();
     Drivers_close();
@@ -173,12 +180,15 @@ void *fsi_hld_loopback_dma_main(void *args)
     return NULL;
 }
 
-static int32_t Fsi_appCompareData(uint16_t *txBufPtr, uint16_t *rxBufPtr)
+static int32_t Fsi_appCompareData(uint16_t *txBufPtr, uint16_t *rxBufPtr, uint8_t app_userData)
 {
     int32_t     status = SystemP_SUCCESS;
     uint32_t    i;
+    uint8_t     dataSize;
 
-    for(i = 0; i < (FSI_APP_FRAME_DATA_WORD_COUNT * FSI_APP_LOOP_COUNT); i++)
+    dataSize   = rxParams[CONFIG_FSI_RX0].frameDataSize;
+
+    for(i = 0; i < (dataSize * FSI_APP_LOOP_COUNT); i++)
     {
         if(*rxBufPtr++ != *txBufPtr++)
         {
@@ -200,7 +210,7 @@ static int32_t Fsi_appCompareData(uint16_t *txBufPtr, uint16_t *rxBufPtr)
         }
         userData = (gRxBufTagAndUserData[i] & CSL_FSI_RX_CFG_RX_FRAME_TAG_UDATA_USER_DATA_MASK) >>
                      CSL_FSI_RX_CFG_RX_FRAME_TAG_UDATA_USER_DATA_SHIFT;
-        if(FSI_APP_TX_USER_DATA != userData)
+        if(app_userData != userData)
         {
             status |= SystemP_FAILURE;
             break;

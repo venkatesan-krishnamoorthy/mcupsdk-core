@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Texas Instruments Incorporated
+ * Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -161,6 +161,15 @@ typedef void (*FSI_Rx_ErrorCallbackFxn) (FSI_Rx_Handle handle);
  */
 typedef struct FSI_Rx_Params_t
 {
+    /** Loop count */
+    uint16_t loopCnt;
+
+    /**< Frame Data Size */
+    uint16_t frameDataSize;
+
+    /**< Lane number */
+    FSI_DataWidth   numLane;
+
     /*! Blocking or Callback mode. Refer \ref FSI_Rx_TransferMode
      */
     uint32_t                transferMode;
@@ -187,6 +196,9 @@ typedef struct FSI_Rx_Attrs_s
 
     /**< Peripheral interrupt number */
     uint32_t                intrNum;
+
+    /**< Peripheral Interrupt line number */
+    uint32_t                intrLine;
 
     /**< Driver operating mode. Polling, DMA, interrupt */
     uint32_t                operMode;
@@ -314,16 +326,16 @@ void FSI_Rx_close(FSI_Rx_Handle handle);
 int32_t FSI_Rx_edmaIntrInit(FSI_Rx_Object *FsiTxObj, uint32_t tccAlloc);
 
 int32_t FSI_Rx_hld(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTagAndUserData,
-                    uint16_t dataSize, uint16_t bufIdx);
+                    uint16_t bufIdx);
 
 int32_t FSI_Rx_Intr(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTagAndUserData,
-                    uint16_t dataSize, uint16_t bufIdx);
+                    uint16_t bufIdx);
 
 int32_t FSI_Rx_Dma(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTagAndUserData,
-                    uint16_t dataSize, uint16_t bufIdx);
+                    uint16_t bufIdx);
 
 int32_t FSI_Rx_Poll(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTagAndUserData,
-                    uint16_t dataSize, uint16_t bufIdx);
+                    uint16_t bufIdx);
 
 int32_t FSI_Rx_edmaChInit(const FSI_Rx_Object *fsiRxObj, uint32_t edmaEventNo,
                           uint32_t *edmaParam, uint32_t *edmaTccAlloc);
@@ -339,6 +351,10 @@ int32_t FSI_Rx_configureDma(const FSI_Rx_Object *fsiRxObj, uint32_t *dmaCh,
 void FSI_Rx_DmaCompletionCallback(void *args);
 
 void FSI_Rx_pendDmaCompletion();
+
+void FSI_HLD_RxParams_init(FSI_Rx_Params *prms);
+
+uint32_t FSI_Rx_getBaseAddr(FSI_Rx_Handle handle);
 
 /**
  *  \brief #FSI_write() does not block code execution and will call a

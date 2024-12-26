@@ -326,7 +326,7 @@ const example_file_list = [
 	"test/drivers/edma/edma_ut_am261x/.project/project.js",
 	// "test/drivers/epwm/.project/project.js",
 	// "test/drivers/eqep/.project/project.js",
-	"test/drivers/fsi/.project/project.js",
+	"test/drivers/fsi/fsi_lld/.project/project.js",
 	"test/drivers/gpio/.project/project.js",
 	// "test/drivers/gpmc/.project/project.js",
 	"test/drivers/i2c/.project/project.js",

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 Texas Instruments Incorporated
+ * Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -168,6 +168,24 @@ typedef void (*FSI_Tx_ErrorCallbackFxn) (FSI_Tx_Handle handle);
  */
 typedef struct FSI_Tx_Params_t
 {
+    /** User data */
+    uint8_t userData;
+
+    /** Loop count */
+    uint16_t loopCnt;
+
+    /**< Frame Data Size */
+    uint16_t frameDataSize;
+
+    /**< Lane number */
+    FSI_DataWidth   numLane;
+
+    /**< Frame tag */
+    FSI_FrameTag    frameTag;
+
+    /**< Frame type */
+    FSI_FrameType    frameType;
+
     /*! Blocking or Callback mode. Refer \ref FSI_Tx_TransferMode
      */
     uint32_t                transferMode;
@@ -192,8 +210,14 @@ typedef struct FSI_Tx_Attrs_s
     /* Peripheral base address */
     uint32_t                baseAddr;
 
+    /* Peripheral prescalar value */
+    uint32_t                preScalarVal;
+
     /**< Peripheral interrupt number */
     uint32_t                intrNum;
+
+    /**< Peripheral Interrupt line number */
+    uint32_t                intrLine;
 
     /**< Driver operating mode. Polling, DMA, interrupt */
     uint32_t                operMode;
@@ -321,16 +345,16 @@ void FSI_Tx_close(FSI_Tx_Handle handle);
 int32_t FSI_Tx_edmaIntrInit(FSI_Tx_Object *FsiTxObj, uint32_t tccAlloc);
 
 int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData, 
-                    uint16_t dataSize, uint16_t bufIdx);
+                    uint16_t bufIdx);
 
 int32_t FSI_Tx_Intr(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData, 
-                    uint16_t dataSize, uint16_t bufIdx);
+                    uint16_t bufIdx);
 
 int32_t FSI_Tx_Dma(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData, 
-                    uint16_t dataSize, uint16_t bufIdx);
+                    uint16_t bufIdx);
 
 int32_t FSI_Tx_Poll(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTagAndUserData, 
-                    uint16_t dataSize, uint16_t bufIdx);
+                    uint16_t bufIdx);
 
 int32_t FSI_Tx_dmaOpen(FSI_Tx_Handle handle, FSI_Tx_DmaChConfig dmaChCfg);
 int32_t FSI_Tx_dmaClose(FSI_Tx_Handle handle, FSI_Tx_DmaChConfig dmaChCfg);
@@ -346,6 +370,10 @@ int32_t FSI_Tx_configureDma(const FSI_Tx_Object *fsiTxObj, uint32_t *dmaCh,
 void FSI_Tx_DmaCompletionCallback(void *args);
 
 void FSI_Tx_pendDmaCompletion();
+
+void FSI_HLD_TxParams_init(FSI_Tx_Params *prms);
+
+uint32_t FSI_Tx_getBaseAddr(FSI_Tx_Handle handle);
 
 /**
  *  \brief  This is the FSI TX ISR and can be used as IRQ handler.

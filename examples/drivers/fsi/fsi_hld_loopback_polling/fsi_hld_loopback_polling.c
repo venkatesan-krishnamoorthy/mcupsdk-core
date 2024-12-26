@@ -55,27 +55,16 @@
  * Once the transfer it completes, it compares the source and destination buffers for any data mismatch.
  */
 
-/* FSI TXCLK - 50 MHz */
-#define FSI_APP_TXCLK_FREQ              (50 * 1000 * 1000)
-/* FSI module input clock - 500 MHz */
-#define FSI_APP_CLK_FREQ                (CONFIG_FSI_TX0_CLK)
-/* FSI TX prescaler value for TXCLKIN of 100 MHz. / 2 is provided as TXCLK = TXCLKIN/2 */
-#define FSI_APP_TX_PRESCALER_VAL        (FSI_APP_CLK_FREQ / FSI_APP_TXCLK_FREQ / 2U)
-
+/* Loop count */
 #define FSI_APP_LOOP_COUNT              (100U)
-/* User data to be sent with Data frame */
-#define FSI_APP_TX_USER_DATA            (0x07U)
-/* Configuring Frame - can be between 1-16U */
-#define FSI_APP_FRAME_DATA_WORD_SIZE    (16U)
-/* 0x0U for 1 lane and 0x1U for two lane */
-#define FSI_APP_N_LANES                 (0x0U)
-#define FSI_APP_TX_DATA_FRAME_TAG       (0x1U)
 
 /* Index of FSI TX/RX buffer, gBudIdx + FSI_APP_FRAME_DATA_WORD_SIZE should be <= 16 */
 uint16_t gRxBufData[FSI_MAX_VALUE_BUF_PTR_OFF + 1U];
 uint16_t gTxBufData[FSI_MAX_VALUE_BUF_PTR_OFF + 1U];
 
 static int32_t Fsi_appCompareData(uint16_t *txBufPtr, uint16_t *rxBufPtr);
+
+extern FSI_Rx_Params rxParams[CONFIG_FSI_RX0];
 
 void *fsi_hld_loopback_polling_main(void *args)
 {
@@ -84,11 +73,15 @@ void *fsi_hld_loopback_polling_main(void *args)
     uint32_t    loopCnt;
     uint16_t    bufIdx;
 
+    FSI_Rx_Config *rx_config = NULL;
+    FSI_Rx_Attrs  *rx_attrs   = NULL;
+
+    FSI_Tx_Config *tx_config = NULL;
+    FSI_Tx_Attrs  *tx_attrs   = NULL;
+
     /* Test parameters */
-    uint32_t    rxBaseAddr, txBaseAddr;
-    rxBaseAddr = CONFIG_FSI_RX0_BASE_ADDR;
-    txBaseAddr = CONFIG_FSI_TX0_BASE_ADDR;
-    dataSize   = FSI_APP_FRAME_DATA_WORD_SIZE;
+    uint32_t    rx_baseAddr, tx_baseAddr;
+    dataSize   = rxParams[CONFIG_FSI_RX0].frameDataSize;
     loopCnt    = FSI_APP_LOOP_COUNT;
     bufIdx     = 0U;
 
@@ -99,11 +92,19 @@ void *fsi_hld_loopback_polling_main(void *args)
     DebugP_log("[FSI] Loopback Polling application started ...\r\n");
 
     /* Enable loopback */
-    status = FSI_enableRxInternalLoopback(rxBaseAddr);
+    rx_config = (FSI_Rx_Config *)gFsiRxHandle[CONFIG_FSI_RX0];
+    rx_attrs = rx_config->attrs;
+    rx_baseAddr = rx_attrs->baseAddr;
+
+    status = FSI_enableRxInternalLoopback(rx_baseAddr);
     DebugP_assert(status == SystemP_SUCCESS);
 
     /* Send Flush Sequence to sync, after every rx soft reset */
-    status = FSI_executeTxFlushSequence(txBaseAddr, FSI_APP_TX_PRESCALER_VAL);
+    tx_config = (FSI_Tx_Config *)gFsiTxHandle[CONFIG_FSI_TX0];
+    tx_attrs = tx_config->attrs;
+    tx_baseAddr = tx_attrs->baseAddr;
+
+    status = FSI_executeTxFlushSequence(tx_baseAddr, tx_attrs->preScalarVal);
     DebugP_assert(status == SystemP_SUCCESS);
 
     /* Start transfer */
@@ -117,27 +118,24 @@ void *fsi_hld_loopback_polling_main(void *args)
         }
 
         /* Transmit data */
-        status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, NULL, dataSize, bufIdx);
+        status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, NULL, bufIdx);
         DebugP_assert(status == SystemP_SUCCESS);
 
         /* Receive data */
-        status = FSI_Rx_hld(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData, NULL, dataSize, bufIdx);
+        status = FSI_Rx_hld(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData, NULL, bufIdx);
         DebugP_assert(status == SystemP_SUCCESS);
 
         /* Compare data */
         status = Fsi_appCompareData(gTxBufData, gRxBufData);
         DebugP_assert(status == SystemP_SUCCESS);
+
     }
 
-    if(SystemP_SUCCESS == status)
-    {
-        DebugP_log("[FSI] %d frames successfully received!!!\r\n", FSI_APP_LOOP_COUNT);
-        DebugP_log("All tests have passed!!\r\n");
-    }
-    else
-    {
-        DebugP_log("Some tests have failed!!\r\n");
-    }
+    status = FSI_disableRxInternalLoopback(rx_baseAddr);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    DebugP_log("[FSI] %d frames successfully received!!!\r\n", FSI_APP_LOOP_COUNT);
+    DebugP_log("All tests have passed!!\r\n");
 
     Board_driversClose();
     Drivers_close();
@@ -149,8 +147,11 @@ static int32_t Fsi_appCompareData(uint16_t *txBufPtr, uint16_t *rxBufPtr)
 {
     int32_t     status = SystemP_SUCCESS;
     uint32_t    i;
+    uint16_t dataSize;
 
-    for(i = 0; i < FSI_APP_FRAME_DATA_WORD_SIZE; i++)
+    dataSize = rxParams[CONFIG_FSI_RX0].frameDataSize;
+
+    for(i = 0; i < dataSize; i++)
     {
         if(*rxBufPtr++ != *txBufPtr++)
         {
