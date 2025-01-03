@@ -2,7 +2,7 @@
  * PRU1_bin.h
  * 
  * 
- * Copyright (c) 2024, Texas Instruments Incorporated
+ * Copyright (c) 2025, Texas Instruments Incorporated
  * All rights reserved not granted herein.
  *
  * Limited License.
@@ -59,7 +59,7 @@ const unsigned int PRU1_b00[]= {
 0x240000c0,
 0x24011280,
 0x240302c1,
-0x24000781,
+0x24000881,
 0x240c08c2,
 0x24010982,
 0x8100b880,
@@ -939,8 +939,8 @@ const unsigned int PRU1_b00[]= {
 0x24000000,
 0x2e86098d,
 0x241fa0c2,
-0x90c21c02,
-0xd100e203,
+0x90c21802,
+0xd101e203,
 0x1d17f6f6,
 0x79000002,
 0x1f17f6f6,
