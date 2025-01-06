@@ -8,8 +8,6 @@
 /**
  * Import the modules used in this configuration.
  */
-const uart            = scripting.addModule("/drivers/uart/uart", {}, false);
-const uart1           = uart.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -40,9 +38,11 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-uart1.$name            = "CONFIG_UART_CONSOLE";
-uart1.UART.RXD.$assign = "UART0_RXD";
-uart1.UART.TXD.$assign = "UART0_TXD";
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -257,4 +257,4 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-uart1.UART.$suggestSolution = "UART0";
+debug_log.uartLog.UART.$suggestSolution = "UART0";
