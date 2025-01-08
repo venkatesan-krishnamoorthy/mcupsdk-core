@@ -112,6 +112,10 @@ void board_flash_reset(OSPI_Handle oHandle)
 
     Board_eepromOpen();
 
+    /* Check if part type is SIP (internal flash) or non-SIP (external flash)
+     * If SIP part, directly reset the flash using driver API irrespective of board revision.
+     * There is no IO expander involved in this case.
+     */
     uint32_t sipVal = (((ptrTopCtrlRegs->EFUSE2_ROW_6) & 
             CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_MASK) >> 
                     CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_SHIFT);

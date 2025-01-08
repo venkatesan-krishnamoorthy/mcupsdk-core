@@ -44,6 +44,10 @@
 #define EXP_TIME_DIVIDER                (2U)
 #define MILLISEC_TO_MICROSEC(msec)      ((msec)*1000U)
 
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+void board_flash_reset(OSPI_Handle oHandle);
+# endif
+
 /*
  * This example uses the WDT module in reset mode to trigger warm reset.
  *
@@ -65,6 +69,16 @@ void watchdog_reset_mode_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+
+    #if defined (SOC_AM263PX) || defined (SOC_AM261X)
+    /* In OSPI SBL mode after watchdog warm reset the ROM is not able to load the SBL again,
+     * The reason is that the ROM only uses 3 byte addressing mode. To address the full memory
+     * address range, software typically switches to 4-byte addressing mode. If a reset to the
+     * processor occurs, the ROM executes expecting 3-byte addressing mode, but the flash will 
+     * have been left in 4-byte addressing mode. For the flash device to return to 3-byte addressing mode,
+     * it must be reset using this signal.*/
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+    # endif
 
     DebugP_log("Watchdog reset Mode Test Started ...\r\n");
 
@@ -89,7 +103,7 @@ void watchdog_reset_mode_main(void *args)
 
     /* Wait for residual milli seconds */
     ClockP_usleep(MILLISEC_TO_MICROSEC(wdtExpiryTimeinMs%1000U));
-
+    
     /* Wait till WDT triggers the reset */
     while(true)
     {

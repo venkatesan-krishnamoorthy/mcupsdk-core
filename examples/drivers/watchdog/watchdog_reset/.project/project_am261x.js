@@ -6,6 +6,7 @@ const files = {
     common: [
         "watchdog_reset_mode.c",
         "main.c",
+        "board.c",
     ],
 };
 
