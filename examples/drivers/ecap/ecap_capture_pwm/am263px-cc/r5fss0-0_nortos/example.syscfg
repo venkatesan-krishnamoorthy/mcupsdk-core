@@ -53,6 +53,7 @@ const int_xbar1       = int_xbar.addInstance();
 pmic1.$name = "CONFIG_PMIC0";
 
 ecap1.$name                  = "CONFIG_ECAP0";
+ecap1.emulationMode          = "ECAP_EMULATION_FREE_RUN";
 ecap1.enableInterrupt        = true;
 ecap1.interruptSourceAPWM    = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
 ecap1.captureMode            = "ECAP_ONE_SHOT_CAPTURE_MODE";

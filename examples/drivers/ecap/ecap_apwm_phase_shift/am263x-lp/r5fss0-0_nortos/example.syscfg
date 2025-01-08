@@ -49,6 +49,7 @@ const output_xbar2    = output_xbar.addInstance();
  */
 ecap1.$name             = "CONFIG_ECAP0";
 ecap1.ecapMode          = "APWM";
+ecap1.emulationMode     = "ECAP_EMULATION_FREE_RUN";
 ecap1.useInterrupts     = false;
 ecap1.syncInPulseSource = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 ecap1.apwmPeriod        = 5000;
@@ -59,6 +60,7 @@ ecap1.enableLoadCounter = true;
 ecap2.$name             = "CONFIG_ECAP1";
 ecap2.ecapBase          = "CSL_CONTROLSS_ECAP1_U_BASE";
 ecap2.ecapMode          = "APWM";
+ecap2.emulationMode     = "ECAP_EMULATION_FREE_RUN";
 ecap2.useInterrupts     = false;
 ecap2.apwmPeriod        = 5000;
 ecap2.apwmCompare       = 2500;

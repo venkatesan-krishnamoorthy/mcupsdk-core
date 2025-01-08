@@ -53,6 +53,7 @@ const int_xbar2       = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+ecap1.emulationMode                       = "ECAP_EMULATION_FREE_RUN";
 ecap1.enableInterrupt                     = true;
 ecap1.interruptSourceAPWM                 = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
 ecap1.ecapInput                           = "ECAP_INPUT_INPUTXBAR0";
@@ -71,6 +72,7 @@ ecap1.minValue_1                          = 9950;
 ecap1.maxValue_1                          = 10050;
 
 ecap2.enableInterrupt        = true;
+ecap2.emulationMode          = "ECAP_EMULATION_FREE_RUN";
 ecap2.interruptSourceAPWM    = ["ECAP_ISR_SOURCE_COUNTER_PERIOD"];
 ecap2.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
 ecap2.reArm                  = true;
@@ -88,6 +90,7 @@ ecap2.minValue_1             = 9950;
 ecap2.maxValue_1             = 10050;
 
 ecap3.$name                  = "MON_PERIOD_HIGH";
+ecap3.emulationMode          = "ECAP_EMULATION_FREE_RUN";
 ecap3.ecapBase               = "CSL_CONTROLSS_ECAP2_U_BASE";
 ecap3.eventStop              = "ECAP_EVENT_2";
 ecap3.enableLoadCounter      = true;
@@ -103,6 +106,7 @@ ecap3.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
 ecap3.monitorSelect_1        = "ECAP_MUNIT_PERIOD_WIDTH_RISE_RISE";
 
 ecap4.$name                  = "MON_PERIOD_LOW";
+ecap4.emulationMode          = "ECAP_EMULATION_FREE_RUN";
 ecap4.ecapBase               = "CSL_CONTROLSS_ECAP3_U_BASE";
 ecap4.eventOnePolarity       = "ECAP_EVNT_FALLING_EDGE";
 ecap4.eventTwoPolarity       = "ECAP_EVNT_FALLING_EDGE";
@@ -120,6 +124,7 @@ ecap4.ecapInput              = "ECAP_INPUT_INPUTXBAR0";
 ecap4.monitorSelect_1        = "ECAP_MUNIT_PERIOD_WIDTH_FALL_FALL";
 
 ecap5.$name                  = "MON_POSEDGE";
+ecap5.emulationMode          = "ECAP_EMULATION_FREE_RUN";
 ecap5.ecapBase               = "CSL_CONTROLSS_ECAP4_U_BASE";
 ecap5.reArm                  = true;
 ecap5.resetCounters          = true;
@@ -136,6 +141,7 @@ ecap5.syncInPulseSource      = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 ecap5.eventStop              = "ECAP_EVENT_2";
 
 ecap6.$name                  = "MON_NEGEDGE";
+ecap6.emulationMode          = "ECAP_EMULATION_FREE_RUN";
 ecap6.ecapBase               = "CSL_CONTROLSS_ECAP5_U_BASE";
 ecap6.enableLoadCounter      = true;
 ecap6.resetCounters          = true;

@@ -56,6 +56,7 @@ const input_xbar3     = input_xbar.addInstance();
  * Write custom configuration values to the imported modules.
  */
 ecap1.eventStop           = "ECAP_EVENT_2";
+ecap1.emulationMode       = "ECAP_EMULATION_FREE_RUN";
 ecap1.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
 ecap1.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
 ecap1.reArm               = true;
@@ -68,6 +69,7 @@ ecap1.enableLoadCounter   = true;
 ecap1.loadCounter         = true;
 
 ecap2.ecapBase            = "CSL_CONTROLSS_ECAP1_U_BASE";
+ecap2.emulationMode       = "ECAP_EMULATION_FREE_RUN";
 ecap2.reArm               = true;
 ecap2.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
 ecap2.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
@@ -80,6 +82,7 @@ ecap2.enableLoadCounter   = true;
 ecap2.loadCounter         = true;
 
 ecap3.ecapBase            = "CSL_CONTROLSS_ECAP2_U_BASE";
+ecap3.emulationMode       = "ECAP_EMULATION_FREE_RUN";
 ecap3.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
 ecap3.counterResetOnEvent = ["ECAP_EVENT_2"];
 ecap3.eventStop           = "ECAP_EVENT_2";
