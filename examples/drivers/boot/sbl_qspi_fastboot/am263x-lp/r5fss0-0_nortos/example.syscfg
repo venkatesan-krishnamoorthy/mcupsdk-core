@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2634" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
@@ -40,15 +40,15 @@ const section3        = section.addInstance();
 const section4        = section.addInstance();
 const section5        = section.addInstance();
 const section6        = section.addInstance();
-const section7        = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-bootloader1.$name            = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset   = "0x00080000";
-bootloader1.hsmrtDecoupling  = true;
-bootloader1.hsmrtImageOffset = "0x00040000";
+bootloader1.$name                 = "CONFIG_BOOTLOADER0";
+bootloader1.appImageOffset        = "0x00080000";
+bootloader1.hsmrtDecoupling       = true;
+bootloader1.hsmrtImageOffset      = "0x00040000";
+bootloader1.hsmrtImageLoadAddress = "0x70100000";
 
 flash1.$name                               = "CONFIG_FLASH0";
 bootloader1.flashDriver                    = flash1;
@@ -120,12 +120,11 @@ default_linker1.$name = "memory_configurator_default_linker0";
 
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
-general1.stack_size     = 16384;
 general1.heap_size      = 8192;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(9);
+region1.memory_region.create(8);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -147,21 +146,18 @@ region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].manualStartAddress = 0x70002100;
 region1.memory_region[4].size               = 0x14F00;
 region1.memory_region[4].auto               = false;
-region1.memory_region[5].$name              = "MSRAM_HSMRT";
-region1.memory_region[5].manualStartAddress = 0x70027800;
-region1.memory_region[5].size               = 0x2F000;
+region1.memory_region[5].type               = "CUSTOM";
+region1.memory_region[5].$name              = "MAILBOX_HSM";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x44000000;
+region1.memory_region[5].size               = 0x3CE;
 region1.memory_region[6].type               = "CUSTOM";
-region1.memory_region[6].$name              = "MAILBOX_HSM";
+region1.memory_region[6].$name              = "MAILBOX_R5F";
 region1.memory_region[6].auto               = false;
-region1.memory_region[6].manualStartAddress = 0x44000000;
 region1.memory_region[6].size               = 0x3CE;
-region1.memory_region[7].type               = "CUSTOM";
-region1.memory_region[7].$name              = "MAILBOX_R5F";
-region1.memory_region[7].auto               = false;
-region1.memory_region[7].size               = 0x3CE;
-region1.memory_region[7].manualStartAddress = 0x44000400;
-region1.memory_region[8].$name              = "MSRAM_1";
-region1.memory_region[8].size               = 0x1B000;
+region1.memory_region[6].manualStartAddress = 0x44000400;
+region1.memory_region[7].$name              = "MSRAM_1";
+region1.memory_region[7].size               = 0x1B000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
@@ -232,28 +228,21 @@ section4.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section4.output_section[4].input_section.create(1);
 section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
-section5.load_memory             = "MSRAM_HSMRT";
-section5.group                   = false;
-section5.$name                   = "Hsmrt";
-section5.type                    = "NOLOAD";
+section5.load_memory                 = "MAILBOX_HSM";
+section5.type                        = "NOLOAD";
+section5.group                       = false;
+section5.$name                       = "SIPC HSM Queue Memory";
 section5.output_section.create(1);
-section5.output_section[0].$name = ".rodata.hsmrt";
+section5.output_section[0].$name     = ".bss.sipc_hsm_queue_mem";
+section5.output_section[0].alignment = 0;
 
-section6.load_memory                 = "MAILBOX_HSM";
+section6.load_memory                 = "MAILBOX_R5F";
 section6.type                        = "NOLOAD";
 section6.group                       = false;
-section6.$name                       = "SIPC HSM Queue Memory";
+section6.$name                       = "SIPC R5F Queue Memory";
 section6.output_section.create(1);
-section6.output_section[0].$name     = ".bss.sipc_hsm_queue_mem";
+section6.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section6.output_section[0].alignment = 0;
-
-section7.load_memory                 = "MAILBOX_R5F";
-section7.type                        = "NOLOAD";
-section7.group                       = false;
-section7.$name                       = "SIPC R5F Queue Memory";
-section7.output_section.create(1);
-section7.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
-section7.output_section[0].alignment = 0;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
