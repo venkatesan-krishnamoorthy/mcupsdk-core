@@ -21,18 +21,18 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=mcu_esm0.$(PROFILE).out
-COREOUTNAME:=mcu_esm0.$(PROFILE).optishare.out
+OUTNAME:=esm_main_app.$(PROFILE).out
+COREOUTNAME:=esm_main_app.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=mcu_esm0.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=mcu_esm0.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=mcu_esm0.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=mcu_esm0.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=mcu_esm0.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=mcu_esm0.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=mcu_esm0.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mcu_esm0.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=esm_main_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=esm_main_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=esm_main_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=esm_main_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=esm_main_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=esm_main_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=esm_main_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=esm_main_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 
@@ -209,7 +209,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am243x:m4fss0-0:nortos:ti-arm-clang mcu_esm0 ...
+	@echo  Scrubing: am243x:m4fss0-0:nortos:ti-arm-clang esm_main_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -334,12 +334,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for mcu_esm0.$(PROFILE) ...
+	@echo Creating Coverage Report for esm_main_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o mcu_esm0.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=mcu_esm0.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=mcu_esm0.$(PROFILE).profdata > coverage/mcu_esm0.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/mcu_esm0.$(PROFILE).profdata.json --output-json=coverage/mcu_esm0.$(PROFILE).analysis.json --output=../mcu_esm0.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o esm_main_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=esm_main_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=esm_main_app.$(PROFILE).profdata > coverage/esm_main_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/esm_main_app.$(PROFILE).profdata.json --output-json=coverage/esm_main_app.$(PROFILE).analysis.json --output=../esm_main_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

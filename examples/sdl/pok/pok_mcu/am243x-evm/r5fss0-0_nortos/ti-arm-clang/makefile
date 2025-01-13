@@ -21,18 +21,18 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=pok_example.$(PROFILE).out
-COREOUTNAME:=pok_example.$(PROFILE).optishare.out
+OUTNAME:=pok_app.$(PROFILE).out
+COREOUTNAME:=pok_app.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=pok_example.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=pok_example.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=pok_example.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=pok_example.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=pok_example.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=pok_example.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=pok_example.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=pok_example.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=pok_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=pok_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=pok_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=pok_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=pok_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=pok_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=pok_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=pok_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 
@@ -215,7 +215,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am243x:r5fss0-0:nortos:ti-arm-clang pok_example ...
+	@echo  Scrubing: am243x:r5fss0-0:nortos:ti-arm-clang pok_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -340,12 +340,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for pok_example.$(PROFILE) ...
+	@echo Creating Coverage Report for pok_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o pok_example.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=pok_example.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=pok_example.$(PROFILE).profdata > coverage/pok_example.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/pok_example.$(PROFILE).profdata.json --output-json=coverage/pok_example.$(PROFILE).analysis.json --output=../pok_example.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o pok_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=pok_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=pok_app.$(PROFILE).profdata > coverage/pok_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/pok_app.$(PROFILE).profdata.json --output-json=coverage/pok_app.$(PROFILE).analysis.json --output=../pok_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

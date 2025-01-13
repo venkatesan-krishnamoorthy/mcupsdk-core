@@ -119,7 +119,7 @@ function getComponentProperty(device) {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "pok_example";
+    property.name = "pok_app";
     property.isInternal = false;
     property.description = "This example verifies POK operation"
     property.buildOptionCombos = buildOptionCombos;
