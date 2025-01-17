@@ -23,8 +23,12 @@ MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_freertos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_freertos/ti-arm-clang/generated
 CORE_1=--script ../r5fss0-1_freertos/example.syscfg --context r5fss0-1 --output ../r5fss0-1_freertos/ti-arm-clang/generated
+CORE_2=--script ../r5fss1-0_freertos/example.syscfg --context r5fss1-0 --output ../r5fss1-0_freertos/ti-arm-clang/generated
+CORE_3=--script ../r5fss1-1_freertos/example.syscfg --context r5fss1-1 --output ../r5fss1-1_freertos/ti-arm-clang/generated
 
 CORES = \
+    $(CORE_3) \
+    $(CORE_2) \
     $(CORE_1) \
     $(CORE_0) \
 
@@ -36,6 +40,12 @@ CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
 CORE_1_IMG=../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
 
+CORE_2_IMG=../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).out
+CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
+
+CORE_3_IMG=../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).out
+CORE_IMG_ARGS +=--core-img=3:$(CORE_3_IMG)
+
 MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE:=$(SYSTEM_PROJECT_NAME).$(PROFILE).optishare.mcelf
 
 CORE_IMG_OPTISHARE_ARGS :=
@@ -46,9 +56,17 @@ CORE_IMG_OPTISHARE_ARGS +=--core-img=0:$(CORE_0_OPTISHARE_IMG)
 CORE_1_OPTISHARE_IMG=../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).optishare.out
 CORE_IMG_OPTISHARE_ARGS +=--core-img=1:$(CORE_1_OPTISHARE_IMG)
 
+CORE_2_OPTISHARE_IMG=../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).optishare.out
+CORE_IMG_OPTISHARE_ARGS +=--core-img=2:$(CORE_2_OPTISHARE_IMG)
+
+CORE_3_OPTISHARE_IMG=../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).optishare.out
+CORE_IMG_OPTISHARE_ARGS +=--core-img=3:$(CORE_3_OPTISHARE_IMG)
+
 COREXMLS = \
 	../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml\
 	../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml\
+	../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml\
+	../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml\
 
 SYSTEM_FLAG := true
 
@@ -57,6 +75,8 @@ all: postBuild
 corebuild: syscfg
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) -C ../r5fss0-1_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
+	$(MAKE) -C ../r5fss1-0_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
+	$(MAKE) -C ../r5fss1-1_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 
 
 postBuild: corebuild
@@ -78,6 +98,8 @@ coreout: sso.out
 	@echo generating files with sso
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../system_freertos/sso.out
 	$(MAKE) -C ../r5fss0-1_freertos/ti-arm-clang/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../system_freertos/sso.out
+	$(MAKE) -C ../r5fss1-0_freertos/ti-arm-clang/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../system_freertos/sso.out
+	$(MAKE) -C ../r5fss1-1_freertos/ti-arm-clang/ coreout SYSTEM_FLAG=${SYSTEM_FLAG} SSO_PATH=../../system_freertos/sso.out
 	@echo generating files with sso done!
 	@echo .
 
@@ -98,6 +120,8 @@ sso.cmd: all $(COREXMLS)
 optisave: buildmcelfsso
 	$(OPTISAVE) ../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml ../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).optishare.lnkxml > ../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).ossr
 	$(OPTISAVE) ../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml ../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).optishare.lnkxml > ../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).ossr
+	$(OPTISAVE) ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).optishare.lnkxml > ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).ossr
+	$(OPTISAVE) ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).lnkxml ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).optishare.lnkxml > ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).ossr
 
 buildmcelfsso: coreout
 	@echo .
@@ -110,6 +134,8 @@ buildmcelfsso: coreout
 clean:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
 	$(MAKE) -C ../r5fss0-1_freertos/ti-arm-clang/ clean
+	$(MAKE) -C ../r5fss1-0_freertos/ti-arm-clang/ clean
+	$(MAKE) -C ../r5fss1-1_freertos/ti-arm-clang/ clean
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
@@ -118,6 +144,8 @@ clean:
 scrub:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ scrub
 	$(MAKE) -C ../r5fss0-1_freertos/ti-arm-clang/ scrub
+	$(MAKE) -C ../r5fss1-0_freertos/ti-arm-clang/ scrub
+	$(MAKE) -C ../r5fss1-1_freertos/ti-arm-clang/ scrub
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
@@ -176,14 +204,20 @@ MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 MULTI_CORE_APP_PARAMS = \
     ../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
     ../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
+    ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
     ../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
     ../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-0) \
+    ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss1-1) \
 
 MULTI_CORE_BOOTIMAGE_DEPENDENCY = \
     ../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc \
     ../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc \
+    ../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).rprc \
+    ../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).rprc \
 
 $(MULTI_CORE_BOOTIMAGE_DEPENDENCY):
 
