@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -151,6 +151,10 @@ void *fsi_loopback_main(void *args)
         /* Compare data */
         status = Fsi_appCompareData(gTxBufData, gRxBufData);
         DebugP_assert(status == SystemP_SUCCESS);
+
+        /* Setting RxBuffer pointer to 0 in every loop*/
+        status = FSI_setRxBufferPtr(rxBaseAddr, 0U);
+        DebugP_assert(status == SystemP_SUCCESS);
     }
 
     Fsi_appIntrDeInit(txBaseAddr, rxBaseAddr);
@@ -177,8 +181,6 @@ static int32_t Fsi_appTxConfig(uint32_t txBaseAddr)
 
     /* TX init and reset */
     status = FSI_performTxInitialization(txBaseAddr, FSI_APP_TX_PRESCALER_VAL);
-    status += FSI_resetTxModule(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
-    FSI_clearTxModuleReset(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setTxSoftwareFrameSize(txBaseAddr, FSI_APP_FRAME_DATA_WORD_SIZE);
@@ -198,8 +200,6 @@ static int32_t Fsi_appRxConfig(uint32_t rxBaseAddr)
 
     /* RX init and reset */
     status  = FSI_performRxInitialization(rxBaseAddr);
-    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
-    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setRxSoftwareFrameSize(rxBaseAddr, FSI_APP_FRAME_DATA_WORD_SIZE);

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-24 Texas Instruments Incorporated
+ *  Copyright (C) 2022-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -354,8 +354,6 @@ static int32_t Fsi_appDmaTxConfig(uint32_t txBaseAddr)
 
     /* TX init and reset */
     status = FSI_performTxInitialization(txBaseAddr, FSI_APP_TX_PRESCALER_VAL);
-    status += FSI_resetTxModule(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
-    FSI_clearTxModuleReset(txBaseAddr, FSI_TX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setTxSoftwareFrameSize(txBaseAddr, FSI_APP_FRAME_DATA_WORD_COUNT);
@@ -371,8 +369,6 @@ static int32_t Fsi_appDmaRxConfig(uint32_t rxBaseAddr)
 
     /* RX init and reset */
     status  = FSI_performRxInitialization(rxBaseAddr);
-    status += FSI_resetRxModule(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
-    FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
 
     /* Setting for requested transfer params */
     status += FSI_setRxSoftwareFrameSize(rxBaseAddr, FSI_APP_FRAME_DATA_WORD_COUNT);
