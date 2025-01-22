@@ -281,7 +281,7 @@ I2C_Handle I2C_open(uint32_t idx, const I2C_Params *params)
             hwiPrms.eventId = (uint16_t)hwAttrs->eventId;
             hwiPrms.intNum = hwAttrs->intNum;
             hwiPrms.isPulse = 1;
-            hwiPrms.priority = 4U;
+            hwiPrms.priority = hwAttrs->intrPriority;
             hwiPrms.isFIQ = 0;
 
             /* Register interrupts */

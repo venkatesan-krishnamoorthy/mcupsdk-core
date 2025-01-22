@@ -178,6 +178,8 @@ typedef struct I2C_HwAttrs_s {
     uint32_t            funcClk;
 /** enable Interrupt */
     bool                enableIntr;
+/** Interrupt Priority */
+    uint8_t             intrPriority;
 /** I2C own target addresses for multi-target channels,
  *  if only one target channel is supported, set the
  *  target address to ownTargetAddr[0]
