@@ -79,7 +79,7 @@ int32_t MCSPI_lld_dmaInit(MCSPI_DmaHandle mcspiDmaHandle)
         isInit = EDMA_isInitialized(mcspiDmaHandle);
         if(isInit != TRUE)
         {
-            status = MCSPI_STATUS_SUCCESS;
+            status = MCSPI_STATUS_FAILURE;
         }
     }
     else
