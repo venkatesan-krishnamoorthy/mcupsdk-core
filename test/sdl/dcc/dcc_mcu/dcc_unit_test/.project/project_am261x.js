@@ -32,10 +32,6 @@ const libdirs_nortos = {
     ],
 };
 
-
-
-
-
 const libs_nortos_r5f = {
     common: [
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -45,16 +41,12 @@ const libs_nortos_r5f = {
     ],
 };
 
-
-
 const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/test/unity/",
         "${MCU_PLUS_SDK_PATH}/test/sdl/dpl/",
     ],
 };
-
-
 
 const lnkfiles = {
     common: [
@@ -77,13 +69,11 @@ const templates_nortos_r5f =
     }
 ];
 
-
-
-
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
-
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
+
 function getComponentProperty() {
     let property = {};
 
@@ -108,13 +98,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.includes = includes_nortos;
 
     if(buildOption.cpu.match(/r5f*/)) {
-
-
         build_property.libs = libs_nortos_r5f;
         build_property.templates = templates_nortos_r5f;
-
     }
-
 
     return build_property;
 }

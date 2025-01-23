@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022 Texas Instruments Incorporated
+ *  Copyright (c) 2022-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -175,7 +175,7 @@ int32_t SDL_DCC_funcTest(void)
 		switch(i)
 		{
 			case 0:
-                #if defined (SOC_AM263X) || defined (SOC_AM263PX)
+                #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_0;
 					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC5;
                     DebugP_log("\n Reference clock source: XTALCLK \r\n");
@@ -198,7 +198,7 @@ int32_t SDL_DCC_funcTest(void)
 			break;
 
 			case 1:
-                #if defined (SOC_AM263X) || defined (SOC_AM263PX)
+                #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_2;
 					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC0;
 					DebugP_log("\r\n Reference clock source: RCCLK10M\r\n");

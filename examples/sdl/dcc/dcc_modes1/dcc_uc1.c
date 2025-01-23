@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -533,7 +533,7 @@ static int32_t SDL_DCCAppWaitForCompletion();
 /*                         Global Variables                                  */
 /*===========================================================================*/
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 {
       .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -545,6 +545,23 @@ SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
                         },
     /**< DCC events high priority:**/
     .errorpinBitmap = {0x01E00000u, 0x00000000u, 0x00000000, 0x00000000u,
+                      },
+    /**< All events high priority:**/
+};
+
+#endif
+
+#if defined (SOC_AM261X)
+SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
+{
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000F00u, 0x00000000u, 0x00000000, 0x00000000u,
+                },
+    /**< Only DCC events enable:**/
+    .priorityBitmap = {0x00000F00u, 0x00000000u, 0x00000000, 0x00000000u,
+                        },
+    /**< DCC events high priority:**/
+    .errorpinBitmap = {0x00000F00u, 0x00000000u, 0x00000000, 0x00000000u,
                       },
     /**< All events high priority:**/
 };
@@ -819,7 +836,7 @@ void test_sdl_dcc_test_app (void)
     SDL_DCCA_clockInit();
     #endif
 
-    #if defined (SOC_AM263X) || defined (SOC_AM263PX)
+    #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     /* Initialize MAIN DCC module */
     retVal = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &DCC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, NULL);
 

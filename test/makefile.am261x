@@ -131,6 +131,10 @@ help:
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/r5/PmuP_armv7r/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_func_test/am261x-som/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_unit_test/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_unit_test/am261x-som/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/esm/v0/esm_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/esm/v0/esm_func_test/am261x-som/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/esm/v0/esm_unit_test/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -358,6 +362,10 @@ BUILD_COMBO_EXAMPLE_ALL += dpl_ut_PmuP_armv7r_am261x-som_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dcc_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += esm_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += esm_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += esm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -701,6 +709,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C kernel/freertos/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ dcc_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
+ dcc_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dcc_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
  esm_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/esm/v0/esm_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -955,6 +975,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_PmuP_armv7r_am261x-som_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += esm_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += esm_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += esm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1293,6 +1317,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C kernel/freertos/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ dcc_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
+ dcc_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dcc_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
  esm_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/esm/v0/esm_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -1547,6 +1583,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_PmuP_armv7r_am261x-som_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_PmuP_armv7r_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += esm_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += esm_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += esm_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1884,6 +1924,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_freertos_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C kernel/freertos/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ dcc_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_func_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_func_test/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dcc_test_app_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C sdl/dcc/dcc_mcu/dcc_unit_test/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
 
  esm_func_test_app_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/esm/v0/esm_func_test/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

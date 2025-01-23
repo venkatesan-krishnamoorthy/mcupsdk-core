@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022 Texas Instruments Incorporated
+ *  Copyright (c) 2022-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -80,7 +80,7 @@ sdlDccTest_t  sdlDccTestList[] = {
     {NULL,             "TERMINATING CONDITION",  SDL_APP_TEST_NOT_RUN }
 };
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 {
       .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -96,6 +96,23 @@ SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
     /**< All events high priority:**/
 };
 
+#endif
+
+#if defined (SOC_AM261X)
+SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
+{
+      .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000F00u, 0x00000000u, 0x00000000, 0x00000000u,
+                },
+     /**< Only DCC events enable:**/
+	  /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x00000F00u, 0x00000000u, 0x00000000, 0x00000000u,
+                        },
+    /**< DCC events high priority:**/
+    .errorpinBitmap = {0x00000F00u, 0x00000000u, 0x00000000, 0x00000000u,
+                      },
+    /**< All events high priority:**/
+};
 #endif
 
 #if defined (SOC_AWR294X)

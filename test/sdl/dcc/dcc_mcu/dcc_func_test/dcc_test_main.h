@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -66,10 +66,16 @@
 #include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
 #endif
 
-#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263PX)
 #include <sdl/esm/v2/sdl_esm.h>
 #include <sdl/include/am263px/sdlr_soc_baseaddress.h>
 #include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
+#endif
+
+#if defined (SOC_AM261X)
+#include <sdl/esm/v2/sdl_esm.h>
+#include <sdl/include/am261x/sdlr_soc_baseaddress.h>
+#include <sdl/include/am261x/sdlr_intr_r5fss0_core0.h>
 #endif
 
 #if defined (SOC_AWR294X)
@@ -239,8 +245,8 @@ typedef struct sdlDccTest_s
 #define SDL_APP_TEST_FAILED         (-(int32_t) (1))
 #define SDL_APP_TEST_PASS           ( (int32_t) (0))
 
-#define DCC_NO_INTERRUPT    		(0u)
-#define DCC_INTERRUPT				(1u)
+#define DCC_NO_INTERRUPT            (0u)
+#define DCC_INTERRUPT               (1u)
 
 /*===========================================================================*/
 /*                         External function declarations                    */
