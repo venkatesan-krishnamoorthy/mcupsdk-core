@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2020
+ *   Copyright (c) Texas Instruments Incorporated 2020-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -65,33 +65,32 @@ extern PBIST_TestHandle_t PBIST_TestHandleArray[SDL_PBIST_NUM_INSTANCES];
  */
 typedef uint32_t SDL_TOPPBISTMemGroup;
 
-#define SDL_PBIST_MEMGRP_MEM_MSS_R5_STC                     ((uint32_t) 1U)
-#define SDL_PBIST_MEMGRP_MEM_TOP_PBISTROM                  ((uint32_t) 2U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CPSW                   ((uint32_t) 3U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_ICSSM             ((uint32_t) 4U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_MBOX                   ((uint32_t) 5U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_MCAN                ((uint32_t) 6U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_TPCC                   ((uint32_t) 7U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_L2_0                ((uint32_t) 8U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_L2_1                   ((uint32_t) 9U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_L2_2                   ((uint32_t) 10U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_L2_3                  ((uint32_t) 11U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_VIM0                ((uint32_t) 12U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_VIM1             ((uint32_t) 13U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS1_VIM0              ((uint32_t) 14U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS1_VIM1             ((uint32_t) 15U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_TRACE                  ((uint32_t) 16U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CR5A_ATCM0                ((uint32_t) 17U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CR5A_ATCM1               ((uint32_t) 18U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CR5A_BTCM0               ((uint32_t) 19U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CR5A_BTCM1               ((uint32_t) 20U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CR5B_ATCM0               ((uint32_t) 21U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CR5B_ATCM1               ((uint32_t) 22U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CR5B_BTCM0               ((uint32_t) 23U)
-#define SDL_PBIST_MEMGRP_MEM_MSS_CR5B_BTCM1               ((uint32_t) 24U)
-#define SDL_PBIST_MEMGRP_MEM_R5SS0                        ((uint32_t) 25U)
-#define SDL_PBIST_MEMGRP_MEM_R5SS1                        ((uint32_t) 26U)
-#define SDL_PBIST_MEMGRP_MEM_MMCH0                        ((uint32_t) 27U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5_STC                   ((uint32_t) 1U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_TMU1               ((uint32_t) 2U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_TMU2               ((uint32_t) 3U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_TMU3               ((uint32_t) 4U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_TMU4               ((uint32_t) 5U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_TMU5               ((uint32_t) 6U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_TMU6               ((uint32_t) 7U)
+#define SDL_PBIST_MEMGRP_MEM_TOP_PBISTROM                 ((uint32_t) 8U)
+#define SDL_PBIST_MEMGRP_MEM_CR5A_ROM0                    ((uint32_t) 9U)
+#define SDL_PBIST_MEMGRP_MEM_CR5A_ROM1                    ((uint32_t) 10U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_ICSSM0                   ((uint32_t) 11U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_ICSSM1                   ((uint32_t) 12U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_CPSW                     ((uint32_t) 13U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_ECU_PERIPH               ((uint32_t) 14U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_FOTA                     ((uint32_t) 15U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_MBOX                     ((uint32_t) 16U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_TPCC                     ((uint32_t) 17U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_OSPI                     ((uint32_t) 18U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_RL2_CPU0           ((uint32_t) 19U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_R5SS0_RL2_CPU1           ((uint32_t) 20U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_TRACE                    ((uint32_t) 21U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_USB                      ((uint32_t) 22U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_L2_1                     ((uint32_t) 23U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_L2_2                     ((uint32_t) 24U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_MMCH0                    ((uint32_t) 25U)
+#define SDL_PBIST_MEMGRP_MEM_MSS_MMCH1                    ((uint32_t) 26U)
 
 #define APP_PBIST_TEST_NEG_INST          (0x5U)
 /**

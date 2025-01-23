@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,7 +54,7 @@
                                                | SDL_PBIST_MARGIN_MODE_PBIST_DFT_READ_MASK)
 
 /* PBIST Functional mode  */
-#define SDL_PBIST_FUNCTIONAL_MODE       (0x0U)
+#define SDL_PBIST_FUNCTIONAL_MODE          (0x0U)
 #define SDL_MSS_TOP_PBIST_SELF_TEST_KEY    ((uint8_t)0x05U)
 #define SDL_MSS_TOP_PBIST_MDP_LOGIC_RESET  ((uint8_t)0x0AU)
 

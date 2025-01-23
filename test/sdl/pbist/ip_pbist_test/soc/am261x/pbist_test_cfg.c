@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2020-2022
+ *   Copyright (c) Texas Instruments Incorporated 2020-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -63,19 +63,6 @@
 /* ========================================================================== */
 
 #if defined (R5F0_INPUTS)
-PBIST_TestHandle_t PBIST_TestHandleArray[1] =
-{
-    {
-        .testName               = "TOP PBIST",
-        .pbistInst              = SDL_PBIST_INST_TOP,
-        .pPBISTRegs             = (SDL_pbistRegs *)SDL_TOP_PBIST_U_BASE,
-        .numPBISTRuns           = 1u,
-        .interruptNumber        = SDL_R5FSS0_CORE0_INTR_PBIST_DONE,
-        .doneFlag               = false,                /* Initialize done flag  */
-    },
-};
-#endif
-#if defined (R5F1_INPUTS)
 PBIST_TestHandle_t PBIST_TestHandleArray[1] =
 {
     {

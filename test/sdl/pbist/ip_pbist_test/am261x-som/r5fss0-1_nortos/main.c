@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2020-2025
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -28,44 +28,23 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
- /**
- *  \file     pbist_test_cfg.h
- *
- *  \brief    This file contains PBIST test configuration
- *
- *  \details  PBIST Test configuration
- **/
-#ifndef PBIST_TEST_CFG_H
-#define PBIST_TEST_CFG_H
+#include <stdlib.h>
+#include "ti_drivers_config.h"
+#include "ti_board_config.h"
 
-#ifdef __cplusplus
-extern "C"
+void test_main(void *args);
+
+int main(void)
 {
-#endif
-/* ========================================================================== */
-/*                             Include Files                                  */
-/* ========================================================================== */
-#include <sdl/include/soc_config.h>
-#include <pbist_test_func.h>
+    System_init();
+    Board_init();
 
-/* #define DEBUG */
+    test_main(NULL);
 
-/* ========================================================================== */
-/*                                Macros                                      */
-/* ========================================================================== */
+    Board_deinit();
+    System_deinit();
 
-#if defined (R5F0_INPUTS)
-extern PBIST_TestHandle_t PBIST_TestHandleArray[1];
-#endif
-#define PBIST_NEG_TEST_PBIST_CFG_BASE    (0x0U)
-#define APP_PBIST_TEST_NEG_INST          (0x5U)
-
-#ifdef __cplusplus
+    return 0;
 }
-#endif
-
-#endif /* PBIST_TEST_CFG_H */
-/* Nothing past this point */
