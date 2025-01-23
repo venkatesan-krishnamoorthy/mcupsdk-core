@@ -70,6 +70,7 @@ const templates_nortos_r5f =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
 function getComponentProperty(device) {
@@ -96,7 +97,13 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
-    if(buildOption.cpu.match(/r5f*/))
+    if(buildOption.cpu.match(/r5fss0-0*/))
+    {
+        build_property.libs = libs_nortos_r5f;
+        build_property.templates = templates_nortos_r5f;
+    }
+
+    if(buildOption.cpu.match(/r5fss0-1*/))
     {
         build_property.libs = libs_nortos_r5f;
         build_property.templates = templates_nortos_r5f;
