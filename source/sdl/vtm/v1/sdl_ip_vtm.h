@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated.
+ *  Copyright (C) 2023-2025 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -99,9 +99,6 @@ typedef uint8_t SDL_VTM_configTsCtrl;
 
 #define SDL_VTM_AIP_OFF             0x1U
 #define SDL_VTM_AIP_ON              0x0U
-
-#define SDL_VTM_TMPSOFF_OFF         0x1U
-#define SDL_VTM_TMPSOFF_ON          0x0U
 
 #define SDL_VTM_TMPSOFF_OFF         0x1U
 #define SDL_VTM_TMPSOFF_ON          0x0U

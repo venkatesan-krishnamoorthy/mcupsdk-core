@@ -1,4 +1,4 @@
-/* Copyright (c) 2024 Texas Instruments Incorporated
+/* Copyright (c) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,7 +48,7 @@ extern int32_t gNumTempSensors;
 extern int32_t gNumCoreVoltageDomains;
 #endif
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_VTM_configTs SDL_VTM_configTempSense =
 {
     1U,     /* TS0 Shut*/
@@ -1411,7 +1411,7 @@ int32_t sdlVTM_apiTest(void)
 
     return (testResult);
 #endif
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
     int32_t                          	testResult = SDL_APP_TEST_PASS;
     int32_t                          	sdlResult;
     uint32_t pTempVal;
@@ -1532,12 +1532,21 @@ int32_t sdlVTM_apiTest(void)
         DebugP_log("\n  SDL_VTM_getAdcCode API test failed on line no: %d \n", __LINE__);
         testResult = -1;
     }
+#if defined (SOC_AM261X)
     adccode = SDL_VTM_getAdcCode(SDL_VTM_INSTANCE_TS_1);
     if (adccode != 0xFF)
     {
         DebugP_log("\n  SDL_VTM_getAdcCode API test failed on line no: %d \n", __LINE__);
         testResult = -1;
     }
+#elif defined (SOC_AM263PX)
+    adccode = SDL_VTM_getAdcCode(SDL_VTM_INSTANCE_TS_1);
+    if (adccode != 0xFF)
+    {
+        DebugP_log("\n  SDL_VTM_getAdcCode API test failed on line no: %d \n", __LINE__);
+        testResult = -1;
+    }
+#endif
     adccode = SDL_VTM_getAdcCode(SDL_VTM_INSTANCE_TS_2);
     if (adccode == 0xFF)
     {

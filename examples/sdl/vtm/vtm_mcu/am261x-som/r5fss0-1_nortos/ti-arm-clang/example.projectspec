@@ -11,7 +11,7 @@
 
     <project
         title="Vtm Example"
-        name = "vtm_example_am261x-som_r5fss0-0_nortos_ti-arm-clang"
+        name = "vtm_example_am261x-som_r5fss0-1_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -21,7 +21,7 @@
         toolChain="TICLANG"
         cgtVersion="4.0.1"
         device="Cortex R.AM261x"
-        deviceCore="Cortex_R5_0"
+        deviceCore="Cortex_R5_1"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"
@@ -43,7 +43,7 @@
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
             -DSOC_AM261X
-            -DR5F0_0_INPUTS
+            -DR5F0_1_INPUTS
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
@@ -62,7 +62,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM2611 --package ZCZ
+            --context r5fss0-1 --part AM2611 --package ZCZ
         "
 
         description="A Vtm Example NORTOS project">

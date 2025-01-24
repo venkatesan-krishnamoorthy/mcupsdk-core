@@ -4,8 +4,10 @@ let device = "am261x";
 
 const files = {
     common: [
+        "sdl_vtm_test_main.c",
+        "sdl_vtm_test_api.c",
+        "sdl_vtm_test_err.c",
         "dpl_interface.c",
-        "vtm_main.c",
         "main.c",
     ],
 };
@@ -25,36 +27,24 @@ const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
-        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/test/unity/lib",
         "${MCU_PLUS_SDK_PATH}/source/sdl/lib",
     ],
 };
 
 const includes_nortos = {
     common: [
-          "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
-          "${MCU_PLUS_SDK_PATH}/examples/sdl/vtm/vtm_uc/",
+        "${MCU_PLUS_SDK_PATH}/test/unity/",
+        "${MCU_PLUS_SDK_PATH}/test/sdl/dpl/",
     ],
 };
 
-const libs_nortos_r5f = {
+const libs_r5f = {
     common: [
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-    ],
-};
-
-const r5fss0_0_macro = {
-    common: [
-        "R5F0_0_INPUTS",
-    ],
-};
-
-const r5fss0_1_macro = {
-    common: [
-        "R5F0_1_INPUTS",
     ],
 };
 
@@ -66,13 +56,6 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_SDL_VTM";
-
-const projectspecfiles = {
-    common: [
-        "event_trig.h",
-    ]
-};
 const templates_nortos_r5f =
 [
     {
@@ -89,14 +72,14 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
-function getComponentProperty(device) {
+function getComponentProperty() {
     let property = {};
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "vtm_example";
-    property.isInternal = false;
-    property.description = "This example verifies VTM operation"
+    property.name = "vtm_test_app";
+    property.isInternal = true;
+    property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -111,18 +94,10 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    build_property.libs = libs_nortos_r5f;
-    build_property.templates = templates_nortos_r5f;
 
-    if(buildOption.cpu.match(/r5fss0-0/))
-    {
-        build_property.defines = r5fss0_0_macro;
-    }
-
-    if(buildOption.cpu.match(/r5fss0-1/))
-    {
-        build_property.defines = r5fss0_1_macro;
+    if(buildOption.cpu.match(/r5f*/)) {
+        build_property.libs = libs_r5f;
+        build_property.templates = templates_nortos_r5f;
     }
 
     return build_property;

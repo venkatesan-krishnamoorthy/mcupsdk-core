@@ -564,6 +564,8 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/rti/UC4/am261x-som/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/tmu_rom_checksum/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/tmu_rom_checksum/am261x-som/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1523,6 +1525,8 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc4_am261x-som_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_ALL += sdl_rti_example_uc4_am261x-som_r5fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tmu_rom_checksum_example_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tmu_rom_checksum_example_am261x-som_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += vtm_example_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += vtm_example_am261x-som_r5fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_dthe_aes_cbc_128_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_dthe_aes_cbc_256_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -2959,6 +2963,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  tmu_rom_checksum_example_am261x-som_r5fss0-1_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/tmu_rom_checksum/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile all
 
+ vtm_example_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ vtm_example_am261x-som_r5fss0-1_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile all
+
  crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -3537,6 +3547,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc4_am261x-som_r5fss0-0_nortos_
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_rti_example_uc4_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_rom_checksum_example_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_rom_checksum_example_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_example_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_example_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_dthe_aes_cbc_128_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_dthe_aes_cbc_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4968,6 +4980,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  tmu_rom_checksum_example_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/tmu_rom_checksum/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile clean
 
+ vtm_example_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ vtm_example_am261x-som_r5fss0-1_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile clean
+
  crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -5546,6 +5564,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc4_am261x-som_r5fss0-0_nortos_
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_rti_example_uc4_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_rom_checksum_example_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_rom_checksum_example_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_example_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_example_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_dthe_aes_cbc_128_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_dthe_aes_cbc_256_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6976,6 +6996,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  tmu_rom_checksum_example_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/tmu_rom_checksum/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
+
+ vtm_example_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ vtm_example_am261x-som_r5fss0-1_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
 
  crypto_dthe_aes_cbc_128_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

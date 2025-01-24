@@ -3,7 +3,7 @@
  *
  * Voltage and Thermal Monitor (VTM) Example Application
  *
- *  Copyright (c) 2024 Texas Instruments Incorporated
+ *  Copyright (c) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,12 +54,22 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
+#if defined (SOC_AM261X)
+#if defined (R5F0_0_INPUTS)
+#define SDL_R5FSS_INTR_TSENSE_H  SDL_R5FSS0_CORE0_INTR_TSENSE_H
+#define SDL_R5FSS_INTR_TSENSE_L  SDL_R5FSS0_CORE0_INTR_TSENSE_L
+#elif defined (R5F0_1_INPUTS)
+#define SDL_R5FSS_INTR_TSENSE_H  SDL_R5FSS0_CORE1_INTR_TSENSE_H
+#define SDL_R5FSS_INTR_TSENSE_L  SDL_R5FSS0_CORE1_INTR_TSENSE_L
+#endif
+#elif defined (SOC_AM263PX)
 #if defined (R5F0_INPUTS)
 #define SDL_R5FSS_INTR_TSENSE_H  SDL_R5FSS0_CORE0_INTR_TSENSE_H
 #define SDL_R5FSS_INTR_TSENSE_L  SDL_R5FSS0_CORE0_INTR_TSENSE_L
 #elif defined (R5F1_INPUTS)
 #define SDL_R5FSS_INTR_TSENSE_H  SDL_R5FSS1_CORE0_INTR_TSENSE_H
 #define SDL_R5FSS_INTR_TSENSE_L  SDL_R5FSS1_CORE0_INTR_TSENSE_L
+#endif
 #endif
 SDL_VTM_configTs SDL_VTM_configTempSense =
 {
@@ -84,7 +94,7 @@ volatile bool SDL_vtmEsmError = false;
 
 
 static uint32_t ESMarg;
-
+#if defined (SOC_AM263PX)
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -96,7 +106,19 @@ SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
     .errorpinBitmap = {0x00000000u, 0x00001000u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
 };
-
+#elif defined (SOC_AM261X)
+SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
+{
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    /* Enable THERMAL_MONITOR error - 44 is the ESM interrupt number. */
+    .enableBitmap = {0x40000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    .priorityBitmap = {0x40000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+    .errorpinBitmap = {0x40000000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+};
+#endif
 
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -245,17 +267,41 @@ void vtm_example_app(void)
     /* UC2 - Receive Low threshold Breach Interrupt and  Hot Interrupt. */
     DebugP_log("\r\n");
     DebugP_log("\r\n UC2 : ");
+#if defined (SOC_AM261X)
+    ClockP_sleep(1);
+#else
     ClockP_usleep(9000);
+#endif
     SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, 0);  
+#if defined (SOC_AM261X)
+    ClockP_sleep(1);
+#else
     ClockP_usleep(9000);
+#endif
     retValue = SDL_VTM_initTs(&SDL_VTM_configTempSense);
+#if defined (SOC_AM261X)
+    ClockP_sleep(1);
+#else
     ClockP_usleep(9000);
+#endif
     SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
+#if defined (SOC_AM261X)
+    ClockP_sleep(1);
+#else
     ClockP_usleep(9000);
+#endif
     SDL_VTM_enableTc();
+#if defined (SOC_AM261X)
+    ClockP_sleep(1);
+#else
     ClockP_usleep(9000);
+#endif
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
+#if defined (SOC_AM261X)
+    ClockP_sleep(1);
+#else
     ClockP_usleep(9000);
+#endif
     alert_th_hot = 0; // temperatube in mc
     alert_th_cold = temp0 - 3000; // temperatube in mc
     /* Configure cold alert temperature so that low threshold interrupt is generated. */

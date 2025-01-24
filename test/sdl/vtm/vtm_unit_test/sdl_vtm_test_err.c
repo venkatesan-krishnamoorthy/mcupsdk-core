@@ -1,4 +1,4 @@
-/* Copyright (c) 2024 Texas Instruments Incorporated
+/* Copyright (c) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -44,7 +44,7 @@ extern int32_t gNumTempSensors;
 extern int32_t gNumCoreVoltageDomains;
 #endif
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_VTM_configTs SDL_VTM_configTempSense1 =
 {
     1U,     /* TS0 Shut*/
@@ -1043,7 +1043,7 @@ int32_t sdlVTM_errTest(void)
     return (testResult);
 #endif
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
     int32_t                          	testResult = SDL_APP_TEST_PASS;
     int32_t                          	sdlResult;
     uint32_t pTempVal;

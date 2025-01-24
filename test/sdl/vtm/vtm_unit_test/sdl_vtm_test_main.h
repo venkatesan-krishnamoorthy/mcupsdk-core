@@ -1,4 +1,4 @@
-/* Copyright (c) 2024 Texas Instruments Incorporated
+/* Copyright (c) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -55,7 +55,7 @@
 #include <sdl/vtm/v0/sdl_ip_vtm.h>
 #endif
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/vtm/v1/sdl_ip_vtm.h>
 #endif
 
