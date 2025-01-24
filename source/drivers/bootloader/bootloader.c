@@ -55,11 +55,10 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+#define GET_CACHE_ALIGNED_SIZE(x) ((x + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1))
+
 /** Increase variable A by number B while keping the alignemnt of C bytes */
 #define ALIGNED_INCREMENT(A,B,C) do{A = (A = A + B, (A % C) > 0 ? A + C - (A % C): A);} while(0)
-
-/** The maximum size of the vector table. */
-#define MAX_VECTOR_TABLE_SIZE (80U)
 
 /*RPRC image ID for linux load only images */
 #define RPRC_LINUX_LOAD_ONLY_IMAGE_ID (21U)
@@ -89,9 +88,11 @@ extern uint32_t gBootloaderConfigNum;
 extern Bootloader_MemArgs gMemBootloaderArgs;
 #endif
 
-uint8_t gElfHBuffer[ELF_HEADER_MAX_SIZE];
-uint8_t gNoteSegBuffer[ELF_NOTE_SEGMENT_MAX_SIZE];
-uint8_t gPHTBuffer[ELF_MAX_SEGMENTS * ELF_P_HEADER_MAX_SIZE];
+uint8_t gElfHBuffer[GET_CACHE_ALIGNED_SIZE(ELF_HEADER_MAX_SIZE)] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+uint8_t gNoteSegBuffer[GET_CACHE_ALIGNED_SIZE(ELF_NOTE_SEGMENT_MAX_SIZE)] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+uint8_t gPHTBuffer[GET_CACHE_ALIGNED_SIZE(ELF_MAX_SEGMENTS * ELF_P_HEADER_MAX_SIZE)] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+uint8_t vec_addrs[GET_CACHE_ALIGNED_SIZE(BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB)] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT)));
+volatile uint32_t vec_size = 0U;
 
 /** Buffer to store the Application X509 cert if present. */
 uint8_t gX509Cert[MAX_APP_CERT_LENGTH];
@@ -907,9 +908,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
     uint32_t rdSz = ELFCLASS_IDX + 1U;
 
     uint8_t randomStringBuffer[BOOTLOADER_MAX_RS_NOTE_SEGMENT_SIZE];
-    uint8_t vec_addrs[MAX_VECTOR_TABLE_SIZE];
     uint8_t vec_present = 0U;
-    uint32_t vec_size = 0U;
     uint32_t doAuth = FALSE;
     
     uint32_t phoff = 0U;
@@ -927,7 +926,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
 
     Bootloader_Config *config = (Bootloader_Config *)handle;
 
-    uint8_t initCpuDone[CSL_CORE_ID_MAX] = {0};
+    uint8_t initCpuDone[CSL_CORE_ID_MAX] = {0x1};
     char ELFSTR[] = { 0x7F, 'E', 'L', 'F' };    
 
     if(config->fxns->imgReadFxn == NULL || config->fxns->imgSeekFxn == NULL)
@@ -1114,33 +1113,72 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                         */
                         if (addr == 0U)
                         {
-                            addr = (uint32_t)&vec_addrs[0U];
+                            uint32_t tcm_mirror_addr = (uint32_t)&vec_addrs[0U];
                             vec_present = 1U;
                             vec_size = elfPhdrPtr32[i].filesz;
 
-                            if (vec_size > MAX_VECTOR_TABLE_SIZE) 
+                            if (vec_size > BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB) 
                             {
-                                status = SystemP_FAILURE;
+                                /* If the address of the segment is valid, load the segment from the flash. */
+                                status = config->fxns->imgReadFxn((void *)tcm_mirror_addr, BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB, config->args);
+                                config->bootImageSize += BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB;
+                                parsedImageSize += BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB;
+
+                                if((status == SystemP_SUCCESS) && (doAuth == TRUE))
+                                {
+                                    /* Send the loadable segment info for Streaming Authentication to the HSM. */
+                                    status = Bootloader_authUpdate((uintptr_t)tcm_mirror_addr, BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB, BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED);
+                                }
+
+                                /* If the address of the segment is valid, load the segment from the flash. */
+                                status = config->fxns->imgReadFxn((void *)(addr + BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB), (vec_size - BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB), config->args);
+                                config->bootImageSize += (vec_size - BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB);
+                                parsedImageSize += (vec_size - BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB);
+
+                                if((status == SystemP_SUCCESS) && (doAuth == TRUE))
+                                {
+                                    /* Send the loadable segment info for Streaming Authentication to the HSM. */
+                                    status = Bootloader_authUpdate((uintptr_t)(addr + BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB), (vec_size - BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB), BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED);
+                                }
+
+                                /* To revert the pending copy size */
+                                vec_size = BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB;
+                            }
+                            else
+                            {
+                                if (status == SystemP_SUCCESS)
+                                {
+                                    /* If the address of the segment is valid, load the segment from the flash. */
+                                    status = config->fxns->imgReadFxn((void *)tcm_mirror_addr, elfPhdrPtr32[i].filesz, config->args);
+                                    config->bootImageSize += elfPhdrPtr32[i].filesz;
+                                    parsedImageSize += elfPhdrPtr32[i].filesz;
+                                }
+                        
+                                if((status == SystemP_SUCCESS) && (doAuth == TRUE))
+                                {
+                                    /* Send the loadable segment info for Streaming Authentication to the HSM. */
+                                    status = Bootloader_authUpdate((uintptr_t)tcm_mirror_addr, elfPhdrPtr32[i].filesz, BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED);
+                                }
                             }
                         }
                         else 
                         {
                             /* Verify the address of all segments except those which are local or global variables of the SBL. */
                             status = Bootloader_verifySegmentAddr(addr);
-                        }
-                          
-                        if (status == SystemP_SUCCESS)
-                        {
-                            /* If the address of the segment is valid, load the segment from the flash. */
-                            status = config->fxns->imgReadFxn((void *)addr, elfPhdrPtr32[i].filesz, config->args);
-                            config->bootImageSize += elfPhdrPtr32[i].filesz;
-                            parsedImageSize += elfPhdrPtr32[i].filesz;
-                        }
+
+                            if (status == SystemP_SUCCESS)
+                            {
+                                /* If the address of the segment is valid, load the segment from the flash. */
+                                status = config->fxns->imgReadFxn((void *)addr, elfPhdrPtr32[i].filesz, config->args);
+                                config->bootImageSize += elfPhdrPtr32[i].filesz;
+                                parsedImageSize += elfPhdrPtr32[i].filesz;
+                            }
                         
-                        if((status == SystemP_SUCCESS) && (doAuth == TRUE))
-                        {
-                            /* Send the loadable segment info for Streaming Authentication to the HSM. */
-                            status = Bootloader_authUpdate((uintptr_t)addr, elfPhdrPtr32[i].filesz, BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED);
+                            if((status == SystemP_SUCCESS) && (doAuth == TRUE))
+                            {
+                                /* Send the loadable segment info for Streaming Authentication to the HSM. */
+                                status = Bootloader_authUpdate((uintptr_t)addr, elfPhdrPtr32[i].filesz, BOOTLOADER_APP_SEGMENT_CANBE_ENCRYPTED);
+                            }
                         }
                     }
                 }
@@ -1184,7 +1222,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
                         vec_present = 1U;
                         vec_size = elfPhdrPtr64[i].filesz;
 
-                        if (vec_size > MAX_VECTOR_TABLE_SIZE) 
+                        if (vec_size > BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB) 
                         {
                             status = SystemP_FAILURE;
                         }

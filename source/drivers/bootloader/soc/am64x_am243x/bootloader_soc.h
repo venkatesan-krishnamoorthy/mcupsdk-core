@@ -53,6 +53,9 @@ extern "C"
 
 #define BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY   (200000000U)
 
+/** The maximum size of the SBL in TCM memory */
+#define BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB             		(80U)
+
 /**
  * \brief Data structure containing information about a core specific to the AM64x SOC
  *

@@ -57,6 +57,9 @@ extern "C"
 /** \brief Flash base address */
 #define BOOTLOADER_FLASH_BASE_ADDR             (CSL_MCU_FSS0_DAT_REG1_BASE)
 
+/** The maximum size of the SBL in TCM memory */
+#define BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB             		(80U)
+
 /**
  * \brief Data structure containing information about a core specific to the AM65x SOC
  *

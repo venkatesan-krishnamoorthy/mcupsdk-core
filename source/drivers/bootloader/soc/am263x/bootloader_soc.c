@@ -48,7 +48,7 @@
 
 extern HsmClient_t gHSMClient ;
 
-SecureBoot_Stream_t gSecureBootStreamArray[MAX_SECURE_BOOT_STREAM_LENGTH];
+extern SecureBoot_Stream_t gSecureBootStreamArray[];
 uint32_t gStreamId = 0;
 
 

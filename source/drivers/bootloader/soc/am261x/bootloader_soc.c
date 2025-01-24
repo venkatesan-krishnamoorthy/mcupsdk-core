@@ -50,7 +50,7 @@
 extern HsmClient_t gHSMClient ;
 extern uint32_t gR5ClockFrequency;
 
-SecureBoot_Stream_t gSecureBootStreamArray[MAX_SECURE_BOOT_STREAM_LENGTH];
+extern SecureBoot_Stream_t gSecureBootStreamArray[];
 uint32_t gStreamId = 0;
 
 Bootloader_resMemSections gResMemSection =

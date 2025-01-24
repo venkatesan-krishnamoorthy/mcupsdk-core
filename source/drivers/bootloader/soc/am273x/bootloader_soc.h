@@ -83,6 +83,9 @@ extern "C"
 #define BOOTLOADER_SOC_VARIANT_DUAL_R5F            (0x00000000)
 #define BOOTLOADER_SOC_VARIANT_SINGLE_R5F          (uint32_t)(1U << 14U)
 
+/** The maximum size of the SBL in TCM memory */
+#define BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB             		(80U)
+
 /**
  * \brief Data structure containing information about a core specific to the AM273x SOC
  *

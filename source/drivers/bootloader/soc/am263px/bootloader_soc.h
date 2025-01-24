@@ -66,6 +66,10 @@ extern "C"
 #define BOOTLOADER_DEVTYPE_GP           (0x03U)
 /** \brief hsmclient ID for bootloader */
 #define BOOTLOADER_CLIENT_ID            (0x02)
+
+/** The maximum size of the SBL in TCM memory : Derived from ROM Eclipse */
+#define BOOTLOADER_MAX_SBL_SIZE_IN_TCM_KB             (640U)
+
 /** @} */
 /**
  * \brief Data structure containing information about a core specific to the SOC
