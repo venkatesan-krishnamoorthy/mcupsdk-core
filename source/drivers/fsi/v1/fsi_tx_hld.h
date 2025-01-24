@@ -124,6 +124,9 @@ static SemaphoreP_Object gFsiDmaTxSemObject;
 #define FSI_TX_TRANSFER_MODE_CALLBACK    (1U)
 /** @} */
 
+/* CRC Value is calculated based on the TX pattern */
+#define FSI_APP_TX_PATTERN_USER_CRC_VALUE (0x41U)
+
 /**
  *  \anchor FSI_OperatingMode
  *  \name Operating Mode
@@ -135,6 +138,18 @@ static SemaphoreP_Object gFsiDmaTxSemObject;
 #define FSI_TX_OPER_MODE_POLLED                 (0U)
 #define FSI_TX_OPER_MODE_INTERRUPT              (1U)
 #define FSI_TX_OPER_MODE_DMA                    (2U)
+
+/**
+ *  \anchor FSI Error Check
+ *  \name Error Check
+ *
+ *  Values used to determine the FSI Error check operation.
+ *
+ *  @{
+ */
+#define FSI_TX_NO_ERROR_CHECK                      (0U)
+#define FSI_TX_USER_DEFINED_CRC_CHECK              (1U)
+#define FSI_TX_ECC_ERROR_CHECK                     (2U)
 
 
 /** \brief A handle that is returned from a #UART_open() call */
@@ -185,6 +200,9 @@ typedef struct FSI_Tx_Params_t
 
     /**< Frame type */
     FSI_FrameType    frameType;
+
+    /**< Error Check */
+    uint16_t    errorCheck;
 
     /*! Blocking or Callback mode. Refer \ref FSI_Tx_TransferMode
      */
@@ -374,6 +392,8 @@ void FSI_Tx_pendDmaCompletion();
 void FSI_HLD_TxParams_init(FSI_Tx_Params *prms);
 
 uint32_t FSI_Tx_getBaseAddr(FSI_Tx_Handle handle);
+
+void FSI_Tx_errorCheck(FSI_Tx_Handle handle, uint16_t *txBufData);
 
 /**
  *  \brief  This is the FSI TX ISR and can be used as IRQ handler.

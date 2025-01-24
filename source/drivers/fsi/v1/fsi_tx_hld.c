@@ -151,6 +151,7 @@ void FSI_HLD_TxParams_init(FSI_Tx_Params *prms)
         prms->numLane = FSI_DATA_WIDTH_1_LANE;
         prms->frameTag = FSI_FRAME_TAG1;
         prms->frameType = FSI_FRAME_TYPE_NWORD_DATA;
+        prms->errorCheck = FSI_TX_NO_ERROR_CHECK;
     }
 }
 
@@ -358,6 +359,7 @@ static int32_t FSI_Tx_deConfigInstance(FSI_Tx_Handle handle)
     const FSI_Tx_Attrs      *attrs;
     FSI_Tx_Config           *config = NULL;
     FSI_Tx_Object           *fsiTxObj = NULL;
+    uint32_t            baseAddr = 0;
 
     if(NULL_PTR != handle)
     {
@@ -365,9 +367,16 @@ static int32_t FSI_Tx_deConfigInstance(FSI_Tx_Handle handle)
         config = (FSI_Tx_Config*)handle;
         attrs = config->attrs;
         fsiTxObj = config->object;
+        baseAddr = attrs->baseAddr;
+
         if(FSI_TX_OPER_MODE_DMA == attrs->operMode)
         {
            status = FSI_Tx_dmaClose(handle, fsiTxObj->fsiTxDmaChCfg);
+        }
+        if (fsiTxObj->params->errorCheck == FSI_TX_USER_DEFINED_CRC_CHECK)
+        {
+            /* CRC Value is calculated based on the TX pattern */
+            status = FSI_disableTxUserCRC(baseAddr);
         }
         else
         {
@@ -600,6 +609,39 @@ void FSI_Tx_Isr(void* args)
         SemaphoreP_post(&object->writeTransferSemObj);
     }
     return;
+}
+
+void FSI_Tx_errorCheck(FSI_Tx_Handle handle, uint16_t *txBufData)
+{
+    FSI_Tx_Config *config = NULL;
+    FSI_Tx_Object *object = NULL;
+    FSI_Tx_Attrs *attrs;
+    uint32_t baseAddr;
+
+    if(NULL_PTR != handle)
+    {
+        /* Get the pointer to the CAN Driver Block */
+        config = (FSI_Tx_Config*)handle;
+        attrs = config->attrs;
+        baseAddr = attrs->baseAddr;
+        object = config->object;
+
+       if(object->params->errorCheck == FSI_TX_USER_DEFINED_CRC_CHECK)
+       {
+            FSI_enableTxUserCRC(baseAddr, FSI_APP_TX_PATTERN_USER_CRC_VALUE);
+       }
+       else if(object->params->errorCheck == FSI_TX_ECC_ERROR_CHECK)
+       {
+            /* ECC computation for 2 words */
+            uint16_t getEccVal = 0U;
+            uint32_t txData = txBufData[0U] | txBufData[1U] << 16U;
+
+            FSI_setTxECCComputeWidth(baseAddr, FSI_16BIT_ECC_COMPUTE);
+            FSI_setTxECCdata(baseAddr, txData);
+            FSI_getTxECCValue(baseAddr, &getEccVal);
+            FSI_setTxUserDefinedData(baseAddr, getEccVal);
+       }
+    }
 }
 
 void FSI_Tx_pendDmaCompletion()

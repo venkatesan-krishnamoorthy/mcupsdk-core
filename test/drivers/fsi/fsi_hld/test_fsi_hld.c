@@ -109,6 +109,12 @@ void test_main(void *args)
     test_fsi_set_params(&testParams, 4);
     RUN_TEST(test_fsi_txrx, 4, (void*)&testParams);
 
+    test_fsi_set_params(&testParams, 5);
+    RUN_TEST(test_fsi_txrx, 5, (void*)&testParams);
+
+    test_fsi_set_params(&testParams, 6);
+    RUN_TEST(test_fsi_txrx, 6, (void*)&testParams);
+
     UNITY_END();
 
     Drivers_close();
@@ -242,6 +248,16 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
             rx_attrs->intrLine = CONFIG_FSI_RX0_INTR2;
             rx_attrs->intrNum  = FSI_INT2;
             break;
+        case 5:
+            Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
+            gFsiRxTestParams.fsi_rx_params.errorCheck = FSI_RX_USER_DEFINED_CRC_CHECK;
+            gFsiTxTestParams.fsi_tx_params.errorCheck = FSI_TX_USER_DEFINED_CRC_CHECK;
+            break;
+        case 6:
+            Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
+            gFsiRxTestParams.fsi_rx_params.errorCheck = FSI_RX_ECC_ERROR_CHECK;
+            gFsiTxTestParams.fsi_tx_params.errorCheck = FSI_TX_ECC_ERROR_CHECK;
+            break;
     }
 
     return;
@@ -258,6 +274,7 @@ static void Fsi_appTxRxTestParamsInit(FSI_HLD_RxTestParams *rxTestParms,
 
     rxTestParms->rxFrameWDTest = FALSE;
     rxTestParms->rxPingWDTest  = FALSE;
+
     txTestParms->rxFrameWDTest = FALSE;
     txTestParms->rxPingWDTest  = FALSE;
 

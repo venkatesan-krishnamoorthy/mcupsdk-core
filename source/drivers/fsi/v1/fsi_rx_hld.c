@@ -148,6 +148,7 @@ void FSI_HLD_RxParams_init(FSI_Rx_Params *prms)
     {
         prms->frameDataSize = 16;
         prms->numLane = FSI_DATA_WIDTH_1_LANE;
+        prms->errorCheck = FSI_RX_NO_ERROR_CHECK;
     }
 }
 
@@ -563,6 +564,43 @@ void FSI_Rx_Isr(void* args)
         SemaphoreP_post(&object->readTransferSemObj);
     }
     return;
+}
+
+void FSI_Rx_errorCheck(FSI_Rx_Handle handle, uint16_t *rxBufData)
+{
+    FSI_Rx_Config *config = NULL;
+    FSI_Rx_Object *object = NULL;
+    FSI_Rx_Attrs *attrs;
+    uint32_t baseAddr;
+
+    if(NULL_PTR != handle)
+    {
+        /* Get the pointer to the FSI_RX Driver Block */
+        config = (FSI_Rx_Config*)handle;
+        attrs = config->attrs;
+        baseAddr = attrs->baseAddr;
+        object = config->object;
+
+       if(object->params->errorCheck == FSI_RX_USER_DEFINED_CRC_CHECK)
+       {
+            uint16_t receivedCrcVal;
+            FSI_getRxReceivedCRC(baseAddr, &receivedCrcVal);
+            DebugP_assert(receivedCrcVal == FSI_APP_TX_PATTERN_USER_CRC_VALUE);
+       }
+       else if(object->params->errorCheck == FSI_RX_ECC_ERROR_CHECK)
+       {
+            /* ECC computation for 2 words */
+            uint16_t getEccVal = 0U, rxEccLog;
+            uint32_t rxData = rxBufData[0U] | rxBufData[1U] << 16U;
+
+            FSI_getRxUserDefinedData(baseAddr, &getEccVal);
+            FSI_setRxECCComputeWidth(baseAddr, FSI_16BIT_ECC_COMPUTE);
+            FSI_setRxECCData(baseAddr, rxData);
+            FSI_setRxReceivedECCValue(baseAddr, getEccVal);
+            FSI_getRxECCLog(baseAddr, &rxEccLog);
+            DebugP_assert(rxEccLog == 0U);
+       }
+    }
 }
 
 void FSI_Rx_pendDmaCompletion()

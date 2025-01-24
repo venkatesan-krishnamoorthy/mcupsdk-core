@@ -107,6 +107,7 @@ void fsi_tx_hld_main(void *args)
     rxParams.transferMode = txParams.transferMode;
     rxParams.transferCallbackFxn = NULL;
     rxParams.errorCallbackFxn = NULL;
+    rxParams.errorCheck = txParams.errorCheck;
     FSI_Rx_open(CONFIG_FSI_RX0, &rxParams);
 
     /* Enable loopback */
@@ -127,6 +128,11 @@ void fsi_tx_hld_main(void *args)
         gTxBufData[i] = dataSize + i;
     }
  
+    if(txParams.errorCheck != FSI_TX_NO_ERROR_CHECK)
+    {
+        FSI_Tx_errorCheck(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData);
+    }
+
     if (txTestParams->rxFrameWDTest != TRUE)
     {
         /* Transmit data */

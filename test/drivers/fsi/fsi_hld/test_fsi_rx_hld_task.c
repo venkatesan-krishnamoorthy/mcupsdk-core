@@ -113,6 +113,11 @@ void fsi_rx_hld_main(void *args)
         gRxFrameWdTest = FALSE;
     }
 
+    if(rxParams.errorCheck != FSI_RX_NO_ERROR_CHECK)
+    {
+        FSI_Rx_errorCheck(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData);
+    }
+
     /* post semaphore to sync with tx */
     SemaphoreP_post(&gFsiTxRx_SyncSemaphoreObj);
     SemaphoreP_post(p_taskDoneSemaphoreObj);

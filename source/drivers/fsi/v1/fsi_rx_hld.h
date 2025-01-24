@@ -100,6 +100,21 @@ static SemaphoreP_Object gFsiDmaRxSemObject;
 #define FSI_RX_OPER_MODE_INTERRUPT              (1U)
 #define FSI_RX_OPER_MODE_DMA                    (2U)
 
+/**
+ *  \anchor FSI Error Check
+ *  \name Error Check
+ *
+ *  Values used to determine the FSI Error check operation.
+ *
+ *  @{
+ */
+#define FSI_RX_NO_ERROR_CHECK                      (0U)
+#define FSI_RX_USER_DEFINED_CRC_CHECK              (1U)
+#define FSI_RX_ECC_ERROR_CHECK                     (2U)
+
+/* CRC Value is calculated based on the TX pattern */
+#define FSI_APP_TX_PATTERN_USER_CRC_VALUE (0x41U)
+
 /** @name Return status
  *
  * @{
@@ -169,6 +184,9 @@ typedef struct FSI_Rx_Params_t
 
     /**< Lane number */
     FSI_DataWidth   numLane;
+
+    /**< Error Check */
+    uint16_t    errorCheck;
 
     /*! Blocking or Callback mode. Refer \ref FSI_Rx_TransferMode
      */
@@ -355,6 +373,8 @@ void FSI_Rx_pendDmaCompletion();
 void FSI_HLD_RxParams_init(FSI_Rx_Params *prms);
 
 uint32_t FSI_Rx_getBaseAddr(FSI_Rx_Handle handle);
+
+void FSI_Rx_errorCheck(FSI_Rx_Handle handle, uint16_t *rxBufData);
 
 /**
  *  \brief #FSI_write() does not block code execution and will call a
