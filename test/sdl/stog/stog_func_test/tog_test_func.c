@@ -3,7 +3,7 @@
  *
  * Timeout Gasket (TOG) Example Application
  *
- *  Copyright (c) 2023 Texas Instruments Incorporated
+ *  Copyright (c) 2023-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -400,6 +400,9 @@ void TOG_injectESMError(uint32_t instanceIndex)
     instance = instanceIndex;
     cfg.cfgCtrl = SDL_TOG_CFG_TIMEOUT;
     int32_t status;
+#if defined (SOC_AM261X)
+    volatile uint32_t i = 0;
+#endif
 
     /* Call SDL API to set smaller timeout to trigger error */
     cfg.timeoutVal = 1u;
@@ -409,7 +412,7 @@ void TOG_injectESMError(uint32_t instanceIndex)
         DebugP_log("   Inject SDL_TOG_init TimeoutVal Failed \r\n");
         /* Assert */
     }
-#if !defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if !defined (SOC_AM263PX) && !defined (SOC_AM261X)
     if(instanceIndex==0)
 	{
 	  SDL_REG32_RD(END_POINT_ACCESS0);
@@ -425,6 +428,10 @@ void TOG_injectESMError(uint32_t instanceIndex)
 
     /* Call SDL API to set configure back to original timeout value */
     cfg.timeoutVal = TOG_TEST_TIMEOUTVAL;
+#if defined (SOC_AM261X)
+    /* Delay before set original timeout */
+    for(i=0;i<0xFFFF;i++);
+#endif
     status = SDL_TOG_init(instance, &cfg);
     if (status != SDL_PASS)
     {

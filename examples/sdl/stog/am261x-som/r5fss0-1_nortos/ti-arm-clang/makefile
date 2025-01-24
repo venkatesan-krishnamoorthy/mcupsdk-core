@@ -1,5 +1,5 @@
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=stog_func_test.$(PROFILE).out
-COREOUTNAME:=stog_func_test.$(PROFILE).optishare.out
+OUTNAME:=sdl_stog_r5f.$(PROFILE).out
+COREOUTNAME:=sdl_stog_r5f.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=stog_func_test.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=stog_func_test.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=stog_func_test.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME:=sdl_stog_r5f.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=sdl_stog_r5f.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=sdl_stog_r5f.$(PROFILE).appimage.signed
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=stog_func_test.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=stog_func_test.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=stog_func_test.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=stog_func_test.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=stog_func_test.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=stog_func_test.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=stog_func_test.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_MCELF:=sdl_stog_r5f.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=sdl_stog_r5f.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=sdl_stog_r5f.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=sdl_stog_r5f.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=sdl_stog_r5f.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=sdl_stog_r5f.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=sdl_stog_r5f.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -44,8 +44,8 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	tog_test_main.c \
-	tog_test_func.c \
+	tog_main.c \
+	tog_usecase.c \
 	dpl_interface.c \
 	main.c \
 	ti_drivers_config.c \
@@ -62,14 +62,14 @@ ASMFILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
-	../../../../../dpl \
+	../../../../dpl \
 	generated \
 
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
-	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
-	-I${MCU_PLUS_SDK_PATH}/test/sdl/dpl/ \
+	-I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/ \
+	-I${MCU_PLUS_SDK_PATH}/examples/sdl/stog/ \
 	-Igenerated \
 
 DEFINES_common := \
@@ -111,14 +111,14 @@ LNK_FILES_common = \
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lnortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
@@ -133,7 +133,7 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
@@ -141,7 +141,7 @@ LIBS_NAME = \
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	${CG_TOOL_ROOT}/lib \
 
@@ -172,11 +172,11 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am261x:r5fss0-0:nortos:ti-arm-clang $(OUTNAME): $<
+	@echo  Compiling: am261x:r5fss0-1:nortos:ti-arm-clang $(OUTNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am261x:r5fss0-0:nortos:ti-arm-clang $(LIBNAME): $<
+	@echo  Compiling: am261x:r5fss0-1:nortos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 all: $(TARGETS)
@@ -198,21 +198,21 @@ endif
 
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Linking: am261x:r5fss0-0:nortos:ti-arm-clang $@ ...
+	@echo  Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml
-	@echo  Linking: am261x:r5fss0-0:nortos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 coreout: $(COREOUTNAME)
 $(COREOUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Relinking Linking: am261x:r5fss0-0:nortos:ti-arm-clang $@ with OptiShare SSO..
+	@echo  Relinking Linking: am261x:r5fss0-1:nortos:ti-arm-clang $@ with OptiShare SSO..
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml -Wl,--import_sso=$(SSO_PATH)
 	@echo  Relinking with optishare: am261x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am261x:r5fss0-0:nortos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am261x:r5fss0-1:nortos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -224,7 +224,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang stog_func_test ...
+	@echo  Scrubing: am261x:r5fss0-1:nortos:ti-arm-clang sdl_stog_r5f ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -269,11 +269,11 @@ $(SYSCFG_GEN_FILES): syscfg
 ifeq ($(SYSTEM_FLAG), false)
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-1 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-1 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -313,13 +313,13 @@ endif
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \
-	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_IMAGE_PARAMS_XIP = \
-	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
@@ -331,9 +331,9 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
-	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-1):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
 	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
 
@@ -365,8 +365,8 @@ else
 	$(RM) $(BOOTIMAGE_NAME_MCELF)-enc
 endif
 endif
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
-	@echo  Boot image: am261x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: am261x:r5fss0-1:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
 	@echo  .
 endif
 
@@ -374,12 +374,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for stog_func_test.$(PROFILE) ...
+	@echo Creating Coverage Report for sdl_stog_r5f.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o stog_func_test.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=stog_func_test.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=stog_func_test.$(PROFILE).profdata > coverage/stog_func_test.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/stog_func_test.$(PROFILE).profdata.json --output-json=coverage/stog_func_test.$(PROFILE).analysis.json --output=../stog_func_test.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sdl_stog_r5f.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdl_stog_r5f.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sdl_stog_r5f.$(PROFILE).profdata > coverage/sdl_stog_r5f.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sdl_stog_r5f.$(PROFILE).profdata.json --output-json=coverage/sdl_stog_r5f.$(PROFILE).analysis.json --output=../sdl_stog_r5f.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

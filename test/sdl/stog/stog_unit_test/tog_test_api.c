@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2023
+ *   Copyright (c) Texas Instruments Incorporated 2023-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -235,7 +235,7 @@ static int32_t TOG_apiTestLocal(uint32_t instanceIndex)
             testResult = -1;
         }
     }
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 	if (testResult == SDL_PASS)
     {
         testResult = SDL_TOG_registerInterrupt();

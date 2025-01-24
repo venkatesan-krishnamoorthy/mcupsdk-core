@@ -3,7 +3,7 @@
  *
  * Timeout Gasket (TOG) Example Application
  *
- *  Copyright (c) 2024 Texas Instruments Incorporated
+ *  Copyright (c) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -417,7 +417,7 @@ void TOG_injectESMError(uint32_t instanceIndex)
         /* Assert */
     }
     /* According to instance, need to access this Address*/
-#if !defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
     SDL_REG32_RD(END_POINT_ACCESS);
 #else
     /* Read from OSPI memory. */
@@ -549,7 +549,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
         }
         else
         {
-            #if defined (SOC_AM263PX)
+            #if defined (SOC_AM263PX) || defined (SOC_AM261X)
             DebugP_log("\r\nTOG Interrupt received \r\n");
             #endif
             DebugP_log("\r\nSDL_TOG_stop complete \r\n");
