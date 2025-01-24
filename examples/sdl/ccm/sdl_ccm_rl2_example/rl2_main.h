@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2024
+ *   Copyright (c) Texas Instruments Incorporated 2024-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,13 +62,19 @@ extern "C"
 /*                                Macros                                      */
 /* ========================================================================== */
 #define  CCM_FUNC_TEST_ID         (0U)
+
+#if defined (SOC_AM261X)
+#define  CCM_NUM_INSTANCE         (1U)
+#else 
 #define  CCM_NUM_INSTANCE         (2U)
+#endif
 
 #define SDL_INTR_PRIORITY_LVL      1U
 #define SDL_ENABLE_ERR_PIN         1U
 
 #define SDL_INTR_GROUP_NUM      1U
 #define ESM_INSTANCE 			SDL_ESM_INST_MAIN_ESM0
+
 
 /* ========================================================================== */
 /*                 External Function Declarations                             */

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2024
+ *   Copyright (c) Texas Instruments Incorporated 2024-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -258,7 +258,7 @@ int32_t CCM_funcTest(void)
 {
     int32_t testResult = 0;
     int32_t loop=0;
-	int32_t loopCnt=2;
+	uint32_t loopCnt = CCM_NUM_INSTANCE;
 
 	for(loop=0; loop < loopCnt; loop++)
 	{

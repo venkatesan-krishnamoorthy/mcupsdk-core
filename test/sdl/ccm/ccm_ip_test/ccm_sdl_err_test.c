@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -95,7 +95,7 @@ static int32_t CCM_errTest(void)
     }
 	if(testResult == 0)
 	{
-		/* To get EFAIL, set differnt TEST MODE */
+		/* To get EFAIL, set different TEST MODE */
 	    SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instanceId],   \
                                                    SDL_MCU_ARMSS_CCMR5_CCMKEYR3_REGID, \
                                                    SDL_MCU_ARMSS_CCMR5_MKEY_SELF_TEST_MODE, \
@@ -230,7 +230,18 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-
+#if defined (SOC_AM261X)
+    if (testResult == 0)
+    {
+        sdlResult = SDL_CCM_selfTest(instanceId, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK, \
+		                             SDL_CCM_SELFTEST_TYPE_NORMAL, 0x0, 1U);
+        if (sdlResult == SDL_PASS)
+        {
+            DebugP_log("sdlCcm_negTest: failure on line no. %d \n", __LINE__);
+            testResult = -1;
+        }
+    }
+#else
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_selfTest(INSTANCE, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK, \
@@ -241,6 +252,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
+#endif
 
     if (testResult == 0)
     {

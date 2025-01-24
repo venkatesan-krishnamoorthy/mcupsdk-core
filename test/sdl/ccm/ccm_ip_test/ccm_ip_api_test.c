@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -53,6 +53,22 @@
 /*                                Macros                                      */
 /* ========================================================================== */
 
+#if defined(SOC_AM263PX)
+#define SDL_ESM_INTR_PULSE_R5SS0_BUS_MONITOR_ERR_PULSE_TEST SDL_ESM0_R5FSS0_R5FSS0_BUS_MONITOR_ERR_PULSE_0
+#define SDL_ESM_INTR_PULSE_R5SS0_TMU_COMP_ERR_TEST          SDL_ESM0_R5FSS0_TMU_COMPARE_ERR
+#define SDL_ESM_INTR_PULSE_R5SS0_RL2_COMP_ERR_TEST          SDL_ESM0_R5FSS0_RL2_COMPARE_ERR
+#define SDL_ESM_INTR_PULSE_R5SS0_COMPARE_ERR_PULSE_TEST     SDL_ESM0_R5FSS0_R5FSS0_COMPARE_ERR_PULSE_0
+#define SDL_ESM_INTR_PULSE_R5SS0_VIM_COMPARE_ERR_PULSE_TEST SDL_ESM0_R5FSS0_R5FSS0_VIM_COMPARE_ERR_PULSE_0
+#endif
+
+#if defined(SOC_AM261X)
+#define SDL_ESM_INTR_PULSE_R5SS0_BUS_MONITOR_ERR_PULSE_TEST SDL_ESM_INTR_PULSE_R5SS0_BUS_MONITOR_ERR_PULSE
+#define SDL_ESM_INTR_PULSE_R5SS0_TMU_COMP_ERR_TEST          SDL_ESM_INTR_PULSE_R5SS0_TMU_COMP_ERR
+#define SDL_ESM_INTR_PULSE_R5SS0_RL2_COMP_ERR_TEST          SDL_ESM_INTR_PULSE_R5SS0_RL2_COMP_ERR
+#define SDL_ESM_INTR_PULSE_R5SS0_COMPARE_ERR_PULSE_TEST     SDL_ESM_INTR_PULSE_R5SS0_COMPARE_ERR_PULSE
+#define SDL_ESM_INTR_PULSE_R5SS0_VIM_COMPARE_ERR_PULSE_TEST SDL_ESM_INTR_PULSE_R5SS0_VIM_COMPARE_ERR_PULSE
+#endif
+
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -69,7 +85,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 {
     int32_t       testResult = 0;
     SDL_ErrType_t sdlResult;
-    int i;
+    int i, ccmregid, moduleid;
 	uint32_t    valToBeRead;
 	int32_t     metaInfo;
     SDL_McuArmssCcmR5OpModeKey    opModeKey;
@@ -85,7 +101,15 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_VIM_U_BASE;
 #endif
-    for(i = SDL_MCU_ARMSS_CCMR5_CCMSR1_REGID; i <= 	SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID; i++)
+#if defined(SOC_AM263X) || defined(SOC_AM273X)||defined(SOC_AWR294X)
+    ccmregid = SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID;
+    moduleid = SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID;
+#endif
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+    ccmregid = SDL_MCU_ARMSS_CCMR5_CCMSR6_REGID;
+    moduleid = SDL_MCU_ARMSS_CCMR5_RL2_MODULE_ID;
+#endif
+    for(i = SDL_MCU_ARMSS_CCMR5_CCMSR1_REGID; i <= 	ccmregid; i++)
 	{
 		if(testResult == 0)
 		{
@@ -112,7 +136,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 
 	if(testResult == 0)
 	{
-		sdlResult = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instanceId], SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID, valToBeRead, NULL);
+		sdlResult = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instanceId], ccmregid, valToBeRead, NULL);
 		if (sdlResult != SDL_PASS)
 		{
 			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
@@ -120,7 +144,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 		}
 	}
 
-    for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID; i++)
+    for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= moduleid; i++)
 	{
     	if(testResult == 0)
     	{
@@ -217,7 +241,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 
 	if(testResult == 0)
 	{
-		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID, &opModeKey, NULL);
+		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], moduleid, &opModeKey, NULL);
 		if (sdlResult != SDL_PASS)
 		{
 			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
@@ -226,7 +250,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 	}
 	if(testResult == 0)
 	{
-		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID, opModeKey, NULL);
+		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], moduleid, opModeKey, NULL);
 		if (sdlResult != SDL_PASS)
 		{
 			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
@@ -236,7 +260,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 
 	if(testResult == 0)
 	{
-		for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= 	SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID; i++)
+		for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= 	moduleid; i++)
 		{
 			sdlResult = SDL_armR5CCMGetCompareError(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, &cmpError, &metaInfo);
 			if (sdlResult != SDL_PASS)
@@ -250,7 +274,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 
 	if(testResult == 0)
 	{
-		sdlResult = SDL_armR5CCMGetCompareError(SDL_CCM_baseAddress[instanceId], SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID, \
+		sdlResult = SDL_armR5CCMGetCompareError(SDL_CCM_baseAddress[instanceId], moduleid, \
                                           		&cmpError, NULL);
 		if (sdlResult != SDL_PASS)
 		{
@@ -261,7 +285,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 
 	if(testResult == 0)
 	{
-		for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= 	SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID; i++)
+		for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= 	moduleid; i++)
 		{
 			sdlResult = SDL_armR5CCMClearCompareError(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, &metaInfo);
 			if (sdlResult != SDL_PASS)
@@ -320,6 +344,21 @@ static int32_t CCM_IP_test(uint32_t instanceId)
             DebugP_log("\n  VIM API test failed on line no: %d \n", __LINE__);
         }
     }
+
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+    SDL_CCM_MonitorType monitorType;
+    SDL_CCM_getErrorType(SDL_R5SS0_CCM, SDL_ESM_INTR_PULSE_R5SS0_BUS_MONITOR_ERR_PULSE_TEST, &monitorType);
+    SDL_CCM_getErrorType(SDL_R5SS0_CCM, SDL_ESM_INTR_PULSE_R5SS0_TMU_COMP_ERR_TEST, &monitorType);
+    SDL_CCM_getErrorType(SDL_R5SS0_CCM, SDL_ESM_INTR_PULSE_R5SS0_RL2_COMP_ERR_TEST, &monitorType);
+    SDL_CCM_getErrorType(SDL_R5SS0_CCM, SDL_ESM_INTR_PULSE_R5SS0_COMPARE_ERR_PULSE_TEST, &monitorType);
+    SDL_CCM_getErrorType(SDL_R5SS0_CCM, SDL_ESM_INTR_PULSE_R5SS0_VIM_COMPARE_ERR_PULSE_TEST, &monitorType);
+    SDL_CCM_injectError(SDL_R5SS0_CCM, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK);
+    SDL_CCM_injectError(SDL_R5SS0_CCM, SDL_CCM_MONITOR_TYPE_VIM);
+    SDL_CCM_injectError(SDL_R5SS0_CCM, SDL_CCM_MONITOR_TYPE_TMU);
+    SDL_CCM_injectError(SDL_R5SS0_CCM, SDL_CCM_MONITOR_TYPE_RL2);
+    SDL_CCM_injectError(SDL_R5SS0_CCM, SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR);
+#endif
+
     return (sdlResult);
 }
 

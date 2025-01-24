@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -65,7 +65,7 @@ extern "C"
 #define SDL_INTR_PRIORITY_LVL      1U
 #define SDL_ENABLE_ERR_PIN         1U
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM261X)
 #define SDL_INTR_GROUP_NUM      1U
 #define ESM_INSTANCE 			SDL_ESM_INST_MAIN_ESM0
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -73,6 +73,13 @@ extern "C"
 #define ESM_INSTANCE 			SDL_ESM_INST_MSS_ESM
 #define SDL_ESM_MAX_EVENT_MAP   1U
 #endif
+
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#define  CCM_NUM_INSTANCE         (2U)
+#elif defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM261X)
+#define  CCM_NUM_INSTANCE         (1U)
+#endif
+
 /* ========================================================================== */
 /*                 External Function Declarations                             */
 /* ========================================================================== */

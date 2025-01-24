@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2024
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -102,7 +102,7 @@ static int32_t CCM_API_test(uint32_t instanceId)
 	}
 	if(testResult == 0)
 	{
-        for(i = SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK; i <= 	SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR; i++)
+        for(i = SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK; i <= SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR; i++)
     	{
 			sdlResult = SDL_CCM_clearError(instanceId, (SDL_CCM_MonitorType)i);
 			if (sdlResult != SDL_PASS)
@@ -113,7 +113,6 @@ static int32_t CCM_API_test(uint32_t instanceId)
 			}
     	}
     }
-
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_selfTest(instanceId, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK, \
@@ -124,7 +123,14 @@ static int32_t CCM_API_test(uint32_t instanceId)
             testResult = -1;
         }
     }
-
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
+     SDL_CCM_selfTest(instanceId, SDL_CCM_MONITOR_TYPE_VIM, \
+		                             SDL_CCM_SELFTEST_TYPE_NORMAL, 0x0, 1000U);
+     SDL_CCM_selfTest(instanceId, SDL_CCM_MONITOR_TYPE_TMU, \
+		                             SDL_CCM_SELFTEST_TYPE_NORMAL, 0x0, 1000U);
+     SDL_CCM_selfTest(instanceId, SDL_CCM_MONITOR_TYPE_RL2, \
+		                             SDL_CCM_SELFTEST_TYPE_NORMAL, 0x0, 1000U);
+#endif
     return (testResult);
 }
 
@@ -133,12 +139,8 @@ int32_t CCM_sdlApiTest(void)
 {
     int32_t    testResult = 0;
 	int32_t    j = 0;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-	int32_t loop=2;
-#endif
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
-	int32_t loop=1;
-#endif
+	int32_t loop=CCM_NUM_INSTANCE;
+
 	for(j=0;j<loop;j++)
 	{
 		/* Run the test for diagnostics first */

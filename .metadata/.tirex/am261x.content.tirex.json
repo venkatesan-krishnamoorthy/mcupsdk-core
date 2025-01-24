@@ -15520,6 +15520,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies the operation of CCM module CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ccm_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_example/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the operation of CCM RL2 module CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ccm_rl2_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_rl2_example/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_rl2_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the operation of CCM TMU module CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ccm_tmu_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_tmu_example/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_tmu_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the operation of VIM module CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_vim_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_vim/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_vim",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies DCC in various modes of operation CPU is R5FSS0-0 running NORTOS.",
         "name": "dcc",
         "location": "../../examples/sdl/dcc/dcc_modes1/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2024
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -103,7 +103,7 @@ int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -116,6 +116,23 @@ SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
                         },
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
     .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00780880u, 0x00000000u,
+                      },
+    /**< All events high priority: except timer, selftest error events, and Main ESM output */
+};
+#endif
+#if defined (SOC_AM261X)
+SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
+{
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x000C04f0u, 0x00000000u,
+                },
+     /**< All events enable: except timer and self test  events, and Main ESM output */
+    /* Temporarily disabling vim compare error as well*/
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x000C04f0u, 0x00000000u,
+                        },
+    /**< All events high priority: except timer, selftest error events, and Main ESM output */
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x000C04f0u, 0x00000000u,
                       },
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
 };
@@ -574,10 +591,10 @@ int32_t CCM_funcTest(void)
 {
     int32_t    testResult = 0;
 	int32_t    loop= 0;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 	int32_t loopCnt=2;
 #endif
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM261X)
 	int32_t loopCnt=1;
 #endif
 	for(loop=0; loop < loopCnt; loop++)

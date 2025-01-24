@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022-2024 Texas Instruments Incorporated
+ *  Copyright (c) 2022-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -81,7 +81,7 @@ typedef enum {
     /**< CCM output compare block monitor type */
     SDL_CCM_MONITOR_TYPE_VIM = 2,
     /**< CCM VIM block monitor type */
-#if defined (SOC_AM263PX) || (SOC_AM261X)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_CCM_MONITOR_TYPE_TMU = 3,
     /**< CCM TMU block monitor type */
     SDL_CCM_MONITOR_TYPE_RL2 = 4,

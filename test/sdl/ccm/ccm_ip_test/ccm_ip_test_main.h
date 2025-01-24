@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2024
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -84,14 +84,19 @@ extern "C"
 #define  CCM_IP_API_TEST_ID       (0U)
 #define  CCM_IP_ERROR_TEST_ID     (1U)
 #define  CCM_TOTAL_NUM_TESTS      (2U)
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #define  CCM_NUM_INSTANCE         (3U)
+#define INSTANCE 		SDL_R5SS0_CCM
+#endif
+#if defined (SOC_AM261X)
+#define  CCM_NUM_INSTANCE         (1U)
 #define INSTANCE 		SDL_R5SS0_CCM
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
 #define  CCM_NUM_INSTANCE         (2U)
 #define INSTANCE 		SDL_MSS_CCMR
 #endif
+
 /* ========================================================================== */
 /*                 External Function Declarations                             */
 /* ========================================================================== */
