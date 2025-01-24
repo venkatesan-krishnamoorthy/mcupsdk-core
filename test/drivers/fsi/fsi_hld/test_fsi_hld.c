@@ -115,6 +115,9 @@ void test_main(void *args)
     test_fsi_set_params(&testParams, 6);
     RUN_TEST(test_fsi_txrx, 6, (void*)&testParams);
 
+    test_fsi_set_params(&testParams, 7);
+    RUN_TEST(test_fsi_txrx, 7, (void*)&testParams);
+
     UNITY_END();
 
     Drivers_close();
@@ -257,6 +260,16 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.errorCheck = FSI_RX_ECC_ERROR_CHECK;
             gFsiTxTestParams.fsi_tx_params.errorCheck = FSI_TX_ECC_ERROR_CHECK;
+            break;
+        case 7:
+            Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
+            gFsiRxTestParams.fsi_rx_params.numLane = FSI_DATA_WIDTH_2_LANE;
+            gFsiTxTestParams.fsi_tx_params.numLane = FSI_DATA_WIDTH_2_LANE;
+            gFsiRxTestParams.fsi_rx_params.delayLineCtrl = TRUE;
+            /* TX Delay Test is applicable for AM263X, AM263PX & AM261X only */
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+            gFsiTxTestParams.fsi_tx_params.delayLineCtrl = TRUE;
+#endif
             break;
     }
 

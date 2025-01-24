@@ -108,6 +108,7 @@ void fsi_tx_hld_main(void *args)
     rxParams.transferCallbackFxn = NULL;
     rxParams.errorCallbackFxn = NULL;
     rxParams.errorCheck = txParams.errorCheck;
+    rxParams.delayLineCtrl = txParams.delayLineCtrl;
     FSI_Rx_open(CONFIG_FSI_RX0, &rxParams);
 
     /* Enable loopback */

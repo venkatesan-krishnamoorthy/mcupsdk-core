@@ -204,6 +204,9 @@ typedef struct FSI_Tx_Params_t
     /**< Error Check */
     uint16_t    errorCheck;
 
+    /**< Delay control */
+    bool delayLineCtrl;
+
     /*! Blocking or Callback mode. Refer \ref FSI_Tx_TransferMode
      */
     uint32_t                transferMode;

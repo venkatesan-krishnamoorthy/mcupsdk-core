@@ -152,6 +152,7 @@ void FSI_HLD_TxParams_init(FSI_Tx_Params *prms)
         prms->frameTag = FSI_FRAME_TAG1;
         prms->frameType = FSI_FRAME_TYPE_NWORD_DATA;
         prms->errorCheck = FSI_TX_NO_ERROR_CHECK;
+        prms->delayLineCtrl = FALSE;
     }
 }
 
@@ -340,6 +341,13 @@ static int32_t FSI_Tx_configInstance(FSI_Tx_Handle handle)
 
         status += FSI_setTxFrameType(baseAddr, fsiTxObj->params->frameType);
 
+        if (fsiTxObj->params->delayLineCtrl == TRUE)
+        {
+            FSI_configTxDelayLine(baseAddr, FSI_TX_DELAY_CLK, 5U);
+            FSI_configTxDelayLine(baseAddr, FSI_TX_DELAY_D0, 5U);
+            FSI_configTxDelayLine(baseAddr, FSI_TX_DELAY_D1, 5U);
+        }
+
         /* Initialize dma mode if the dma handle is not NULL */
         if (status == SystemP_SUCCESS)
         {
@@ -373,14 +381,14 @@ static int32_t FSI_Tx_deConfigInstance(FSI_Tx_Handle handle)
         {
            status = FSI_Tx_dmaClose(handle, fsiTxObj->fsiTxDmaChCfg);
         }
-        if (fsiTxObj->params->errorCheck == FSI_TX_USER_DEFINED_CRC_CHECK)
-        {
-            /* CRC Value is calculated based on the TX pattern */
-            status = FSI_disableTxUserCRC(baseAddr);
-        }
         else
         {
             status = SystemP_SUCCESS;
+        }
+        if (fsiTxObj->params->errorCheck == FSI_TX_USER_DEFINED_CRC_CHECK)
+        {
+            /* CRC Value is calculated based on the TX pattern */
+            FSI_disableTxUserCRC(baseAddr);
         }
     }
 

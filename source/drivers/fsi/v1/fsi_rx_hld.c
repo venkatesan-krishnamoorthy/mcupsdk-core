@@ -149,6 +149,7 @@ void FSI_HLD_RxParams_init(FSI_Rx_Params *prms)
         prms->frameDataSize = 16;
         prms->numLane = FSI_DATA_WIDTH_1_LANE;
         prms->errorCheck = FSI_RX_NO_ERROR_CHECK;
+        prms->delayLineCtrl = FALSE;
     }
 }
 
@@ -328,6 +329,12 @@ static int32_t FSI_Rx_configInstance(FSI_Rx_Handle handle)
         status += FSI_setRxSoftwareFrameSize(baseAddr, fsiRxObj->params->frameDataSize);
         status += FSI_setRxDataWidth(baseAddr, fsiRxObj->params->numLane);
 
+        if (fsiRxObj->params->delayLineCtrl == TRUE)
+        {
+            FSI_configRxDelayLine(baseAddr, FSI_RX_DELAY_CLK, 5U);
+            FSI_configRxDelayLine(baseAddr, FSI_RX_DELAY_D0, 5U);
+            FSI_configRxDelayLine(baseAddr, FSI_RX_DELAY_D1, 5U);
+        }
         if(attrs->operMode != FSI_RX_OPER_MODE_DMA)
         {
             /* Setting frame config */
