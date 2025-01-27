@@ -12,8 +12,10 @@ on:
     branches: [ "next", "next_stage" ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# This workflow contains a build jobs for all the SOCs in the repo
 jobs:
-  # This workflow contains a build jobs for all the SOCs in the repo
+
+   #AM243 build 
   build_am64x:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
@@ -34,79 +36,77 @@ jobs:
           ./build-test.sh --device=am64x
 
 
+  #AM243 build 
   build_am243x:
-    # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
-          # Relative path under $GITHUB_WORKSPACE to place the repository
           path: 'pr_checkout'
 
-      # Runs a single command using the runners shell
       - name: build_test
         run: |
           cp ./pr_checkout/.github/workflows/build-test.sh .
           chmod +x ./build-test.sh
           ./build-test.sh --device=am243x
           
+  #AM263 build 
   build_am263x:
-    # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
-          # Relative path under $GITHUB_WORKSPACE to place the repository
           path: 'pr_checkout'
 
-      # Runs a single command using the runners shell
       - name: build_test
         run: |
           cp ./pr_checkout/.github/workflows/build-test.sh .
           chmod +x ./build-test.sh
           ./build-test.sh --device=am263x
-          
+         
+  #AM263P build 
   build_am263px:
-    # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
-          # Relative path under $GITHUB_WORKSPACE to place the repository
           path: 'pr_checkout'
 
-      # Runs a single command using the runners shell
       - name: build_test
         run: |
           cp ./pr_checkout/.github/workflows/build-test.sh .
           chmod +x ./build-test.sh
           ./build-test.sh --device=am263px
-          
+
+  #AM273 build
   build_am273x:
-    # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
-          # Relative path under $GITHUB_WORKSPACE to place the repository
           path: 'pr_checkout'
 
-      # Runs a single command using the runners shell
       - name: build_test
         run: |
           cp ./pr_checkout/.github/workflows/build-test.sh .
           chmod +x ./build-test.sh
           ./build-test.sh --device=am273x
 
+  #AM261 build
+  build_am261x:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: 'pr_checkout'
+
+      - name: build_test
+        run: |
+          cp ./pr_checkout/.github/workflows/build-test.sh .
+          chmod +x ./build-test.sh
+          ./build-test.sh --device=am261x
