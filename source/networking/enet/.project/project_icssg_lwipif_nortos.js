@@ -21,7 +21,7 @@ const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/board/ethphy/enet/rtos_drivers/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core",

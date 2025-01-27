@@ -100,9 +100,9 @@ const filedirs = {
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy",
 
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V3",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/defcfg",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/V3",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/defcfg",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/board/src",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/board/src/am64x_am243x_evm",
@@ -112,8 +112,8 @@ const filedirs = {
 const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V3",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/V3",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core",

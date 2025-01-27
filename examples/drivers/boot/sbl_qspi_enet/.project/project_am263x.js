@@ -63,7 +63,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/security",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy",
