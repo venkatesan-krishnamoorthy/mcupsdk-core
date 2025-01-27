@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -317,8 +317,13 @@ static void IntrDisable(uint32_t intsrc)
 {
     uint32_t intrStatus;
 #if defined (SOC_AM261X)
+#if defined(R5F0_0_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
+#elif defined(R5F0_1_INPUTS)
+    SDL_RTI_getStatus(SDL_INSTANCE_WDT1, &intrStatus);
+    SDL_RTI_clearStatus(SDL_INSTANCE_WDT1, intrStatus);
+#endif
 #elif defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined (R5F0_INPUTS)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);

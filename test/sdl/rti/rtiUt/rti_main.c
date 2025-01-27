@@ -1,4 +1,4 @@
-/* Copyright (c) 2021 Texas Instruments Incorporated
+/* Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -106,8 +106,11 @@ typedef struct {
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
+#if defined(R5F0_1_INPUTS) 
+    { SOC_RcmPeripheralId_WDT1, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
+#else
     { SOC_RcmPeripheralId_WDT0, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
-
+#endif
     { SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END },
 };
 #endif
@@ -123,7 +126,11 @@ static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(R5F0_1_INPUTS) 
+    status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT1, 1);
+#else
     status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
+#endif
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
     status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_MSS_WDT, 1);

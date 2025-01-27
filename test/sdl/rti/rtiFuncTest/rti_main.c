@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -92,7 +92,11 @@ typedef struct {
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
+#if defined(R5F0_1_INPUTS) 
+    { SOC_RcmPeripheralId_WDT1, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
+#else
     { SOC_RcmPeripheralId_WDT0, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
+#endif
 
     { SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END },
 };
@@ -109,7 +113,11 @@ static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(R5F0_1_INPUTS) 
+    status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT1, 1);
+#else
     status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
+#endif
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
     status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_MSS_WDT, 1);
@@ -239,7 +247,7 @@ SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -253,6 +261,24 @@ SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
     .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000005u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+};
+#elif defined (SOC_AM261X)
+SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
+{
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x00000003u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u,0x00000000u},
+    /**< All events enable: except clkstop events for unused clocks
+        *   and PCIE events */
+        /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000003u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000003u, 0x00000000u,
                 0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
@@ -416,7 +442,7 @@ void test_sdl_rti_baremetal_test_app (void)
 
     /* Open drivers to open the UART driver for console */
 
-  #if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
+  #if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     void *ptr = (void *)&arg;
   #endif
 
@@ -429,7 +455,7 @@ void test_sdl_rti_baremetal_test_app (void)
     Sdl_Module_clockSetFrequency();
 	#endif
     /* Initialize MCU RTI module */
-    #if defined (SOC_AM263X) || defined (SOC_AM263PX)
+    #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     result = SDL_ESM_init(SDL_INSTANCE_ESM0, &RTI_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
     #elif defined (SOC_AM273X)
     result = SDL_ESM_init (SDL_INSTANCE_ESM0,&params,NULL,NULL);

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -57,8 +57,14 @@
 #endif
 #endif
 #if defined (SOC_AM261X)
+#if defined (R5F0_0_INPUTS)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_RTI_BASE SDL_WDT0_U_BASE
+#endif
+#if defined (R5F0_1_INPUTS)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_WDT1
+#define SDL_RTI_BASE SDL_WDT1_U_BASE
+#endif
 #endif
 #if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined (R5F0_INPUTS)

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -59,8 +59,14 @@
 #endif
 #endif
 #if defined (SOC_AM261X)
+#if defined (R5F0_0_INPUTS)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_WDT_BASE SDL_WDT0_U_BASE
+#endif
+#if defined (R5F0_1_INPUTS)
+#define SDL_INSTANCE_RTI SDL_INSTANCE_WDT1
+#define SDL_WDT_BASE SDL_WDT1_U_BASE
+#endif
 #endif
 #if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined (R5F0_INPUTS)
@@ -426,6 +432,9 @@ static void IntrDisable(uint32_t intsrc)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT2, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT2, intrStatus);
     #endif
+    #elif defined (SOC_AM261X)
+    SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
+    SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
     #elif defined (SOC_AWR294X) || (SOC_AM273X)
     SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
@@ -436,7 +445,7 @@ static void IntrDisable(uint32_t intsrc)
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
 	#endif
       /* Clear ESM registers. */
-    #if defined (SOC_AM263X) || defined (SOC_AM263PX)
+    #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intsrc);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
     #endif

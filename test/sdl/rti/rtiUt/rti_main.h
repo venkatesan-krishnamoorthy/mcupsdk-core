@@ -1,4 +1,4 @@
-/* Copyright (c) 2021-2024 Texas Instruments Incorporated
+/* Copyright (c) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,7 +56,11 @@
 #include "ti_board_open_close.h"
 
 #if defined (SOC_AM261X)
+#if defined R5F0_1_INPUTS
+#define SDL_INSTANCE_RTI SDL_INSTANCE_WDT1
+#else
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
+#endif
 #endif
 #if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #if defined (R5F0_INPUTS)
