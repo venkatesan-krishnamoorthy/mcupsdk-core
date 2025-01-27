@@ -89,6 +89,29 @@ extern uint32_t             gFsiRxConfigNum;
 static SemaphoreP_Object gFsiDmaRxSemObject;
 
 /**
+ *  \anchor FSI_RxTrigCtrlSelectSrc
+ *  \name FSI trigger select source signals
+ *  @{
+ */
+typedef uint32_t FSI_RxTrigCtrlSelectSrc;
+
+#define FSI_RX_TRIGGER_CTRL_SEL_PING_PACKET            ((uint32_t)0x00U)
+/**< FSI Ping Packet Received */
+#define FSI_RX_TRIGGER_CTRL_SEL_DATA_PACKET            ((uint32_t)0x01U)
+/**< FSI DATA Packet Received */
+#define FSI_RX_TRIGGER_CTRL_SEL_ERROR_PACKET           ((uint32_t)0x02U)
+/**< FSI Error Packet Received */
+#define FSI_RX_TRIGGER_CTRL_SEL_PING_FRAME_TAG_PACKET  ((uint32_t)0x03U)
+/**< FSI Ping Frame Tag Occured */
+#define FSI_RX_TRIGGER_CTRL_SEL_DATA_FRAME_TAG_PACKET  ((uint32_t)0x04U)
+/**< FSI Data Frame Tag Occured */
+#define FSI_RX_TRIGGER_CTRL_SEL_ERROR_FRAME_TAG_PACKET ((uint32_t)0x05U)
+/**< FSI Error Frame Tag Occured */
+#define FSI_RX_TRIGGER_CTRL_SEL_FRAME_DONE             ((uint32_t)0x06U)
+/**< FSI Frame Done Received */
+/** @} */
+
+/**
  *  \anchor FSI_OperatingMode
  *  \name Operating Mode
  *
@@ -176,6 +199,9 @@ typedef void (*FSI_Rx_ErrorCallbackFxn) (FSI_Rx_Handle handle);
  */
 typedef struct FSI_Rx_Params_t
 {
+    /** User data */
+    uint8_t userData;
+
     /** Loop count */
     uint16_t loopCnt;
 
@@ -190,6 +216,15 @@ typedef struct FSI_Rx_Params_t
 
     /**< Delay control */
     bool delayLineCtrl;
+
+    /**< Reciever trigger enable */
+    bool    rxTrigger;
+
+    /**< Reciever trigger value in Cycles*/
+    uint32_t rxTriggerValCycles;
+
+    /**< User Data Filter Test */
+    bool udataFilterTest;
 
     /*! Blocking or Callback mode. Refer \ref FSI_Rx_TransferMode
      */

@@ -151,8 +151,11 @@ void FSI_HLD_TxParams_init(FSI_Tx_Params *prms)
         prms->numLane = FSI_DATA_WIDTH_1_LANE;
         prms->frameTag = FSI_FRAME_TAG1;
         prms->frameType = FSI_FRAME_TYPE_NWORD_DATA;
+        prms->rxTrigger = FALSE;
+        prms->rxTriggerVal = 4;
         prms->errorCheck = FSI_TX_NO_ERROR_CHECK;
         prms->delayLineCtrl = FALSE;
+        prms->udataFilterTest = FALSE;
     }
 }
 
@@ -331,11 +334,24 @@ static int32_t FSI_Tx_configInstance(FSI_Tx_Handle handle)
         status += FSI_setTxSoftwareFrameSize(baseAddr, fsiTxObj->params->frameDataSize);
         status += FSI_setTxDataWidth(baseAddr, fsiTxObj->params->numLane);
 
+        if(fsiTxObj->params->rxTrigger == TRUE)
+        {
+            /* RX TRIGGER 0*/
+            status += FSI_setTxExtFrameTrigger(baseAddr, fsiTxObj->params->rxTriggerVal);
+        }
+
         if(attrs->operMode != FSI_TX_OPER_MODE_DMA)
         {
             /*In case of NON-DMA transmission */
             /* Setting frame config */
-            status += FSI_setTxUserDefinedData(baseAddr, fsiTxObj->params->userData);
+            if (fsiTxObj->params->udataFilterTest == TRUE)
+            {
+                status += FSI_setTxUserDefinedData(baseAddr, 0xA5);
+            }
+            else
+            {
+                status += FSI_setTxUserDefinedData(baseAddr, fsiTxObj->params->userData);
+            }
             status += FSI_setTxFrameTag(baseAddr, fsiTxObj->params->frameTag);
         }
 

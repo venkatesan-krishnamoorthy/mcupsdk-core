@@ -118,6 +118,14 @@ void test_main(void *args)
     test_fsi_set_params(&testParams, 7);
     RUN_TEST(test_fsi_txrx, 7, (void*)&testParams);
 
+    test_fsi_set_params(&testParams, 8);
+    RUN_TEST(test_fsi_txrx, 8, (void*)&testParams);
+
+    test_fsi_set_params(&testParams, 9);
+    RUN_TEST(test_fsi_txrx, 9, (void*)&testParams);
+
+
+
     UNITY_END();
 
     Drivers_close();
@@ -270,6 +278,18 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
             gFsiTxTestParams.fsi_tx_params.delayLineCtrl = TRUE;
 #endif
+            break;
+        case 8:
+            Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
+            gFsiRxTestParams.fsi_rx_params.rxTrigger = TRUE;
+            gFsiTxTestParams.fsi_tx_params.rxTrigger = TRUE;
+            break;
+        case 9:
+            Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
+            gFsiRxTestParams.fsi_rx_params.udataFilterTest = TRUE;
+            gFsiTxTestParams.fsi_tx_params.udataFilterTest = TRUE;
+            gFsiRxTestParams.fsi_rx_params.userData  = FSI_APP_RX_USER_DATA_FILTER_VALUE;
+            gFsiTxTestParams.fsi_tx_params.userData  = FSI_APP_TX_USER_DATA_FILTER_VALUE;
             break;
     }
 

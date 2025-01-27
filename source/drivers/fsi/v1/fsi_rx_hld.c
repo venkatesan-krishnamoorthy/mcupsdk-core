@@ -146,10 +146,12 @@ void FSI_HLD_RxParams_init(FSI_Rx_Params *prms)
 {
     if(prms != NULL)
     {
+        prms->userData = 7;
         prms->frameDataSize = 16;
         prms->numLane = FSI_DATA_WIDTH_1_LANE;
         prms->errorCheck = FSI_RX_NO_ERROR_CHECK;
         prms->delayLineCtrl = FALSE;
+        prms->udataFilterTest = FALSE;
     }
 }
 
@@ -324,6 +326,19 @@ static int32_t FSI_Rx_configInstance(FSI_Rx_Handle handle)
 
         /* Rx init and reset */
         status = FSI_performRxInitialization(baseAddr);
+
+        if(fsiRxObj->params->udataFilterTest == TRUE)
+        {
+            FSI_enableRxDataFilter(baseAddr);
+            FSI_setRxUserDataRefValue(baseAddr, fsiRxObj->params->userData);
+            FSI_setRxUserDataBitMask(baseAddr, 0xF0);
+        }
+        if(fsiRxObj->params->rxTrigger == TRUE)
+        {
+            FSI_enableAndConfigRxTrigCtrl(baseAddr, FSI_RX_TRIG_CTRL_REG_0,
+                                        FSI_RX_TRIGGER_CTRL_SEL_DATA_PACKET,
+                                        fsiRxObj->params->rxTriggerValCycles);
+        }
 
         /* Setting for requested transfer params */
         status += FSI_setRxSoftwareFrameSize(baseAddr, fsiRxObj->params->frameDataSize);

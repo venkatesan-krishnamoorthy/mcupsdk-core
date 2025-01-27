@@ -120,6 +120,22 @@ void fsi_rx_hld_main(void *args)
 
     /* post semaphore to sync with tx */
     SemaphoreP_post(&gFsiTxRx_SyncSemaphoreObj);
+
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+        if(rxParams.udataFilterTest == TRUE)
+        {
+            uint16_t userData;
+            FSI_getRxUserDefinedData(rxBaseAddr, &userData);
+            if ((userData & FSI_APP_RX_USER_DATA_BIT_MASK) !=
+                (rxParams.userData & FSI_APP_RX_USER_DATA_BIT_MASK))
+                {
+                    DebugP_assert(FALSE);
+                }
+
+            FSI_disableRxDataFilter(rxBaseAddr);
+        }
+#endif
+
     SemaphoreP_post(p_taskDoneSemaphoreObj);
 
     while(1)

@@ -207,6 +207,15 @@ typedef struct FSI_Tx_Params_t
     /**< Delay control */
     bool delayLineCtrl;
 
+    /**< Reciever trigger enable */
+    bool    rxTrigger;
+
+    /**< Reciever trigger value */
+    uint32_t rxTriggerVal;
+
+    /**< User Data Filter Test */
+    bool udataFilterTest;
+
     /*! Blocking or Callback mode. Refer \ref FSI_Tx_TransferMode
      */
     uint32_t                transferMode;

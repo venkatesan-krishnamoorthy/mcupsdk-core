@@ -109,6 +109,10 @@ void fsi_tx_hld_main(void *args)
     rxParams.errorCallbackFxn = NULL;
     rxParams.errorCheck = txParams.errorCheck;
     rxParams.delayLineCtrl = txParams.delayLineCtrl;
+    rxParams.rxTrigger = txParams.rxTrigger;
+    rxParams.rxTriggerValCycles = txParams.rxTriggerVal;
+    rxParams.userData = txParams.userData;
+    rxParams.udataFilterTest = txParams.udataFilterTest;
     FSI_Rx_open(CONFIG_FSI_RX0, &rxParams);
 
     /* Enable loopback */
