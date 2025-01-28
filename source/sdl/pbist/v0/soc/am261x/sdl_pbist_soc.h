@@ -63,9 +63,6 @@ extern "C" {
 #if defined (SUBSYS_R5SS0)
 #define SDL_INTR_PBIST_DONE SDL_R5FSS0_CORE0_INTR_PBIST_DONE
 #endif
-#if defined (SUBSYS_R5SS0_1)
-#define SDL_INTR_PBIST_DONE SDL_R5FSS0_CORE1_INTR_PBIST_DONE
-#endif
 /**
 @defgroup SDL_PBIST_FUNCTION  PBIST Functions
 @ingroup SDL_PBIST_API
