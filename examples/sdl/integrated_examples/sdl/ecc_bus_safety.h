@@ -1,4 +1,4 @@
-/*  Copyright (c) 2022-2024 Texas Instruments Incorporated
+/*  Copyright (c) 2022-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -312,6 +312,32 @@ extern int32_t SDL_ECC_BUS_SAFETY_DAP_SEC_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DAP_DED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_DAP_RED_Test(void);
 
+/* Node ICSSM_PDSP0 */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0_RED_Test(void);
+
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0_RED_Test(void);
+
+/* Node ICSSM_PDSP1 */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1_RED_Test(void);
+
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1_RED_Test(void);
+
+/* Node ICSSM_SLAVE */
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S_RED_Test(void);
+
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_SEC_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_DED_Test(void);
+extern int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_RED_Test(void);
 
 #ifdef __cplusplus
 }

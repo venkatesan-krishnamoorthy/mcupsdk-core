@@ -3,7 +3,7 @@
  *
  * Voltage and Thermal Monitor (VTM) Example Application
  *
- *  Copyright (c) 2024 Texas Instruments Incorporated
+ *  Copyright (c) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -186,13 +186,18 @@ int32_t VTM_test(void)
     
     while(SDL_tempBelowCold != 1U);
     
+    ClockP_usleep(9000);
     /* UC2 - Receive Low threshold Breach Interrupt and  Hot Interrupt. */
     SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, 0);
-    
+    ClockP_usleep(9000);
     retValue = SDL_VTM_initTs(&SDL_VTM_configTempSense);
+    ClockP_usleep(9000);
     SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
+    ClockP_usleep(9000);
     SDL_VTM_enableTc();
+    ClockP_usleep(9000);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
+    ClockP_usleep(9000);
     alert_th_hot = 0; // temperatube in mc
     alert_th_cold = temp0 - 3000; // temperatube in mc
     /* Device temperature is 0x40 => 70000mc */
@@ -212,6 +217,7 @@ int32_t VTM_test(void)
 
     while(SDL_tempExceedHot != 1U);
 
+    ClockP_usleep(9000);
     /* UC3 - ESM Interrupt and Warm Reset Generation. */
     SDL_VTM_setClearInterrupts(SDL_VTM_INSTANCE_TS_0, SDL_VTM_MASK_HOT, SDL_VTM_MASK_COLD, SDL_VTM_MASK_LOW_TH);
     alert_th_hot = temp0 - 3000; // temperatube in mc

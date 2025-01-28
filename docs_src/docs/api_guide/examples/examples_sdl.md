@@ -30,11 +30,6 @@ This page lists all the examples related to usage of SDL.
 \endcond
 
 \cond SOC_AM263X || SOC_AM263PX
--# INTEGRATED SDL AND MCAN DRIVER
-   -# \subpage EXAMPLES_SDL_INTEGRATED_MCAN
-\endcond
-
-\cond SOC_AM263X || SOC_AM263PX
 -# ECC
    -# \subpage EXAMPLES_SDL_R5F_ECC_DDATA
    -# \subpage EXAMPLES_SDL_R5F_ECC_DTAG
@@ -71,6 +66,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_DMA_PARITY
 -# R5FCPU_UTILS
    -# \subpage EXAMPLES_SDL_R5F_CPU_STATIC_REGISTER
+-# INTEGRATED SDL AND MCAN DRIVER
+   -# \subpage EXAMPLES_SDL_INTEGRATED_MCAN
 \endcond
 
 \cond  SOC_AM263PX || SOC_AM261X

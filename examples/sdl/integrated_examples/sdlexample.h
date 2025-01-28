@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2024 Texas Instruments Incorporated
+ *   Copyright (c) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,6 +62,13 @@ extern "C"
 #include <sdl/sdl_exception.h>
 #include <sdl/r5/v0/sdl_interrupt.h>
 
+#if defined (SOC_AM261X)
+#include <sdl/sdlr_tog.h>
+#include <sdl/include/am261x/sdlr_soc_ecc_aggr.h>
+#include <sdl/include/am261x/sdlr_intr_r5fss0_core0.h>
+#include <sdl/esm/v2/sdl_esm.h>
+#include <sdl/esm/v2/v2_0/sdl_ip_esm.h>
+#endif
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -100,6 +107,8 @@ extern "C"
 /* used to denote Interrupt Source in the ESM */
 #define ESM_INT_MCAN0_ECC_CORRECTABLE       2u
 #define ESM_INT_MCAN0_ECC_NOT_CORRECTABLE   3u
+#define ESM_INT_RTI                         64u
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define ESM_INT_TCMADDR_R500                14u
 #define ESM_INT_TCMADDR_R501                15u
 #define ESM_INT_TCMADDR_R510                16u
@@ -116,8 +125,6 @@ extern "C"
 #define ESM_INT_R5F0_ECC_CORRECTABLE        47u
 #define ESM_INT_R5F0_ECC_UNCORRECTABLE      48u
 #define ESM_INT_EDMA0_TPCC_ERRINTAGG        63u
-#define ESM_INT_RTI                         64u   /* Pulse interrupt Int 0 in TRM */
-#define ESM_INT_EDMA0_TPCC_ERINT            68u
 #define ESM_INT_ICSSM_ECC_UNCORRECTABLE     77u
 #define ESM_INT_ICSSM_ECC_CORRECTABLE       78u
 #define ESM_INT_CCM0_SELFTEST               83u
@@ -125,6 +132,27 @@ extern "C"
 #define ESM_INT_CCM1_SELFTEST               85u
 #define ESM_INT_CCM1_LOCKSTEP               86u
 #define ESM_INT_TMU_PARITY                  88u
+#elif defined(SOC_AM261X)
+#define ESM_INT_TCMADDR_R500                35u
+#define ESM_INT_TCMADDR_R501                36u
+#define ESM_INT_MSSL2_ECC_CORRECTABLE       6u
+#define ESM_INT_MSSL2_ECC_UNCORRECTABLE     7u
+#define ESM_INT_DCC0                        8u
+#define ESM_INT_DCC1                        9u
+#define ESM_INT_DCC2                        10u
+#define ESM_INT_DCC3                        11u
+#define ESM_INT_BUSSAFETY1                  19u
+#define ESM_INT_BUSSAFETY2                  20u
+#define ESM_INT_VTM                         30u
+#define ESM_INT_R5F0_ECC_CORRECTABLE        37u
+#define ESM_INT_R5F0_ECC_UNCORRECTABLE      38u
+#define ESM_INT_EDMA0_TPCC_ERRINTAGG        45u
+#define ESM_INT_ICSSM_ECC_UNCORRECTABLE     75u
+#define ESM_INT_ICSSM_ECC_CORRECTABLE       76u
+#define ESM_INT_CCM0_SELFTEST               82u
+#define ESM_INT_CCM0_LOCKSTEP               83u
+#define ESM_INT_TMU_PARITY                  72u
+#endif
 
 
 /* denotes which diag is running */

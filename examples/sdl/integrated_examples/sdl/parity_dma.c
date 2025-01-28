@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2024
+ *   Copyright (c) Texas Instruments Incorporated 2024-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -55,6 +55,10 @@
 #if defined(SOC_AM263PX)
 #include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
 #include <sdl/ecc/soc/am263px/sdl_ecc_soc.h>
+#endif
+#if defined(SOC_AM261X)
+#include <sdl/include/am261x/sdlr_soc_ecc_aggr.h>
+#include <sdl/ecc/soc/am261x/sdl_ecc_soc.h>
 #endif
 
 /* ========================================================================== */

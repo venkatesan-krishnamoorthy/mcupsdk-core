@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2022-2024 Texas Instruments Incorporated
+ *   Copyright (c) 2022-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -57,8 +57,14 @@
 #define SDL_EXAMPLE_ECC_RAM_ADDR    (0x52600000u) /* MCAN0 address */
 #define SDL_EXAMPLE_ECC_AGGR                              SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                            SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID
+#if defined(SOC_AM263PX) || defined(SOC_AM263X)
 #define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
+#endif
+#if defined(SOC_AM261X)
+#define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
+#endif
 #define SDL_EXAMPLE_ECC_MSS_AGGR                          SDL_SOC_ECC_AGGR
 #define SDL_EXAMPLE_ECC_MSSL2_RAM_ID                      SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_ID
 #define SDL_EXAMPLE_ECC_ATCM_BTCM_AGGR                    SDL_R5FSS0_CORE0_ECC_AGGR
@@ -196,6 +202,7 @@ static SDL_ECC_InitConfig_t ECC_Test_R5FSS0_CORE0_ECCInitConfig =
 volatile static uint32_t esmcbarg = 0;
 
 /* defines for setting the bitmasks for the ESM strcuure we pass to SDL */
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define ESM_ENABLE_BITMAP_RTI_G2      0x00000001u     /* RTI */
 #define ESM_PRIORITY_RTI_G0           0x00000001u
 #define ESM_ERRORP_RTI_G2             0x00000001u
@@ -254,7 +261,68 @@ volatile static uint32_t esmcbarg = 0;
 #define ESM_ENABLE_BITMAP_PARITYTMU_G2 0x01000000u     /* TMU PARITY */
 #define ESM_PRIORITY_PARITYTMU_G2      0x01000000u
 #define ESM_ERRORP_PARITYTMU_G2        0x01000000u
+#endif
 
+#if defined(SOC_AM261X)
+#define ESM_ENABLE_BITMAP_RTI_G2      0x00000001u     /* RTI */
+#define ESM_PRIORITY_RTI_G0           0x00000001u
+#define ESM_ERRORP_RTI_G2             0x00000001u
+
+#define ESM_ENABLE_BITMAP_MCAN0ECC_G0 0x0000000cu     /* MCAN0 correctable or not ECC  */
+#define ESM_PRIORITY_MCAN0ECC_G0      0x00000008u
+#define ESM_ERRORP_MCAN0ECC_G0        0x0000000cu
+
+#define ESM_ENABLE_BITMAP_ICSSMECC_G2 0x00007800u     /* ICSSM correctable or not ECC  */
+#define ESM_PRIORITY_ICSSMECC_G2      0x00007800u
+#define ESM_ERRORP_ICSSMECC_G2        0x00007800u
+
+#define ESM_ENABLE_BITMAP_MSSL2ECC_G0 0x000000c0u     /* MSSL2 correctable or not ECC  */
+#define ESM_PRIORITY_MSSL2ECC_G0      0x000000c0u
+#define ESM_ERRORP_MSSL2ECC_G0        0x000000c0u
+
+#define ESM_ENABLE_BITMAP_R5F0ECC_G1  0x00000060u     /* R5F0 correctable or not ECC  */
+#define ESM_PRIORITY_R5F0ECC_G1       0x00000060u
+#define ESM_ERRORP_R5F0ECC_G1         0x00000060u
+
+#define ESM_ENABLE_BITMAP_DCC_G0      0x00000F00u     /* DCC  */
+#define ESM_PRIORITY_DCC_G0           0x00000F00u
+#define ESM_ERRORP_DCC_G0             0x00000F00u
+
+#define ESM_ENABLE_BITMAP_PARITYTCM_G1 0x00000018u     /* Parity - TCM */
+#define ESM_ENABLE_BITMAP_PARITYTCM_G2 0x00000018u
+#define ESM_PRIORITY_PARITYTCM_G1      0x00000018u
+#define ESM_PRIORITY_PARITYTCM_G2      0x00000018u
+#define ESM_ERRORP_PARITYTCM_G2        0x00000018u
+#define ESM_ERRORP_PARITYTCM_G0        0x00000018u
+
+#define ESM_ENABLE_BITMAP_PARITYDMA_G1 0x00002000u     /* Parity - DMA */
+#define ESM_ENABLE_BITMAP_PARITYDMA_G2 0x00000004u
+#define ESM_PRIORITY_PARITYDMA_G1      0x00002000u
+#define ESM_PRIORITY_PARITYDMA_G2      0x00000004u
+#define ESM_ERRORP_PARITYDMA_G2        0x00000004u
+#define ESM_ERRORP_PARITYDMA_G1        0x00002000u
+
+#define ESM_ENABLE_BITMAP_ECCBUSC_G1   0x00000002u     /* ECC BUS */
+#define ESM_ENABLE_BITMAP_BUSSAFETY_G0 0x80000000u
+#define ESM_ERRORP_ECCBUS_G1           0x00000002u
+#define ESM_ERRORP_ECCBUS_G0           0x80000000u
+
+#define ESM_ENABLE_BITMAP_CCM_G2       0x000C04f0u     /* CCM */
+#define ESM_PRIORITY_CCM_G2            0x000C04f0u
+#define ESM_ERRORP_CCM_G2              0x000C04f0u
+
+#define ESM_ENABLE_BITMAP_TPTC_G0      0x000000c0u     /* ECC MSS TPTC */
+#define ESM_PRIORITY_TPTC_G0           0x000000c0u
+#define ESM_ERRORP_TPTC_G2             0x000000c0u
+
+#define ESM_ENABLE_BITMAP_VTM_G0       0x40000000u     /* VTM */
+#define ESM_PRIORITY_VTM_G0            0x00000000u
+#define ESM_ERRORP_VTM_G0              0x40000000u
+
+#define ESM_ENABLE_BITMAP_PARITYTMU_G2 0x00000100u     /* TMU PARITY */
+#define ESM_PRIORITY_PARITYTMU_G2      0x00000100u
+#define ESM_ERRORP_PARITYTMU_G2        0x00000100u
+#endif
 /* we will configure this  in the initlaization function for the ESM */
 #define ESM_NOT_CONFIGURED            0x00000000u    /* used when not configuring any values for the ESM */
 
@@ -339,7 +407,11 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         sdlstats.esmcb = ESMCB_DCC;
         dcc_clearESM();
     }
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     else if ( (intSrc >= ESM_INT_TCMADDR_R500) && (intSrc <= ESM_INT_TCMADDR_R511) )
+#elif defined(SOC_AM261X)
+    else if ( (intSrc >= ESM_INT_TCMADDR_R500) && (intSrc <= ESM_INT_TCMADDR_R501) )
+#endif
     {
         /* TCM Parity */
         sdlstats.esmcb = ESMCB_PARITYTCM ;
@@ -363,12 +435,16 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         sdlstats.esmcb = ESMCB_RTI;
         rti_clearESM(intSrc);
     }
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     else if ((intSrc == ESM_INT_CCM0_LOCKSTEP) || (intSrc == ESM_INT_CCM0_SELFTEST) || (intSrc == ESM_INT_CCM1_SELFTEST) || (intSrc == ESM_INT_CCM1_LOCKSTEP))
+#elif defined (SOC_AM261X)
+    else if ((intSrc == ESM_INT_CCM0_LOCKSTEP) || (intSrc == ESM_INT_CCM0_SELFTEST))
+#endif
     {
         sdlstats.esmcb = ESMCB_CCM;
         ccm_clearESM(intSrc);
     }
-    #if defined (SOC_AM263PX)
+    #if defined (SOC_AM263PX) || defined(SOC_AM261X)
     else if (intSrc == ESM_INT_VTM)
     {
         sdlstats.esmcb = ESMCB_VTM;
@@ -423,7 +499,16 @@ int32_t ESM_init (void)
 
     Example_esmInitConfig.priorityBitmap[0] = (ESM_PRIORITY_RTI_G0 | ESM_PRIORITY_MCAN0ECC_G0  | ESM_PRIORITY_DCC_G0 | ESM_PRIORITY_PARITYTCM_G0 |  ESM_ERRORP_ECCBUS_G0 | ESM_PRIORITY_MSSL2ECC_G0 | ESM_PRIORITY_TPTC_G0);
     Example_esmInitConfig.priorityBitmap[1] = (ESM_ERRORP_ECCBUS_G1 | ESM_PRIORITY_PARITYDMA_G1 | ESM_PRIORITY_R5F0ECC_G1 | ESM_PRIORITY_VTM_G1);
-    Example_esmInitConfig.priorityBitmap[2] = (ESM_PRIORITY_PARITYTCM_G2 | ESM_PRIORITY_CCM_G2 | ESM_PRIORITY_PARITYDMA_G2 | ESM_PRIORITY_ICSSMECC_G2 | ESM_PRIORITY_PARITYTMU_G2);
+    Example_esmInitConfig.priorityBitmap[2] = (ESM_PRIORITY_PARITYTCM_G2 | ESM_PRIORITY_CCM_G2 | ESM_PRIORITY_PARITYDMA_G2 | ESM_PRIORITY_ICSSMECC_G2 | ESM_PRIORITY_PARITYTMU_G2 | ESM_ENABLE_BITMAP_PARITYTCM_G2);
+    #endif
+    #if defined(SOC_AM261X)
+    Example_esmInitConfig.enableBitmap[0]   = (ESM_ENABLE_BITMAP_BUSSAFETY_G0 | ESM_ENABLE_BITMAP_MCAN0ECC_G0 | ESM_ENABLE_BITMAP_MSSL2ECC_G0 | ESM_ENABLE_BITMAP_TPTC_G0 | ESM_ENABLE_BITMAP_DCC_G0 | ESM_ENABLE_BITMAP_VTM_G0);
+    Example_esmInitConfig.enableBitmap[1]   = (ESM_ENABLE_BITMAP_ECCBUSC_G1 | ESM_ENABLE_BITMAP_R5F0ECC_G1 | ESM_ENABLE_BITMAP_PARITYTCM_G1 | ESM_ENABLE_BITMAP_PARITYDMA_G1);
+    Example_esmInitConfig.enableBitmap[2]   = (ESM_ENABLE_BITMAP_RTI_G2 | ESM_ENABLE_BITMAP_CCM_G2 | ESM_ENABLE_BITMAP_ICSSMECC_G2 | ESM_ENABLE_BITMAP_PARITYTMU_G2 | ESM_ENABLE_BITMAP_PARITYTCM_G1 | ESM_ENABLE_BITMAP_PARITYDMA_G2);
+
+    Example_esmInitConfig.priorityBitmap[0] = (ESM_PRIORITY_RTI_G0 | ESM_PRIORITY_MCAN0ECC_G0  | ESM_PRIORITY_MSSL2ECC_G0 | ESM_PRIORITY_TPTC_G0 | ESM_PRIORITY_DCC_G0 | ESM_PRIORITY_VTM_G0 | ESM_ERRORP_ECCBUS_G0);
+    Example_esmInitConfig.priorityBitmap[1] = (ESM_ERRORP_ECCBUS_G1 | ESM_PRIORITY_R5F0ECC_G1 | ESM_PRIORITY_PARITYTCM_G1);
+    Example_esmInitConfig.priorityBitmap[2] = (ESM_PRIORITY_CCM_G2 | ESM_PRIORITY_ICSSMECC_G2 | ESM_PRIORITY_PARITYTMU_G2 | ESM_PRIORITY_PARITYTCM_G2);
     #endif
 /***
     We will leave the Safety LED Off on the EVM (LD016).  If we detect an ESM event that is not ecpected we will

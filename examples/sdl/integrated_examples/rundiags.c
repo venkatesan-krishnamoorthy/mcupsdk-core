@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -67,7 +67,7 @@ int32_t performDiags(void *args)
 {
   int32_t   sdlResult;
   uint32_t  delay;
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined(SOC_AM261X)
   uint32_t indexId;
 #endif
   /* check RTI_UC1 */
@@ -225,7 +225,7 @@ int32_t performDiags(void *args)
     return sdlResult;
   }
   DebugP_log("PASSED. \r\n");
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
   /* check TMU ROM Checksum test */
   for (delay=0; delay < 20000; delay++);
   DebugP_log("    TMU ROM Checksum test... ");

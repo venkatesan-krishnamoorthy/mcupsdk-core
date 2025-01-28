@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2024
+ *   Copyright (c) Texas Instruments Incorporated 2024-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -69,32 +69,62 @@
 
 #if SDL_ICSSM_DRAM0
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ADDR                    (0x48000000u) /* ICSSM DRAM0 RAM address */
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
+#endif
+#if defined(SOC_AM261X)
+#define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
+#endif
 #endif
 
 #if SDL_ICSSM_DRAM1
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ADDR                    (0x48002000u) /* ICSSM DRAM1 RAM address */
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID
+#endif
+#if defined(SOC_AM261X)
+#define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID
+#endif
 #endif
 
 #if SDL_ICSSM_PR1_PDSP0_IRAM
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ADDR                    (0x48034000u) /* ICSSM PR1 PDSP0 IRAM RAM address */
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID
+#endif
+#if defined(SOC_AM261X)
+#define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID
+#endif
 #endif
 
 #if SDL_ICSSM_PR1_PDSP1_IRAM
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ADDR                    (0x48038000u) /* ICSSM PR1 PDSP1 IRAM RAM address */
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID
+#endif
+#if defined(SOC_AM261X)
+#define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID
+#endif
 #endif
 
 #if SDL_ICSSM_RAM
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ADDR                    (0x48010000u) /* ICSSM RAM RAM address */
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
 #define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID
+#endif
+#if defined(SOC_AM261X)
+#define SDL_EXAMPLE_ECC_ICSSM_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_ICSSM_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID
+#endif
 #endif
 /* ========================================================================== */
 /*                            Global Variables                                */

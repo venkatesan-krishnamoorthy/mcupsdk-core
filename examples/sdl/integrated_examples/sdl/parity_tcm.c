@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2024
+ *   Copyright (c) Texas Instruments Incorporated 2024-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,6 +62,10 @@
 #include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
 #include <sdl/ecc/soc/am263px/sdl_ecc_soc.h>
 #endif
+#if defined(SOC_AM261X)
+#include <sdl/include/am261x/sdlr_soc_ecc_aggr.h>
+#include <sdl/ecc/soc/am261x/sdl_ecc_soc.h>
+#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -82,7 +86,7 @@
 #define SDL_R5F0ATCM1_MASK							(0x70U)
 #define SDL_R5F0B0TCM1_MASK							(0x7000U)
 #define	SDL_R5F0B1TCM1_MASK							(0x700000U)
-
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_R5F1ATCM0_MASK							(0x7U)
 #define SDL_R5F1B0TCM0_MASK							(0x700U)
 #define	SDL_R5F1B1TCM0_MASK							(0x70000U)
@@ -90,7 +94,7 @@
 #define SDL_R5F1ATCM1_MASK							(0x70U)
 #define SDL_R5F1B0TCM1_MASK							(0x7000U)
 #define	SDL_R5F1B1TCM1_MASK							(0x700000U)
-
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -112,12 +116,15 @@ static int32_t  setValue=0x7u; /* for clearing TCM registers */
 int32_t ParityTCM_clear(void)
 {
     int32_t retVal = SDL_PASS;
-
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
   sdlstats.tcm.statusRegValue0 = SDL_REG32_RD(SDL_R5FSS0_CORE0_TCM_ERR_STATUS);
   sdlstats.tcm.statusRegValue1 = SDL_REG32_RD(SDL_R5FSS0_CORE1_TCM_ERR_STATUS);
   sdlstats.tcm.statusRegValue2 = SDL_REG32_RD(SDL_R5FSS1_CORE0_TCM_ERR_STATUS);
   sdlstats.tcm.statusRegValue3 = SDL_REG32_RD(SDL_R5FSS1_CORE1_TCM_ERR_STATUS);
-
+#elif defined(SOC_AM261X)
+  sdlstats.tcm.statusRegValue0 = SDL_REG32_RD(SDL_R5FSS0_CORE0_TCM_ERR_STATUS);
+  sdlstats.tcm.statusRegValue1 = SDL_REG32_RD(SDL_R5FSS0_CORE1_TCM_ERR_STATUS);
+#endif
 	SDL_cleartcmStatusRegs(setValue);
 
 	paritytcm_esmError = true;
@@ -245,7 +252,7 @@ int32_t ParityTCM_test(void)
 			retVal = SDL_PASS;
 		}
 	}
-
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #ifdef TCM_ON_R5F1
 /* R5FSS1_0 */
 
@@ -353,7 +360,7 @@ int32_t ParityTCM_test(void)
 		}
 	}
 #endif /* TCM on R5F1 */
-
+#endif
     return retVal;
 }
 

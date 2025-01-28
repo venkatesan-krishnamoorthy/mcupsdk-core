@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2023-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -88,7 +88,7 @@ int main_parent(void)
   {
     sdlstats.startupErrCode |= STARTUPDIAGS_ESMERR;
   }
-  #if !defined(SOC_AM263PX)
+  #if defined(SOC_AM263X)
   /* Run self Test Check */
   STC_run(NULL);
   if ( (sdlstats.stcResult[0] != SDL_STC_COMPLETED_SUCCESS) || (sdlstats.stcResult[1] != SDL_STC_COMPLETED_SUCCESS) )
@@ -141,7 +141,7 @@ int main_parent(void)
     SDL_ESM_setNError(SDL_ESM_INST_MAIN_ESM0);
     while (FOREVER);
   }
-  #if !defined(SOC_AM263PX)
+  #if defined(SOC_AM263X)
   /* Main task */
   gMainTask = xTaskCreateStatic( main_task,        /* Pointer to the function that implements the task. */
                                 "main_task",      /* Text name for the task.  This is to facilitate debugging only. */
@@ -158,7 +158,7 @@ int main_parent(void)
     while (FOREVER);
   }
   #endif
-  #if !defined(SOC_AM263X)
+  #if defined(SOC_AM263PX) || defined(SOC_AM261X)
   exampleState = EXAMPLE_STATE_STARTUP_DONE;
   main_task(NULL);
   #endif

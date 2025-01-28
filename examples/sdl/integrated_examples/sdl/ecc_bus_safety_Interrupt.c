@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2022-2024 Texas Instruments Incorporated
+/* Copyright (c) 2022-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,10 +61,14 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_SEC_test(const SDL_ESM_Inst esmInstType, u
 /*===========================================================================*/
 /*                         Global Variables                                  */
 /*===========================================================================*/
-
+#if  defined (SOC_AM263X) || defined (SOC_AM263PX)
 volatile bool mssSecFlag = FALSE;
 volatile bool SDL_MSS_intrFlg[SDL_ECC_BUS_SAFETY_MSS_STM_STIM+1U];
-
+#endif
+#if defined (SOC_AM261X)
+volatile bool mssSecFlag = FALSE;
+volatile bool SDL_MSS_intrFlg[SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP+1U];
+#endif
 /*===========================================================================*/
 /*                   Local Function definitions                              */
 /*===========================================================================*/
@@ -112,7 +116,7 @@ int32_t EccBusSafety_clearESM(void)
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_MBOX);
     /*  MSS_MMC */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_MMC);
-    #if !defined(SOC_AM263PX)
+    #if defined(SOC_AM263X)
     /*  MSS_GPMC */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_GPMC);
     #endif
@@ -122,18 +126,22 @@ int32_t EccBusSafety_clearESM(void)
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_L2_B);
     /* MSS_L2_C */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_L2_C);
+    #if defined(SOC_AM263X) || defined(SOC_AM263PX)
     /* MSS_L2_D */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_L2_D);
+    #endif
     /* MSS_CPSW */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_CPSW);
     /* MSS_MCRC */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_MCRC);
+    #if defined(SOC_AM263X) || defined(SOC_AM263PX)
     /* ICSSM_PDSP0 */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_PDSP0);
     /* ICSSM_PDSP1 */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_PDSP1);
     /* ICSSM_S */
     SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_S);
+    #endif
     mssSecFlag = TRUE;
   }
   else
@@ -234,7 +242,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_C_RED_Test(void)
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
             SDL_ECC_BUS_SAFETY_MSS_L2_C, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 /********************************************************************************************************
 *   For Node MSS_L2_D
 *********************************************************************************************************/
@@ -255,7 +263,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_L2_D_RED_Test(void)
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
             SDL_ECC_BUS_SAFETY_MSS_L2_D, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#endif
 /********************************************************************************************************
 *   For Node MSS_MMC_S
 *********************************************************************************************************/
@@ -352,6 +360,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB_RED_Test()
 {
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 /********************************************************************************************************
 *   For Node MSS_CR5C_AHB_RED_TEST
 *********************************************************************************************************/
@@ -367,7 +376,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AHB_RED_Test()
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
             SDL_ECC_BUS_SAFETY_MSS_CR5D_AHB, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#endif
 /********************************************************************************************************
 *   For Node MSS_TPTC_A0_RD
 *********************************************************************************************************/
@@ -446,7 +455,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR_RED_Test(void)
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
             SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_WR, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 /********************************************************************************************************
 *   For Node MSS_CR5C_AXI_WR
 *********************************************************************************************************/
@@ -466,7 +475,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_WR_RED_Test(void)
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
             SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_WR, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#endif
 /********************************************************************************************************
 *   For Node MSS_CR5A_AXI_RD
 *********************************************************************************************************/
@@ -508,7 +517,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD_RED_Test(void)
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
             SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_RD, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 /********************************************************************************************************
 *   For Node MSS_CR5C_AXI_RD
 *********************************************************************************************************/
@@ -550,7 +559,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD_RED_Test(void)
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
             SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_RD, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#endif
 /********************************************************************************************************
 *   For Node MSS_CR5A_AXI_S
 *********************************************************************************************************/
@@ -587,7 +596,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S_RED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_CR5B_AXI_S, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 /********************************************************************************************************
 *   For Node MSS_CR5C_AXI_S
 *********************************************************************************************************/
@@ -624,7 +633,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S_RED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_CR5D_AXI_S, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#endif
 /********************************************************************************************************
 *   For Node MSS_MCRC
 *********************************************************************************************************/
@@ -642,7 +651,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test(void)
 {
     return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_MCRC, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#if defined (SOC_AM263X)
 /********************************************************************************************************
 *   For Node MSS_QSPI
 *********************************************************************************************************/
@@ -661,7 +670,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test(void)
   return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
           SDL_ECC_BUS_SAFETY_MSS_QSPI, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#endif
 /********************************************************************************************************
 *   For Node MSS_MBOX
 *********************************************************************************************************/
@@ -734,7 +743,120 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_SCRP1_RED_Test(void)
   return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
           SDL_ECC_BUS_SAFETY_MSS_SCRP1, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
+#if defined (SOC_AM261X)
+/********************************************************************************************************
+*   For Node ICSSM_PDSP0
+*********************************************************************************************************/
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0_SEC_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0,SDL_ICSSM0_PDSP0_U_BASE));
+}
 
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0_DED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0,SDL_ICSSM0_PDSP0_U_BASE+64U));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0_RED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
+          SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP0, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
+}
+
+/********************************************************************************************************
+*   For Node ICSSM_PDSP1
+*********************************************************************************************************/
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1_SEC_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1,SDL_ICSSM0_PDSP1_U_BASE));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1_DED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1,SDL_ICSSM0_PDSP1_U_BASE+64U));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1_RED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
+          SDL_ECC_BUS_SAFETY_MSS_ICSSM0_PDSP1, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
+}
+
+/********************************************************************************************************
+*   For Node ICSSM_SLAVE
+*********************************************************************************************************/
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S_SEC_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S,SDL_ICSSM0_S_BASE));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S_DED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S,SDL_ICSSM0_S_BASE+64U));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S_RED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
+          SDL_ECC_BUS_SAFETY_MSS_ICSSM0_S, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
+}
+/********************************************************************************************************
+*   For Node ICSSM_PDSP0
+*********************************************************************************************************/
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0_SEC_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0,SDL_ICSSM1_PDSP0_U_BASE));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0_DED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0,SDL_ICSSM1_PDSP0_U_BASE+64U));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0_RED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
+          SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP0, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
+}
+
+/********************************************************************************************************
+*   For Node ICSSM_PDSP1
+*********************************************************************************************************/
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1_SEC_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1,SDL_ICSSM1_PDSP1_U_BASE));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1_DED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1,SDL_ICSSM1_PDSP1_U_BASE+64U));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1_RED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
+          SDL_ECC_BUS_SAFETY_MSS_ICSSM1_PDSP1, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
+}
+
+/********************************************************************************************************
+*   For Node ICSSM_SLAVE
+*********************************************************************************************************/
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_SEC_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_SEC_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S,SDL_ICSSM1_S_BASE));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_DED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_DED_test(SDL_ESM_INST_MAIN_ESM0, SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S,SDL_ICSSM1_S_BASE+64U));
+}
+
+int32_t SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S_RED_Test(void)
+{
+    return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0,\
+          SDL_ECC_BUS_SAFETY_MSS_ICSSM1_S, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
+}
+#else
 /********************************************************************************************************
 *   For Node ICSSM_PDSP0
 *********************************************************************************************************/
@@ -793,7 +915,7 @@ int32_t SDL_ECC_BUS_SAFETY_ICSSM_S_RED_Test(void)
   return (SDL_ECC_BUS_SAFETY_MSS_RED_test(SDL_ESM_INST_MAIN_ESM0, \
           SDL_ECC_BUS_SAFETY_ICSSM_S, SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
-
+#endif
 /********************************************************************************************************
 *   For Node DAP
 *********************************************************************************************************/

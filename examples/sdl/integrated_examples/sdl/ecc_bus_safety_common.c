@@ -1,4 +1,4 @@
-/* Copyright (c) 2022-2024 Texas Instruments Incorporated
+/* Copyright (c) 2022-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -313,7 +313,7 @@ void SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(uint32_t busSftyNode , uint32_t *d
             break;
         }
         #endif
-        #if defined (SOC_AM263X)
+        #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         /* MSS TPTC A0 RD */
         case SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD :
         {

@@ -1,4 +1,4 @@
-/* Copyright (c) 2022-2024 Texas Instruments Incorporated
+/* Copyright (c) 2022-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -55,8 +55,11 @@
 /*
  *  \brief global variable for holding data buffer.
 */
+#if defined(SOC_AM263X)|| defined(SOC_AM263PX)
 static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0, SDL_STC_INST_MAINR5F1};
-
+#elif defined(SOC_AM261X)
+static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0};
+#endif
 /*===========================================================================*/
 /*                         Macros                                            */
 /*===========================================================================*/

@@ -294,6 +294,7 @@ const example_file_list = [
 	"examples/sdl/stog/.project/project.js",
 	"examples/sdl/tmu_rom_checksum/.project/project.js",
 	"examples/sdl/vtm/vtm_mcu/.project/project.js",
+	"examples/sdl/integrated_examples/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cbc_128/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_cbc_256/.project/project.js",
 	"examples/security/crypto/dthe_aes/crypto_aes_ccm_128/.project/project.js",
