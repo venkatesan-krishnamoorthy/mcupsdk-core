@@ -64,15 +64,11 @@ typedef void (*FsiTestTestCaseFxnPtr)(void *args);
 
 typedef struct FSI_HLD_TxTestParams_s {
     FSI_Tx_Params fsi_tx_params;
-    uint32_t rxFrameWDTest;
-    uint32_t rxPingWDTest;
     SemaphoreP_Object taskDoneSemaphoreObj;
 } FSI_HLD_TxTestParams;
 
 typedef struct FSI_HLD_RxTestParams_s {
     FSI_Rx_Params fsi_rx_params;
-    uint32_t rxFrameWDTest;
-    uint32_t rxPingWDTest;
     SemaphoreP_Object taskDoneSemaphoreObj;
 } FSI_HLD_RxTestParams;
 

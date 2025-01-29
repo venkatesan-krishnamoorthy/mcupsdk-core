@@ -93,7 +93,9 @@ void test_main(void *args)
 {
     FSI_MainTestParams  testParams;
 
-    Drivers_open();
+   // Drivers_open();
+    Drivers_intXbarOpen();
+    Drivers_uartOpen();
 
     UNITY_BEGIN();
 
@@ -124,7 +126,8 @@ void test_main(void *args)
     test_fsi_set_params(&testParams, 9);
     RUN_TEST(test_fsi_txrx, 9, (void*)&testParams);
 
-
+    test_fsi_set_params(&testParams, 10);
+    RUN_TEST(test_fsi_txrx, 10, (void*)&testParams);
 
     UNITY_END();
 
@@ -146,16 +149,6 @@ void test_fsi_txrx(void *args)
     status = SemaphoreP_constructCounting(&rxTestParams->taskDoneSemaphoreObj, 0, 2);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    TaskP_Params_init(&txTaskParms);
-    txTaskParms.name = "FSI-TX Task";
-    txTaskParms.stackSize = FSI_TASK_STACK_SIZE;
-    txTaskParms.stack = gFsiTxTaskStack;
-    txTaskParms.priority = FSI_TASK_PRIORITY;
-    txTaskParms.args = txTestParams;
-    txTaskParms.taskMain = testParams->testCaseTxFxnPtr;;
-    status = TaskP_construct(&gFsiTxTaskObject, &txTaskParms);
-    DebugP_assert(status == SystemP_SUCCESS);
-
     TaskP_Params_init(&rxTaskParms);
     rxTaskParms.name = "FSI-RX Task";
     rxTaskParms.stackSize = FSI_TASK_STACK_SIZE;
@@ -166,6 +159,16 @@ void test_fsi_txrx(void *args)
     status = TaskP_construct(&gFsiRxTaskObject, &rxTaskParms);
     DebugP_assert(status == SystemP_SUCCESS);
 
+    TaskP_Params_init(&txTaskParms);
+    txTaskParms.name = "FSI-TX Task";
+    txTaskParms.stackSize = FSI_TASK_STACK_SIZE;
+    txTaskParms.stack = gFsiTxTaskStack;
+    txTaskParms.priority = FSI_TASK_PRIORITY;
+    txTaskParms.args = txTestParams;
+    txTaskParms.taskMain = testParams->testCaseTxFxnPtr;;
+    status = TaskP_construct(&gFsiTxTaskObject, &txTaskParms);
+    DebugP_assert(status == SystemP_SUCCESS);
+
     SemaphoreP_pend(&txTestParams->taskDoneSemaphoreObj, SystemP_WAIT_FOREVER);
     SemaphoreP_pend(&rxTestParams->taskDoneSemaphoreObj, SystemP_WAIT_FOREVER);
 
@@ -173,7 +176,7 @@ void test_fsi_txrx(void *args)
     TaskP_destruct(&gFsiTxTaskObject);
 
     /* Compare data */
-    if ((rxTestParams->rxFrameWDTest != TRUE) && (rxTestParams->rxPingWDTest != TRUE) )
+    if ((rxTestParams->fsi_rx_params.rxFrameWDTest != TRUE) && (rxTestParams->fsi_rx_params.rxPingWDTest != TRUE) )
     {
         status = Fsi_appCompareData(gTxBufData, gRxBufData);
         DebugP_assert(status == SystemP_SUCCESS);
@@ -284,6 +287,7 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
             gFsiRxTestParams.fsi_rx_params.rxTrigger = TRUE;
             gFsiTxTestParams.fsi_tx_params.rxTrigger = TRUE;
             break;
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         case 9:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.udataFilterTest = TRUE;
@@ -291,6 +295,12 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
             gFsiRxTestParams.fsi_rx_params.userData  = FSI_APP_RX_USER_DATA_FILTER_VALUE;
             gFsiTxTestParams.fsi_tx_params.userData  = FSI_APP_TX_USER_DATA_FILTER_VALUE;
             break;
+        case 10:
+            Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
+            gFsiRxTestParams.fsi_rx_params.intrEvt = FSI_RX_EVT_FRAME_WD_TIMEOUT;
+            gFsiRxTestParams.fsi_rx_params.rxFrameWDTest = TRUE;
+            gFsiTxTestParams.fsi_tx_params.rxFrameWDTest = TRUE;
+#endif
     }
 
     return;
@@ -304,12 +314,6 @@ static void Fsi_appTxRxTestParamsInit(FSI_HLD_RxTestParams *rxTestParms,
 
     FSI_HLD_TxParams_init(tx_params);
     FSI_HLD_RxParams_init(rx_params);
-
-    rxTestParms->rxFrameWDTest = FALSE;
-    rxTestParms->rxPingWDTest  = FALSE;
-
-    txTestParms->rxFrameWDTest = FALSE;
-    txTestParms->rxPingWDTest  = FALSE;
 
     return;
 }

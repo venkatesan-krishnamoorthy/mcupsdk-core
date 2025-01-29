@@ -216,6 +216,15 @@ typedef struct FSI_Tx_Params_t
     /**< User Data Filter Test */
     bool udataFilterTest;
 
+    /**< Receive Frame WD Test */
+    bool                rxFrameWDTest;
+
+    /* Receive Ping WD Test */
+    bool                rxPingWDTest;
+
+    /**< Interrupt Event */
+    uint32_t                intrEvt;
+
     /*! Blocking or Callback mode. Refer \ref FSI_Tx_TransferMode
      */
     uint32_t                transferMode;
@@ -248,6 +257,9 @@ typedef struct FSI_Tx_Attrs_s
 
     /**< Peripheral Interrupt line number */
     uint32_t                intrLine;
+
+    /**< Interrupt Event */
+    uint32_t                intrEvt;
 
     /**< Driver operating mode. Polling, DMA, interrupt */
     uint32_t                operMode;

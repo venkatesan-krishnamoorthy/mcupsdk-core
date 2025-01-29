@@ -81,7 +81,7 @@ void fsi_tx_main(void *args)
     uint16_t bufIdx;
     SemaphoreP_Object *p_taskDoneSemaphoreObj;
     FSI_TxTestParams  *txTestParams = (FSI_TxTestParams  *)args;
-    uint16_t bufPtrLoc;
+    uint16_t bufPtrLoc, wordCnt;
     uint16_t *tmpBufAddr;
 
     /* Test parameters */
@@ -156,7 +156,7 @@ void fsi_tx_main(void *args)
         status = FSI_startTxTransmit(txBaseAddr);
         DebugP_assert(status == SystemP_SUCCESS);
 
-        //FSI_getTxWordCount(txBaseAddr, &wordCnt);
+        FSI_getTxWordCount(txBaseAddr, &wordCnt);
         /* Wait for TX and RX completion */
         SemaphoreP_pend(&gFsiTxSemObject, SystemP_WAIT_FOREVER);
     }

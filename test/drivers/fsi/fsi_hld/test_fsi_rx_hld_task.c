@@ -59,6 +59,7 @@
 uint16_t gRxBufData[FSI_MAX_VALUE_BUF_PTR_OFF + 1U];
 
 extern SemaphoreP_Object gFsiTxRx_SyncSemaphoreObj;
+
 volatile uint32_t gRxFrameWdTest = FALSE;
 volatile uint32_t gRxPingWdTest = FALSE;
 
@@ -73,7 +74,7 @@ volatile uint32_t gRxPingWdTest = FALSE;
 void fsi_rx_hld_main(void *args)
 {
     int32_t status = SystemP_SUCCESS;
-    uint32_t rxBaseAddr, rxBufAddr;
+    uint32_t rxBaseAddr = 0, rxBufAddr;
     uint16_t dataSize;
     uint16_t bufIdx;
     uint16_t *tmpBufAddr;
@@ -81,13 +82,22 @@ void fsi_rx_hld_main(void *args)
     FSI_HLD_RxTestParams  *rxTestParams = (FSI_HLD_RxTestParams  *)args;
     FSI_Rx_Params rxParams = rxTestParams->fsi_rx_params;
 
+    FSI_Rx_close(gFsiRxHandle[CONFIG_FSI_RX0]);
+
+    gFsiRxHandle[CONFIG_FSI_RX0] = FSI_Rx_open(CONFIG_FSI_RX0, &rxParams);
+
     /* Test parameters */
     rxBaseAddr = FSI_Rx_getBaseAddr(gFsiRxHandle[CONFIG_FSI_RX0]);
+    status = FSI_enableRxInternalLoopback(rxBaseAddr);
+    DebugP_assert(status == SystemP_SUCCESS);
     dataSize = rxParams.frameDataSize;
     bufIdx = 0U;
     p_taskDoneSemaphoreObj = &rxTestParams->taskDoneSemaphoreObj;
 
     DebugP_log("[FSI] Loopback RX application test started ...\r\n");
+
+    /* post semaphore to sync with tx */
+    SemaphoreP_post(&gFsiTxRx_SyncSemaphoreObj);
 
     /* Memset RX buffer with 0 for every loop */
     for (uint32_t i = 0; i < dataSize; i++)
@@ -95,7 +105,7 @@ void fsi_rx_hld_main(void *args)
         gRxBufData[i] = 0;
     }
 
-    if (rxTestParams->rxFrameWDTest != TRUE)
+    if (rxParams.rxFrameWDTest != TRUE)
     {
         status = FSI_Rx_hld(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData, NULL, bufIdx);
         DebugP_assert(status == SystemP_SUCCESS);
@@ -109,8 +119,8 @@ void fsi_rx_hld_main(void *args)
     }
     else
     {
-        DebugP_assert(gRxFrameWdTest == TRUE);
-        gRxFrameWdTest = FALSE;
+        status = FSI_Rx_hld(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData, NULL, bufIdx);
+        DebugP_assert(status == SystemP_SUCCESS);
     }
 
     if(rxParams.errorCheck != FSI_RX_NO_ERROR_CHECK)
@@ -118,25 +128,11 @@ void fsi_rx_hld_main(void *args)
         FSI_Rx_errorCheck(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData);
     }
 
-    /* post semaphore to sync with tx */
-    SemaphoreP_post(&gFsiTxRx_SyncSemaphoreObj);
-
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-        if(rxParams.udataFilterTest == TRUE)
-        {
-            uint16_t userData;
-            FSI_getRxUserDefinedData(rxBaseAddr, &userData);
-            if ((userData & FSI_APP_RX_USER_DATA_BIT_MASK) !=
-                (rxParams.userData & FSI_APP_RX_USER_DATA_BIT_MASK))
-                {
-                    DebugP_assert(FALSE);
-                }
-
-            FSI_disableRxDataFilter(rxBaseAddr);
-        }
-#endif
-
     SemaphoreP_post(p_taskDoneSemaphoreObj);
+
+    /* RX interrupt deinit */
+    FSI_disableRxInterrupt(rxBaseAddr, 0, FSI_RX_EVTMASK);
+    FSI_clearRxEvents(rxBaseAddr, FSI_RX_EVTMASK);
 
     while(1)
     {

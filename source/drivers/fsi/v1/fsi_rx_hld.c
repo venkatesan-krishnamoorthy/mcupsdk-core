@@ -49,6 +49,7 @@
 #include <drivers/fsi.h>
 #include <drivers/fsi/v1/fsi_rx_hld.h>
 #include <drivers/fsi/v1/dma/edma/fsi_dma_edma.h>
+#include <kernel/dpl/ClockP.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -99,7 +100,6 @@ extern uint32_t gFsiRxConfigNum;
 extern FSI_Rx_Config gFsiRxConfig[];
 extern FSI_Rx_DmaHandle gFsiRxDmaHandle[];
 extern FSI_Rx_DmaChConfig gFsiRxDmaChCfg;
-
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -152,6 +152,8 @@ void FSI_HLD_RxParams_init(FSI_Rx_Params *prms)
         prms->errorCheck = FSI_RX_NO_ERROR_CHECK;
         prms->delayLineCtrl = FALSE;
         prms->udataFilterTest = FALSE;
+        prms->rxFrameWDTest = FALSE;
+        prms->rxPingWDTest = FALSE;
     }
 }
 
@@ -225,6 +227,14 @@ FSI_Rx_Handle FSI_Rx_open(uint32_t index, FSI_Rx_Params *prms)
             status += SemaphoreP_constructBinary(&obj->readTransferSemObj, 0U);
             obj->readTransferSem = &obj->readTransferSemObj;
 
+            if(obj->params->rxFrameWDTest == TRUE)
+            {
+                /* Performing a reset on frame WD */
+                FSI_resetRxModule(attrs->baseAddr, FSI_RX_FRAME_WD_CNT_RESET);
+                ClockP_usleep(1U);
+                FSI_clearRxModuleReset(attrs->baseAddr, FSI_RX_FRAME_WD_CNT_RESET);
+            }
+            /* Interrupt Init */
             /* Register interrupt */
             if(FSI_RX_OPER_MODE_INTERRUPT == attrs->operMode)
             {
@@ -234,8 +244,14 @@ FSI_Rx_Handle FSI_Rx_open(uint32_t index, FSI_Rx_Params *prms)
                 hwiPrms.callback    = &FSI_Rx_Isr;
                 hwiPrms.args        = (void *) handle;
                 status += HwiP_construct(&obj->hwiObj, &hwiPrms);
-                status = FSI_enableRxInterrupt(attrs->baseAddr, attrs->intrNum, FSI_RX_EVT_DATA_FRAME);
+                status = FSI_enableRxInterrupt(attrs->baseAddr, attrs->intrNum, prms->intrEvt);
             }
+        }
+
+        if(obj->params->rxFrameWDTest == TRUE)
+        {
+            /* Value to generate a Frame WD timeout interrupt event */
+            FSI_enableRxFrameWatchdog(attrs->baseAddr, 0x10000);
         }
 
         SemaphoreP_post(&gFsiRxDrvObj.lockObj);
@@ -494,10 +510,18 @@ int32_t FSI_Rx_Intr(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTa
         attrs = config->attrs;
         obj = config->object;
         baseAddr = attrs->baseAddr;
-        dataSize = obj->params->frameDataSize;
-        /* Recieve data */
-        status = FSI_readRxBuffer(baseAddr, rxBufData, dataSize, bufIdx);
-        DebugP_assert(status == SystemP_SUCCESS);
+
+        if(obj->params->rxFrameWDTest != TRUE)
+        {
+            dataSize = obj->params->frameDataSize;
+            /* Recieve data */
+            status = FSI_readRxBuffer(baseAddr, rxBufData, dataSize, bufIdx);
+            DebugP_assert(status == SystemP_SUCCESS);
+        }
+        else
+        {
+
+        }
     }
 
     return status;
@@ -574,6 +598,7 @@ void FSI_Rx_Isr(void* args)
     FSI_Rx_Config *config = NULL;
     FSI_Rx_Object *object = NULL;
     uint32_t baseAddr = 0;
+    uint16_t intrStatus;
 
     if(args != NULL)
     {
@@ -582,10 +607,31 @@ void FSI_Rx_Isr(void* args)
         baseAddr = attrs->baseAddr;
         object = config->object;
 
-        FSI_clearRxEvents(baseAddr, FSI_RX_EVT_FRAME_DONE);
+        FSI_getRxEventStatus(baseAddr, &intrStatus);
+        if ((intrStatus & FSI_RX_EVT_FRAME_WD_TIMEOUT) == FSI_RX_EVT_FRAME_WD_TIMEOUT)
+        {
+            FSI_clearRxEvents(baseAddr, FSI_RX_EVT_FRAME_WD_TIMEOUT);
+        }
+        if ((intrStatus & FSI_RX_EVT_PING_WD_TIMEOUT) == FSI_RX_EVT_PING_WD_TIMEOUT)
+        {
+            FSI_clearRxEvents(baseAddr, FSI_RX_EVT_PING_WD_TIMEOUT);
+        }
+        if ((intrStatus & (FSI_RX_EVT_DATA_FRAME | FSI_RX_EVT_FRAME_DONE)) ==
+                          (FSI_RX_EVT_DATA_FRAME | FSI_RX_EVT_FRAME_DONE))
+        {
+            FSI_clearRxEvents(baseAddr,
+                              (FSI_RX_EVT_DATA_FRAME | FSI_RX_EVT_FRAME_DONE));
+        }
+
+        if ((intrStatus & FSI_RX_EVT_PING_FRAME) == FSI_RX_EVT_PING_FRAME)
+        {
+            FSI_clearRxEvents(baseAddr, FSI_RX_EVT_PING_FRAME);
+        }
+
         SemaphoreP_post(&object->readTransferSemObj);
+
+        return;
     }
-    return;
 }
 
 void FSI_Rx_errorCheck(FSI_Rx_Handle handle, uint16_t *rxBufData)

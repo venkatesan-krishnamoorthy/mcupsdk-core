@@ -77,54 +77,34 @@ void fsi_tx_hld_main(void *args)
     SemaphoreP_Object *p_taskDoneSemaphoreObj;
     FSI_HLD_TxTestParams  *txTestParams = (FSI_HLD_TxTestParams  *)args;
     FSI_Tx_Params txParams = txTestParams->fsi_tx_params;
-    FSI_Rx_Params rxParams;
 
     FSI_Tx_Config *tx_config = NULL;
     FSI_Tx_Attrs  *tx_attrs   = NULL;
 
+    gFsiTxHandle[CONFIG_FSI_TX0] = FSI_Tx_open(CONFIG_FSI_TX0, &txParams);
+
     tx_config = (FSI_Tx_Config *)gFsiTxHandle[CONFIG_FSI_TX0];
     tx_attrs = tx_config->attrs;
 
-    FSI_Tx_close(gFsiTxHandle[CONFIG_FSI_TX0]);
-    FSI_Rx_close(gFsiRxHandle[CONFIG_FSI_RX0]);
+   // FSI_Tx_close(gFsiTxHandle[CONFIG_FSI_TX0]);
 
     /* Test parameters */
     txBaseAddr = FSI_Tx_getBaseAddr(gFsiTxHandle[CONFIG_FSI_TX0]);
+    rxBaseAddr = FSI_Rx_getBaseAddr(gFsiRxHandle[CONFIG_FSI_RX0]);
     dataSize = txParams.frameDataSize;
     bufIdx = 0U;
     p_taskDoneSemaphoreObj = &txTestParams->taskDoneSemaphoreObj;
 
     DebugP_log("[FSI] Loopback Tx application started ...\r\n");
 
-    FSI_Tx_open(CONFIG_FSI_TX0, &txParams);
-
-    /* FSI_enableRxInternalLoopback should be called before FSI transmits the data
-       and FSI_Rx_Open should be called before "FSI_enableRxInternalLoopback" function
-    */
-    rxParams.loopCnt = txParams.loopCnt;
-    rxParams.frameDataSize = txParams.frameDataSize;
-    rxParams.numLane = txParams.numLane;
-    rxParams.transferMode = txParams.transferMode;
-    rxParams.transferCallbackFxn = NULL;
-    rxParams.errorCallbackFxn = NULL;
-    rxParams.errorCheck = txParams.errorCheck;
-    rxParams.delayLineCtrl = txParams.delayLineCtrl;
-    rxParams.rxTrigger = txParams.rxTrigger;
-    rxParams.rxTriggerValCycles = txParams.rxTriggerVal;
-    rxParams.userData = txParams.userData;
-    rxParams.udataFilterTest = txParams.udataFilterTest;
-    FSI_Rx_open(CONFIG_FSI_RX0, &rxParams);
-
-    /* Enable loopback */
-    /* Test parameters */
-    rxBaseAddr = FSI_Rx_getBaseAddr(gFsiRxHandle[CONFIG_FSI_RX0]);
-    status = FSI_enableRxInternalLoopback(rxBaseAddr);
-    DebugP_assert(status == SystemP_SUCCESS);
 
     /* Send Flush Sequence to sync, after every rx soft reset */
     status = FSI_executeTxFlushSequence(txBaseAddr, tx_attrs->preScalarVal);
     DebugP_assert(status == SystemP_SUCCESS);
 
+    /* sync between rx and tx */
+    status = SemaphoreP_pend(&gFsiTxRx_SyncSemaphoreObj,SystemP_WAIT_FOREVER);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     /* Start transfer */
     /* Memset TX buffer with new data for every loop */
@@ -132,36 +112,20 @@ void fsi_tx_hld_main(void *args)
     {
         gTxBufData[i] = dataSize + i;
     }
- 
-    if(txParams.errorCheck != FSI_TX_NO_ERROR_CHECK)
-    {
-        FSI_Tx_errorCheck(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData);
-    }
 
-    if (txTestParams->rxFrameWDTest != TRUE)
-    {
-        /* Transmit data */
-        status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, NULL, bufIdx);
-        DebugP_assert(status == SystemP_SUCCESS);
-    }
-    else
-    {
-        status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, NULL, bufIdx);
-        DebugP_assert(status == SystemP_SUCCESS);
-        FSI_disableTxClock(txBaseAddr);
-    }
-
-    /* sync between rx and tx */
-    status = SemaphoreP_pend(&gFsiTxRx_SyncSemaphoreObj, SystemP_WAIT_FOREVER);
+    status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, NULL, bufIdx);
     DebugP_assert(status == SystemP_SUCCESS);
+
+    /* TX interrupt deinit */
+    FSI_disableTxInterrupt(txBaseAddr, 0, FSI_TX_EVTMASK);
+    FSI_clearTxEvents(txBaseAddr, FSI_TX_EVTMASK);
+    FSI_disableTxClock(txBaseAddr);
 
     SemaphoreP_post(p_taskDoneSemaphoreObj);
 
-    FSI_disableRxInternalLoopback(rxBaseAddr);
-
     FSI_Tx_close(gFsiTxHandle[CONFIG_FSI_TX0]);
-    FSI_Rx_close(gFsiRxHandle[CONFIG_FSI_RX0]);
 
+    FSI_disableRxInternalLoopback(rxBaseAddr);
     while(1)
     {
         /* Yield to the main task which deletes this task. */

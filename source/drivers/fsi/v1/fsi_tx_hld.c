@@ -156,6 +156,8 @@ void FSI_HLD_TxParams_init(FSI_Tx_Params *prms)
         prms->errorCheck = FSI_TX_NO_ERROR_CHECK;
         prms->delayLineCtrl = FALSE;
         prms->udataFilterTest = FALSE;
+        prms->rxFrameWDTest = FALSE;
+        prms->rxPingWDTest = FALSE;
     }
 }
 
@@ -238,7 +240,7 @@ FSI_Tx_Handle FSI_Tx_open(uint32_t index, FSI_Tx_Params *prms)
                 hwiPrms.callback    = &FSI_Tx_Isr;
                 hwiPrms.args        = (void *) handle;
                 status += HwiP_construct(&obj->hwiObj, &hwiPrms);
-                status += FSI_enableTxInterrupt(attrs->baseAddr, attrs->intrNum, FSI_TX_EVT_FRAME_DONE);
+                status += FSI_enableTxInterrupt(attrs->baseAddr, attrs->intrNum, prms->intrEvt);
             }
         }
 
@@ -443,13 +445,15 @@ int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
                     if (object->params->transferMode == FSI_TX_TRANSFER_MODE_BLOCKING)
                     {
                         /* Block on transferSem till the transfer completion. */
-                        DebugP_assert(NULL_PTR != object->writeTransferSem);
-                        retVal = SemaphoreP_pend(&object->writeTransferSemObj, SystemP_WAIT_FOREVER);
-                        if (retVal != SystemP_SUCCESS)
+                        if(object->params->rxFrameWDTest != TRUE)
                         {
-                            retVal = FSI_Tx_deConfigInstance(handle);
+                            DebugP_assert(NULL_PTR != object->writeTransferSem);
+                            SemaphoreP_pend(&object->writeTransferSemObj, SystemP_WAIT_FOREVER);
                         }
                     }
+
+                    retVal = FSI_Tx_deConfigInstance(handle);
+
                 }
             }
         }
@@ -523,6 +527,11 @@ int32_t FSI_Tx_Intr(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTa
         status += FSI_writeTxBuffer(baseAddr, txBufData, dataSize, bufIdx);
         status += FSI_startTxTransmit(baseAddr);
         DebugP_assert(status == SystemP_SUCCESS);
+
+        if(obj->params->rxFrameWDTest == TRUE)
+        {
+            FSI_disableTxClock(baseAddr);
+        }
     }
 
     return status;
@@ -629,7 +638,7 @@ void FSI_Tx_Isr(void* args)
         baseAddr = attrs->baseAddr;
         object = config->object;
 
-        FSI_clearTxEvents(baseAddr, FSI_TX_EVT_FRAME_DONE);
+        FSI_clearTxEvents(baseAddr, attrs->intrEvt);
         SemaphoreP_post(&object->writeTransferSemObj);
     }
     return;

@@ -226,6 +226,15 @@ typedef struct FSI_Rx_Params_t
     /**< User Data Filter Test */
     bool udataFilterTest;
 
+    /**< Receive Frame WD Test */
+    bool                rxFrameWDTest;
+
+    /* Receive Ping WD Test */
+    bool                rxPingWDTest;
+
+    /**< Interrupt Event */
+    uint32_t                intrEvt;
+
     /*! Blocking or Callback mode. Refer \ref FSI_Rx_TransferMode
      */
     uint32_t                transferMode;
