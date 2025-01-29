@@ -38,21 +38,12 @@ const includes_nortos = {
     ],
 };
 
-const libs_nortos_r5f0_0 = {
+const libs_nortos_r5f = {
     common: [
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "sdl.am261x.r5fss0-0.ti-arm-clang.${ConfigName}.lib",
-    ],
-};
-
-const libs_nortos_r5f0_1 = {
-    common: [
-        "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "sdl.am261x.r5fss0-1.ti-arm-clang.${ConfigName}.lib",
+        "sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -106,17 +97,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
-    if(buildOption.cpu.match(/r5fss0-1/))
-    {
-        build_property.libs = libs_nortos_r5f0_1;
-        build_property.templates = templates_nortos_r5f;
-    }
-
-    if(buildOption.cpu.match(/r5fss0-0/))
-    {
-        build_property.libs = libs_nortos_r5f0_0;
-        build_property.templates = templates_nortos_r5f;
-    }
+    build_property.libs = libs_nortos_r5f;
+    build_property.templates = templates_nortos_r5f;
 
     return build_property;
 }
