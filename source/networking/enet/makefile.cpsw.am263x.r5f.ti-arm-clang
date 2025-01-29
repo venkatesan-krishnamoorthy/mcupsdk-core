@@ -94,16 +94,16 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/am263x \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy \
-    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils \
-    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V2 \
-    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/defcfg \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/V2 \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/defcfg \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ether_ring/src \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \

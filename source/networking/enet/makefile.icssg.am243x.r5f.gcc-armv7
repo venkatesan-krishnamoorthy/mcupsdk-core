@@ -67,9 +67,9 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3 \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy \
-    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils \
-    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V3 \
-    ${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/defcfg \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/V3 \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/defcfg \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/board/src \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/board/src/am64x_am243x_evm \
 
@@ -77,8 +77,8 @@ INCLUDES_common := \
     -I${CG_TOOL_ROOT}/arm-none-eabi/include \
     -I${MCU_PLUS_SDK_PATH}/source \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/V3 \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/utils/V3 \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
