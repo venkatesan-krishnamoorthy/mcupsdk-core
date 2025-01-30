@@ -193,6 +193,7 @@ const files_am261x = {
         "QueueP_sample.c",
         "Sdfm_sample.c",
         "SemaphoreP_sample.c",
+        "Ram_sample.c",
         "TaskP_sample.c",
         "TimerP_sample.c",
         "Uart_sample.c",

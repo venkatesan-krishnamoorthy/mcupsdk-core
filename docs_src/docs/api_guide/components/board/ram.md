@@ -8,7 +8,7 @@ The driver takes care of configuring the specific interface necessary to interac
 ## Features Supported
 
 - APIs to read and write to a RAM offset.
-- Supports 16-bit parallel pSRAM devices.
+- Supports 16-bit pSRAM devices.
 
 ## SysConfig Features
 
@@ -23,12 +23,21 @@ The driver takes care of configuring the specific interface necessary to interac
 - Supported RAM devices
     - IS67WVE4M16EBLL70BLA1
 \endcond
+\cond SOC_AM261X
+- Supported RAM devices
+    - APS12808L-OBMx
+\endcond
 
 ## Features NOT Supported
 
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
 - Serial RAM devices
-- Burst read & write is not supported
 - DMA support
+\endcond
+\cond SOC_AM261X
+- Parallel RAM devices
+\endcond
+- Burst read & write is not supported
 
 ## Important Usage Guidelines
 

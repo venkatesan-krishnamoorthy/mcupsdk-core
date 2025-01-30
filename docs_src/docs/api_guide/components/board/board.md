@@ -11,7 +11,7 @@ It consists of below sub-modules
 \endcond
 \cond !SOC_AM65X
 - \subpage BOARD_FLASH_PAGE
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM261X
 - \subpage BOARD_RAM_PAGE
 \endcond
 - \subpage BOARD_EEPROM_PAGE

@@ -627,6 +627,18 @@ void OSPI_setReadDummyCycles(OSPI_Handle handle, uint32_t dummyCycles)
     }
 }
 
+void OSPI_setWriteDummyCycles(OSPI_Handle handle, uint32_t dummyCycles)
+{
+    OSPILLD_Handle hOspi;
+
+    if((OSPI_Handle) NULL != handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        OSPI_lld_setWriteDummyCycles(hOspi,dummyCycles);
+    }
+}
+
 void OSPI_setCmdDummyCycles(OSPI_Handle handle, uint32_t dummyCycles)
 {
     OSPILLD_Handle hOspi;

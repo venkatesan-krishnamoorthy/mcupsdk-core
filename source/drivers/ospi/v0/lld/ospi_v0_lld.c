@@ -789,6 +789,25 @@ void OSPI_lld_setReadDummyCycles(OSPILLD_Handle hOspi, uint32_t dummyCycles)
     }
 }
 
+void OSPI_lld_setWriteDummyCycles(OSPILLD_Handle hOspi, uint32_t dummyCycles)
+{
+    /* Check if hOspi is NULL */
+    if(hOspi != NULL)
+    {
+        const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(hOspi->baseAddr);
+
+        /* Set read dummy cycles */
+        CSL_REG32_FINS(&pReg->DEV_INSTR_WR_CONFIG_REG, OSPI_FLASH_CFG_DEV_INSTR_WR_CONFIG_REG_DUMMY_WR_CLK_CYCLES_FLD, dummyCycles);
+
+        /* Update book-keeping variable in OSPI object */
+        hOspi->rdDummyCycles = dummyCycles;
+    }
+    else
+    {
+        /* do nothing */
+    }
+}
+
 void OSPI_lld_setCmdDummyCycles(OSPILLD_Handle hOspi, uint32_t dummyCycles)
 {
     /* Check if hOspi is NULL */

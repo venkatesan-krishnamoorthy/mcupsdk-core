@@ -521,6 +521,17 @@ void OSPI_setCmdDummyCycles(OSPI_Handle handle, uint32_t cmdDummyCycles);
 void OSPI_setReadDummyCycles(OSPI_Handle handle, uint32_t dummyCycles);
 
 /**
+ *  \brief  This function sets appropriate dummy cycles for flash write
+ *
+ *  \pre    OSPI controller has been opened using #OSPI_open()
+ *
+ *  \param  handle  An #OSPI_Handle returned from an #OSPI_open()
+ *  \param  dummyCycles     Number of dummy cycles
+ *
+ */
+void OSPI_setWriteDummyCycles(OSPI_Handle handle, uint32_t dummyCycles);
+
+/**
  *  \brief  This function sets the phyEnableSuccess field in \ref OSPI_Object. Has to be called from flash driver
  *
  *  \pre    OSPI controller has been opened using #OSPI_open()

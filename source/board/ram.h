@@ -66,6 +66,19 @@ typedef struct Ram_Config_s Ram_Config;
  */
 typedef struct Ram_Params_s Ram_Params;
 
+typedef struct Ram_Devconfig_s 
+{
+    uint8_t cmdRd;
+    uint8_t cmdWr;
+    uint8_t cmdReset;
+    uint8_t cmdRegRd;
+    uint8_t cmdRegWr;
+    uint8_t dummyClksRd;
+    uint8_t dummyClksWr;
+    uint8_t dummyClksCmd;
+
+} Ram_DevConfig;
+
 typedef struct Ram_Attrs_s {
 
     uint32_t ramType;      /**< Ram type. Whether it's NAND or NOR */
@@ -158,7 +171,8 @@ typedef struct Ram_Config_s
 {
     Ram_Attrs                *attrs;       /**< Ram device attributes */
     Ram_Fxns                 *fxns;        /**< Ram device implementation functions */
-    void                       *object;      /**< Ram driver object, used to maintain driver implementation state */
+    Ram_DevConfig            *devConfig;
+    void                     *object;      /**< Ram driver object, used to maintain driver implementation state */
 
 } Ram_Config;
 
@@ -202,8 +216,12 @@ typedef struct Ram_Params_s {
 
 } Ram_Params;
 
-#if defined (DRV_VERSION_PSRAM_V0)
+#if defined (DRV_VERSION_RAM_V0)
 #include <board/ram/gpmc/psram_gpmc.h>
+#endif
+
+#if defined (DRV_VERSION_RAM_V0) && defined (DRV_VERSION_OSPI_V0)
+#include <board/ram/ospi/psram_ospi.h>
 #endif
 
 Ram_Attrs *Ram_getAttrs(uint32_t instanceId);
