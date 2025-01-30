@@ -114,7 +114,7 @@ static void SDL_vtmPrepLookupTable(void)
     {
         for ( i = 0; i < SDL_VTM_NUM_OF_ADC_CODES; i++)
         {
-            derived_array[i] = gSDL_pvt_poly[i];
+            derived_array[i] = gSDL_pvt_poly_golden[i];
         }
     }
 

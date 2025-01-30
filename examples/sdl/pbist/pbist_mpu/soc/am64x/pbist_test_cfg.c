@@ -354,7 +354,7 @@ PBIST_TestHandle_t PBIST_TestHandleArray[PBIST_MAX_INSTANCE+1] =
                 .override           = 0x0u,
                 .algorithmsBitMap   = SDL_PBIST1_ALGO_BITMAP_1,
                 .memoryGroupsBitMap = SDL_PBIST1_MEM_BITMAP_1,
-                .scrambleValue      = 0x0u,
+                .scrambleValue      = 0xFEDCBA9876543210U,
             }
         },
         .PBISTNegConfigRun =

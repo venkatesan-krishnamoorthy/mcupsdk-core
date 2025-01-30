@@ -79,7 +79,7 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[SDL_PBIST_NUM_INSTANCES] =
                 .override           = 0x0u,
                 .algorithmsBitMap   = SDL_PBIST1_ALGO_BITMAP_1,
                 .memoryGroupsBitMap = SDL_PBIST1_MEM_BITMAP_1,
-                .scrambleValue      = 0x0u,
+                .scrambleValue      = 0xFEDCBA9876543210U,
             }
         },
         .PBISTNegConfigRun =
