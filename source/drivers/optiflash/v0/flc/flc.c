@@ -139,7 +139,7 @@ FLC_API_STS_t FLC_clearWriteError(FLC_RegionInfo * const regionInfo)
     {
         CSL_rl2_of_r5fss0_core0Regs *regs;
         regs = (CSL_rl2_of_r5fss0_core0Regs*)regionInfo->baseAddress;
-        regs->IRQSTATUS_MSK |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_WRERR_MASK;
+        regs->IRQSTATUS_MSK = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_WRERR_MASK;
     }
     return status;
 }
@@ -155,7 +155,7 @@ FLC_API_STS_t FLC_clearReadError(FLC_RegionInfo * const regionInfo)
     {
         CSL_rl2_of_r5fss0_core0Regs *regs;
         regs = (CSL_rl2_of_r5fss0_core0Regs*)regionInfo->baseAddress;
-        regs->IRQSTATUS_MSK |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_RDERR_MASK;
+        regs->IRQSTATUS_MSK = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_RDERR_MASK;
     }
     return status;
 }
@@ -206,13 +206,13 @@ FLC_API_STS_t FLC_enableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interru
         switch(intr)
         {
             case FLC_INTERRUPT_DONE:
-                regs->IRQENABLE_SET |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK;
+                regs->IRQENABLE_SET = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK;
                 break;
             case FLC_INTERRUPT_WRITE_ERROR:
-                regs->IRQENABLE_SET |= CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_SET_EN_FLC_WRERR_MASK;
+                regs->IRQENABLE_SET = CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_SET_EN_FLC_WRERR_MASK;
                 break;
             case FLC_INTERRUPT_READ_ERROR:
-                regs->IRQENABLE_SET |= CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_SET_EN_FLC_RDERR_MASK;
+                regs->IRQENABLE_SET = CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_SET_EN_FLC_RDERR_MASK;
                 break;
             default:
                 status = FLC_API_STS_ERROR_UNKNOWN_INTERRUPT;
@@ -236,13 +236,13 @@ FLC_API_STS_t FLC_clearInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrup
         switch(intr)
         {
             case FLC_INTERRUPT_DONE:
-                regs->IRQSTATUS_MSK |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK;
+                regs->IRQSTATUS_MSK = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK;
                 break;
             case FLC_INTERRUPT_WRITE_ERROR:
-                regs->IRQSTATUS_MSK |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_WRERR_MASK;
+                regs->IRQSTATUS_MSK = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_WRERR_MASK;
                 break;
             case FLC_INTERRUPT_READ_ERROR:
-                regs->IRQSTATUS_MSK |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_RDERR_MASK;
+                regs->IRQSTATUS_MSK = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_RDERR_MASK;
                 break;
             default:
                 status = FLC_API_STS_ERROR_UNKNOWN_INTERRUPT;
@@ -266,13 +266,13 @@ FLC_API_STS_t FLC_disableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interr
         switch(intr)
         {
             case FLC_INTERRUPT_DONE:
-                regs->IRQENABLE_CLR |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK;
+                regs->IRQENABLE_CLR = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK;
                 break;
             case FLC_INTERRUPT_WRITE_ERROR:
-                regs->IRQENABLE_CLR |= CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_CLR_EN_FLC_WRERR_MASK;
+                regs->IRQENABLE_CLR = CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_CLR_EN_FLC_WRERR_MASK;
                 break;
             case FLC_INTERRUPT_READ_ERROR:
-                regs->IRQENABLE_CLR |= CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_CLR_EN_FLC_RDERR_MASK;
+                regs->IRQENABLE_CLR = CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_CLR_EN_FLC_RDERR_MASK;
                 break;
             default:
                 status = FLC_API_STS_ERROR_UNKNOWN_INTERRUPT;
