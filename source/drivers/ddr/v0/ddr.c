@@ -346,19 +346,18 @@ static uint32_t DDR_isEnabled (DDR_Params *prm)
 static int32_t DDR_inlineECCCfg (DDR_Params *prm)
 {
     int32_t status = SystemP_SUCCESS;
+    uint32_t regVal = 0U;
+    CSL_emif_sscfgRegs *pEmifSsRegs;
 
     if (prm->eccRegion != NULL)
     {
-        /* Disable inline ECC */
-        DDR_enableInlineECC (0U);
-
         CSL_EmifConfig emifCfg;
         uintptr_t      memPtr;
         memset(&emifCfg, 0, sizeof(emifCfg));
 
         emifCfg.bEnableMemoryECC = TRUE;
         emifCfg.bReadModifyWriteEnable = TRUE;
-        emifCfg.bECCCheck = TRUE;
+        emifCfg.bECCCheck = FALSE;
         emifCfg.bWriteAlloc = TRUE;
         emifCfg.ECCThreshold = 1U;
 
@@ -419,6 +418,10 @@ static int32_t DDR_inlineECCCfg (DDR_Params *prm)
 
         if (status == SystemP_SUCCESS)
         {
+            pEmifSsRegs = (CSL_emif_sscfgRegs *)CSL_DDR16SS0_SS_CFG_BASE;
+
+            CSL_REG32_WR( &pEmifSsRegs->ECC_1B_ERR_CNT_REG, 1u );
+            
             status = CSL_emifClearECCInterruptStatus((CSL_emif_sscfgRegs *)CSL_DDR16SS0_SS_CFG_BASE,
                                                     CSL_EMIF_SSCFG_V2A_INT_SET_REG_ECC1BERR_EN_MASK
                                                     | CSL_EMIF_SSCFG_V2A_INT_SET_REG_ECCM1BERR_EN_MASK
@@ -431,9 +434,11 @@ static int32_t DDR_inlineECCCfg (DDR_Params *prm)
                                                     | CSL_EMIF_SSCFG_V2A_INT_SET_REG_ECCM1BERR_EN_MASK
                                                     | CSL_EMIF_SSCFG_V2A_INT_SET_REG_ECC2BERR_EN_MASK);
             }
-        }
 
-        DDR_enableInlineECC (1U);
+            regVal = pEmifSsRegs->ECC_CTRL_REG;
+            regVal |= CSL_FMK(EMIF_SSCFG_ECC_CTRL_REG_ECC_CK, 1U);
+            CSL_REG32_WR( &pEmifSsRegs->ECC_CTRL_REG, regVal );
+        }
     }
     else
     {
