@@ -71,6 +71,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "OSPI0_D3";
 flash1.peripheralDriver.OSPI.D2.$assign   = "OSPI0_D2";
 flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
 flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "EPWM11_B";
 
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";

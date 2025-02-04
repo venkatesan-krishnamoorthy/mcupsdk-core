@@ -9,8 +9,6 @@
 /**
  * Import the modules used in this configuration.
  */
-const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1           = gpio.addInstance();
 const littlefs        = scripting.addModule("/fs/littlefs/littlefs", {}, false);
 const littlefs1       = littlefs.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
@@ -45,10 +43,6 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-gpio1.$name          = "GPIO_OSPI_RST";
-gpio1.pinDir         = "OUTPUT";
-gpio1.defaultValue   = "1";
-gpio1.GPIO_n.$assign = "EPWM11_B";
 
 littlefs1.$name                                   = "CONFIG_LITTLEFS0";
 littlefs1.peripheralDriver.$name                  = "CONFIG_FLASH0";
@@ -293,4 +287,5 @@ littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution   = "EPWM11_B";
 

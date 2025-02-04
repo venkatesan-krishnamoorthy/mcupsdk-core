@@ -58,7 +58,6 @@
 
 #define EEPROM_OFFSET_READ_PCB_REV                  (0x0022U)
 #define EEPROM_READ_PCB_REV_DATA_LEN                (0x2U)
-#define BOARD_VERSION_E2                            ('2')
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -170,15 +169,25 @@ void i2c_flash_reset(void)
     status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, gBoardVer, EEPROM_READ_PCB_REV_DATA_LEN);
     if(status == SystemP_SUCCESS)
     {
-        if(gBoardVer[1] == BOARD_VERSION_E2)
+        if(gBoardVer[1] == '0' && gBoardVer[0] == 'A')
+        {
+            /* boardVer is REV A */
+            /* OSPI RESET signal comes from SOC directly, not via IO expander */
+        }
+        else if(gBoardVer[1] == '2' && gBoardVer[0] == 'E')
         {
             /* boardVer is E2 */
             status = TCA6424_Flash_reset();
         }
-        else
+        else if(gBoardVer[1] == '1' && gBoardVer[0] == 'E')
         {
             /* boardVer is E1 */
             status = TCA6416_Flash_reset();
+        }
+        else
+        {
+            /* boardVer is invalid */
+            /* Do nothing */
         }
     }
 
@@ -190,15 +199,28 @@ void mcanEnableTransceiver(void)
 {
     int32_t status = SystemP_SUCCESS;
 
-    if(gBoardVer[1] == BOARD_VERSION_E2)
+    if(status == SystemP_SUCCESS)
     {
-        /* boardVer is E1 */
-        status = TCA6424_Mcan_Transceiver();
-    }
-    else
-    {
-        /* boardVer is E1 */
-        /* MCAN Transceiver is enabled by default in E1*/
+        if(gBoardVer[1] == '0' && gBoardVer[0] == 'A')
+        {
+            /* boardVer is REV A */
+            status = TCA6424_Mcan_Transceiver();
+        }
+        else if(gBoardVer[1] == '2' && gBoardVer[0] == 'E')
+        {
+            /* boardVer is E2 */
+            status = TCA6424_Mcan_Transceiver();
+        }
+        else if(gBoardVer[1] == '1' && gBoardVer[0] == 'E')
+        {
+            /* boardVer is E1 */
+            /* MCAN Transceiver is enabled by default in E1*/
+        }
+        else
+        {
+            /* boardVer is not valid */
+            /* Do nothing */        
+        }
     }
 
     DebugP_assert(status == SystemP_SUCCESS);

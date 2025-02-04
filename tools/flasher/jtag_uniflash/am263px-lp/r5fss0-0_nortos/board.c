@@ -31,19 +31,12 @@
  */
 
 #include <stdint.h>
-#include <drivers/gpio.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include "ti_drivers_config.h"
 
 
 void gpio_flash_reset(void)
 {
-    uint32_t    gpioBaseAddr, pinNum;
-    /* Get address after translation translate */
-    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_OSPI_RST_BASE_ADDR);
-    pinNum       = GPIO_OSPI_RST_PIN;
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_OSPI_RST_DIR);
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
-    GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
-
+    /* Dummy function */
+    /* OSPI RESET signal comes from SOC directly */
 }

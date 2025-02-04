@@ -283,4 +283,5 @@ ospi1.OSPI.D3.$suggestSolution          = "OSPI0_D3";
 ospi1.OSPI.D2.$suggestSolution          = "OSPI0_D2";
 ospi1.OSPI.D1.$suggestSolution          = "OSPI0_D1";
 ospi1.OSPI.D0.$suggestSolution          = "OSPI0_D0";
+ospi1.OSPI.RESET_OUT0.$suggestSolution          = "EPWM11_B";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

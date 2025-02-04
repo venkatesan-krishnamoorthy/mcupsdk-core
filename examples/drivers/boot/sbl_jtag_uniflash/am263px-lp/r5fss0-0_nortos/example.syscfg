@@ -11,8 +11,6 @@
  */
 const flash      = scripting.addModule("/board/flash/flash", {}, false);
 const flash1     = flash.addInstance();
-const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1      = gpio.addInstance();
 const clock      = scripting.addModule("/kernel/dpl/clock");
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg    = scripting.addModule("/kernel/dpl/dpl_cfg");
@@ -59,6 +57,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "OSPI0_D3";
 flash1.peripheralDriver.OSPI.D2.$assign   = "OSPI0_D2";
 flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
 flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "EPWM11_B";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -68,11 +67,6 @@ edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM4";
 edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM5";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM6";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM7";
-
-gpio1.pinDir         = "OUTPUT";
-gpio1.$name          = "GPIO_OSPI_RST";
-gpio1.defaultValue   = "1";
-gpio1.GPIO_n.$assign = "EPWM11_B";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";

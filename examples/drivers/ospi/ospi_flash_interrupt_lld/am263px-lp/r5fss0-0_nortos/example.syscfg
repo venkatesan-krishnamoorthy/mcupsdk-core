@@ -57,6 +57,7 @@ ospi1.OSPI.D3.$assign   = "OSPI0_D3";
 ospi1.OSPI.D2.$assign   = "OSPI0_D2";
 ospi1.OSPI.D1.$assign   = "OSPI0_D1";
 ospi1.OSPI.D0.$assign   = "OSPI0_D0";
+ospi1.OSPI.RESET_OUT0.$assign   = "EPWM11_B";
 ospi1.child.$name       = "drivers_ospi_v0_ospi_v0_am263px_lld_template0";
 
 debug_log.enableUartLog       = true;

@@ -326,5 +326,6 @@ flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
 flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
 flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
 flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "EPWM11_B";
 i2c2.I2C.SCL.$suggestSolution                      = "I2C0_SCL";
 i2c2.I2C.SDA.$suggestSolution                      = "I2C0_SDA";

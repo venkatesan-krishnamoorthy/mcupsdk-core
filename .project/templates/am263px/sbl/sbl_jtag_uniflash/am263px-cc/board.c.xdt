@@ -111,19 +111,25 @@ void i2c_flash_reset(void)
     status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
     if(status == SystemP_SUCCESS)
     {
-        if(boardVer[1] == '2')
+        if(boardVer[0] == 'A' && boardVer[1] == '\0')
+        {
+            /* boardVer is REV A */
+            /* OSPI RESET signal comes from SOC directly, not via IO expander */
+        }
+        else if(boardVer[1] == '2' && boardVer[0] == 'E')
         {
             /* boardVer is E2 */
             status = TCA6424_Flash_reset();
         }
-        else if(boardVer[1] == '1')
+        else if(boardVer[1] == '1' && boardVer[0] == 'E')
         {
             /* boardVer is E1 */
             status = TCA6416_Flash_reset();
         }
         else
         {
-            status = TCA6416_Flash_reset();
+            /* boardVer is invalid */
+            /* Do nothing */
         }
     }
 

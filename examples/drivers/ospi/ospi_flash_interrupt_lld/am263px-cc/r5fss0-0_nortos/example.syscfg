@@ -55,6 +55,7 @@ ospi1.OSPI.D3.$suggestSolution   = "OSPI0_D3";
 ospi1.OSPI.D2.$suggestSolution   = "OSPI0_D2";
 ospi1.OSPI.D1.$suggestSolution   = "OSPI0_D1";
 ospi1.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+ospi1.OSPI.RESET_OUT0.$suggestSolution          = "EPWM11_B";
 ospi1.child.$name       = "drivers_ospi_v0_ospi_v0_am263px_lld_template0";
 
 debug_log.enableUartLog       = true;
@@ -281,9 +282,9 @@ section12.output_section[0].alignment = 0;
  */
 ospi1.OSPI.$suggestSolution                 = "OSPI0";
 ospi1.OSPI.DQS.$suggestSolution             = "UART1_TXD";
-ospi1.OSPI.D7.$suggestSolution              = "EPWM12_B";
-ospi1.OSPI.D6.$suggestSolution              = "MCAN1_RX";
-ospi1.OSPI.D5.$suggestSolution              = "EPWM12_A";
+ospi1.OSPI.D7.$suggestSolution   = "MCAN1_TX";
+ospi1.OSPI.D6.$suggestSolution   = "MCAN1_RX";
+ospi1.OSPI.D5.$suggestSolution   = "MCAN0_TX";
 debug_log.uartLog.UART.$suggestSolution     = "UART0";
 debug_log.uartLog.UART.RXD.$suggestSolution = "MMC_CLK";
 debug_log.uartLog.UART.TXD.$suggestSolution = "MMC_CMD";

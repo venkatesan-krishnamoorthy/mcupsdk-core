@@ -55,7 +55,6 @@
 
 #define EEPROM_OFFSET_READ_PCB_REV                  (0x0022U)
 #define EEPROM_READ_PCB_REV_DATA_LEN                (0x2U)
-#define BOARD_VERSION_E2                            ('2')
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -67,7 +66,7 @@ static TCA6424_Config  gTCA6424_Config;
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-int32_t TCA6424_Transceiver(void)
+int32_t TCA6424_Mcan_Transceiver(void)
 {
     int32_t             status = SystemP_SUCCESS;
     TCA6424_Params      tca6424Params;
@@ -109,15 +108,25 @@ void mcanEnableTransceiver(void)
     status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
     if(status == SystemP_SUCCESS)
     {
-        if(boardVer[1] == BOARD_VERSION_E2)
+        if(boardVer[0] == 'A' && boardVer[1] == '\0')
+        {
+            /* boardVer is REV A */
+            status = TCA6424_Mcan_Transceiver();
+        }
+        else if(boardVer[1] == '2' && boardVer[0] == 'E')
         {
             /* boardVer is E2 */
-            status = TCA6424_Transceiver();
+            status = TCA6424_Mcan_Transceiver();
         }
-        else
+        else if(boardVer[1] == '1' && boardVer[0] == 'E')
         {
             /* boardVer is E1 */
             /* MCAN Transceiver is enabled by default in E1*/
+        }
+        else
+        {
+            /* boardVer is not valid */
+            /* Do nothing */        
         }
     }
 

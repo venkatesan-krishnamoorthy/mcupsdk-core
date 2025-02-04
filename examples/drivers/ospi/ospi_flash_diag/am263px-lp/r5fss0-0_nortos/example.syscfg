@@ -257,3 +257,4 @@ ospi1.OSPI.$suggestSolution     = "OSPI0";
 ospi1.OSPI.CLK.$suggestSolution = "OSPI0_CLK";
 ospi1.OSPI.DQS.$suggestSolution = "UART1_TXD";
 ospi1.OSPI.D0.$suggestSolution  = "OSPI0_D0";
+ospi1.OSPI.RESET_OUT0.$assign   = "EPWM11_B";
