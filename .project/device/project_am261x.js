@@ -488,14 +488,15 @@ function getSysCfgPart(board) {
 function getDevToolTirex(board) {
 	switch (board) {
 		case "am261x-lp":
-			return "LP-AM263P";
+			return "LP-AM261";
 		case "am261x-lp (dp83826 phy)":
-			return "LP-AM263P";
+			return "LP-AM261";
 		case "am261x-lp (dp83tg720 phy)":
-			return "LP-AM263P";
+			return "LP-AM261";
 		case "am261x-som":
+			return "AM261-SOM-EVM";
 		default:
-			return "TMDSCNCD263P";
+			return "LP-AM261";
 	}
 }
 

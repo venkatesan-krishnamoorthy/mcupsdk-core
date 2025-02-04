@@ -11,7 +11,7 @@
         "name": "adc_alternate_dma_trigger",
         "location": "../../examples/drivers/adc/adc_alternate_dma_trigger/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -44,7 +44,7 @@
         "name": "adc_alternate_dma_trigger",
         "location": "../../examples/drivers/adc/adc_alternate_dma_trigger/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -77,7 +77,7 @@
         "name": "adc_burst_mode_epwm",
         "location": "../../examples/drivers/adc/adc_burst_mode_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -110,7 +110,7 @@
         "name": "adc_burst_mode_epwm",
         "location": "../../examples/drivers/adc/adc_burst_mode_epwm/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -143,7 +143,7 @@
         "name": "adc_burst_mode_oversampling",
         "location": "../../examples/drivers/adc/adc_burst_mode_oversampling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -176,7 +176,7 @@
         "name": "adc_burst_mode_oversampling",
         "location": "../../examples/drivers/adc/adc_burst_mode_oversampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -209,7 +209,7 @@
         "name": "adc_dac_loopback",
         "location": "../../examples/drivers/adc/adc_dac_loopback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -242,7 +242,7 @@
         "name": "adc_dac_loopback",
         "location": "../../examples/drivers/adc/adc_dac_loopback/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -275,7 +275,7 @@
         "name": "adc_differential_mode",
         "location": "../../examples/drivers/adc/adc_differential_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -308,7 +308,7 @@
         "name": "adc_differential_mode",
         "location": "../../examples/drivers/adc/adc_differential_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -341,7 +341,7 @@
         "name": "adc_early_interrupt_offset",
         "location": "../../examples/drivers/adc/adc_early_interrupt_offset/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -374,7 +374,7 @@
         "name": "adc_early_interrupt_offset",
         "location": "../../examples/drivers/adc/adc_early_interrupt_offset/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -407,7 +407,7 @@
         "name": "adc_global_force",
         "location": "../../examples/drivers/adc/adc_global_force/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -440,7 +440,7 @@
         "name": "adc_global_force",
         "location": "../../examples/drivers/adc/adc_global_force/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -473,7 +473,7 @@
         "name": "adc_high_priority_soc",
         "location": "../../examples/drivers/adc/adc_high_priority_soc/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -506,7 +506,7 @@
         "name": "adc_high_priority_soc",
         "location": "../../examples/drivers/adc/adc_high_priority_soc/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -539,7 +539,7 @@
         "name": "adc_multiple_soc_epwm",
         "location": "../../examples/drivers/adc/adc_multiple_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -572,7 +572,7 @@
         "name": "adc_multiple_soc_epwm",
         "location": "../../examples/drivers/adc/adc_multiple_soc_epwm/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -605,7 +605,7 @@
         "name": "adc_open_shorts_detection",
         "location": "../../examples/drivers/adc/adc_open_shorts_detection/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -638,7 +638,7 @@
         "name": "adc_open_shorts_detection",
         "location": "../../examples/drivers/adc/adc_open_shorts_detection/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -671,7 +671,7 @@
         "name": "adc_ppb_delay",
         "location": "../../examples/drivers/adc/adc_ppb_delay/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -704,7 +704,7 @@
         "name": "adc_ppb_delay",
         "location": "../../examples/drivers/adc/adc_ppb_delay/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -737,7 +737,7 @@
         "name": "adc_ppb_epwm_trip",
         "location": "../../examples/drivers/adc/adc_ppb_epwm_trip/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -770,7 +770,7 @@
         "name": "adc_ppb_epwm_trip",
         "location": "../../examples/drivers/adc/adc_ppb_epwm_trip/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -803,7 +803,7 @@
         "name": "adc_ppb_limits",
         "location": "../../examples/drivers/adc/adc_ppb_limits/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -836,7 +836,7 @@
         "name": "adc_ppb_limits",
         "location": "../../examples/drivers/adc/adc_ppb_limits/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -869,7 +869,7 @@
         "name": "adc_ppb_offset",
         "location": "../../examples/drivers/adc/adc_ppb_offset/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -902,7 +902,7 @@
         "name": "adc_ppb_offset",
         "location": "../../examples/drivers/adc/adc_ppb_offset/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -935,7 +935,7 @@
         "name": "adc_safety_checker",
         "location": "../../examples/drivers/adc/adc_safety_checker/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -968,7 +968,7 @@
         "name": "adc_safety_checker",
         "location": "../../examples/drivers/adc/adc_safety_checker/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1001,7 +1001,7 @@
         "name": "adc_soc_continuous",
         "location": "../../examples/drivers/adc/adc_soc_continuous/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1034,7 +1034,7 @@
         "name": "adc_soc_continuous",
         "location": "../../examples/drivers/adc/adc_soc_continuous/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1067,7 +1067,7 @@
         "name": "adc_soc_continuous_dma",
         "location": "../../examples/drivers/adc/adc_soc_continuous_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1100,7 +1100,7 @@
         "name": "adc_soc_continuous_dma",
         "location": "../../examples/drivers/adc/adc_soc_continuous_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1133,7 +1133,7 @@
         "name": "adc_soc_ecap",
         "location": "../../examples/drivers/adc/adc_soc_ecap/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1166,7 +1166,7 @@
         "name": "adc_soc_ecap",
         "location": "../../examples/drivers/adc/adc_soc_ecap/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1199,7 +1199,7 @@
         "name": "adc_soc_epwm",
         "location": "../../examples/drivers/adc/adc_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1232,7 +1232,7 @@
         "name": "adc_soc_epwm",
         "location": "../../examples/drivers/adc/adc_soc_epwm/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1265,7 +1265,7 @@
         "name": "adc_soc_oversampling",
         "location": "../../examples/drivers/adc/adc_soc_oversampling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1298,7 +1298,7 @@
         "name": "adc_soc_oversampling",
         "location": "../../examples/drivers/adc/adc_soc_oversampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1331,7 +1331,7 @@
         "name": "adc_soc_rti",
         "location": "../../examples/drivers/adc/adc_soc_rti/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1364,7 +1364,7 @@
         "name": "adc_soc_rti",
         "location": "../../examples/drivers/adc/adc_soc_rti/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1397,7 +1397,7 @@
         "name": "adc_soc_software",
         "location": "../../examples/drivers/adc/adc_soc_software/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1430,7 +1430,7 @@
         "name": "adc_soc_software",
         "location": "../../examples/drivers/adc/adc_soc_software/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1463,7 +1463,7 @@
         "name": "adc_soc_software_sync",
         "location": "../../examples/drivers/adc/adc_soc_software_sync/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1496,7 +1496,7 @@
         "name": "adc_soc_software_sync",
         "location": "../../examples/drivers/adc/adc_soc_software_sync/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1529,7 +1529,7 @@
         "name": "adc_sw_interleaved_averaging",
         "location": "../../examples/drivers/adc/adc_sw_interleaved_averaging/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1562,7 +1562,7 @@
         "name": "adc_sw_interleaved_averaging",
         "location": "../../examples/drivers/adc/adc_sw_interleaved_averaging/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1595,7 +1595,7 @@
         "name": "adc_trigger_repeater_oversampling",
         "location": "../../examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1628,7 +1628,7 @@
         "name": "adc_trigger_repeater_oversampling",
         "location": "../../examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1661,7 +1661,7 @@
         "name": "adc_trigger_repeater_undersampling",
         "location": "../../examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1694,7 +1694,7 @@
         "name": "adc_trigger_repeater_undersampling",
         "location": "../../examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1727,7 +1727,7 @@
         "name": "sbl_can",
         "location": "../../examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1760,7 +1760,7 @@
         "name": "sbl_can",
         "location": "../../examples/drivers/boot/sbl_can/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1793,7 +1793,7 @@
         "name": "sbl_can_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_can_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1826,7 +1826,7 @@
         "name": "sbl_can_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_can_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1859,7 +1859,7 @@
         "name": "sbl_can_uniflash",
         "location": "../../examples/drivers/boot/sbl_can_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1892,7 +1892,7 @@
         "name": "sbl_can_uniflash",
         "location": "../../examples/drivers/boot/sbl_can_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1925,7 +1925,7 @@
         "name": "sbl_can_uniflash_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_can_uniflash_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -1958,7 +1958,7 @@
         "name": "sbl_can_uniflash_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_can_uniflash_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -1991,7 +1991,7 @@
         "name": "sbl_dfu",
         "location": "../../examples/drivers/boot/sbl_dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2024,7 +2024,7 @@
         "name": "sbl_dfu_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_dfu_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2057,7 +2057,7 @@
         "name": "sbl_dfu_uniflash",
         "location": "../../examples/drivers/boot/sbl_dfu_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2090,7 +2090,7 @@
         "name": "sbl_jtag_uniflash",
         "location": "../../examples/drivers/boot/sbl_jtag_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2123,7 +2123,7 @@
         "name": "sbl_jtag_uniflash",
         "location": "../../examples/drivers/boot/sbl_jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2156,7 +2156,7 @@
         "name": "sbl_null",
         "location": "../../examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2189,7 +2189,7 @@
         "name": "sbl_null",
         "location": "../../examples/drivers/boot/sbl_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2222,7 +2222,7 @@
         "name": "sbl_ospi",
         "location": "../../examples/drivers/boot/sbl_ospi/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2255,7 +2255,7 @@
         "name": "sbl_ospi",
         "location": "../../examples/drivers/boot/sbl_ospi/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2288,7 +2288,7 @@
         "name": "sbl_ospi_fastboot",
         "location": "../../examples/drivers/boot/sbl_ospi_fastboot/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2321,7 +2321,7 @@
         "name": "sbl_ospi_fastboot",
         "location": "../../examples/drivers/boot/sbl_ospi_fastboot/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2354,7 +2354,7 @@
         "name": "sbl_ospi_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_ospi_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2387,7 +2387,7 @@
         "name": "sbl_ospi_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_ospi_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2420,7 +2420,7 @@
         "name": "sbl_uart",
         "location": "../../examples/drivers/boot/sbl_uart/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2453,7 +2453,7 @@
         "name": "sbl_uart",
         "location": "../../examples/drivers/boot/sbl_uart/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2486,7 +2486,7 @@
         "name": "sbl_uart_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_uart_multicore_elf/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2519,7 +2519,7 @@
         "name": "sbl_uart_multicore_elf",
         "location": "../../examples/drivers/boot/sbl_uart_multicore_elf/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2552,7 +2552,7 @@
         "name": "sbl_uart_uniflash",
         "location": "../../examples/drivers/boot/sbl_uart_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2585,7 +2585,7 @@
         "name": "sbl_uart_uniflash",
         "location": "../../examples/drivers/boot/sbl_uart_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2618,7 +2618,7 @@
         "name": "cmpss_asynchronous_trip",
         "location": "../../examples/drivers/cmpss/cmpss_asynchronous_trip/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2651,7 +2651,7 @@
         "name": "cmpss_asynchronous_trip",
         "location": "../../examples/drivers/cmpss/cmpss_asynchronous_trip/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2684,7 +2684,7 @@
         "name": "cmpss_digital_filter_trip",
         "location": "../../examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2717,7 +2717,7 @@
         "name": "cmpss_digital_filter_trip",
         "location": "../../examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2750,7 +2750,7 @@
         "name": "cmpss_calibration",
         "location": "../../examples/drivers/cmpss/cmpss_calibration/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2783,7 +2783,7 @@
         "name": "cmpss_calibration",
         "location": "../../examples/drivers/cmpss/cmpss_calibration/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2816,7 +2816,7 @@
         "name": "dac_constant_voltage",
         "location": "../../examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2849,7 +2849,7 @@
         "name": "dac_constant_voltage",
         "location": "../../examples/drivers/dac/dac_constant_voltage/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2882,7 +2882,7 @@
         "name": "dac_epwm_sync",
         "location": "../../examples/drivers/dac/dac_epwm_sync/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2915,7 +2915,7 @@
         "name": "dac_epwm_sync",
         "location": "../../examples/drivers/dac/dac_epwm_sync/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -2948,7 +2948,7 @@
         "name": "dac_ramp_wave",
         "location": "../../examples/drivers/dac/dac_ramp_wave/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -2981,7 +2981,7 @@
         "name": "dac_ramp_wave",
         "location": "../../examples/drivers/dac/dac_ramp_wave/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3014,7 +3014,7 @@
         "name": "dac_random_voltage",
         "location": "../../examples/drivers/dac/dac_random_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3047,7 +3047,7 @@
         "name": "dac_random_voltage",
         "location": "../../examples/drivers/dac/dac_random_voltage/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3080,7 +3080,7 @@
         "name": "dac_sine_dma",
         "location": "../../examples/drivers/dac/dac_sine_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3113,7 +3113,7 @@
         "name": "dac_sine_dma",
         "location": "../../examples/drivers/dac/dac_sine_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3146,7 +3146,7 @@
         "name": "dac_sine_wave",
         "location": "../../examples/drivers/dac/dac_sine_wave/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3179,7 +3179,7 @@
         "name": "dac_sine_wave",
         "location": "../../examples/drivers/dac/dac_sine_wave/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3212,7 +3212,7 @@
         "name": "dac_square_wave",
         "location": "../../examples/drivers/dac/dac_square_wave/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3245,7 +3245,7 @@
         "name": "dac_square_wave",
         "location": "../../examples/drivers/dac/dac_square_wave/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3278,7 +3278,7 @@
         "name": "ecap_apwm_phase_shift",
         "location": "../../examples/drivers/ecap/ecap_apwm_phase_shift/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3311,7 +3311,7 @@
         "name": "ecap_apwm_phase_shift",
         "location": "../../examples/drivers/ecap/ecap_apwm_phase_shift/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3344,7 +3344,7 @@
         "name": "ecap_apwm_mode",
         "location": "../../examples/drivers/ecap/ecap_apwm_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3377,7 +3377,7 @@
         "name": "ecap_apwm_mode",
         "location": "../../examples/drivers/ecap/ecap_apwm_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3410,7 +3410,7 @@
         "name": "ecap_capture_pwm",
         "location": "../../examples/drivers/ecap/ecap_capture_pwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3443,7 +3443,7 @@
         "name": "ecap_capture_pwm",
         "location": "../../examples/drivers/ecap/ecap_capture_pwm/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3476,7 +3476,7 @@
         "name": "ecap_edma",
         "location": "../../examples/drivers/ecap/ecap_edma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3509,7 +3509,7 @@
         "name": "ecap_edma",
         "location": "../../examples/drivers/ecap/ecap_edma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3542,7 +3542,7 @@
         "name": "ecap_signal_monitoring",
         "location": "../../examples/drivers/ecap/ecap_signal_monitoring/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3575,7 +3575,7 @@
         "name": "ecap_signal_monitoring",
         "location": "../../examples/drivers/ecap/ecap_signal_monitoring/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3608,7 +3608,7 @@
         "name": "edma_chain_transfer",
         "location": "../../examples/drivers/edma/edma_chain_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3641,7 +3641,7 @@
         "name": "edma_chain_transfer",
         "location": "../../examples/drivers/edma/edma_chain_transfer/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3674,7 +3674,7 @@
         "name": "edma_interrupt_transfer",
         "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -3707,7 +3707,7 @@
         "name": "edma_interrupt_transfer",
         "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3740,7 +3740,7 @@
         "name": "edma_interrupt_transfer",
         "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -3773,7 +3773,7 @@
         "name": "edma_interrupt_transfer",
         "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3806,7 +3806,7 @@
         "name": "edma_link_transfer",
         "location": "../../examples/drivers/edma/edma_link_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3839,7 +3839,7 @@
         "name": "edma_link_transfer",
         "location": "../../examples/drivers/edma/edma_link_transfer/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3872,7 +3872,7 @@
         "name": "edma_multimem_transfer",
         "location": "../../examples/drivers/edma/edma_multimem_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3905,7 +3905,7 @@
         "name": "edma_multimem_transfer",
         "location": "../../examples/drivers/edma/edma_multimem_transfer/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -3938,7 +3938,7 @@
         "name": "edma_polled_transfer",
         "location": "../../examples/drivers/edma/edma_polled_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -3971,7 +3971,7 @@
         "name": "edma_polled_transfer",
         "location": "../../examples/drivers/edma/edma_polled_transfer/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -4004,7 +4004,7 @@
         "name": "edma_polled_transfer",
         "location": "../../examples/drivers/edma/edma_polled_transfer/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4037,7 +4037,7 @@
         "name": "edma_polled_transfer",
         "location": "../../examples/drivers/edma/edma_polled_transfer/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -4070,7 +4070,7 @@
         "name": "epwm_chopper",
         "location": "../../examples/drivers/epwm/epwm_chopper/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4103,7 +4103,7 @@
         "name": "epwm_chopper",
         "location": "../../examples/drivers/epwm/epwm_chopper/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4136,7 +4136,7 @@
         "name": "epwm_configure_signal",
         "location": "../../examples/drivers/epwm/epwm_configure_signal/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4169,7 +4169,7 @@
         "name": "epwm_configure_signal",
         "location": "../../examples/drivers/epwm/epwm_configure_signal/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4202,7 +4202,7 @@
         "name": "epwm_global_load_and_link",
         "location": "../../examples/drivers/epwm/epwm_global_load_and_link/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4235,7 +4235,7 @@
         "name": "epwm_global_load_and_link",
         "location": "../../examples/drivers/epwm/epwm_global_load_and_link/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4268,7 +4268,7 @@
         "name": "epwm_dccap",
         "location": "../../examples/drivers/epwm/epwm_dccap/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4301,7 +4301,7 @@
         "name": "epwm_dccap",
         "location": "../../examples/drivers/epwm/epwm_dccap/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4334,7 +4334,7 @@
         "name": "epwm_deadband",
         "location": "../../examples/drivers/epwm/epwm_deadband/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4367,7 +4367,7 @@
         "name": "epwm_deadband",
         "location": "../../examples/drivers/epwm/epwm_deadband/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4400,7 +4400,7 @@
         "name": "epwm_diode_emulation",
         "location": "../../examples/drivers/epwm/epwm_diode_emulation/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4433,7 +4433,7 @@
         "name": "epwm_diode_emulation",
         "location": "../../examples/drivers/epwm/epwm_diode_emulation/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4466,7 +4466,7 @@
         "name": "epwm_dma",
         "location": "../../examples/drivers/epwm/epwm_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4499,7 +4499,7 @@
         "name": "epwm_dma",
         "location": "../../examples/drivers/epwm/epwm_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4532,7 +4532,7 @@
         "name": "epwm_hr_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_hr_duty_cycle/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4565,7 +4565,7 @@
         "name": "epwm_hr_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_hr_duty_cycle/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4598,7 +4598,7 @@
         "name": "epwm_hr_updown",
         "location": "../../examples/drivers/epwm/epwm_hr_updown/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4631,7 +4631,7 @@
         "name": "epwm_hr_updown",
         "location": "../../examples/drivers/epwm/epwm_hr_updown/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4664,7 +4664,7 @@
         "name": "epwm_illegal_combo_logic",
         "location": "../../examples/drivers/epwm/epwm_illegal_combo_logic/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4697,7 +4697,7 @@
         "name": "epwm_illegal_combo_logic",
         "location": "../../examples/drivers/epwm/epwm_illegal_combo_logic/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4730,7 +4730,7 @@
         "name": "epwm_minimum_deadband",
         "location": "../../examples/drivers/epwm/epwm_minimum_deadband/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4763,7 +4763,7 @@
         "name": "epwm_minimum_deadband",
         "location": "../../examples/drivers/epwm/epwm_minimum_deadband/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4796,7 +4796,7 @@
         "name": "epwm_protection_pru",
         "location": "../../examples/drivers/epwm/epwm_protection_pru/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4829,7 +4829,7 @@
         "name": "epwm_protection_pru",
         "location": "../../examples/drivers/epwm/epwm_protection_pru/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4862,7 +4862,7 @@
         "name": "epwm_synchronization",
         "location": "../../examples/drivers/epwm/epwm_synchronization/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4895,7 +4895,7 @@
         "name": "epwm_synchronization",
         "location": "../../examples/drivers/epwm/epwm_synchronization/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4928,7 +4928,7 @@
         "name": "epwm_updown_aq",
         "location": "../../examples/drivers/epwm/epwm_updown_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -4961,7 +4961,7 @@
         "name": "epwm_updown_aq",
         "location": "../../examples/drivers/epwm/epwm_updown_aq/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -4994,7 +4994,7 @@
         "name": "epwm_trip_zone",
         "location": "../../examples/drivers/epwm/epwm_trip_zone/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5027,7 +5027,7 @@
         "name": "epwm_trip_zone",
         "location": "../../examples/drivers/epwm/epwm_trip_zone/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5060,7 +5060,7 @@
         "name": "epwm_valley_switching",
         "location": "../../examples/drivers/epwm/epwm_valley_switching/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5093,7 +5093,7 @@
         "name": "epwm_valley_switching",
         "location": "../../examples/drivers/epwm/epwm_valley_switching/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5126,7 +5126,7 @@
         "name": "epwm_xcmp_dma",
         "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5159,7 +5159,7 @@
         "name": "epwm_xcmp_dma",
         "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5192,7 +5192,7 @@
         "name": "epwm_xcmp_multiple_edges",
         "location": "../../examples/drivers/epwm/epwm_xcmp_multiple_edges/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5225,7 +5225,7 @@
         "name": "epwm_xcmp_multiple_edges",
         "location": "../../examples/drivers/epwm/epwm_xcmp_multiple_edges/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5258,7 +5258,7 @@
         "name": "hrpwm_deadband_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_deadband_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5291,7 +5291,7 @@
         "name": "hrpwm_deadband_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_deadband_sfo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5324,7 +5324,7 @@
         "name": "hrpwm_duty_cycle_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_duty_cycle_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5357,7 +5357,7 @@
         "name": "hrpwm_duty_cycle_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_duty_cycle_sfo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5390,7 +5390,7 @@
         "name": "hrpwm_phase_shift_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5423,7 +5423,7 @@
         "name": "hrpwm_phase_shift_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5456,7 +5456,7 @@
         "name": "eqep_frequency_measurement",
         "location": "../../examples/drivers/eqep/eqep_frequency_measurement/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5489,7 +5489,7 @@
         "name": "eqep_frequency_measurement",
         "location": "../../examples/drivers/eqep/eqep_frequency_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5522,7 +5522,7 @@
         "name": "eqep_cw_ccw",
         "location": "../../examples/drivers/eqep/eqep_cw_ccw/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5555,7 +5555,7 @@
         "name": "eqep_cw_ccw",
         "location": "../../examples/drivers/eqep/eqep_cw_ccw/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5588,7 +5588,7 @@
         "name": "eqep_speed_direction",
         "location": "../../examples/drivers/eqep/eqep_speed_direction/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5621,7 +5621,7 @@
         "name": "eqep_speed_direction",
         "location": "../../examples/drivers/eqep/eqep_speed_direction/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5654,7 +5654,7 @@
         "name": "eqep_freq_cal_interrupt",
         "location": "../../examples/drivers/eqep/eqep_freq_cal_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5687,7 +5687,7 @@
         "name": "eqep_freq_cal_interrupt",
         "location": "../../examples/drivers/eqep/eqep_freq_cal_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5720,7 +5720,7 @@
         "name": "flc",
         "location": "../../examples/drivers/flc/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5752,7 +5752,7 @@
         "name": "flc",
         "location": "../../examples/drivers/flc/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5784,7 +5784,7 @@
         "name": "fsi_loopback_dma",
         "location": "../../examples/drivers/fsi/fsi_loopback_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5817,7 +5817,7 @@
         "name": "fsi_loopback_dma",
         "location": "../../examples/drivers/fsi/fsi_loopback_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5850,7 +5850,7 @@
         "name": "fsi_loopback_interrupt",
         "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5883,7 +5883,7 @@
         "name": "fsi_loopback_interrupt",
         "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5916,7 +5916,7 @@
         "name": "fsi_loopback_polling",
         "location": "../../examples/drivers/fsi/fsi_loopback_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -5949,7 +5949,7 @@
         "name": "fsi_loopback_polling",
         "location": "../../examples/drivers/fsi/fsi_loopback_polling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -5982,7 +5982,7 @@
         "name": "fsi_hld_loopback_interrupt",
         "location": "../../examples/drivers/fsi/fsi_hld_loopback_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6015,7 +6015,7 @@
         "name": "fsi_hld_loopback_interrupt",
         "location": "../../examples/drivers/fsi/fsi_hld_loopback_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6048,7 +6048,7 @@
         "name": "fsi_hld_loopback_polling",
         "location": "../../examples/drivers/fsi/fsi_hld_loopback_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6081,7 +6081,7 @@
         "name": "fsi_hld_loopback_polling",
         "location": "../../examples/drivers/fsi/fsi_hld_loopback_polling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6114,7 +6114,7 @@
         "name": "fsi_hld_loopback_dma",
         "location": "../../examples/drivers/fsi/fsi_hld_loopback_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6147,7 +6147,7 @@
         "name": "fsi_hld_loopback_dma",
         "location": "../../examples/drivers/fsi/fsi_hld_loopback_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6180,7 +6180,7 @@
         "name": "gpio_input_interrupt",
         "location": "../../examples/drivers/gpio/gpio_input_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6213,7 +6213,7 @@
         "name": "gpio_input_interrupt",
         "location": "../../examples/drivers/gpio/gpio_input_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6246,7 +6246,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6279,7 +6279,7 @@
         "name": "gpio_led_blink",
         "location": "../../examples/drivers/gpio/gpio_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6312,7 +6312,7 @@
         "name": "hsm_services",
         "location": "../../examples/drivers/hsmclient/hsm_services/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6345,7 +6345,7 @@
         "name": "mpu_firewall_services_demo",
         "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6378,7 +6378,7 @@
         "name": "mpu_firewall_services_demo",
         "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6411,7 +6411,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6444,7 +6444,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -6477,7 +6477,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6510,7 +6510,7 @@
         "name": "i2c_led_blink",
         "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -6543,7 +6543,7 @@
         "name": "i2c_led_blink_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_interrupt_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6576,7 +6576,7 @@
         "name": "i2c_led_blink_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6609,7 +6609,7 @@
         "name": "i2c_led_blink_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_polling_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6642,7 +6642,7 @@
         "name": "i2c_led_blink_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_led_blink_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6675,7 +6675,7 @@
         "name": "i2c_led_read_write_lld",
         "location": "../../examples/drivers/i2c/i2c_led_read_write_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6708,7 +6708,7 @@
         "name": "i2c_led_read_write_lld",
         "location": "../../examples/drivers/i2c/i2c_led_read_write_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6741,7 +6741,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6774,7 +6774,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -6807,7 +6807,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6840,7 +6840,7 @@
         "name": "i2c_memory_read",
         "location": "../../examples/drivers/i2c/i2c_memory_read/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -6873,7 +6873,7 @@
         "name": "i2c_memory_read_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_memory_read_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6906,7 +6906,7 @@
         "name": "i2c_memory_read_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_memory_read_interrupt_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -6939,7 +6939,7 @@
         "name": "i2c_memory_read_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_memory_read_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -6972,7 +6972,7 @@
         "name": "i2c_memory_read_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_memory_read_polling_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -7005,7 +7005,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7038,7 +7038,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -7071,7 +7071,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -7104,7 +7104,7 @@
         "name": "i2c_read",
         "location": "../../examples/drivers/i2c/i2c_read/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -7137,7 +7137,7 @@
         "name": "i2c_temperature",
         "location": "../../examples/drivers/i2c/i2c_temperature/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7170,7 +7170,7 @@
         "name": "i2c_temperature",
         "location": "../../examples/drivers/i2c/i2c_temperature/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -7203,7 +7203,7 @@
         "name": "i2c_temperature_interrupt_lld",
         "location": "../../examples/drivers/i2c/i2c_temperature_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7236,7 +7236,7 @@
         "name": "i2c_temperature_polling_lld",
         "location": "../../examples/drivers/i2c/i2c_temperature_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7269,7 +7269,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -7302,7 +7302,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7335,7 +7335,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -7368,7 +7368,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -7401,7 +7401,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -7434,7 +7434,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7467,7 +7467,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -7500,7 +7500,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -7533,7 +7533,7 @@
         "name": "lin_external",
         "location": "../../examples/drivers/lin/lin_external/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7566,7 +7566,7 @@
         "name": "lin_external",
         "location": "../../examples/drivers/lin/lin_external/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -7599,7 +7599,7 @@
         "name": "lin_loopback_interrupt",
         "location": "../../examples/drivers/lin/lin_loopback_interrupts/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7632,7 +7632,7 @@
         "name": "lin_loopback_interrupt",
         "location": "../../examples/drivers/lin/lin_loopback_interrupts/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -7665,7 +7665,7 @@
         "name": "lin_loopback_interrupt",
         "location": "../../examples/drivers/lin/lin_loopback_interrupts/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -7698,7 +7698,7 @@
         "name": "lin_loopback_interrupt",
         "location": "../../examples/drivers/lin/lin_loopback_interrupts/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -7731,7 +7731,7 @@
         "name": "lin_loopback_polling",
         "location": "../../examples/drivers/lin/lin_loopback_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7764,7 +7764,7 @@
         "name": "lin_loopback_polling",
         "location": "../../examples/drivers/lin/lin_loopback_polling/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -7797,7 +7797,7 @@
         "name": "lin_loopback_polling",
         "location": "../../examples/drivers/lin/lin_loopback_polling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -7830,7 +7830,7 @@
         "name": "lin_loopback_polling",
         "location": "../../examples/drivers/lin/lin_loopback_polling/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -7863,7 +7863,7 @@
         "name": "lin_sci_dma",
         "location": "../../examples/drivers/lin/lin_sci_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -7896,7 +7896,7 @@
         "name": "lin_sci_dma",
         "location": "../../examples/drivers/lin/lin_sci_dma/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -7929,7 +7929,7 @@
         "name": "lin_sci_dma",
         "location": "../../examples/drivers/lin/lin_sci_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -7962,7 +7962,7 @@
         "name": "lin_sci_dma",
         "location": "../../examples/drivers/lin/lin_sci_dma/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -7995,7 +7995,7 @@
         "name": "lin_sci_loopback",
         "location": "../../examples/drivers/lin/lin_sci_loopback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -8028,7 +8028,7 @@
         "name": "lin_sci_loopback",
         "location": "../../examples/drivers/lin/lin_sci_loopback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -8061,7 +8061,7 @@
         "name": "lin_sci_loopback",
         "location": "../../examples/drivers/lin/lin_sci_loopback/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -8094,7 +8094,7 @@
         "name": "lin_sci_loopback",
         "location": "../../examples/drivers/lin/lin_sci_loopback/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -8127,7 +8127,7 @@
         "name": "mcan_external_read_write",
         "location": "../../examples/drivers/mcan/mcan_external_read_write/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -8160,7 +8160,7 @@
         "name": "mcan_external_read_write",
         "location": "../../examples/drivers/mcan/mcan_external_read_write/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -8193,7 +8193,7 @@
         "name": "mcan_external_read_write",
         "location": "../../examples/drivers/mcan/mcan_external_read_write/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -8226,7 +8226,7 @@
         "name": "mcan_external_read_write",
         "location": "../../examples/drivers/mcan/mcan_external_read_write/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -8259,7 +8259,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -8292,7 +8292,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -8325,7 +8325,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -8358,7 +8358,7 @@
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -8391,7 +8391,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -8424,7 +8424,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -8457,7 +8457,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -8490,7 +8490,7 @@
         "name": "mcan_loopback_polling",
         "location": "../../examples/drivers/mcan/mcan_loopback_polling/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -8523,7 +8523,7 @@
         "name": "mcan_loopback_dma",
         "location": "../../examples/drivers/mcan/mcan_loopback_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -8556,7 +8556,7 @@
         "name": "mcan_loopback_dma",
         "location": "../../examples/drivers/mcan/mcan_loopback_dma/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -8589,7 +8589,7 @@
         "name": "mcan_loopback_dma",
         "location": "../../examples/drivers/mcan/mcan_loopback_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -8622,7 +8622,7 @@
         "name": "mcan_loopback_dma",
         "location": "../../examples/drivers/mcan/mcan_loopback_dma/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -8655,7 +8655,7 @@
         "name": "canfd_loopback_polling",
         "location": "../../examples/drivers/mcan/canfd_loopback_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -8688,7 +8688,7 @@
         "name": "canfd_loopback_polling",
         "location": "../../examples/drivers/mcan/canfd_loopback_polling/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -8721,7 +8721,7 @@
         "name": "canfd_loopback_polling",
         "location": "../../examples/drivers/mcan/canfd_loopback_polling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -8754,7 +8754,7 @@
         "name": "canfd_loopback_polling",
         "location": "../../examples/drivers/mcan/canfd_loopback_polling/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -8787,7 +8787,7 @@
         "name": "canfd_loopback_interrupt",
         "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -8820,7 +8820,7 @@
         "name": "canfd_loopback_interrupt",
         "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -8853,7 +8853,7 @@
         "name": "canfd_loopback_interrupt",
         "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -8886,7 +8886,7 @@
         "name": "canfd_loopback_interrupt",
         "location": "../../examples/drivers/mcan/canfd_loopback_interrupt/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -8919,7 +8919,7 @@
         "name": "canfd_loopback_dma",
         "location": "../../examples/drivers/mcan/canfd_loopback_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -8952,7 +8952,7 @@
         "name": "canfd_loopback_dma",
         "location": "../../examples/drivers/mcan/canfd_loopback_dma/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -8985,7 +8985,7 @@
         "name": "canfd_loopback_dma",
         "location": "../../examples/drivers/mcan/canfd_loopback_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -9018,7 +9018,7 @@
         "name": "canfd_loopback_dma",
         "location": "../../examples/drivers/mcan/canfd_loopback_dma/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -9051,7 +9051,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -9084,7 +9084,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -9117,7 +9117,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -9150,7 +9150,7 @@
         "name": "mcspi_loopback",
         "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -9183,7 +9183,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -9216,7 +9216,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -9249,7 +9249,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -9282,7 +9282,7 @@
         "name": "mcspi_loopback_dma",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -9315,7 +9315,7 @@
         "name": "mcspi_loopback_dma_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -9348,7 +9348,7 @@
         "name": "mcspi_loopback_dma_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -9381,7 +9381,7 @@
         "name": "mcspi_loopback_dma_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -9414,7 +9414,7 @@
         "name": "mcspi_loopback_dma_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -9447,7 +9447,7 @@
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -9480,7 +9480,7 @@
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -9513,7 +9513,7 @@
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -9546,7 +9546,7 @@
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -9579,7 +9579,7 @@
         "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -9612,7 +9612,7 @@
         "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -9645,7 +9645,7 @@
         "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -9678,7 +9678,7 @@
         "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -9711,7 +9711,7 @@
         "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -9744,7 +9744,7 @@
         "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -9777,7 +9777,7 @@
         "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -9810,7 +9810,7 @@
         "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -9843,7 +9843,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -9876,7 +9876,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -9909,7 +9909,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -9942,7 +9942,7 @@
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -9975,7 +9975,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10008,7 +10008,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -10041,7 +10041,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10074,7 +10074,7 @@
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -10107,7 +10107,7 @@
         "name": "ospi_flash_diag",
         "location": "../../examples/drivers/ospi/ospi_flash_diag/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10140,7 +10140,7 @@
         "name": "ospi_flash_diag",
         "location": "../../examples/drivers/ospi/ospi_flash_diag/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10173,7 +10173,7 @@
         "name": "ospi_flash_dma",
         "location": "../../examples/drivers/ospi/ospi_flash_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10206,7 +10206,7 @@
         "name": "ospi_flash_dma",
         "location": "../../examples/drivers/ospi/ospi_flash_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10239,7 +10239,7 @@
         "name": "ospi_flash_io",
         "location": "../../examples/drivers/ospi/ospi_flash_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10272,7 +10272,7 @@
         "name": "ospi_flash_io",
         "location": "../../examples/drivers/ospi/ospi_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10305,7 +10305,7 @@
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10338,7 +10338,7 @@
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -10371,7 +10371,7 @@
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10404,7 +10404,7 @@
         "name": "ospi_flash_file_io",
         "location": "../../examples/drivers/ospi/ospi_flash_file_io/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -10437,7 +10437,7 @@
         "name": "ospi_flash_interrupt",
         "location": "../../examples/drivers/ospi/ospi_flash_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10470,7 +10470,7 @@
         "name": "ospi_flash_interrupt",
         "location": "../../examples/drivers/ospi/ospi_flash_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10503,7 +10503,7 @@
         "name": "ospi_flash_diag_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_diag_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10536,7 +10536,7 @@
         "name": "ospi_flash_diag_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_diag_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10569,7 +10569,7 @@
         "name": "ospi_flash_dma_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_dma_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10602,7 +10602,7 @@
         "name": "ospi_flash_dma_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_dma_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10635,7 +10635,7 @@
         "name": "ospi_flash_interrupt_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10668,7 +10668,7 @@
         "name": "ospi_flash_interrupt_lld",
         "location": "../../examples/drivers/ospi/ospi_flash_interrupt_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10701,7 +10701,7 @@
         "name": "ospi_dual_flash_io",
         "location": "../../examples/drivers/ospi/ospi_dual_flash_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10734,7 +10734,7 @@
         "name": "ospi_dual_flash_io",
         "location": "../../examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10767,7 +10767,7 @@
         "name": "pmic_qa_watchdog_reset",
         "location": "../../examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10800,7 +10800,7 @@
         "name": "pmic_qa_watchdog_reset",
         "location": "../../examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -10833,7 +10833,7 @@
         "name": "pmic_trigger_watchdog_reset",
         "location": "../../examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10866,7 +10866,7 @@
         "name": "pmic_trigger_watchdog_reset",
         "location": "../../examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -10899,7 +10899,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10932,7 +10932,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -10965,7 +10965,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -10998,7 +10998,7 @@
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11031,7 +11031,7 @@
         "name": "rat",
         "location": "../../examples/drivers/rat/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11063,7 +11063,7 @@
         "name": "rat",
         "location": "../../examples/drivers/rat/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11095,7 +11095,7 @@
         "name": "rl2",
         "location": "../../examples/drivers/rl2/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11127,7 +11127,7 @@
         "name": "rl2",
         "location": "../../examples/drivers/rl2/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11159,7 +11159,7 @@
         "name": "rti_led_blink",
         "location": "../../examples/drivers/rti/rti_led_blink/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11192,7 +11192,7 @@
         "name": "rti_led_blink",
         "location": "../../examples/drivers/rti/rti_led_blink/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -11225,7 +11225,7 @@
         "name": "sdfm_ecap_loop_back",
         "location": "../../examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11258,7 +11258,7 @@
         "name": "sdfm_ecap_loop_back",
         "location": "../../examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11291,7 +11291,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11324,7 +11324,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11357,7 +11357,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11390,7 +11390,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11423,7 +11423,7 @@
         "name": "tmu_context_save",
         "location": "../../examples/drivers/tmu/tmu_context_save/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11456,7 +11456,7 @@
         "name": "tmu_context_save",
         "location": "../../examples/drivers/tmu/tmu_context_save/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11489,7 +11489,7 @@
         "name": "tmu_cores_support",
         "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11522,7 +11522,7 @@
         "name": "tmu_cores_support",
         "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11555,7 +11555,7 @@
         "name": "tmu_cores_support",
         "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11588,7 +11588,7 @@
         "name": "tmu_cores_support",
         "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11621,7 +11621,7 @@
         "name": "tmu_operations",
         "location": "../../examples/drivers/tmu/tmu_operations/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11654,7 +11654,7 @@
         "name": "tmu_operations",
         "location": "../../examples/drivers/tmu/tmu_operations/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11687,7 +11687,7 @@
         "name": "tmu_park_transform",
         "location": "../../examples/drivers/tmu/tmu_park_transform/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11720,7 +11720,7 @@
         "name": "tmu_park_transform",
         "location": "../../examples/drivers/tmu/tmu_park_transform/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11753,7 +11753,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11786,7 +11786,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -11819,7 +11819,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11852,7 +11852,7 @@
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -11885,7 +11885,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -11918,7 +11918,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -11951,7 +11951,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -11984,7 +11984,7 @@
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -12017,7 +12017,7 @@
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12050,7 +12050,7 @@
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -12083,7 +12083,7 @@
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12116,7 +12116,7 @@
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -12149,7 +12149,7 @@
         "name": "uart_echo_dma_lld",
         "location": "../../examples/drivers/uart/uart_echo_dma_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12182,7 +12182,7 @@
         "name": "uart_echo_dma_lld",
         "location": "../../examples/drivers/uart/uart_echo_dma_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12215,7 +12215,7 @@
         "name": "uart_echo_interrupt_lld",
         "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12248,7 +12248,7 @@
         "name": "uart_echo_interrupt_lld",
         "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12281,7 +12281,7 @@
         "name": "uart_echo_low_latency_interrupt",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12314,7 +12314,7 @@
         "name": "uart_echo_low_latency_interrupt",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12347,7 +12347,7 @@
         "name": "uart_echo_low_latency_polling",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12380,7 +12380,7 @@
         "name": "uart_echo_low_latency_polling",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12413,7 +12413,7 @@
         "name": "uart_echo_polling_lld",
         "location": "../../examples/drivers/uart/uart_echo_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12446,7 +12446,7 @@
         "name": "uart_echo_polling_lld",
         "location": "../../examples/drivers/uart/uart_echo_polling_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12479,7 +12479,7 @@
         "name": "watchdog_interrupt",
         "location": "../../examples/drivers/watchdog/watchdog_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12512,7 +12512,7 @@
         "name": "watchdog_interrupt",
         "location": "../../examples/drivers/watchdog/watchdog_interrupt/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12545,7 +12545,7 @@
         "name": "watchdog_reset_mode",
         "location": "../../examples/drivers/watchdog/watchdog_reset/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12578,7 +12578,7 @@
         "name": "watchdog_reset_mode",
         "location": "../../examples/drivers/watchdog/watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12611,7 +12611,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -12642,7 +12642,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-som/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -12673,7 +12673,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -12704,7 +12704,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-lp/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -12735,7 +12735,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12766,7 +12766,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12797,7 +12797,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12828,7 +12828,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12859,7 +12859,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -12890,7 +12890,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -12921,7 +12921,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -12952,7 +12952,7 @@
         "name": "hello_world",
         "location": "../../examples/hello_world/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -12983,7 +12983,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -13014,7 +13014,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -13045,7 +13045,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -13076,7 +13076,7 @@
         "name": "hello_world_cpp",
         "location": "../../examples/hello_world_cpp/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -13107,7 +13107,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -13140,7 +13140,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -13173,7 +13173,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -13206,7 +13206,7 @@
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -13239,7 +13239,7 @@
         "name": "interrupt_prioritization",
         "location": "../../examples/kernel/dpl/interrupt_prioritization/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -13272,7 +13272,7 @@
         "name": "interrupt_prioritization",
         "location": "../../examples/kernel/dpl/interrupt_prioritization/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -13305,7 +13305,7 @@
         "name": "interrupt_prioritization",
         "location": "../../examples/kernel/dpl/interrupt_prioritization/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -13338,7 +13338,7 @@
         "name": "interrupt_prioritization",
         "location": "../../examples/kernel/dpl/interrupt_prioritization/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -13371,7 +13371,7 @@
         "name": "test_data_abort",
         "location": "../../examples/kernel/dpl/test_data_abort/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -13404,7 +13404,7 @@
         "name": "test_data_abort",
         "location": "../../examples/kernel/dpl/test_data_abort/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -13437,7 +13437,7 @@
         "name": "test_data_abort",
         "location": "../../examples/kernel/dpl/test_data_abort/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -13470,7 +13470,7 @@
         "name": "test_data_abort",
         "location": "../../examples/kernel/dpl/test_data_abort/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -13503,7 +13503,7 @@
         "name": "test_prefetch_abort",
         "location": "../../examples/kernel/dpl/test_prefetch_abort/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -13536,7 +13536,7 @@
         "name": "test_prefetch_abort",
         "location": "../../examples/kernel/dpl/test_prefetch_abort/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -13569,7 +13569,7 @@
         "name": "test_prefetch_abort",
         "location": "../../examples/kernel/dpl/test_prefetch_abort/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -13602,7 +13602,7 @@
         "name": "test_prefetch_abort",
         "location": "../../examples/kernel/dpl/test_prefetch_abort/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -13635,7 +13635,7 @@
         "name": "test_undef",
         "location": "../../examples/kernel/dpl/test_undef/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -13668,7 +13668,7 @@
         "name": "test_undef",
         "location": "../../examples/kernel/dpl/test_undef/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -13701,7 +13701,7 @@
         "name": "test_undef",
         "location": "../../examples/kernel/dpl/test_undef/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -13734,7 +13734,7 @@
         "name": "test_undef",
         "location": "../../examples/kernel/dpl/test_undef/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -13767,7 +13767,7 @@
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -13800,7 +13800,7 @@
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -13833,7 +13833,7 @@
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -13866,7 +13866,7 @@
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -13899,7 +13899,7 @@
         "name": "basic_smart_placement",
         "location": "../../examples/kernel/nortos/basic_smart_placement/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -13932,7 +13932,7 @@
         "name": "basic_smart_placement",
         "location": "../../examples/kernel/nortos/basic_smart_placement/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -13965,7 +13965,7 @@
         "name": "enet_cpsw_est",
         "location": "../../source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14002,7 +14002,7 @@
         "name": "enet_cpsw_est",
         "location": "../../source/networking/enet/core/examples/enet_cpsw_est/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14039,7 +14039,7 @@
         "name": "ocmc_benchmarking",
         "location": "../../examples/benchmarks/ocmc_benchmarking/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -14071,7 +14071,7 @@
         "name": "ocmc_benchmarking",
         "location": "../../examples/benchmarks/ocmc_benchmarking/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14103,7 +14103,7 @@
         "name": "real_time_debug",
         "location": "../../examples/real_time_debug/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -14134,7 +14134,7 @@
         "name": "real_time_debug",
         "location": "../../examples/real_time_debug/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14165,7 +14165,7 @@
         "name": "real_time_debug",
         "location": "../../examples/real_time_debug/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -14196,7 +14196,7 @@
         "name": "real_time_debug",
         "location": "../../examples/real_time_debug/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -14227,7 +14227,7 @@
         "name": "enet_l2_cpsw",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14264,7 +14264,7 @@
         "name": "enet_l2_cpsw",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14301,7 +14301,7 @@
         "name": "enet_l2_cpsw",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14338,7 +14338,7 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14375,7 +14375,7 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14412,7 +14412,7 @@
         "name": "enet_cpsw_loopback_mac_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14451,7 +14451,7 @@
         "name": "enet_cpsw_loopback_mac_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14490,7 +14490,7 @@
         "name": "enet_cpsw_loopback_phy_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14529,7 +14529,7 @@
         "name": "enet_cpsw_loopback_phy_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14568,7 +14568,7 @@
         "name": "enet_txsg",
         "location": "../../source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14605,7 +14605,7 @@
         "name": "enet_txsg",
         "location": "../../source/networking/enet/core/examples/enet_tx_scatter_gather/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14642,7 +14642,7 @@
         "name": "cpsw_lwip_https",
         "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14680,7 +14680,7 @@
         "name": "cpsw_lwip_https",
         "location": "../../source/networking/enet/core/examples/lwip/cpsw_lwip_https/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14718,7 +14718,7 @@
         "name": "enet_cpsw_rawhttpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -14756,7 +14756,7 @@
         "name": "enet_cpsw_rawhttpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_rawhttpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -14794,7 +14794,7 @@
         "name": "enet_cpsw_socket",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14832,7 +14832,7 @@
         "name": "enet_cpsw_socket",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_socket/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14870,7 +14870,7 @@
         "name": "enet_cpsw_tcpclient",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14908,7 +14908,7 @@
         "name": "enet_cpsw_tcpclient",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14946,7 +14946,7 @@
         "name": "enet_cpsw_tcpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -14984,7 +14984,7 @@
         "name": "enet_cpsw_tcpserver",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_tcpserver/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15022,7 +15022,7 @@
         "name": "enet_cpsw_udp_igmp",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15060,7 +15060,7 @@
         "name": "enet_cpsw_udp_igmp",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udp_igmp/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15098,7 +15098,7 @@
         "name": "enet_cpsw_udpclient",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15136,7 +15136,7 @@
         "name": "enet_cpsw_udpclient",
         "location": "../../source/networking/enet/core/examples/lwip/enet_cpsw_udpclient/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15174,7 +15174,7 @@
         "name": "enet_lwip_cpsw",
         "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15212,7 +15212,7 @@
         "name": "enet_lwip_cpsw",
         "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15250,7 +15250,7 @@
         "name": "icss_emac_lwip",
         "location": "../../examples/networking/lwip/icss_emac_lwip/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15283,7 +15283,7 @@
         "name": "gptp_app",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83tg720/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15321,7 +15321,7 @@
         "name": "gptp_app",
         "location": "../../source/networking/enet/core/examples/tsn/gptp_cpsw_app/am261x-lp-dp83826/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -15359,7 +15359,7 @@
         "name": "sdl_mcrc_auto_cpu_example",
         "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15392,7 +15392,7 @@
         "name": "sdl_mcrc_auto_cpu_example",
         "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15425,7 +15425,7 @@
         "name": "sdl_mcrc_full_cpu_example",
         "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15458,7 +15458,7 @@
         "name": "sdl_mcrc_full_cpu_example",
         "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15491,7 +15491,7 @@
         "name": "sdl_mcrc_semi_cpu_example",
         "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15524,7 +15524,7 @@
         "name": "sdl_mcrc_semi_cpu_example",
         "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15557,7 +15557,7 @@
         "name": "r5f_cpu_utils",
         "location": "../../examples/sdl/r5f_cpu_utils/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15589,7 +15589,7 @@
         "name": "r5f_cpu_utils",
         "location": "../../examples/sdl/r5f_cpu_utils/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15621,7 +15621,7 @@
         "name": "crypto_dthe_aes_cbc_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15655,7 +15655,7 @@
         "name": "crypto_dthe_aes_cbc_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -15689,7 +15689,7 @@
         "name": "crypto_dthe_aes_cbc_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15723,7 +15723,7 @@
         "name": "crypto_dthe_aes_cbc_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -15757,7 +15757,7 @@
         "name": "crypto_dthe_aes_ccm_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ccm_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15791,7 +15791,7 @@
         "name": "crypto_dthe_aes_ccm_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ccm_128/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -15825,7 +15825,7 @@
         "name": "crypto_dthe_aes_ccm_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ccm_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15859,7 +15859,7 @@
         "name": "crypto_dthe_aes_ccm_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ccm_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -15893,7 +15893,7 @@
         "name": "crypto_aes_cfb",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cfb/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15927,7 +15927,7 @@
         "name": "crypto_aes_cfb",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cfb/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -15961,7 +15961,7 @@
         "name": "crypto_dthe_aes_cmac_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -15995,7 +15995,7 @@
         "name": "crypto_dthe_aes_cmac_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16029,7 +16029,7 @@
         "name": "crypto_dthe_aes_cmac_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16063,7 +16063,7 @@
         "name": "crypto_dthe_aes_cmac_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16097,7 +16097,7 @@
         "name": "crypto_dthe_aes_ctr",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ctr/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16131,7 +16131,7 @@
         "name": "crypto_dthe_aes_ctr",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ctr/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16165,7 +16165,7 @@
         "name": "crypto_dthe_aes_ecb_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16199,7 +16199,7 @@
         "name": "crypto_dthe_aes_ecb_128",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16233,7 +16233,7 @@
         "name": "crypto_dthe_aes_ecb_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16267,7 +16267,7 @@
         "name": "crypto_dthe_aes_ecb_256",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16301,7 +16301,7 @@
         "name": "crypto_dthe_aes_stream",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16335,7 +16335,7 @@
         "name": "crypto_dthe_aes_stream",
         "location": "../../examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16369,7 +16369,7 @@
         "name": "dthe_hmac_sha256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16403,7 +16403,7 @@
         "name": "dthe_hmac_sha256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16437,7 +16437,7 @@
         "name": "dthe_hmac_sha512",
         "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha512/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16471,7 +16471,7 @@
         "name": "dthe_hmac_sha512",
         "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha512/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16505,7 +16505,7 @@
         "name": "dthe_sha_256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16539,7 +16539,7 @@
         "name": "dthe_sha_256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16573,7 +16573,7 @@
         "name": "dthe_sha_512",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16607,7 +16607,7 @@
         "name": "dthe_sha_512",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16641,7 +16641,7 @@
         "name": "usb_dfu",
         "location": "../../examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16674,7 +16674,7 @@
         "name": "usb_dfu",
         "location": "../../examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -16707,7 +16707,7 @@
         "name": "cdc_echo",
         "location": "../../examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16740,7 +16740,7 @@
         "name": "edma_interrupt_transfer",
         "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -16770,7 +16770,7 @@
         "name": "edma_interrupt_transfer",
         "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-lp/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -16800,7 +16800,7 @@
         "name": "mpu_firewall_services_demo",
         "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-lp/system_nortos/system.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -16830,7 +16830,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -16860,7 +16860,7 @@
         "name": "ipc_notify_echo",
         "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-lp/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -16890,7 +16890,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -16920,7 +16920,7 @@
         "name": "ipc_rpmsg_echo",
         "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-lp/system_freertos_nortos/system.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -16950,7 +16950,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos/system.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -16980,7 +16980,7 @@
         "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am261x-lp/system_nortos/system.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -17010,7 +17010,7 @@
         "name": "tmu_cores_support",
         "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/system_nortos/system.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -17040,7 +17040,7 @@
         "name": "tmu_cores_support",
         "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-lp/system_nortos/system.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -17070,7 +17070,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-som/system_freertos/system.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -17098,7 +17098,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-lp/system_freertos/system.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "freertos"
@@ -17126,7 +17126,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-som/system_nortos/system.projectspec",
         "devtools": [
-            "TMDSCNCD263P"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "nortos"
@@ -17154,7 +17154,7 @@
         "name": "empty",
         "location": "../../examples/empty/am261x-lp/system_nortos/system.projectspec",
         "devtools": [
-            "LP-AM263P"
+            "LP-AM261"
         ],
         "kernel": [
             "nortos"
@@ -17178,8 +17178,8 @@
         "name": "User Guide",
         "location": "../../docs/api_guide_am261x/index.html",
         "devtools": [
-            "TMDSCNCD263P",
-            "LP-AM263P"
+            "AM261-SOM-EVM",
+            "LP-AM261"
         ],
         "mainCategories": [
             [
