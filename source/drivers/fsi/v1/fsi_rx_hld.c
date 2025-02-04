@@ -151,9 +151,15 @@ void FSI_HLD_RxParams_init(FSI_Rx_Params *prms)
         prms->numLane = FSI_DATA_WIDTH_1_LANE;
         prms->errorCheck = FSI_RX_NO_ERROR_CHECK;
         prms->delayLineCtrl = FALSE;
+        prms->rxTrigger  = false,
+        prms->rxTriggerValCycles  = 4,
         prms->udataFilterTest = FALSE;
         prms->rxFrameWDTest = FALSE;
         prms->rxPingWDTest = FALSE;
+        prms->intrEvt        = FSI_RX_EVT_DATA_FRAME,
+        prms->transferMode = FSI_RX_TRANSFER_MODE_BLOCKING,
+        prms->transferCallbackFxn = NULL;
+        prms->errorCallbackFxn = NULL;
     }
 }
 
@@ -301,6 +307,7 @@ void FSI_Rx_close(FSI_Rx_Handle handle)
         if(FSI_RX_OPER_MODE_INTERRUPT == attrs->operMode)
         {
             status += FSI_disableRxInterrupt(attrs->baseAddr, FSI_INT1, FSI_RX_EVTMASK);
+            FSI_clearRxEvents(attrs->baseAddr, FSI_RX_EVTMASK);
             DebugP_assert(SystemP_SUCCESS == status);
         }
 
@@ -386,6 +393,7 @@ static int32_t FSI_Rx_deConfigInstance(FSI_Rx_Handle handle)
     const FSI_Rx_Attrs      *attrs;
     FSI_Rx_Config           *config = NULL;
     FSI_Rx_Object           *fsiRxObj = NULL;
+    uint32_t  baseAddr;
 
     if(NULL_PTR != handle)
     {
@@ -393,12 +401,22 @@ static int32_t FSI_Rx_deConfigInstance(FSI_Rx_Handle handle)
         config = (FSI_Rx_Config*)handle;
         attrs = config->attrs;
         fsiRxObj = config->object;
+        baseAddr = attrs->baseAddr;
+
         if(FSI_RX_OPER_MODE_DMA == attrs->operMode)
         {
            status = FSI_Rx_dmaClose(handle, fsiRxObj->fsiRxDmaChCfg);
         }
         else
         {
+            if(fsiRxObj->params->udataFilterTest == TRUE)
+            {
+                FSI_disableRxDataFilter(baseAddr);
+            }
+            if(fsiRxObj->params->rxFrameWDTest == TRUE)
+            {
+                FSI_disableRxFrameWatchdog(baseAddr);
+            }
             status = SystemP_SUCCESS;
         }
     }
@@ -439,11 +457,7 @@ int32_t FSI_Rx_hld(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTag
                     {
                         /* Block on transferSem till the transfer completion. */
                         DebugP_assert(NULL_PTR != object->readTransferSem);
-                        retVal = SemaphoreP_pend(&object->readTransferSemObj, SystemP_WAIT_FOREVER);
-                        if (retVal != SystemP_SUCCESS)
-                        {
-                            retVal = FSI_Rx_deConfigInstance(handle);
-                        }
+                        SemaphoreP_pend(&object->readTransferSemObj, SystemP_WAIT_FOREVER);
                     }
                 }
             }
@@ -452,6 +466,9 @@ int32_t FSI_Rx_hld(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTag
         {
             retVal = FSI_Rx_Poll(handle, rxBufData, NULL, bufIdx);
         }
+
+        retVal += FSI_Rx_deConfigInstance(handle);
+
     }
 
     return retVal;

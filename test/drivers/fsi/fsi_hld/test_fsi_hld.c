@@ -93,9 +93,7 @@ void test_main(void *args)
 {
     FSI_MainTestParams  testParams;
 
-   // Drivers_open();
-    Drivers_intXbarOpen();
-    Drivers_uartOpen();
+    Drivers_open();
 
     UNITY_BEGIN();
 

@@ -71,7 +71,7 @@ extern SemaphoreP_Object gFsiTxRx_SyncSemaphoreObj;
 void fsi_tx_hld_main(void *args)
 {
     int32_t status;
-    uint32_t txBaseAddr, rxBaseAddr;
+    uint32_t txBaseAddr;
     uint16_t dataSize;
     uint16_t bufIdx;
     SemaphoreP_Object *p_taskDoneSemaphoreObj;
@@ -81,30 +81,27 @@ void fsi_tx_hld_main(void *args)
     FSI_Tx_Config *tx_config = NULL;
     FSI_Tx_Attrs  *tx_attrs   = NULL;
 
+    FSI_Tx_close(gFsiTxHandle[CONFIG_FSI_TX0]);
+
     gFsiTxHandle[CONFIG_FSI_TX0] = FSI_Tx_open(CONFIG_FSI_TX0, &txParams);
 
     tx_config = (FSI_Tx_Config *)gFsiTxHandle[CONFIG_FSI_TX0];
     tx_attrs = tx_config->attrs;
 
-   // FSI_Tx_close(gFsiTxHandle[CONFIG_FSI_TX0]);
-
     /* Test parameters */
     txBaseAddr = FSI_Tx_getBaseAddr(gFsiTxHandle[CONFIG_FSI_TX0]);
-    rxBaseAddr = FSI_Rx_getBaseAddr(gFsiRxHandle[CONFIG_FSI_RX0]);
     dataSize = txParams.frameDataSize;
     bufIdx = 0U;
     p_taskDoneSemaphoreObj = &txTestParams->taskDoneSemaphoreObj;
 
     DebugP_log("[FSI] Loopback Tx application started ...\r\n");
 
-
     /* Send Flush Sequence to sync, after every rx soft reset */
     status = FSI_executeTxFlushSequence(txBaseAddr, tx_attrs->preScalarVal);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    /* sync between rx and tx */
-    status = SemaphoreP_pend(&gFsiTxRx_SyncSemaphoreObj,SystemP_WAIT_FOREVER);
-    DebugP_assert(status == SystemP_SUCCESS);
+    /* post semaphore to sync with rx */
+    SemaphoreP_post(&gFsiTxRx_SyncSemaphoreObj);
 
     /* Start transfer */
     /* Memset TX buffer with new data for every loop */
@@ -113,19 +110,16 @@ void fsi_tx_hld_main(void *args)
         gTxBufData[i] = dataSize + i;
     }
 
+     if(txParams.errorCheck != FSI_TX_NO_ERROR_CHECK)
+    {
+        FSI_Tx_errorCheck(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData);
+    }
+
     status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, NULL, bufIdx);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    /* TX interrupt deinit */
-    FSI_disableTxInterrupt(txBaseAddr, 0, FSI_TX_EVTMASK);
-    FSI_clearTxEvents(txBaseAddr, FSI_TX_EVTMASK);
-    FSI_disableTxClock(txBaseAddr);
-
     SemaphoreP_post(p_taskDoneSemaphoreObj);
 
-    FSI_Tx_close(gFsiTxHandle[CONFIG_FSI_TX0]);
-
-    FSI_disableRxInternalLoopback(rxBaseAddr);
     while(1)
     {
         /* Yield to the main task which deletes this task. */

@@ -158,6 +158,10 @@ void FSI_HLD_TxParams_init(FSI_Tx_Params *prms)
         prms->udataFilterTest = FALSE;
         prms->rxFrameWDTest = FALSE;
         prms->rxPingWDTest = FALSE;
+        prms->intrEvt     = FSI_TX_EVT_FRAME_DONE;
+        prms->transferMode = FSI_TX_TRANSFER_MODE_BLOCKING;
+        prms->transferCallbackFxn = NULL;
+        prms->errorCallbackFxn = NULL;
     }
 }
 
@@ -291,6 +295,7 @@ void FSI_Tx_close(FSI_Tx_Handle handle)
         {
             status += FSI_disableTxInterrupt(attrs->baseAddr, FSI_INT1, FSI_TX_EVTMASK);
             DebugP_assert(SystemP_SUCCESS == status);
+            FSI_clearTxEvents(attrs->baseAddr, FSI_TX_EVTMASK);
         }
 
         SemaphoreP_post(&gFsiTxDrvObj.lockObj);
@@ -452,8 +457,6 @@ int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
                         }
                     }
 
-                    retVal = FSI_Tx_deConfigInstance(handle);
-
                 }
             }
         }
@@ -461,6 +464,8 @@ int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
         {
             retVal = FSI_Tx_Poll(handle, txBufData, NULL, bufIdx);
         }
+
+        retVal += FSI_Tx_deConfigInstance(handle);
     }
 
     return retVal;
