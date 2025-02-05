@@ -4,7 +4,9 @@ let device = "am261x";
 
 const files = {
     common: [
-        "tmu_rom_checksum_main.c",
+        "tmu_rom_checksum_test_main.c",
+        "tmu_rom_checksum_pos_test.c",
+        "tmu_rom_checksum_neg_test.c",
         "dpl_interface.c",
         "main.c",
     ],
@@ -17,7 +19,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
-        "../../../../dpl", /* SDL dpl base */
+        "../../../../../dpl", /* SDL dpl base */
     ],
 };
 
@@ -25,23 +27,24 @@ const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
-        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/test/unity/lib",
         "${MCU_PLUS_SDK_PATH}/source/sdl/lib",
     ],
 };
 
 const includes_nortos = {
     common: [
-          "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
-          "${MCU_PLUS_SDK_PATH}/examples/sdl/tmu_rom_checksum/",
+        "${MCU_PLUS_SDK_PATH}/test/sdl/tmu_rom_checksum/unit_test/",
+        "${MCU_PLUS_SDK_PATH}/test/unity/",
+        "${MCU_PLUS_SDK_PATH}/test/sdl/dpl/",
     ],
 };
 
-const libs_nortos_r5f = {
+const libs_r5f = {
     common: [
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
@@ -54,15 +57,13 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_SDL_TMU_ROM_CHECKSUM";
-
 const templates_nortos_r5f =
 [
     {
         input: ".project/templates/am261x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "test_main",
+            entryFunction: "tmu_rom_checksum_test_main",
         },
     }
 ];
@@ -72,14 +73,14 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
-function getComponentProperty(device) {
+function getComponentProperty() {
     let property = {};
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "tmu_rom_checksum_example";
-    property.isInternal = false;
-    property.description = "This example verifies CRC for TMU ROM"
+    property.name = "tmu_rom_checksum_unittest_app";
+    property.isInternal = true;
+    property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -94,11 +95,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
-    if(buildOption.cpu.match(/r5f*/))
-    {
-        build_property.libs = libs_nortos_r5f;
+    if(buildOption.cpu.match(/r5f*/)) {
+        build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
     }
 

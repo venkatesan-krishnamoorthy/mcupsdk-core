@@ -1,5 +1,5 @@
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=tmu_rom_checksum_example.$(PROFILE).out
-COREOUTNAME:=tmu_rom_checksum_example.$(PROFILE).optishare.out
+OUTNAME:=tmu_rom_checksum_unittest_app.$(PROFILE).out
+COREOUTNAME:=tmu_rom_checksum_unittest_app.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=tmu_rom_checksum_example.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=tmu_rom_checksum_example.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=tmu_rom_checksum_example.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME:=tmu_rom_checksum_unittest_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=tmu_rom_checksum_unittest_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=tmu_rom_checksum_unittest_app.$(PROFILE).appimage.signed
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=tmu_rom_checksum_example.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=tmu_rom_checksum_example.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=tmu_rom_checksum_example.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=tmu_rom_checksum_example.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=tmu_rom_checksum_example.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=tmu_rom_checksum_example.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=tmu_rom_checksum_example.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_MCELF:=tmu_rom_checksum_unittest_app.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=tmu_rom_checksum_unittest_app.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=tmu_rom_checksum_unittest_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=tmu_rom_checksum_unittest_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=tmu_rom_checksum_unittest_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=tmu_rom_checksum_unittest_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=tmu_rom_checksum_unittest_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -44,7 +44,9 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	tmu_rom_checksum_main.c \
+	tmu_rom_checksum_test_main.c \
+	tmu_rom_checksum_pos_test.c \
+	tmu_rom_checksum_neg_test.c \
 	dpl_interface.c \
 	main.c \
 	ti_drivers_config.c \
@@ -58,14 +60,15 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
-	../../../../dpl \
+	../../../../../dpl \
 	generated \
 
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
-	-I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/ \
-	-I${MCU_PLUS_SDK_PATH}/examples/sdl/tmu_rom_checksum/ \
+	-I${MCU_PLUS_SDK_PATH}/test/sdl/tmu_rom_checksum/unit_test/ \
+	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
+	-I${MCU_PLUS_SDK_PATH}/test/sdl/dpl/ \
 	-Igenerated \
 
 DEFINES_common := \
@@ -107,14 +110,14 @@ LNK_FILES_common = \
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lnortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lunity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
@@ -129,7 +132,7 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	unity.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	sdl.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
@@ -137,7 +140,7 @@ LIBS_NAME = \
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/test/unity/lib \
 	${MCU_PLUS_SDK_PATH}/source/sdl/lib \
 	${CG_TOOL_ROOT}/lib \
 
@@ -220,7 +223,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang tmu_rom_checksum_example ...
+	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang tmu_rom_checksum_unittest_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -370,12 +373,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for tmu_rom_checksum_example.$(PROFILE) ...
+	@echo Creating Coverage Report for tmu_rom_checksum_unittest_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o tmu_rom_checksum_example.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=tmu_rom_checksum_example.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=tmu_rom_checksum_example.$(PROFILE).profdata > coverage/tmu_rom_checksum_example.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/tmu_rom_checksum_example.$(PROFILE).profdata.json --output-json=coverage/tmu_rom_checksum_example.$(PROFILE).analysis.json --output=../tmu_rom_checksum_example.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o tmu_rom_checksum_unittest_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=tmu_rom_checksum_unittest_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=tmu_rom_checksum_unittest_app.$(PROFILE).profdata > coverage/tmu_rom_checksum_unittest_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/tmu_rom_checksum_unittest_app.$(PROFILE).profdata.json --output-json=coverage/tmu_rom_checksum_unittest_app.$(PROFILE).analysis.json --output=../tmu_rom_checksum_unittest_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

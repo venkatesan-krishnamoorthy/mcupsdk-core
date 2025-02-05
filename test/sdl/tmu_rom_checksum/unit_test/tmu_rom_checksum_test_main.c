@@ -1,5 +1,5 @@
 /*********************************************************************
- *   Copyright (c) Texas Instruments Incorporated 2024
+ *   Copyright (c) Texas Instruments Incorporated 2024-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -75,7 +75,7 @@
 /* ========================================================================== */
 
 /* For LDRA based testing, uncomment below line.*/
-/* #undef UNITY_INCLUDE_CONFIG_H */
+#undef UNITY_INCLUDE_CONFIG_H
 
 #ifdef UNITY_INCLUDE_CONFIG_H
 /*
