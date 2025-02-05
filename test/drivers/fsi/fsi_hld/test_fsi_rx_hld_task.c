@@ -106,7 +106,7 @@ void fsi_rx_hld_main(void *args)
         gRxBufData[i] = 0;
     }
 
-    if (rxParams.rxFrameWDTest != TRUE)
+    if (rxParams.rxFrameWDTest != TRUE && rxParams.rxPingWDTest != TRUE)
     {
         status = FSI_Rx_hld(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData, NULL, bufIdx);
         DebugP_assert(status == SystemP_SUCCESS);

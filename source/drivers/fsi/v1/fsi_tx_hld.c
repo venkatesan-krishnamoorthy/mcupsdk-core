@@ -100,6 +100,9 @@ extern FSI_Tx_Config gFsiTxConfig[];
 extern FSI_Tx_DmaHandle gFsiTxDmaHandle[];
 extern FSI_Tx_DmaChConfig gFsiTxDmaChCfg;
 
+/* AD_Review : Need to check this */
+#define CONFIG_FSI_TX0_CLK  (400000000U)
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -371,6 +374,12 @@ static int32_t FSI_Tx_configInstance(FSI_Tx_Handle handle)
             FSI_configTxDelayLine(baseAddr, FSI_TX_DELAY_D1, 5U);
         }
 
+        if(fsiTxObj->params->intrEvt == FSI_TX_EVT_PING_HW_TRIG)
+        {
+            status += FSI_resetTxModule(baseAddr, FSI_TX_PING_TIMEOUT_CNT_RESET);
+            status += FSI_clearTxModuleReset(baseAddr, FSI_TX_PING_TIMEOUT_CNT_RESET);
+        }
+
         /* Initialize dma mode if the dma handle is not NULL */
         if (status == SystemP_SUCCESS)
         {
@@ -413,6 +422,10 @@ static int32_t FSI_Tx_deConfigInstance(FSI_Tx_Handle handle)
             /* CRC Value is calculated based on the TX pattern */
             FSI_disableTxUserCRC(baseAddr);
         }
+        if(fsiTxObj->params->intrEvt == FSI_TX_EVT_PING_HW_TRIG)
+        {
+            FSI_disableTxPingTimer(baseAddr);
+        }
     }
 
     return status;
@@ -450,7 +463,7 @@ int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
                     if (object->params->transferMode == FSI_TX_TRANSFER_MODE_BLOCKING)
                     {
                         /* Block on transferSem till the transfer completion. */
-                        if(object->params->rxFrameWDTest != TRUE)
+                        if(object->params->rxFrameWDTest != TRUE && object->params->rxPingWDTest != TRUE )
                         {
                             DebugP_assert(NULL_PTR != object->writeTransferSem);
                             SemaphoreP_pend(&object->writeTransferSemObj, SystemP_WAIT_FOREVER);
@@ -528,12 +541,21 @@ int32_t FSI_Tx_Intr(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTa
         dataSize = obj->params->frameDataSize;
 
         /* Transmit data */
-        status = FSI_setTxBufferPtr(baseAddr, bufIdx);
-        status += FSI_writeTxBuffer(baseAddr, txBufData, dataSize, bufIdx);
-        status += FSI_startTxTransmit(baseAddr);
-        DebugP_assert(status == SystemP_SUCCESS);
+        if(obj->params->intrEvt != FSI_TX_EVT_PING_HW_TRIG)
+        {
+            status = FSI_setTxBufferPtr(baseAddr, bufIdx);
+            status += FSI_writeTxBuffer(baseAddr, txBufData, dataSize, bufIdx);
+            status += FSI_startTxTransmit(baseAddr);
+            DebugP_assert(status == SystemP_SUCCESS);
+        }
+        else
+        {
+            status = FSI_setTxPingTimeoutMode(baseAddr, FSI_PINGTIMEOUT_ON_HWINIT_PING_FRAME);
+            status += FSI_setTxPingTag(baseAddr, FSI_FRAME_TAG10);
+            status += FSI_enableTxPingTimer(baseAddr, ((CONFIG_FSI_TX0_CLK / (attrs->preScalarVal * 2)) / 2), FSI_FRAME_TAG10);
+        }
 
-        if(obj->params->rxFrameWDTest == TRUE)
+        if(obj->params->rxFrameWDTest == TRUE || obj->params->rxPingWDTest == TRUE)
         {
             FSI_disableTxClock(baseAddr);
         }
@@ -635,6 +657,7 @@ void FSI_Tx_Isr(void* args)
     FSI_Tx_Config *config = NULL;
     FSI_Tx_Object *object = NULL;
     uint32_t baseAddr = 0;
+    uint16_t intrStatus;
 
     if(args != NULL)
     {
@@ -643,7 +666,16 @@ void FSI_Tx_Isr(void* args)
         baseAddr = attrs->baseAddr;
         object = config->object;
 
-        FSI_clearTxEvents(baseAddr, attrs->intrEvt);
+        FSI_getTxEventStatus(baseAddr, &intrStatus);
+        if ((intrStatus & FSI_TX_EVT_FRAME_DONE) == FSI_TX_EVT_FRAME_DONE)
+        {
+            FSI_clearTxEvents(baseAddr, FSI_TX_EVT_FRAME_DONE);
+        }
+        if ((intrStatus & FSI_TX_EVT_PING_HW_TRIG) == FSI_TX_EVT_PING_HW_TRIG)
+        {
+            FSI_clearTxEvents(baseAddr, FSI_TX_EVT_PING_HW_TRIG);
+        }
+
         SemaphoreP_post(&object->writeTransferSemObj);
     }
     return;

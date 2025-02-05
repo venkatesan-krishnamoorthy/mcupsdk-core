@@ -235,6 +235,9 @@ typedef struct FSI_Rx_Params_t
     /**< Interrupt Event */
     uint32_t                intrEvt;
 
+    /* RX HW ping */
+    bool            hwPing;
+
     /*! Blocking or Callback mode. Refer \ref FSI_Rx_TransferMode
      */
     uint32_t                transferMode;

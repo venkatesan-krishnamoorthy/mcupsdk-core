@@ -157,6 +157,7 @@ void FSI_HLD_RxParams_init(FSI_Rx_Params *prms)
         prms->rxFrameWDTest = FALSE;
         prms->rxPingWDTest = FALSE;
         prms->intrEvt        = FSI_RX_EVT_DATA_FRAME,
+        prms->hwPing        = FALSE,
         prms->transferMode = FSI_RX_TRANSFER_MODE_BLOCKING,
         prms->transferCallbackFxn = NULL;
         prms->errorCallbackFxn = NULL;
@@ -240,6 +241,14 @@ FSI_Rx_Handle FSI_Rx_open(uint32_t index, FSI_Rx_Params *prms)
                 ClockP_usleep(1U);
                 FSI_clearRxModuleReset(attrs->baseAddr, FSI_RX_FRAME_WD_CNT_RESET);
             }
+            if(obj->params->rxPingWDTest == TRUE)
+            {
+                /* Performing a reset on frame WD */
+                FSI_resetRxModule(attrs->baseAddr, FSI_RX_PING_WD_CNT_RESET);
+                ClockP_usleep(1U);
+                FSI_clearRxModuleReset(attrs->baseAddr, FSI_RX_PING_WD_CNT_RESET);
+            }
+
             /* Interrupt Init */
             /* Register interrupt */
             if(FSI_RX_OPER_MODE_INTERRUPT == attrs->operMode)
@@ -258,6 +267,12 @@ FSI_Rx_Handle FSI_Rx_open(uint32_t index, FSI_Rx_Params *prms)
         {
             /* Value to generate a Frame WD timeout interrupt event */
             FSI_enableRxFrameWatchdog(attrs->baseAddr, 0x10000);
+        }
+
+        if(obj->params->rxPingWDTest == TRUE)
+        {
+            /* Value to generate a Frame WD timeout interrupt event */
+            FSI_enableRxPingWatchdog(attrs->baseAddr, 0x10000);
         }
 
         SemaphoreP_post(&gFsiRxDrvObj.lockObj);
@@ -367,6 +382,12 @@ static int32_t FSI_Rx_configInstance(FSI_Rx_Handle handle)
         status += FSI_setRxSoftwareFrameSize(baseAddr, fsiRxObj->params->frameDataSize);
         status += FSI_setRxDataWidth(baseAddr, fsiRxObj->params->numLane);
 
+        if((fsiRxObj->params->intrEvt == FSI_RX_EVT_PING_WD_TIMEOUT) ||
+            (fsiRxObj->params->intrEvt == FSI_RX_EVT_PING_FRAME))
+        {
+            status += FSI_setRxPingTimeoutMode(baseAddr, FSI_PINGTIMEOUT_ON_HWINIT_PING_FRAME);
+        }
+
         if (fsiRxObj->params->delayLineCtrl == TRUE)
         {
             FSI_configRxDelayLine(baseAddr, FSI_RX_DELAY_CLK, 5U);
@@ -416,6 +437,10 @@ static int32_t FSI_Rx_deConfigInstance(FSI_Rx_Handle handle)
             if(fsiRxObj->params->rxFrameWDTest == TRUE)
             {
                 FSI_disableRxFrameWatchdog(baseAddr);
+            }
+            if(fsiRxObj->params->rxPingWDTest == TRUE)
+            {
+                FSI_disableRxPingWatchdog(baseAddr);
             }
             status = SystemP_SUCCESS;
         }
@@ -528,16 +553,25 @@ int32_t FSI_Rx_Intr(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTa
         obj = config->object;
         baseAddr = attrs->baseAddr;
 
-        if(obj->params->rxFrameWDTest != TRUE)
+        if(obj->params->rxFrameWDTest != TRUE && obj->params->rxPingWDTest != TRUE)
         {
             dataSize = obj->params->frameDataSize;
             /* Recieve data */
             status = FSI_readRxBuffer(baseAddr, rxBufData, dataSize, bufIdx);
             DebugP_assert(status == SystemP_SUCCESS);
         }
-        else
+        if(obj->params->hwPing == TRUE)
         {
-
+            if(obj->params->rxPingWDTest != TRUE)
+            {
+                uint16_t rxPingTag = 0U;
+                FSI_FrameType frameType;
+                /* Read PinTag which should be same as TXPingTag */
+                FSI_getRxFrameType(baseAddr, &frameType);
+                DebugP_assert(frameType == FSI_FRAME_TYPE_PING);
+                FSI_getRxPingTag(baseAddr, &rxPingTag);
+                DebugP_assert(rxPingTag == FSI_FRAME_TAG10);
+            }
         }
     }
 

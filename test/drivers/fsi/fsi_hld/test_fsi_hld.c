@@ -127,6 +127,12 @@ void test_main(void *args)
     test_fsi_set_params(&testParams, 10);
     RUN_TEST(test_fsi_txrx, 10, (void*)&testParams);
 
+    test_fsi_set_params(&testParams, 11);
+    RUN_TEST(test_fsi_txrx, 11, (void*)&testParams);
+
+    test_fsi_set_params(&testParams, 12);
+    RUN_TEST(test_fsi_txrx, 12, (void*)&testParams);
+
     UNITY_END();
 
     Drivers_close();
@@ -298,7 +304,22 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
             gFsiRxTestParams.fsi_rx_params.intrEvt = FSI_RX_EVT_FRAME_WD_TIMEOUT;
             gFsiRxTestParams.fsi_rx_params.rxFrameWDTest = TRUE;
             gFsiTxTestParams.fsi_tx_params.rxFrameWDTest = TRUE;
+            break;
 #endif
+        case 11:
+            Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
+            gFsiRxTestParams.fsi_rx_params.intrEvt = FSI_RX_EVT_PING_FRAME;
+            gFsiRxTestParams.fsi_rx_params.hwPing  = TRUE;
+            gFsiTxTestParams.fsi_tx_params.intrEvt = FSI_TX_EVT_PING_HW_TRIG;
+            break;
+        case 12:
+            Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
+            gFsiRxTestParams.fsi_rx_params.intrEvt = FSI_RX_EVT_PING_WD_TIMEOUT;
+            gFsiRxTestParams.fsi_rx_params.hwPing  = TRUE;
+            gFsiTxTestParams.fsi_tx_params.intrEvt = FSI_TX_EVT_PING_HW_TRIG;
+            gFsiRxTestParams.fsi_rx_params.rxPingWDTest = TRUE;
+            gFsiTxTestParams.fsi_tx_params.rxPingWDTest = TRUE;
+            break;
     }
 
     return;
