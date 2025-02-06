@@ -495,8 +495,6 @@ int32_t FSI_Rx_hld(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTag
             retVal = FSI_Rx_Poll(handle, rxBufData, NULL, bufIdx);
         }
 
-        retVal += FSI_Rx_deConfigInstance(handle);
-
     }
 
     return retVal;

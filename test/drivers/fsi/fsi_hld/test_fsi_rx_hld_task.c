@@ -142,6 +142,8 @@ void fsi_rx_hld_main(void *args)
         FSI_Rx_errorCheck(gFsiRxHandle[CONFIG_FSI_RX0], gRxBufData);
     }
 
+    FSI_Rx_close(gFsiRxHandle[CONFIG_FSI_RX0]);
+
     SemaphoreP_post(p_taskDoneSemaphoreObj);   
 
     FSI_disableRxInternalLoopback(rxBaseAddr);

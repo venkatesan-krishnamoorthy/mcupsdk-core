@@ -118,6 +118,8 @@ void fsi_tx_hld_main(void *args)
     status = FSI_Tx_hld(gFsiTxHandle[CONFIG_FSI_TX0], gTxBufData, NULL, bufIdx);
     DebugP_assert(status == SystemP_SUCCESS);
 
+    FSI_Tx_close(gFsiTxHandle[CONFIG_FSI_TX0]);
+
     SemaphoreP_post(p_taskDoneSemaphoreObj);
 
     while(1)

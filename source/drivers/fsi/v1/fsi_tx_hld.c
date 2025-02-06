@@ -100,8 +100,7 @@ extern FSI_Tx_Config gFsiTxConfig[];
 extern FSI_Tx_DmaHandle gFsiTxDmaHandle[];
 extern FSI_Tx_DmaChConfig gFsiTxDmaChCfg;
 
-/* AD_Review : Need to check this */
-#define CONFIG_FSI_TX0_CLK  (400000000U)
+extern uint32_t fsi_tx_clk;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -478,7 +477,6 @@ int32_t FSI_Tx_hld(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTag
             retVal = FSI_Tx_Poll(handle, txBufData, NULL, bufIdx);
         }
 
-        retVal += FSI_Tx_deConfigInstance(handle);
     }
 
     return retVal;
@@ -552,7 +550,7 @@ int32_t FSI_Tx_Intr(FSI_Tx_Handle handle, uint16_t *txBufData, uint16_t *txBufTa
         {
             status = FSI_setTxPingTimeoutMode(baseAddr, FSI_PINGTIMEOUT_ON_HWINIT_PING_FRAME);
             status += FSI_setTxPingTag(baseAddr, FSI_FRAME_TAG10);
-            status += FSI_enableTxPingTimer(baseAddr, ((CONFIG_FSI_TX0_CLK / (attrs->preScalarVal * 2)) / 2), FSI_FRAME_TAG10);
+            status += FSI_enableTxPingTimer(baseAddr, ((fsi_tx_clk / (attrs->preScalarVal * 2)) / 2), FSI_FRAME_TAG10);
         }
 
         if(obj->params->rxFrameWDTest == TRUE || obj->params->rxPingWDTest == TRUE)

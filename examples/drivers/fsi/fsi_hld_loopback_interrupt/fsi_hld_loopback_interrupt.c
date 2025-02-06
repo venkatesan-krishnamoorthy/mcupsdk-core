@@ -129,6 +129,9 @@ void *fsi_hld_loopback_interrupt_main(void *args)
         status = Fsi_appCompareData(gTxBufData, gRxBufData);
         DebugP_assert(status == SystemP_SUCCESS);
 
+        /* Setting RxBuffer pointer to 0 in every loop*/
+        status = FSI_setRxBufferPtr(rx_baseAddr, 0U);
+        DebugP_assert(status == SystemP_SUCCESS);
     }
 
     status = FSI_disableRxInternalLoopback(rx_baseAddr);
