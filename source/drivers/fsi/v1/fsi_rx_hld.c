@@ -387,6 +387,14 @@ static int32_t FSI_Rx_configInstance(FSI_Rx_Handle handle)
         {
             status += FSI_setRxPingTimeoutMode(baseAddr, FSI_PINGTIMEOUT_ON_HWINIT_PING_FRAME);
         }
+        else
+        {
+            if(attrs->operMode != FSI_RX_OPER_MODE_DMA)
+            {
+                /* Setting frame config */
+                status += FSI_setRxBufferPtr(baseAddr, 0U);
+            }
+        }
 
         if (fsiRxObj->params->delayLineCtrl == TRUE)
         {
@@ -394,12 +402,7 @@ static int32_t FSI_Rx_configInstance(FSI_Rx_Handle handle)
             FSI_configRxDelayLine(baseAddr, FSI_RX_DELAY_D0, 5U);
             FSI_configRxDelayLine(baseAddr, FSI_RX_DELAY_D1, 5U);
         }
-        if(attrs->operMode != FSI_RX_OPER_MODE_DMA)
-        {
-            /* Setting frame config */
-            status += FSI_setRxBufferPtr(baseAddr, 0U);
-        }
-        else
+        if(attrs->operMode == FSI_RX_OPER_MODE_DMA)
         {
             status  = FSI_Rx_dmaOpen(handle, fsiRxObj->fsiRxDmaChCfg);
         }
@@ -560,19 +563,6 @@ int32_t FSI_Rx_Intr(FSI_Rx_Handle handle, uint16_t *rxBufData, uint16_t *rxBufTa
             status = FSI_readRxBuffer(baseAddr, rxBufData, dataSize, bufIdx);
             DebugP_assert(status == SystemP_SUCCESS);
         }
-        if(obj->params->hwPing == TRUE)
-        {
-            if(obj->params->rxPingWDTest != TRUE)
-            {
-                uint16_t rxPingTag = 0U;
-                FSI_FrameType frameType;
-                /* Read PinTag which should be same as TXPingTag */
-                FSI_getRxFrameType(baseAddr, &frameType);
-                DebugP_assert(frameType == FSI_FRAME_TYPE_PING);
-                FSI_getRxPingTag(baseAddr, &rxPingTag);
-                DebugP_assert(rxPingTag == FSI_FRAME_TAG10);
-            }
-        }
     }
 
     return status;
@@ -677,6 +667,20 @@ void FSI_Rx_Isr(void* args)
         if ((intrStatus & FSI_RX_EVT_PING_FRAME) == FSI_RX_EVT_PING_FRAME)
         {
             FSI_clearRxEvents(baseAddr, FSI_RX_EVT_PING_FRAME);
+        }
+
+        if(object->params->hwPing == TRUE)
+        {
+            if(object->params->rxPingWDTest != TRUE)
+            {
+                uint16_t rxPingTag = 0U;
+                FSI_FrameType frameType;
+                /* Read PinTag which should be same as TXPingTag */
+                FSI_getRxFrameType(baseAddr, &frameType);
+                DebugP_assert(frameType == FSI_FRAME_TYPE_PING);
+                FSI_getRxPingTag(baseAddr, &rxPingTag);
+                DebugP_assert(rxPingTag == FSI_FRAME_TAG10);
+            }
         }
 
         SemaphoreP_post(&object->readTransferSemObj);

@@ -97,41 +97,41 @@ void test_main(void *args)
 
     UNITY_BEGIN();
 
-    test_fsi_set_params(&testParams, 1);
-    RUN_TEST(test_fsi_txrx, 1, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14157);
+    RUN_TEST(test_fsi_txrx, 14157, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 2);
-    RUN_TEST(test_fsi_txrx, 2, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14158);
+    RUN_TEST(test_fsi_txrx, 14158, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 3);
-    RUN_TEST(test_fsi_txrx, 3, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14168);
+    RUN_TEST(test_fsi_txrx, 14168, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 4);
-    RUN_TEST(test_fsi_txrx, 4, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14160);
+    RUN_TEST(test_fsi_txrx, 14160, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 5);
-    RUN_TEST(test_fsi_txrx, 5, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14161);
+    RUN_TEST(test_fsi_txrx, 14161, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 6);
-    RUN_TEST(test_fsi_txrx, 6, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14159);
+    RUN_TEST(test_fsi_txrx, 14159, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 7);
-    RUN_TEST(test_fsi_txrx, 7, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14162);
+    RUN_TEST(test_fsi_txrx, 14162, (void*)&testParams);
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+    test_fsi_set_params(&testParams, 14163);
+    RUN_TEST(test_fsi_txrx, 14163, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 8);
-    RUN_TEST(test_fsi_txrx, 8, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14164);
+    RUN_TEST(test_fsi_txrx, 14164, (void*)&testParams);
+#endif
+    test_fsi_set_params(&testParams, 14165);
+    RUN_TEST(test_fsi_txrx, 14165, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 9);
-    RUN_TEST(test_fsi_txrx, 9, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14166);
+    RUN_TEST(test_fsi_txrx, 14166, (void*)&testParams);
 
-    test_fsi_set_params(&testParams, 10);
-    RUN_TEST(test_fsi_txrx, 10, (void*)&testParams);
-
-    test_fsi_set_params(&testParams, 11);
-    RUN_TEST(test_fsi_txrx, 11, (void*)&testParams);
-
-    test_fsi_set_params(&testParams, 12);
-    RUN_TEST(test_fsi_txrx, 12, (void*)&testParams);
+    test_fsi_set_params(&testParams, 14167);
+    RUN_TEST(test_fsi_txrx, 14167, (void*)&testParams);
 
     UNITY_END();
 
@@ -180,7 +180,8 @@ void test_fsi_txrx(void *args)
     TaskP_destruct(&gFsiTxTaskObject);
 
     /* Compare data */
-    if ((rxTestParams->fsi_rx_params.rxFrameWDTest != TRUE) && (rxTestParams->fsi_rx_params.rxPingWDTest != TRUE) )
+    if ((rxTestParams->fsi_rx_params.rxFrameWDTest != TRUE) && (rxTestParams->fsi_rx_params.rxPingWDTest != TRUE)
+        && (rxTestParams->fsi_rx_params.hwPing != TRUE))
     {
         status = Fsi_appCompareData(gTxBufData, gRxBufData);
         DebugP_assert(status == SystemP_SUCCESS);
@@ -246,37 +247,37 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
     memset(gRxBufData, 0U, sizeof(gRxBufData));
     switch (testCaseNo)
     {
-        case 1:
+        case 14157:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             break;
-        case 2:
+        case 14158:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.numLane = FSI_DATA_WIDTH_2_LANE;
             gFsiTxTestParams.fsi_tx_params.numLane = FSI_DATA_WIDTH_2_LANE;
             break;
-        case 3:
+        case 14168:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.frameDataSize = 2;
             gFsiTxTestParams.fsi_tx_params.frameDataSize = 2;
             break;
-        case 4:
+        case 14160:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             tx_attrs->intrLine = CONFIG_FSI_TX0_INTR2;
             tx_attrs->intrNum  = FSI_INT2;
             rx_attrs->intrLine = CONFIG_FSI_RX0_INTR2;
             rx_attrs->intrNum  = FSI_INT2;
             break;
-        case 5:
+        case 14161:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.errorCheck = FSI_RX_USER_DEFINED_CRC_CHECK;
             gFsiTxTestParams.fsi_tx_params.errorCheck = FSI_TX_USER_DEFINED_CRC_CHECK;
             break;
-        case 6:
+        case 14159:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.errorCheck = FSI_RX_ECC_ERROR_CHECK;
             gFsiTxTestParams.fsi_tx_params.errorCheck = FSI_TX_ECC_ERROR_CHECK;
             break;
-        case 7:
+        case 14162:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.numLane = FSI_DATA_WIDTH_2_LANE;
             gFsiTxTestParams.fsi_tx_params.numLane = FSI_DATA_WIDTH_2_LANE;
@@ -286,33 +287,33 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
             gFsiTxTestParams.fsi_tx_params.delayLineCtrl = TRUE;
 #endif
             break;
-        case 8:
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+        case 14163:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.rxTrigger = TRUE;
             gFsiTxTestParams.fsi_tx_params.rxTrigger = TRUE;
             break;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-        case 9:
+        case 14164:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.udataFilterTest = TRUE;
             gFsiTxTestParams.fsi_tx_params.udataFilterTest = TRUE;
             gFsiRxTestParams.fsi_rx_params.userData  = FSI_APP_RX_USER_DATA_FILTER_VALUE;
             gFsiTxTestParams.fsi_tx_params.userData  = FSI_APP_TX_USER_DATA_FILTER_VALUE;
             break;
-        case 10:
+#endif
+        case 14165:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.intrEvt = FSI_RX_EVT_FRAME_WD_TIMEOUT;
             gFsiRxTestParams.fsi_rx_params.rxFrameWDTest = TRUE;
             gFsiTxTestParams.fsi_tx_params.rxFrameWDTest = TRUE;
             break;
-#endif
-        case 11:
+        case 14166:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.intrEvt = FSI_RX_EVT_PING_FRAME;
             gFsiRxTestParams.fsi_rx_params.hwPing  = TRUE;
             gFsiTxTestParams.fsi_tx_params.intrEvt = FSI_TX_EVT_PING_HW_TRIG;
             break;
-        case 12:
+        case 14167:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.fsi_rx_params.intrEvt = FSI_RX_EVT_PING_WD_TIMEOUT;
             gFsiRxTestParams.fsi_rx_params.hwPing  = TRUE;
