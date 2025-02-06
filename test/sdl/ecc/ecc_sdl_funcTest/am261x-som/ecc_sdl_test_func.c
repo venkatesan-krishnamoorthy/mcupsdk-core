@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -82,16 +82,20 @@
 #define SDL_R5FSS0_CORE0_CACHE_MAX_MEM_SECTIONS     (21U)
 #define SDL_MCAN0_MAX_MEM_SECTIONS                  (1U)
 #define SDL_MCAN1_MAX_MEM_SECTIONS                  (1U)
-#define SDL_MCAN2_MAX_MEM_SECTIONS                  (1U)
-#define SDL_MCAN3_MAX_MEM_SECTIONS                  (1U)
-#define SDL_MSS_MAX_MEM_SECTIONS					(7U)
-#define SDL_ICSSM_MAX_MEM_SECTIONS           		(5u)
+#define SDL_MSS_MAX_MEM_SECTIONS					(6U)
+#define SDL_ICSSM0_MAX_MEM_SECTIONS           		(5u)
+#define SDL_ICSSM1_MAX_MEM_SECTIONS           		(5u)
+#define SDL_CPSW_MAX_MEM_SECTIONS                   (1U)
+#define SDL_FSS_OSPI_MAX_MEM_SECTIONS               (1U)
+#define SDL_FSS_FOTA_MAX_MEM_SECTIONS               (1U)
+#define SDL_OSPI1_MAX_MEM_SECTIONS                  (1U)
 
-#define SDL_MSS_L2_MEM_INIT_ADDR                    (0x50D00240u)
-#define SDL_MSS_L2_MEM_INIT_DONE_ADDR               (0x50D00244u)
+#define SDL_MSS_L2_MEM_INIT_ADDR                    (0x50D00330)
+#define SDL_MSS_L2_MEM_INIT_DONE_ADDR               (0x50D00334)
 #define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53000020u)
-#define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0xcu) /*Bank 3*/
+#define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0x6u) /*Bank 2*/
 
+#define SDL_ECC_AGGR_CPSW_RAM1                      SDL_CPSW3GCSS_ECC_AGGR_CPSW_3GC_CORE_ECC_ECC_CTRL1_ECC_RAM_ID
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -196,6 +200,19 @@ static SDL_ECC_InitConfig_t ECC_Test_MCAN0_ECCInitConfig =
     /**< Sub type list  */
 };
 
+static SDL_ECC_MemSubType ECC_Test_CPSW_subMemTypeList[SDL_CPSW_MAX_MEM_SECTIONS] =
+{
+    SDL_CPSW3GCSS_ECC_AGGR_CPSW_3GC_CORE_ECC_ECC_CTRL1_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_CPSW_ECCInitConfig =
+{
+    .numRams = SDL_CPSW_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_CPSW_subMemTypeList[0]),
+    /**< Sub type list  */
+};
+
 static SDL_ECC_MemSubType ECC_Test_MCAN1_subMemTypeList[SDL_MCAN1_MAX_MEM_SECTIONS] =
 {
     SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
@@ -209,38 +226,11 @@ static SDL_ECC_InitConfig_t ECC_Test_MCAN1_ECCInitConfig =
     /**< Sub type list  */
 };
 
-static SDL_ECC_MemSubType ECC_Test_MCAN2_subMemTypeList[SDL_MCAN2_MAX_MEM_SECTIONS] =
-{
-    SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
-};
-
-static SDL_ECC_InitConfig_t ECC_Test_MCAN2_ECCInitConfig =
-{
-    .numRams = SDL_MCAN2_MAX_MEM_SECTIONS,
-    /**< Number of Rams ECC is enabled  */
-    .pMemSubTypeList = &(ECC_Test_MCAN2_subMemTypeList[0]),
-    /**< Sub type list  */
-};
-
-static SDL_ECC_MemSubType ECC_Test_MCAN3_subMemTypeList[SDL_MCAN3_MAX_MEM_SECTIONS] =
-{
-    SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
-};
-
-static SDL_ECC_InitConfig_t ECC_Test_MCAN3_ECCInitConfig =
-{
-    .numRams = SDL_MCAN3_MAX_MEM_SECTIONS,
-    /**< Number of Rams ECC is enabled  */
-    .pMemSubTypeList = &(ECC_Test_MCAN3_subMemTypeList[0]),
-    /**< Sub type list  */
-};
-
 static SDL_ECC_MemSubType ECC_Test_MSSsubMemTypeList[SDL_MSS_MAX_MEM_SECTIONS] =
 {
     SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_RAM_ID,
     SDL_SOC_ECC_AGGR_MSS_L2_SLV1_ECC_RAM_ID,
     SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_ID,
-    SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_RAM_ID,
     SDL_SOC_ECC_AGGR_MAILBOX_ECC_RAM_ID,
     SDL_SOC_ECC_AGGR_TPTC_A0_ECC_RAM_ID,
     SDL_SOC_ECC_AGGR_TPTC_A1_ECC_RAM_ID
@@ -254,20 +244,37 @@ static SDL_ECC_InitConfig_t ECC_Test_MSSECCInitConfig =
     /**< Sub type list  */
 };
 
-static SDL_ECC_MemSubType ECC_Test_ICSSMsubMemTypeList[SDL_ICSSM_MAX_MEM_SECTIONS] =
+static SDL_ECC_MemSubType ECC_Test_ICSSM0_subMemTypeList[SDL_ICSSM0_MAX_MEM_SECTIONS] =
 {
-    SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
-    SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID,
-    SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID,
-    SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID,
-    SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID,
+    SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
+    SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID,
+    SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID,
+    SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID,
+    SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID,
 };
 
-static SDL_ECC_InitConfig_t ECC_Test_ICSSMECCInitConfig =
+static SDL_ECC_InitConfig_t ECC_Test_ICSSM0_ECCInitConfig =
 {
-    .numRams = SDL_ICSSM_MAX_MEM_SECTIONS,
+    .numRams = SDL_ICSSM0_MAX_MEM_SECTIONS,
     /**< Number of Rams ECC is enabled  */
-    .pMemSubTypeList = &(ECC_Test_ICSSMsubMemTypeList[0]),
+    .pMemSubTypeList = &(ECC_Test_ICSSM0_subMemTypeList[0]),
+    /**< Sub type list  */
+};
+
+static SDL_ECC_MemSubType ECC_Test_ICSSM1_subMemTypeList[SDL_ICSSM1_MAX_MEM_SECTIONS] =
+{
+    SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
+    SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID,
+    SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID,
+    SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID,
+    SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_ICSSM1_ECCInitConfig =
+{
+    .numRams = SDL_ICSSM1_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_ICSSM1_subMemTypeList[0]),
     /**< Sub type list  */
 };
 
@@ -284,16 +291,16 @@ static uint32_t arg;
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x001803fcu, 0x007f8000u, 0x00006000u, 0x00000000u,
+    .enableBitmap = {0x841803fcu, 0x007fc001u, 0x03007800u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events enable: except clkstop events for unused clocks
      *   and PCIE events */
     /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0x001002a8u, 0x001d0000u, 0x00002000u, 0x00000000u,
+    .priorityBitmap = {0x841002a8u, 0x001dc001u, 0x03006000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0x001803fcu, 0x007f8000u, 0x00006000u, 0x00000000u,
+    .errorpinBitmap = {0x841803fcu, 0x007fc001u, 0x03007800u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
@@ -308,7 +315,7 @@ int32_t ECC_Test_MCAN_init (void);
 int32_t ECC_Test_R5F_CACHE_init(void);
 int32_t ECC_Test_R5F_init (void);
 int32_t ECC_Test_MSS_init (void);
-int32_t ECC_Test_ICSSM_init (void);
+int32_t ECC_Test_ICSSM0_init (void);
 //static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectType, uint32_t queueType, uint32_t channelEvent);
 static int32_t ECC_sdlFuncTest(void);
 
@@ -405,32 +412,6 @@ int32_t ECC_Test_MCAN_init (void)
         }
     }
 
-    if (retValue == 0) {
-        /* Initialize ECC Memory */
-        result = SDL_ECC_initMemory(SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR, SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID);
-        if (result != SDL_PASS) {
-            /* print error and quit */
-            DebugP_log("\r\nECC_Test_init: Error initializing Memory of MCAN2 ECC: result = %d\r\n", result);
-
-            retValue = -1;
-        } else {
-            DebugP_log("\r\nECC_Test_init: Initialize of MCAN2 ECC Memory is complete \r\n");
-        }
-    }
-
-    if (retValue == 0) {
-        /* Initialize ECC Memory */
-        result = SDL_ECC_initMemory(SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR, SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID);
-        if (result != SDL_PASS) {
-            /* print error and quit */
-            DebugP_log("\r\nECC_Test_init: Error initializing Memory of MCAN3 ECC: result = %d\r\n", result);
-
-            retValue = -1;
-        } else {
-            DebugP_log("\r\nECC_Test_init: Initialize of MCAN3 ECC Memory is complete \r\n");
-        }
-    }
-
 
     if (retValue == 0) {
         /* Initialize ECC */
@@ -458,31 +439,6 @@ int32_t ECC_Test_MCAN_init (void)
         }
     }
 
-    if (retValue == 0) {
-        /* Initialize ECC */
-        result = SDL_ECC_init(SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR, &ECC_Test_MCAN2_ECCInitConfig);
-        if (result != SDL_PASS) {
-            /* print error and quit */
-            DebugP_log("\r\nECC_Test_init: Error initializing MCAN2 ECC: result = %d\r\n", result);
-
-            retValue = -1;
-        } else {
-            DebugP_log("\r\nECC_Test_init: MCAN2 ECC initialization is completed \r\n");
-        }
-    }
-
-    if (retValue == 0) {
-        /* Initialize ECC */
-        result = SDL_ECC_init(SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR, &ECC_Test_MCAN3_ECCInitConfig);
-        if (result != SDL_PASS) {
-            /* print error and quit */
-            DebugP_log("\r\nECC_Test_init: Error initializing MCAN3 ECC: result = %d\r\n", result);
-
-            retValue = -1;
-        } else {
-            DebugP_log("\r\nECC_Test_init: MCAN3 ECC initialization is completed \r\n");
-        }
-    }
     return retValue;
 }/* End of ECC_Test_MCAN_init() */
 
@@ -654,24 +610,23 @@ int32_t ECC_Test_MSS_init (void)
 }/* End of ECC_Test_MSS_init() */
 
 /*********************************************************************
-* @fn      ECC_Test_ICSSM_init
+* @fn      ECC_Test_ICSSM0_init
 *
 * @param   None
 *
 * @return  0 : Success; < 0 for failures
 **********************************************************************/
-int32_t ECC_Test_ICSSM_init (void)
+int32_t ECC_Test_ICSSM0_init (void)
 {
     int32_t retValue=0;
     SDL_ErrType_t result;
-    void *ptr = (void *)&arg;
 	uint8_t u8Counter = 0;
 
 	if (retValue == 0U) {
-        for(u8Counter = 0; u8Counter < SDL_ICSSM_MAX_MEM_SECTIONS; u8Counter++)
+        for(u8Counter = 0; u8Counter < SDL_ICSSM0_MAX_MEM_SECTIONS; u8Counter++)
         {
             /* Initialize ECC Memory */
-            result = SDL_ECC_initMemory(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR, ECC_Test_ICSSMsubMemTypeList[u8Counter]);
+            result = SDL_ECC_initMemory(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR, ECC_Test_ICSSM0_subMemTypeList[u8Counter]);
             if (result != SDL_PASS) {
                 /* print error and quit */
                 DebugP_log("\r\nECC_Test_init: Error initializing Memory of ICSSM ECC: result = %d\r\n", result);
@@ -684,22 +639,8 @@ int32_t ECC_Test_ICSSM_init (void)
         }
     }
     if (retValue == 0) {
-        /* Initialize ESM module */
-        result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
-        if (result != SDL_PASS) {
-            /* print error and quit */
-            DebugP_log("\r\nESM_Test_init: Error initializing ICSSM ESM: result = %d\r\n", result);
-
-
-            retValue = -1;
-        } else {
-            DebugP_log("\r\nESM_Test_init: Init ICSSM ESM complete \r\n");
-        }
-
-    }
-    if (retValue == 0) {
         /* Initialize ECC */
-        result = SDL_ECC_init(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR, &ECC_Test_ICSSMECCInitConfig);
+        result = SDL_ECC_init(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR, &ECC_Test_ICSSM0_ECCInitConfig);
         if (result != SDL_PASS) {
             /* print error and quit */
             DebugP_log("\r\nECC_Test_init: Error initializing ICSSM ECC: result = %d\r\n", result);
@@ -711,6 +652,51 @@ int32_t ECC_Test_ICSSM_init (void)
     }
     return retValue;
 }
+
+/*********************************************************************
+* @fn      ECC_Test_ICSSM1_init
+*
+* @param   None
+*
+* @return  0 : Success; < 0 for failures
+**********************************************************************/
+int32_t ECC_Test_ICSSM1_init (void)
+{
+    int32_t retValue=0;
+    SDL_ErrType_t result;
+	uint8_t u8Counter = 0;
+
+	if (retValue == 0U) {
+        for(u8Counter = 0; u8Counter < SDL_ICSSM1_MAX_MEM_SECTIONS; u8Counter++)
+        {
+            /* Initialize ECC Memory */
+            result = SDL_ECC_initMemory(SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR, ECC_Test_ICSSM1_subMemTypeList[u8Counter]);
+            if (result != SDL_PASS) {
+                /* print error and quit */
+                DebugP_log("\r\nECC_Test_init: Error initializing Memory of ICSSM ECC: result = %d\r\n", result);
+
+                retValue = -1;
+            }
+        }
+        if (result == SDL_PASS) {
+            DebugP_log("\r\nECC_Test_init: Initialize of ICSSM ECC Memory is complete \r\n");
+        }
+    }
+    if (retValue == 0) {
+        /* Initialize ECC */
+        result = SDL_ECC_init(SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR, &ECC_Test_ICSSM1_ECCInitConfig);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nECC_Test_init: Error initializing ICSSM ECC: result = %d\r\n", result);
+
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nECC_Test_init: ICSSM ECC initialization is completed \r\n");
+        }
+    }
+    return retValue;
+}
+
 /*********************************************************************
  * @fn      ECC_Test_run_MCAN0_1BitInjectTest
  *
@@ -773,7 +759,7 @@ int32_t ECC_Test_run_MCAN1_1BitInjectTest(void)
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x52610000u);
 
-    /* Run one shot test for MCAN3 1 bit error */
+    /* Run one shot test for MCAN1 1 bit error */
     injectErrorConfig.flipBitMask = 0x02;
     result = SDL_ECC_injectError(SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR,
                           SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
@@ -791,88 +777,6 @@ int32_t ECC_Test_run_MCAN1_1BitInjectTest(void)
 
     return retVal;
 }/* End of ECC_Test_run_MCAN1_1BitInjectTest() */
-
-/*********************************************************************
- * @fn      ECC_Test_run_MCAN2_1BitInjectTest
- *
- * @brief   Execute ECC MCAN2  1 bit inject test
- *
- * @param   None
- *
- * @return  0 : Success; < 0 for failures
- ********************************************************************/
-int32_t ECC_Test_run_MCAN2_1BitInjectTest(void)
-{
-    SDL_ErrType_t result;
-    int32_t retVal=0;
-
-    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-    volatile uint32_t testLocationValue;
-
-    DebugP_log("\r\nMCAN2 Single bit error inject test: starting \r\n");
-
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x52620000u);
-
-    /* Run one shot test for MCAN3 1 bit error */
-    injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR,
-                          SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
-                          SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
-                          &injectErrorConfig);
-
-    if (result != SDL_PASS ) {
-     retVal = -1;
-    } else {
-        /* Access the memory where injection is expected */
-        testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nMCAN2 Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
-                    injectErrorConfig.pErrMem, testLocationValue);
-    }
-
-    return retVal;
-}/* End of ECC_Test_run_MCAN2_1BitInjectTest() */
-
-/*********************************************************************
- * @fn      ECC_Test_run_MCAN3_1BitInjectTest
- *
- * @brief   Execute ECC MCAN3 1 bit inject test
- *
- * @param   None
- *
- * @return  0 : Success; < 0 for failures
- ********************************************************************/
-int32_t ECC_Test_run_MCAN3_1BitInjectTest(void)
-{
-    SDL_ErrType_t result;
-    int32_t retVal=0;
-
-    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-    volatile uint32_t testLocationValue;
-
-	DebugP_log("\r\nMCAN3 Single bit error inject test: starting \r\n");
-
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x52630000u);
-
-    /* Run one shot test for MCAN3 1 bit error */
-    injectErrorConfig.flipBitMask = 0x002;
-    result = SDL_ECC_injectError(SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR,
-                             SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
-                             SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
-                             &injectErrorConfig);
-
-    if (result != SDL_PASS ) {
-        retVal = -1;
-    } else {
-        /* Access the memory where injection is expected */
-        testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nMCAN3 Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
-                       injectErrorConfig.pErrMem, testLocationValue);
-    }
-
-    return retVal;
-}/* End of ECC_Test_run_MCAN3_1BitInjectTest() */
 
 /*********************************************************************
  * @fn      ECC_Test_run_MCAN0_1Bit_N_ROWInjectTest
@@ -1076,88 +980,6 @@ int32_t ECC_Test_run_MCAN1_2BitInjectTest(void)
 
     return retVal;
 }/* End of ECC_Test_run_MCAN1_2BitInjectTest() */
-
-/*********************************************************************
- * @fn      ECC_Test_run_MCAN2_2BitInjectTest
- *
- * @brief   Execute ECC MCAN2 2 bit inject test
- *
- * @param   None
- *
- * @return  0 : Success; < 0 for failures
- ********************************************************************/
-int32_t ECC_Test_run_MCAN2_2BitInjectTest(void)
-{
-    SDL_ErrType_t result;
-    int32_t retVal=0;
-
-    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-    volatile uint32_t testLocationValue;
-
-    DebugP_log("\r\nMCAN2 Double bit error inject test: starting \r\n");
-
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x52620000u);
-
-    /* Run one shot test for MCAN2 2 bit error */
-    injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR,
-                          SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
-                          SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
-                          &injectErrorConfig);
-
-    if (result != SDL_PASS ) {
-     retVal = -1;
-    } else {
-        /* Access the memory where injection is expected */
-        testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nMCAN2 Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
-                    injectErrorConfig.pErrMem, testLocationValue);
-    }
-
-    return retVal;
-}/* End of ECC_Test_run_MCAN2_2BitInjectTest() */
-
-/*********************************************************************
- * @fn      ECC_Test_run_MCAN3_2BitInjectTest
- *
- * @brief   Execute ECC MCAN3 2 bit inject test
- *
- * @param   None
- *
- * @return  0 : Success; < 0 for failures
- ********************************************************************/
-int32_t ECC_Test_run_MCAN3_2BitInjectTest(void)
-{
-    SDL_ErrType_t result;
-    int32_t retVal=0;
-
-    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-    volatile uint32_t testLocationValue;
-
-    DebugP_log("\r\nMCAN3 Double bit error inject test: starting \r\n");
-
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x52630000u);
-
-    /* Run one shot test for MCAN3 2 bit error */
-    injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR,
-                             SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
-                             SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
-                             &injectErrorConfig);
-
-    if (result != SDL_PASS ) {
-        retVal = -1;
-    } else {
-        /* Access the memory where injection is expected */
-        testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nMCAN3 Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
-                       injectErrorConfig.pErrMem, testLocationValue);
-    }
-
-    return retVal;
-}/* End of ECC_Test_run_MCAN3_2BitInjectTest() */
 
 /*********************************************************************
  * @fn      ECC_Test_run_MCAN0_2Bit_N_ROWInjectTest
@@ -3923,88 +3745,6 @@ int32_t ECC_Test_run_MSS_L2_SLV2_2BitInjectTest(void)
 }/* End of ECC_Test_run_MSS_L2_SLV2_2BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_MSS_L2_SLV3_1BitInjectTest
- *
- * @brief   Execute ECC MSS L2 SLV3 1 bit Inject test
- *
- * @param   None
- *
- * @return  0 : Success; < 0 for failures
- ********************************************************************/
-int32_t ECC_Test_run_MSS_L2_SLV3_1BitInjectTest(void)
-{
-    SDL_ErrType_t result;
-    int32_t retVal=0;
-
-    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-    volatile uint32_t testLocationValue;
-
-	DebugP_log("\r\nMSS L2 SLV3 Single bit error inject: starting \r\n");
-
-    /* Run one shot test for MSS L2 SLV3 1 bit error */
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x70180000u);
-
-    injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_SOC_ECC_AGGR,
-                                 SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_RAM_ID,
-                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
-                                 &injectErrorConfig);
-
-    if (result != SDL_PASS ) {
-       retVal = -1;
-    } else {
-		/* Access the memory where injection is expected */
-        testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nMSS L2 SLV3 Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
-                   injectErrorConfig.pErrMem, testLocationValue);
-    }
-
-    return retVal;
-}/* End of ECC_Test_run_MSS_L2_SLV3_1BitInjectTest() */
-
-/*********************************************************************
- * @fn      ECC_Test_run_MSS_L2_SLV3_2BitInjectTest
- *
- * @brief   Execute ECC MSS L2 SLV3 2 bit Inject test
- *
- * @param   None
- *
- * @return  0 : Success; < 0 for failures
- ********************************************************************/
-int32_t ECC_Test_run_MSS_L2_SLV3_2BitInjectTest(void)
-{
-    SDL_ErrType_t result;
-    int32_t retVal=0;
-
-    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-    volatile uint32_t testLocationValue;
-
-	DebugP_log("\r\nMSS L2 SLV3 Double bit error inject: starting \r\n");
-
-    /* Run one shot test for MSS L2 SLV3 2 bit error */
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x70180000u);
-
-    injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_SOC_ECC_AGGR,
-                                 SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_RAM_ID,
-                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
-                                 &injectErrorConfig);
-
-    if (result != SDL_PASS ) {
-       retVal = -1;
-    } else {
-		/* Access the memory where injection is expected */
-        testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nMSS L2 SLV3 Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
-                   injectErrorConfig.pErrMem, testLocationValue);
-    }
-
-    return retVal;
-}/* End of ECC_Test_run_MSS_L2_SLV3_2BitInjectTest() */
-
-/*********************************************************************
  * @fn      ECC_Test_run_MSS_MAILBOX_1BitInjectTest
  *
  * @brief   Execute ECC MSS MAILBOX 1 bit Inject test
@@ -4251,7 +3991,7 @@ int32_t ECC_Test_run_MSS_TPTC_A1_2BitInjectTest(void)
 }/* End of ECC_Test_run_MSS_TPTC_A1_2BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_DRAM0_1BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_DRAM0_1BitInjectTest
  *
  * @brief   Execute ECC ICSSM DRAM0 1 bit Inject test
  *
@@ -4259,7 +3999,7 @@ int32_t ECC_Test_run_MSS_TPTC_A1_2BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_DRAM0_1BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_DRAM0_1BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4267,15 +4007,15 @@ int32_t ECC_Test_run_ICSSM_DRAM0_1BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM DRAM0 Single bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 DRAM0 Single bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM DRAM0 1 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48000000u);
 
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4284,15 +4024,15 @@ int32_t ECC_Test_run_ICSSM_DRAM0_1BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM DRAM0 Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 DRAM0 Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_DRAM0_1BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_DRAM0_1BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_DRAM0_2BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_DRAM0_2BitInjectTest
  *
  * @brief   Execute ECC ICSSM DRAM0 2 bit Inject test
  *
@@ -4300,7 +4040,7 @@ int32_t ECC_Test_run_ICSSM_DRAM0_1BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_DRAM0_2BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_DRAM0_2BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4308,15 +4048,15 @@ int32_t ECC_Test_run_ICSSM_DRAM0_2BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM DRAM0 Double bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 DRAM0 Double bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM DRAM0 2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48000000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4325,15 +4065,97 @@ int32_t ECC_Test_run_ICSSM_DRAM0_2BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM DRAM0 Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 DRAM0 Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_DRAM0_2BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_DRAM0_2BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_DRAM1_1BitInjectTest
+ * @fn      ECC_Test_run_ICSSM1_DRAM0_1BitInjectTest
+ *
+ * @brief   Execute ECC ICSSM1 DRAM0 1 bit Inject test
+ *
+ * @param   None
+ *
+ * @return  0 : Success; < 0 for failures
+ ********************************************************************/
+int32_t ECC_Test_run_ICSSM1_DRAM0_1BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+
+    DebugP_log("\r\nICSSM1 DRAM0 Single bit error inject: starting \r\n");
+
+    /* Run one shot test for ICSSM DRAM0 1 bit error */
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(0x48600000u);
+
+    injectErrorConfig.flipBitMask = 0x02;
+    result = SDL_ECC_injectError(SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+       retVal = -1;
+    } else {
+        /* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+        DebugP_log("\r\nICSSM1 DRAM0 Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}/* End of ECC_Test_run_ICSSM1_DRAM0_1BitInjectTest() */
+
+/*********************************************************************
+ * @fn      ECC_Test_run_ICSSM1_DRAM0_2BitInjectTest
+ *
+ * @brief   Execute ECC ICSSM DRAM0 2 bit Inject test
+ *
+ * @param   None
+ *
+ * @return  0 : Success; < 0 for failures
+ ********************************************************************/
+int32_t ECC_Test_run_ICSSM1_DRAM0_2BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+
+    DebugP_log("\r\nICSSM1 DRAM0 Double bit error inject: starting \r\n");
+
+    /* Run one shot test for ICSSM DRAM0 2 bit error */
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(0x48600000u);
+
+    injectErrorConfig.flipBitMask = 0x03;
+    result = SDL_ECC_injectError(SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+       retVal = -1;
+    } else {
+        /* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+        DebugP_log("\r\nICSSM1 DRAM0 Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}/* End of ECC_Test_run_ICSSM1_DRAM0_2BitInjectTest() */
+
+/*********************************************************************
+ * @fn      ECC_Test_run_ICSSM0_DRAM1_1BitInjectTest
  *
  * @brief   Execute ECC ICSSM DRAM1 1 bit Inject test
  *
@@ -4341,7 +4163,7 @@ int32_t ECC_Test_run_ICSSM_DRAM0_2BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_DRAM1_1BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_DRAM1_1BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4349,15 +4171,15 @@ int32_t ECC_Test_run_ICSSM_DRAM1_1BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM DRAM1 Single bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 DRAM1 Single bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM DRAM1 1 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48002000u);
 
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4366,15 +4188,15 @@ int32_t ECC_Test_run_ICSSM_DRAM1_1BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM DRAM1 Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 DRAM1 Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_DRAM1_1BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_DRAM1_1BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_DRAM1_2BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_DRAM1_2BitInjectTest
  *
  * @brief   Execute ECC ICSSM DRAM1 2 bit Inject test
  *
@@ -4382,7 +4204,7 @@ int32_t ECC_Test_run_ICSSM_DRAM1_1BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_DRAM1_2BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_DRAM1_2BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4390,15 +4212,15 @@ int32_t ECC_Test_run_ICSSM_DRAM1_2BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM DRAM1 Double bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 DRAM1 Double bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM DRAM1 2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48002000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4407,15 +4229,15 @@ int32_t ECC_Test_run_ICSSM_DRAM1_2BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM DRAM1 Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 DRAM1 Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_DRAM1_2BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_DRAM1_2BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_1BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_1BitInjectTest
  *
  * @brief   Execute ECC ICSSM PR1 PDSP0 IRAM 1 bit Inject test
  *
@@ -4423,7 +4245,7 @@ int32_t ECC_Test_run_ICSSM_DRAM1_2BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_1BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_1BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4431,15 +4253,15 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_1BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM PR1 PDSP0 IRAM Single bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 PR1 PDSP0 IRAM Single bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM PR1 PDSP0 IRAM 1 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48034000u);
 
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4448,15 +4270,15 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_1BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM PR1 PDSP0 IRAM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 PR1 PDSP0 IRAM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_1BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_1BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_2BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_2BitInjectTest
  *
  * @brief   Execute ECC ICSSM PR1 PDSP0 IRAM 2 bit Inject test
  *
@@ -4464,7 +4286,7 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_1BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_2BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_2BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4472,15 +4294,15 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_2BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM PR1 PDSP0 IRAM Double bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 PR1 PDSP0 IRAM Double bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM PR1 PDSP0 IRAM 2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48034000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4489,15 +4311,15 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_2BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM PR1 PDSP0 IRAM Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 PR1 PDSP0 IRAM Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_2BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_2BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_1BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_1BitInjectTest
  *
  * @brief   Execute ECC ICSSM PR1 PDSP1 IRAM 1 bit Inject test
  *
@@ -4505,7 +4327,7 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_2BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_1BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_1BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4513,15 +4335,15 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_1BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM PR1_PDSP1_IRAM Single bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 PR1_PDSP1_IRAM Single bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM PR1 PDSP1 IRAM 1 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48038000u);
 
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4530,15 +4352,15 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_1BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM PR1 PDSP1 IRAM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 PR1 PDSP1 IRAM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_1BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_1BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_2BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_2BitInjectTest
  *
  * @brief   Execute ECC ICSSM PR1 PDSP1 IRAM 2 bit Inject test
  *
@@ -4546,7 +4368,7 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_1BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_2BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_2BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4554,15 +4376,15 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_2BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM PR1 PDSP1 IRAM Double bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 PR1 PDSP1 IRAM Double bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM PR1 PDSP1 IRAM 2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48038000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4571,15 +4393,15 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_2BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM PR1 PDSP1 IRAM Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 PR1 PDSP1 IRAM Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_2BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_2BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_RAM_1BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_RAM_1BitInjectTest
  *
  * @brief   Execute ECC ICSSM RAM 1 bit Inject test
  *
@@ -4587,7 +4409,7 @@ int32_t ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_2BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_RAM_1BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_RAM_1BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4595,15 +4417,15 @@ int32_t ECC_Test_run_ICSSM_RAM_1BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM RAM Single bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 RAM Single bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM RAM 1 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48010000u);
 
     injectErrorConfig.flipBitMask = 0x02;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4612,15 +4434,15 @@ int32_t ECC_Test_run_ICSSM_RAM_1BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM RAM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 RAM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_RAM_1BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_RAM_1BitInjectTest() */
 
 /*********************************************************************
- * @fn      ECC_Test_run_ICSSM_RAM_2BitInjectTest
+ * @fn      ECC_Test_run_ICSSM0_RAM_2BitInjectTest
  *
  * @brief   Execute ECC ICSSM RAM 2 bit Inject test
  *
@@ -4628,7 +4450,7 @@ int32_t ECC_Test_run_ICSSM_RAM_1BitInjectTest(void)
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_ICSSM_RAM_2BitInjectTest(void)
+int32_t ECC_Test_run_ICSSM0_RAM_2BitInjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
@@ -4636,15 +4458,15 @@ int32_t ECC_Test_run_ICSSM_RAM_2BitInjectTest(void)
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
 
-    DebugP_log("\r\nICSSM RAM Double bit error inject: starting \r\n");
+    DebugP_log("\r\nICSSM0 RAM Double bit error inject: starting \r\n");
 
     /* Run one shot test for ICSSM RAM 2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x48010000u);
 
     injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR,
-                                 SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID,
+    result = SDL_ECC_injectError(SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR,
+                                 SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
 
@@ -4653,12 +4475,12 @@ int32_t ECC_Test_run_ICSSM_RAM_2BitInjectTest(void)
     } else {
         /* Access the memory where injection is expected */
         testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nICSSM RAM Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+        DebugP_log("\r\nICSSM0 RAM Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
     }
 
     return retVal;
-}/* End of ECC_Test_run_ICSSM_RAM_2BitInjectTest() */
+}/* End of ECC_Test_run_ICSSM0_RAM_2BitInjectTest() */
 
 /*********************************************************************
  * @fn      ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_1BitInjectTest
@@ -4776,6 +4598,167 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_case2_2BitInjectTest(void)
 }/* End of ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_case2_2BitInjectTest() */
 
 /*********************************************************************
+ * @fn      ECC_Test_run_CPSW_2BitInjectTest
+ *
+ * @brief   Execute ECC CPSW 2 bit Inject test
+ *
+ * @param   None
+ *
+ * @return  0 : Success; < 0 for failures
+ ********************************************************************/
+int32_t ECC_Test_run_CPSW_2BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+
+	DebugP_log("\r\nCPSW Double bit error inject: starting \r\n");
+
+    /* Run one shot test for CPSW 2 bit error */
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(0x5283E000u);
+
+    injectErrorConfig.flipBitMask = 0x03;
+    result = SDL_ECC_injectError(SDL_CPSW3GCSS_ECC_AGGR,
+                                 SDL_ECC_AGGR_CPSW_RAM1,
+                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+       retVal = -1;
+    } else {
+		/* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+        DebugP_log("\r\nCPSW Double bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete \r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}/* End of ECC_Test_run_CPSW_2BitInjectTest() */
+
+/*********************************************************************
+ * @fn      ECC_Test_run_FSS_OSPI0_1BitInjectTest
+ *
+ * @brief   Execute ECC FSS_OSPI0  1 bit inject test
+ *
+ * @param   None
+ *
+ * @return  0 : Success; < 0 for failures
+ ********************************************************************/
+int32_t ECC_Test_run_FSS_OSPI0_1BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+
+	DebugP_log("\r\nFSS_OSPI0 Single bit error self test: starting \r\n");
+
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(0x53807000u);
+
+    /* Run one shot test for FSS_OSPI  1 bit error */
+    injectErrorConfig.flipBitMask = 0x003;
+    result = SDL_ECC_selfTest(SDL_FSS_OSPI_RAM_ECC_AGGR,
+                             SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_ID,
+                             SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                             &injectErrorConfig,
+                             10000);
+
+    if (result != SDL_PASS ) {
+        retVal = -1;
+    } else {
+
+        DebugP_log("\r\nFSS_OSPI0 Single bit error self test inject at pErrMem = 0x%p:test complete \r\n",
+                   injectErrorConfig.pErrMem);
+    }
+
+    return retVal;
+}/* End of ECC_Test_run_FSS_OSPI0_1BitInjectTest() */
+
+/*********************************************************************
+ * @fn      ECC_Test_run_FSS_FOTA_1BitInjectTest
+ *
+ * @brief   Execute ECC FSS_FOTA  1 bit inject test
+ *
+ * @param   None
+ *
+ * @return  0 : Success; < 0 for failures
+ ********************************************************************/
+int32_t ECC_Test_run_FSS_FOTA_1BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+
+	DebugP_log("\r\nFSS_FOTA Single bit error self test: starting \r\n");
+
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(0x5380f000u);
+
+    /* Run one shot test for FSS_FOTA  1 bit error */
+    injectErrorConfig.flipBitMask = 0x002;
+    result = SDL_ECC_selfTest(SDL_FSS_FOTA_8051_RAM_ECC_AGGR,
+                             SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_ID,
+                             SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                             &injectErrorConfig,
+                             10000);
+
+    if (result != SDL_PASS ) {
+        retVal = -1;
+    } else {
+
+        DebugP_log("\r\nFSS_FOTA Single bit error self test inject at pErrMem = 0x%p:test complete \r\n",
+                   injectErrorConfig.pErrMem);
+    }
+
+    return retVal;
+}/* End of ECC_Test_run_FSS_FOTA_1BitInjectTest() */
+
+/*********************************************************************
+ * @fn      ECC_Test_run_OSPI1_1BitInjectTest
+ *
+ * @brief   Execute ECC OSPI1  1 bit inject test
+ *
+ * @param   None
+ *
+ * @return  0 : Success; < 0 for failures
+ ********************************************************************/
+int32_t ECC_Test_run_OSPI1_1BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+
+	DebugP_log("\r\nOSPI1 Single bit error self test: starting \r\n");
+
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(0x53807000u);
+
+    /* Run one shot test for OSPI1  1 bit error */
+    injectErrorConfig.flipBitMask = 0x002;
+    result = SDL_ECC_selfTest(SDL_OSPI1_RAM_ECC_AGGR,
+                             SDL_OSPI1_RAM_ECC_AGGR_RAM_ID,
+                             SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                             &injectErrorConfig,
+                             10000);
+
+    if (result != SDL_PASS ) {
+        retVal = -1;
+    } else {
+
+        DebugP_log("\r\nOSPI1 Single bit error self test inject at pErrMem = 0x%p:test complete \r\n",
+                   injectErrorConfig.pErrMem);
+    }
+
+    return retVal;
+}/* End of ECC_Test_run_OSPI1_1BitInjectTest() */
+
+/*********************************************************************
  * @fn      ECC_sdlFuncTest
  *
  * @brief   Execute ECC sdl function test
@@ -4815,7 +4798,7 @@ static int32_t ECC_sdlFuncTest(void)
             return SDL_EFAIL;
         }
     }
-
+#if defined (R5F0_0_INPUTS)
 	if (retVal == 0) {
 
 		result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest();
@@ -4939,7 +4922,8 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_B1TCM0_BANK1_1BitInjectTest has failed... \r\n");
 		}
 	}
-
+#endif
+#if defined (R5F0_1_INPUTS)
 	if (retVal == 0) {
 
 		result = ECC_Test_run_R5FSS0_CORE1_ATCM1_BANK0_2BitInjectTest();
@@ -5063,7 +5047,8 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE1_B1TCM1_BANK1_1BitInjectTest has failed... \r\n");
 		}
 	}
-
+#endif
+#if defined (R5F0_0_INPUTS)
 	if (retVal == 0) {
 		result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_1BitInjectTest();
 		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5091,7 +5076,7 @@ static int32_t ECC_sdlFuncTest(void)
 			DebugP_log("\r\nECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_Neg_case2_2BitInjectTest has failed... \r\n");
 		}
 	}
-
+#endif
     if (retVal == 0) {
         result = ECC_Test_run_VIM_1BitInjectTest();
         /*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
@@ -5118,7 +5103,7 @@ static int32_t ECC_sdlFuncTest(void)
 
 		if (retVal != 0)
 		{
-			DebugP_log("\r\nECC SDL ECC_Test_MCAN1_init: unsuccessful \r\n");
+			DebugP_log("\r\nECC SDL ECC_Test_MCAN_init: unsuccessful \r\n");
 			return SDL_EFAIL;
 		}
 	}
@@ -5198,141 +5183,143 @@ static int32_t ECC_sdlFuncTest(void)
 			/*Low priority MCAN1 interrupt */
 		}
 
-		result = ECC_Test_run_MCAN2_1BitInjectTest();
-		if (result != SDL_PASS) {
-			retVal = -1;
-			DebugP_log("\r\nECC_Test_run_MCAN2_1BitInjectTest has failed... \r\n");
-			/*Low priority MCAN2 interrupt */
-		}
-
-		result = ECC_Test_run_MCAN2_2BitInjectTest();
-		if (result != SDL_PASS) {
-			retVal = -1;
-			DebugP_log("\r\nECC_Test_run_MCAN2_2BitInjectTest has failed... \r\n");
-			/*Low priority MCAN2 interrupt */
-		}
-
-		result = ECC_Test_run_MCAN3_1BitInjectTest();
-		if (result != SDL_PASS) {
-			retVal = -1;
-			DebugP_log("\r\nECC_Test_run_MCAN3_1BitInjectTest has failed... \r\n");
-			/*Low priority MCAN3 interrupt */
-		}
-
-		result = ECC_Test_run_MCAN3_2BitInjectTest();
-		if (result != SDL_PASS) {
-			retVal = -1;
-			DebugP_log("\r\nECC_Test_run_MCAN3_2BitInjectTest has failed... \r\n");
-			/*Low priority MCAN3 interrupt */
-		}
-
 	}
 	if (retVal == 0) {
 		/*Init of MSS*/
-		retVal = ECC_Test_ICSSM_init();
+		retVal = ECC_Test_ICSSM0_init();
 		if (retVal != 0)
 		{
-			DebugP_log("\r\nECC SDL ECC_Test_ICSSM_init: unsuccessful \r\n");
+			DebugP_log("\r\nECC SDL ECC_Test_ICSSM0_init: unsuccessful \r\n");
 			return SDL_EFAIL;
 		}
 	}
 
 	if (retVal == 0) {
 
-		result = ECC_Test_run_ICSSM_DRAM0_1BitInjectTest();
+		result = ECC_Test_run_ICSSM0_DRAM0_1BitInjectTest();
 		if (result != SDL_PASS) {
 			retVal = -1;
-			DebugP_log("\r\nECC_Test_run_ICSSM_DRAM0_1BitInjectTest has failed... \r\n");
+			DebugP_log("\r\nECC_Test_run_ICSSM0_DRAM0_1BitInjectTest has failed... \r\n");
 			/*Low priority MCAN1 interrupt */
 		}
 	}
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_DRAM0_2BitInjectTest();
+        result = ECC_Test_run_ICSSM0_DRAM0_2BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_DRAM0_2BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_DRAM0_2BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_DRAM1_1BitInjectTest();
+        result = ECC_Test_run_ICSSM0_DRAM1_1BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_DRAM1_1BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_DRAM1_1BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_DRAM1_2BitInjectTest();
+        result = ECC_Test_run_ICSSM0_DRAM1_2BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_DRAM1_2BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_DRAM1_2BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_1BitInjectTest();
+        result = ECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_1BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_PR1_PDSP0_IRAM_1BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_1BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_PR1_PDSP0_IRAM_2BitInjectTest();
+        result = ECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_2BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_PR1_PDSP0_IRAM_2BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_PR1_PDSP0_IRAM_2BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_1BitInjectTest();
+        result = ECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_1BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_PR1_PDSP1_IRAM_1BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_1BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_PR1_PDSP1_IRAM_2BitInjectTest();
+        result = ECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_2BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_PR1_PDSP1_IRAM_2BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_PR1_PDSP1_IRAM_2BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_RAM_1BitInjectTest();
+        result = ECC_Test_run_ICSSM0_RAM_1BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_RAM_1BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_RAM_1BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
 
     if (retVal == 0) {
 
-        result = ECC_Test_run_ICSSM_RAM_2BitInjectTest();
+        result = ECC_Test_run_ICSSM0_RAM_2BitInjectTest();
         if (result != SDL_PASS) {
             retVal = -1;
-            DebugP_log("\r\nECC_Test_run_ICSSM_RAM_2BitInjectTest has failed... \r\n");
+            DebugP_log("\r\nECC_Test_run_ICSSM0_RAM_2BitInjectTest has failed... \r\n");
+            /*Low priority MCAN1 interrupt */
+        }
+    }
+
+	if (retVal == 0) {
+		/*Init of MSS*/
+		retVal = ECC_Test_ICSSM1_init();
+		if (retVal != 0)
+		{
+			DebugP_log("\r\nECC SDL ECC_Test_ICSSM1_init: unsuccessful \r\n");
+			return SDL_EFAIL;
+		}
+	}
+
+	if (retVal == 0) {
+
+		result = ECC_Test_run_ICSSM1_DRAM0_1BitInjectTest();
+		if (result != SDL_PASS) {
+			retVal = -1;
+			DebugP_log("\r\nECC_Test_run_ICSSM1_DRAM0_1BitInjectTest has failed... \r\n");
+			/*Low priority MCAN1 interrupt */
+		}
+	}
+
+    if (retVal == 0) {
+
+        result = ECC_Test_run_ICSSM1_DRAM0_2BitInjectTest();
+        if (result != SDL_PASS) {
+            retVal = -1;
+            DebugP_log("\r\nECC_Test_run_ICSSM1_DRAM0_2BitInjectTest has failed... \r\n");
             /*Low priority MCAN1 interrupt */
         }
     }
@@ -5426,32 +5413,6 @@ static int32_t ECC_sdlFuncTest(void)
 
 	if (retVal == 0)
 	{
-		result = ECC_Test_run_MSS_L2_SLV3_1BitInjectTest();
-		if (result != SDL_PASS) {
-			retVal = -1;
-			DebugP_log("\r\nECC_Test_run_MSS_L2_SLV3_1BitInjectTest has failed... \r\n");
-			/* High priority MCAN0 interrupt */
-		}
-	}
-
-	if (retVal == 0)
-	{
-		/* Initialize ECC Memory */
-		SDL_ECC_initMemory(SDL_SOC_ECC_AGGR, SDL_SOC_ECC_AGGR_MSS_L2_SLV3_ECC_RAM_ID);
-
-		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
-		gMsmcMemParityInterrupt = false;
-
-		result = ECC_Test_run_MSS_L2_SLV3_2BitInjectTest();
-		if (result != SDL_PASS) {
-			retVal = -1;
-			DebugP_log("\r\nECC_Test_run_MSS_L2_SLV3_2BitInjectTest has failed... \r\n");
-			/* High priority MCAN0 interrupt */
-		}
-	}
-
-	if (retVal == 0)
-	{
 		result = ECC_Test_run_MSS_MAILBOX_1BitInjectTest();
 		if (result != SDL_PASS) {
 			retVal = -1;
@@ -5469,6 +5430,84 @@ static int32_t ECC_sdlFuncTest(void)
 			/* High priority MCAN0 interrupt */
 		}
 	}
+
+	if (retVal == 0)
+    {
+		/* Initialize ECC Memory */
+		retVal = SDL_ECC_initMemory(SDL_CPSW3GCSS_ECC_AGGR, SDL_ECC_AGGR_CPSW_RAM1);
+
+        if (retVal == 0) 
+        {
+            /* Initialize ECC */
+            result = SDL_ECC_init(SDL_CPSW3GCSS_ECC_AGGR, &ECC_Test_CPSW_ECCInitConfig);
+            if (result != SDL_PASS) {
+                /* print error and quit */
+                DebugP_log("\r\nECC_Test_init: Error initializing CPSW ECC: result = %d\r\n", result);
+    
+                retVal = -1;
+            } else {
+                DebugP_log("\r\nECC_Test_init: CPSW ECC initialization is completed \r\n");
+            }
+        }
+
+		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
+		gMsmcMemParityInterrupt = false;
+
+		result = ECC_Test_run_CPSW_2BitInjectTest();
+		if (result != SDL_PASS) {
+			retVal = -1;
+			DebugP_log("\r\nECC_Test_run_CPSW_2BitInjectTest has failed... \r\n");
+			/* High priority CPSW interrupt */
+		}
+	}
+
+//	//if (retVal == 0)
+//	{
+//		/* Initialize ECC Memory */
+//		SDL_ECC_initMemory(SDL_FSS_OSPI_RAM_ECC_AGGR, SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_ID);
+//
+//		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
+//		gMsmcMemParityInterrupt = false;
+//
+//		result = ECC_Test_run_FSS_OSPI0_1BitInjectTest();
+//		if (result != SDL_PASS) {
+//			retVal = -1;
+//			DebugP_log("\r\nECC_Test_run_FSS_OSPI0_1BitInjectTest has failed... \r\n");
+//			/* High priority FSS_OSPI0 interrupt */
+//		}
+//	}
+//
+//	//if (retVal == 0)
+//	{
+//		/* Initialize ECC Memory */
+//		SDL_ECC_initMemory(SDL_FSS_FOTA_8051_RAM_ECC_AGGR, SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_ID);
+//
+//		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
+//		gMsmcMemParityInterrupt = false;
+//
+//		result = ECC_Test_run_FSS_FOTA_1BitInjectTest();
+//		if (result != SDL_PASS) {
+//			retVal = -1;
+//			DebugP_log("\r\nECC_Test_run_FSS_FOTA_1BitInjectTest has failed... \r\n");
+//			/* High priority FSS_FOTA interrupt */
+//		}
+//	}
+//
+//	//if (retVal == 0)
+//	{
+//		/* Initialize ECC Memory */
+//		SDL_ECC_initMemory(SDL_OSPI1_RAM_ECC_AGGR, SDL_OSPI1_RAM_ECC_AGGR_RAM_ID);
+//
+//		/*Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation*/
+//		gMsmcMemParityInterrupt = false;
+//
+//		result = ECC_Test_run_OSPI1_1BitInjectTest();
+//		if (result != SDL_PASS) {
+//			retVal = -1;
+//			DebugP_log("\r\nECC_Test_run_OSPI1_1BitInjectTest has failed... \r\n");
+//			/* High priority OSPI1 interrupt */
+//		}
+//	}
 
     if ( retVal == 0) {
         DebugP_log("\r\nECC SDL API tests: success\r\n");

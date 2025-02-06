@@ -131,7 +131,7 @@ extern "C"
 #define SDL_ICSS_M_ICSSM_1_PR1_MII_RT_PR1_MII_RT_G_CFG_REGS_G_U_BAS	(0x48633000U)
 #define SDL_ICSS_M_ICSSM_1_PR1_PDSP0_IRAM_RAM_U_BASE	            (0x48634000U)
 #define SDL_ICSS_M_ICSSM_1_PR1_PDSP1_IRAM_RAM_U_BASE	            (0x48638000U)
-#define SDL_ICSSM1_ECC	            								(0x48700000U)
+#define SDL_ICSSM1_ECC_BASE                                         (0x48700000U)
 #define SDL_CONTROLSS_G0_EPWM0_U_BASE	            				(0x50000000U)
 #define SDL_CONTROLSS_G0_EPWM1_U_BASE	            				(0x50001000U)
 #define SDL_CONTROLSS_G0_EPWM2_U_BASE	            				(0x50002000U)

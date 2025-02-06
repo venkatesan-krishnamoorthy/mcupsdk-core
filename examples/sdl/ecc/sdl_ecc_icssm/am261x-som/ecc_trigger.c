@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2023
+ *   Copyright (c) Texas Instruments Incorporated 2023-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,43 +61,80 @@
 *           ICSSM different banks
 *           Only one macro should be enabled at one time.
 **/
-#define SDL_ICSSM_DRAM0								(1U)
-#define	SDL_ICSSM_DRAM1								(0U)
-#define	SDL_ICSSM_PR1_PDSP0_IRAM					(0U)
-#define	SDL_ICSSM_PR1_PDSP1_IRAM					(0U)
-#define SDL_ICSSM_RAM								(0U)
+#define SDL_ICSSM0_DRAM0							(1U)
+#define	SDL_ICSSM0_DRAM1							(0U)
+#define	SDL_ICSSM0_PR1_PDSP0_IRAM				    (0U)
+#define	SDL_ICSSM0_PR1_PDSP1_IRAM				    (0U)
+#define SDL_ICSSM0_RAM								(0U)
+
+#define SDL_ICSSM1_DRAM0							(0U)
+#define	SDL_ICSSM1_DRAM1							(0U)
+#define	SDL_ICSSM1_PR1_PDSP0_IRAM				    (0U)
+#define	SDL_ICSSM1_PR1_PDSP1_IRAM				    (0U)
+#define SDL_ICSSM1_RAM								(0U)
 
 #define SDL_ICSSM_MAX_MEM_SECTIONS           		(1u)
 
-#if SDL_ICSSM_DRAM0
+#if SDL_ICSSM0_DRAM0
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48000000u) /* ICSSM DRAM0 RAM address */
-#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
-#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
 #endif
 
-#if SDL_ICSSM_DRAM1
+#if SDL_ICSSM0_DRAM1
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48002000u) /* ICSSM DRAM1 RAM address */
-#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
-#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID
 #endif
 
-#if SDL_ICSSM_PR1_PDSP0_IRAM
+#if SDL_ICSSM0_PR1_PDSP0_IRAM
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48034000u) /* ICSSM PR1 PDSP0 IRAM RAM address */
-#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
-#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID
 #endif
 
-#if SDL_ICSSM_PR1_PDSP1_IRAM
+#if SDL_ICSSM0_PR1_PDSP1_IRAM
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48038000u) /* ICSSM PR1 PDSP1 IRAM RAM address */
-#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
-#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID
 #endif
 
-#if SDL_ICSSM_RAM
+#if SDL_ICSSM0_RAM
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48010000u) /* ICSSM RAM RAM address */
-#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR
-#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID
 #endif
+
+#if SDL_ICSSM1_DRAM0
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48600000u) /* ICSSM DRAM0 RAM address */ 
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM0_ECC_RAM_ID
+#endif
+
+#if SDL_ICSSM1_DRAM1
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48602000u) /* ICSSM DRAM1 RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_DRAM1_ECC_RAM_ID
+#endif
+
+#if SDL_ICSSM1_PR1_PDSP0_IRAM
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48634000u) /* ICSSM PR1 PDSP0 IRAM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP0_IRAM_ECC_RAM_ID
+#endif
+
+#if SDL_ICSSM1_PR1_PDSP1_IRAM
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48638000u) /* ICSSM PR1 PDSP1 IRAM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_PR1_PDSP1_IRAM_ECC_RAM_ID
+#endif
+
+#if SDL_ICSSM1_RAM
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x48610000u) /* ICSSM RAM RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_ICSS_G_CORE_RAM_ECC_RAM_ID
+#endif
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -107,16 +144,16 @@ static uint32_t arg;
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x00000000u, 0x00000000u, 0x00006000u, 0x00000000u,
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x00007800u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events enable: except clkstop events for unused clocks
      *   and PCIE events */
     /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00002000u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00007800u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00006000u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00007800u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
@@ -334,7 +371,8 @@ static int32_t ECC_sdlFuncTest(void)
         }
     }
 
-	if (retVal == 0) {
+	if (retVal == 0) 
+    {
         result = ECC_Test_run_ICSSM_1BitInjectTest();
         if (result == SDL_PASS)
         {

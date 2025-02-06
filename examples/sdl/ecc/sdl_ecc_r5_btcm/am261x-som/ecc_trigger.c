@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -70,6 +70,35 @@
 #define	SDL_B1TCM0_BANK0							(0U)
 #define	SDL_B1TCM0_BANK1							(1U)
 
+#if defined R5F0_1_INPUTS
+
+#define SDL_R5FSS0_CORE1_MAX_MEM_SECTIONS           (1u)
+#if SDL_B0TCM0_BANK0
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080000u) /* R5F B0TCM Bank 0 RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE1_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_ID
+#endif
+
+#if SDL_B0TCM0_BANK1
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080004u) /* R5F B0TCM Bank 1 RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE1_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_ID
+#endif
+
+#if SDL_B1TCM0_BANK0
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080008u) /* R5F B1TCM Bank 0 RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE1_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_ID
+#endif
+
+#if SDL_B1TCM0_BANK1
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x0008000cu) /* R5F B1TCM Bank 1 RAM address */
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE1_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_ID
+#endif
+
+#else
+
 #define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
 #if SDL_B0TCM0_BANK0
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x00080000u) /* R5F B0TCM Bank 0 RAM address */
@@ -93,6 +122,8 @@
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x0008000cu) /* R5F B1TCM Bank 1 RAM address */
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID
+#endif
+
 #endif
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -168,17 +199,17 @@ static uint32_t arg;
 
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
-    .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+    .esmErrorConfig = {1u, 20u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x000001E0u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events enable: except clkstop events for unused clocks
      *   and PCIE events */
     /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
+    .priorityBitmap = {0x00000000u, 0x000001E0u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+    .errorpinBitmap = {0x00000000u, 0x000001E0u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
@@ -191,6 +222,20 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    uint32_t intSrc,
                                                    void *arg);
 
+#if defined R5F0_1_INPUTS
+static SDL_ECC_MemSubType ECC_Test_R5FSS0_CORE1_subMemTypeList[SDL_R5FSS0_CORE1_MAX_MEM_SECTIONS] =
+{
+    SDL_EXAMPLE_ECC_RAM_ID,
+};
+
+static SDL_ECC_InitConfig_t ECC_Test_R5FSS0_CORE1_ECCInitConfig =
+{
+    .numRams = SDL_R5FSS0_CORE1_MAX_MEM_SECTIONS,
+    /**< Number of Rams ECC is enabled  */
+    .pMemSubTypeList = &(ECC_Test_R5FSS0_CORE1_subMemTypeList[0]),
+    /**< Sub type list  */
+};
+#else
 static SDL_ECC_MemSubType ECC_Test_R5FSS0_CORE0_subMemTypeList[SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS] =
 {
     SDL_EXAMPLE_ECC_RAM_ID,
@@ -203,7 +248,7 @@ static SDL_ECC_InitConfig_t ECC_Test_R5FSS0_CORE0_ECCInitConfig =
     .pMemSubTypeList = &(ECC_Test_R5FSS0_CORE0_subMemTypeList[0]),
     /**< Sub type list  */
 };
-
+#endif
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -214,7 +259,148 @@ int32_t ECC_Example_init (void);
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
+#if defined R5F0_1_INPUTS
+/*********************************************************************
+* @fn      ECC_Example_init
+*
+* @param   None
+*
+* @return  0 : Success; < 0 for failures
+**********************************************************************/
+int32_t ECC_Example_init (void)
+{
+    int32_t retValue=0;
+    SDL_ErrType_t result;
+    void *ptr = (void *)&arg;
+    /* Initialise exception handler */
+    ECC_Test_exceptionInit();
 
+    DebugP_log("\r\nECC_Test_init: Exception init complete \r\n");
+
+    if (retValue == 0) {
+            /* Initialize ECC Memory */
+        result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nECC_Test_init: Error initializing Memory of R5FSS0 CORE1 ECC: result = %d\r\n", result);
+
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nECC_Test_init: Initialize of R5FSS0 CORE1 ECC Memory is complete \r\n");
+        }
+    }
+    if (retValue == 0) {
+        /* Initialize ESM module */
+        result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nESM_Test_init: Error initializing MSS ESM: result = %d\r\n", result);
+
+
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nESM_Test_init: Init MSS ESM complete \r\n");
+        }
+
+    }
+    if (retValue == 0) {
+        /* Initialize ECC */
+        result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR, &ECC_Test_R5FSS0_CORE1_ECCInitConfig);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nECC_Test_init: Error initializing R5FSS0 CORE1 ECC: result = %d\r\n", result);
+
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nECC_Test_init: R5FSS0 CORE1 ECC initialization is completed \r\n");
+        }
+    }
+    return retValue;
+}
+
+/*********************************************************************
+ * @fn      ECC_Test_run_R5FSS0_CORE1_BTCM_1BitInjectTest
+ *
+ * @brief   Execute ECC R5FSS0 CORE1 BTCM 1 bit inject test
+ *
+ * @param   None
+ *
+ * @return  0 : Success; < 0 for failures
+ ********************************************************************/
+int32_t ECC_Test_run_R5FSS0_CORE1_BTCM_1BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+
+	DebugP_log("\r\nR5FSS0 CORE1 BTCM Single bit error inject: starting \r\n");
+
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
+
+    /* Run one shot test for R5FSS0 CORE1 BTCM 1 bit error */
+    injectErrorConfig.flipBitMask = 0x02;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+        retVal = -1;
+    } else {
+        /* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+
+        DebugP_log("\r\nR5FSS0 CORE1 BTCM Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete\r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}/* End of ECC_Test_run_R5FSS0_CORE1_BTCM_1BitInjectTest() */
+
+/*********************************************************************
+ * @fn      ECC_Test_run_R5FSS0_CORE1_BTCM_2BitInjectTest
+ *
+ * @brief   Execute ECC R5FSS0 CORE1 BTCM 2 bit Inject test
+ *
+ * @param   None
+ *
+ * @return  0 : Success; < 0 for failures
+ ********************************************************************/
+int32_t ECC_Test_run_R5FSS0_CORE1_BTCM_2BitInjectTest(void)
+{
+    SDL_ErrType_t result;
+    int32_t retVal=0;
+
+    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+    volatile uint32_t testLocationValue;
+
+	DebugP_log("\r\nR5FSS0 CORE1 BTCM Double bit error inject: starting \r\n");
+
+    /* Run one shot test for R5FSS0 CORE1 BTCM 2 bit error */
+    /* Note the address is relative to start of ram */
+    injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
+
+    injectErrorConfig.flipBitMask = 0x03;
+    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
+                                 SDL_EXAMPLE_ECC_RAM_ID,
+                                 SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                 &injectErrorConfig);
+
+    if (result != SDL_PASS ) {
+       retVal = -1;
+    } else {
+        /* Access the memory where injection is expected */
+        testLocationValue = injectErrorConfig.pErrMem[0];
+        DebugP_log("\r\nR5FSS0 CORE1 BTCM Double bit error inject: pErrMem fixed location = 0x%p once test complete: the value of pErrMem is 0x%p\r\n",
+                   injectErrorConfig.pErrMem, testLocationValue);
+    }
+
+    return retVal;
+}/* End of ECC_Test_run_R5FSS0_CORE1_BTCM_2BitInjectTest() */
+#else
 /*********************************************************************
 * @fn      ECC_Example_init
 *
@@ -355,7 +541,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_BTCM_2BitInjectTest(void)
 
     return retVal;
 }/* End of ECC_Test_run_R5FSS0_CORE0_BTCM_2BitInjectTest() */
-
+#endif
 /*********************************************************************
  * @fn      ECC_sdlFuncTest
  *
@@ -374,7 +560,11 @@ static int32_t ECC_sdlFuncTest(void)
 
     if (retVal == 0)
     {
+#if defined R5F0_1_INPUTS
+        result = ECC_Test_run_R5FSS0_CORE1_BTCM_2BitInjectTest();
+#else
         result = ECC_Test_run_R5FSS0_CORE0_BTCM_2BitInjectTest();
+#endif
         if (result == SDL_PASS)
         {
             DebugP_log("\r\nWaiting for ESM Interrupt \r\n");
@@ -402,7 +592,12 @@ static int32_t ECC_sdlFuncTest(void)
     }
 
 	if (retVal == 0) {
+#if defined R5F0_1_INPUTS
+        result = ECC_Test_run_R5FSS0_CORE1_BTCM_1BitInjectTest();
+#else
         result = ECC_Test_run_R5FSS0_CORE0_BTCM_1BitInjectTest();
+#endif
+        
         if (result == SDL_PASS)
         {
             DebugP_log("\r\nWaiting for ESM Interrupt \r\n");

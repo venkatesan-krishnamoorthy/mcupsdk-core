@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -87,7 +87,7 @@ extern volatile bool idmaTransferComplete;
 /*                 External Function Declarations                             */
 /* ========================================================================== */
 
-#if defined(SOC_AM263X)|| defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263X)|| defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
 #if defined(R5F_INPUTS)
 extern int32_t ECC_ip_funcTest(void);
 extern int32_t ECC_sdl_funcTest(void);

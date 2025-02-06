@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2023
+ *   Copyright (c) Texas Instruments Incorporated 2023-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -114,16 +114,16 @@ static uint32_t arg;
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+    .enableBitmap = {0x000000c0u, 0x00000000u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events enable: except clkstop events for unused clocks
      *   and PCIE events */
     /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0x00180000u, 0x000000000u, 0x00000000u, 0x00000000u,
+    .priorityBitmap = {0x000000c0u, 0x000000000u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
-    .errorpinBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+    .errorpinBitmap = {0x000000c0u, 0x00000000u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */

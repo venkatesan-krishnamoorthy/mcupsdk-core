@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1253,13 +1253,13 @@ static int32_t ECC_errNegativeTest(void)
             retVal = -1;
         }
     }
-
+#if defined (R5F0_1_INPUTS)
     if (retVal == 0U) {
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1272,8 +1272,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1285,8 +1285,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1299,8 +1299,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1313,8 +1313,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1327,8 +1327,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1341,8 +1341,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1355,8 +1355,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1369,8 +1369,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1383,8 +1383,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1397,8 +1397,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1411,8 +1411,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1425,8 +1425,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1439,8 +1439,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1453,8 +1453,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1467,8 +1467,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1481,8 +1481,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDIRTY_RAM_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1495,8 +1495,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDIRTY_RAM_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDIRTY_RAM_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1509,8 +1509,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1523,8 +1523,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1537,8 +1537,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1551,8 +1551,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1564,8 +1564,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1578,36 +1578,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM2_RAM_ID,
-                                     SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
-                                     &injectErrorConfig);
-        if (result != SDL_EFAIL) {
-            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
-            retVal = -1;
-        }
-    }
-
-    if (retVal == 0U) {
-        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-        injectErrorConfig.flipBitMask = 0x0;
-        /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID,
-                                     SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
-                                     &injectErrorConfig);
-        if (result != SDL_EFAIL) {
-            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
-            retVal = -1;
-        }
-    }
-
-    if (retVal == 0U) {
-        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-        injectErrorConfig.flipBitMask = 0x101;
-        /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1620,8 +1592,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1634,8 +1606,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM4_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1648,8 +1620,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM4_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1662,8 +1634,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM5_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM4_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1676,8 +1648,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM5_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1690,8 +1662,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM6_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM5_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1704,8 +1676,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM6_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1718,8 +1690,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE0_ECC_AGGR,
-                                     SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM6_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1732,8 +1704,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM7_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1746,8 +1718,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM7_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1760,8 +1732,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1774,8 +1746,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1788,8 +1760,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1802,8 +1774,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1816,8 +1788,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1830,35 +1802,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM3_RAM_ID,
-                                     SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
-                                     &injectErrorConfig);
-        if (result != SDL_EFAIL) {
-            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
-            retVal = -1;
-        }
-    }
-    if (retVal == 0U) {
-        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-        injectErrorConfig.flipBitMask = 0x0;
-        /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DTAG_RAM0_RAM_ID,
-                                     SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
-                                     &injectErrorConfig);
-        if (result != SDL_EFAIL) {
-            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
-            retVal = -1;
-        }
-    }
-
-    if (retVal == 0U) {
-        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-        injectErrorConfig.flipBitMask = 0x101;
-        /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DTAG_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1871,8 +1816,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DTAG_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1885,8 +1830,35 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DTAG_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM3_RAM_ID,
+                                     SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                     &injectErrorConfig);
+        if (result != SDL_EFAIL) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+    if (retVal == 0U) {
+        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+        injectErrorConfig.flipBitMask = 0x0;
+        /* Negative tests without mask bit */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM0_RAM_ID,
+                                     SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                     &injectErrorConfig);
+        if (result != SDL_EFAIL) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+
+    if (retVal == 0U) {
+        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+        injectErrorConfig.flipBitMask = 0x101;
+        /* Negative tests without mask bit */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1899,8 +1871,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DTAG_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1913,8 +1885,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DTAG_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1927,8 +1899,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DTAG_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1941,8 +1913,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DTAG_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1955,8 +1927,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDIRTY_RAM_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -1969,35 +1941,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDIRTY_RAM_RAM_ID,
-                                     SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
-                                     &injectErrorConfig);
-        if (result != SDL_EFAIL) {
-            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
-            retVal = -1;
-        }
-    }
-    if (retVal == 0U) {
-        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-        injectErrorConfig.flipBitMask = 0x0;
-        /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM0_RAM_ID,
-                                     SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
-                                     &injectErrorConfig);
-        if (result != SDL_EFAIL) {
-            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
-            retVal = -1;
-        }
-    }
-
-    if (retVal == 0U) {
-        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-        injectErrorConfig.flipBitMask = 0x101;
-        /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM0_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DTAG_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2010,8 +1955,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDIRTY_RAM_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2024,8 +1969,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM1_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDIRTY_RAM_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2037,8 +1982,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM2_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2051,36 +1996,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM2_RAM_ID,
-                                     SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
-                                     &injectErrorConfig);
-        if (result != SDL_EFAIL) {
-            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
-            retVal = -1;
-        }
-    }
-
-    if (retVal == 0U) {
-        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-        injectErrorConfig.flipBitMask = 0x0;
-        /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM3_RAM_ID,
-                                     SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
-                                     &injectErrorConfig);
-        if (result != SDL_EFAIL) {
-            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
-            retVal = -1;
-        }
-    }
-
-    if (retVal == 0U) {
-        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-        injectErrorConfig.flipBitMask = 0x101;
-        /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM3_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM0_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2093,8 +2010,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM4_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM1_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2107,8 +2024,35 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM4_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM1_RAM_ID,
+                                     SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                     &injectErrorConfig);
+        if (result != SDL_EFAIL) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+    if (retVal == 0U) {
+        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+        injectErrorConfig.flipBitMask = 0x0;
+        /* Negative tests without mask bit */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM2_RAM_ID,
+                                     SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                     &injectErrorConfig);
+        if (result != SDL_EFAIL) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+
+    if (retVal == 0U) {
+        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+        injectErrorConfig.flipBitMask = 0x101;
+        /* Negative tests without mask bit */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM2_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2121,8 +2065,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM5_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2135,8 +2079,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM5_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM3_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2149,8 +2093,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM6_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM4_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2163,8 +2107,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM6_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM4_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2177,8 +2121,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x0;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM7_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM5_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2191,8 +2135,8 @@ static int32_t ECC_errNegativeTest(void)
         SDL_ECC_InjectErrorConfig_t injectErrorConfig;
         injectErrorConfig.flipBitMask = 0x101;
         /* Negative tests without mask bit */
-        result = SDL_ECC_injectError(SDL_R5FSS1_CORE1_ECC_AGGR,
-                                     SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_DDATA_RAM7_RAM_ID,
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM5_RAM_ID,
                                      SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                      &injectErrorConfig);
         if (result != SDL_EFAIL) {
@@ -2200,6 +2144,63 @@ static int32_t ECC_errNegativeTest(void)
             retVal = -1;
         }
     }
+
+    if (retVal == 0U) {
+        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+        injectErrorConfig.flipBitMask = 0x0;
+        /* Negative tests without mask bit */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM6_RAM_ID,
+                                     SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                     &injectErrorConfig);
+        if (result != SDL_EFAIL) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+
+    if (retVal == 0U) {
+        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+        injectErrorConfig.flipBitMask = 0x101;
+        /* Negative tests without mask bit */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM6_RAM_ID,
+                                     SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                     &injectErrorConfig);
+        if (result != SDL_EFAIL) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+
+    if (retVal == 0U) {
+        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+        injectErrorConfig.flipBitMask = 0x0;
+        /* Negative tests without mask bit */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM7_RAM_ID,
+                                     SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                     &injectErrorConfig);
+        if (result != SDL_EFAIL) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+
+    if (retVal == 0U) {
+        SDL_ECC_InjectErrorConfig_t injectErrorConfig;
+        injectErrorConfig.flipBitMask = 0x101;
+        /* Negative tests without mask bit */
+        result = SDL_ECC_injectError(SDL_R5FSS0_CORE1_ECC_AGGR,
+                                     SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_DDATA_RAM7_RAM_ID,
+                                     SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
+                                     &injectErrorConfig);
+        if (result != SDL_EFAIL) {
+            DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
+            retVal = -1;
+        }
+    }
+#endif
 	if (retVal == 0) {
         /* Negative tests with invalid mem subtype 50U */
         result = SDL_ECC_injectError(SDL_R5FSS0_CORE0_ECC_AGGR,
@@ -2278,7 +2279,7 @@ static int32_t ECC_errNegativeTest(void)
     if (retVal == 0U)
 	{
         /* Negative tests with invalid pointer */
-        result = SDL_ECC_init(11U, &ECC_Test_InitConfig);
+        result = SDL_ECC_init(10U, &ECC_Test_InitConfig);
         if (result == SDL_PASS) {
             DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
             retVal = -1;

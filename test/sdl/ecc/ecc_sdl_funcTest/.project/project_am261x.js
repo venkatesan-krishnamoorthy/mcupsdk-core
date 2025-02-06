@@ -58,6 +58,18 @@ const libs_r5f = {
     ],
 };
 
+const r5fss0_0_macro = {
+    common: [
+        "R5F0_0_INPUTS",
+    ],
+};
+
+const r5fss0_1_macro = {
+    common: [
+        "R5F0_1_INPUTS",
+    ],
+};
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -78,7 +90,8 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"}
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"}
 ];
 
 function getComponentProperty() {
@@ -104,12 +117,15 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
 
-    if(buildOption.cpu.match(/r5f*/)) {
-        build_property.libs = libs_r5f;
-        build_property.templates = templates_nortos_r5f;
-		build_property.asmfiles = asmfiles_r5f;
+    build_property.libs = libs_r5f;
+    build_property.templates = templates_nortos_r5f;
+    build_property.asmfiles = asmfiles_r5f;
+    if(buildOption.cpu.match(/r5fss0-0/)) {
+        build_property.defines = r5fss0_0_macro;
     }
-
+    if(buildOption.cpu.match(/r5fss0-1/)) {
+        build_property.defines = r5fss0_1_macro;
+    }
     return build_property;
 }
 

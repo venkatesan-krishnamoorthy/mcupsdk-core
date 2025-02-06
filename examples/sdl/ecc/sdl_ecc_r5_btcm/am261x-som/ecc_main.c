@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -57,10 +57,10 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D18094u)
-#define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D18098u)
-#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
-#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u)
+#define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D18028u)
+#define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D1802Cu)
+#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D1801Cu)
+#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18020u)
 
 #define SDL_CLEAR_STATUS									(0x6u)
 
@@ -97,15 +97,56 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                 esmInst, esmIntrType, grpChannel, index, intSrc);
     printf("\r\nTake action \r\n");
     if(esmIntrType == 1u){
-        printf("\r\nHigh Priority Interrupt Executed\r\n");
-        /* Clear DED MSS_CTRL register*/
-        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
-        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS);
-        printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
-        /* Clear DED RAW MSS_CTRL register*/
-        SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
-        rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW);
-        printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+#if defined (R5F0_0_INPUTS)
+        if(intSrc== SDL_ESM_INTR_LEVEL_R5SS0_CPU0_ECC_UNCORRECTED_LEVEL)
+        {
+            printf("\r\nHigh Priority Interrupt Executed\r\n");
+            /* Clear DED MSS_CTRL register*/
+            SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+            rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS);
+            printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+            /* Clear DED RAW MSS_CTRL register*/
+            SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+            rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW);
+            printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+        }else if(intSrc == SDL_ESM_INTR_LEVEL_R5SS0_CPU0_ECC_CORRECTED_LEVEL)
+        {
+            printf("\r\nHigh Priority Interrupt Executed\r\n");
+            /* Clear DED MSS_CTRL register*/
+            SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+            rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS);
+            printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+            /* Clear DED RAW MSS_CTRL register*/
+            SDL_REG32_WR(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+            rd_data = SDL_REG32_RD(SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW);
+            printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+        }
+#endif
+#if defined (R5F0_1_INPUTS)
+        if(intSrc == SDL_ESM_INTR_LEVEL_R5SS0_CPU1_ECC_CORRECTED_LEVEL)
+        {
+            printf("\r\nHigh Priority Interrupt Executed\r\n");
+            /* Clear DED MSS_CTRL register*/
+            SDL_REG32_WR(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_CPU1_ECC_CORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+            rd_data = SDL_REG32_RD(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_CPU1_ECC_CORR_ERRAGG_STATUS);
+            printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+            /* Clear DED RAW MSS_CTRL register*/
+            SDL_REG32_WR(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_CPU1_ECC_CORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+            rd_data = SDL_REG32_RD(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_CPU1_ECC_CORR_ERRAGG_STATUS_RAW);
+            printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+        }else if(intSrc == SDL_ESM_INTR_LEVEL_R5SS0_CPU1_ECC_UNCORRECTED_LEVEL)
+        {
+            printf("\r\nHigh Priority Interrupt Executed\r\n");
+            /* Clear DED MSS_CTRL register*/
+            SDL_REG32_WR(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_CPU1_ECC_UNCORR_ERRAGG_STATUS, SDL_CLEAR_STATUS);
+            rd_data = SDL_REG32_RD(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_CPU1_ECC_UNCORR_ERRAGG_STATUS);
+            printf("\r\nRead data of DED MSS_CTRL register is 0x%u\r\n",rd_data);
+            /* Clear DED RAW MSS_CTRL register*/
+            SDL_REG32_WR(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_CPU1_ECC_UNCORR_ERRAGG_STATUS_RAW, SDL_CLEAR_STATUS);
+            rd_data = SDL_REG32_RD(SDL_MSS_CTRL_U_BASE + SDL_MSS_CTRL_R5SS0_CPU1_ECC_UNCORR_ERRAGG_STATUS_RAW);
+            printf("\r\nRead data of DED RAW MSS_CTRL register is 0x%u\r\n",rd_data);
+        }
+#endif
     }
     else{
         printf("\r\nLow Priority Interrupt Executed\r\n");

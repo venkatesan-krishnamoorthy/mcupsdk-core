@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,7 +54,11 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-
+#if defined (R5F0_0_INPUTS)
+#define SDL_ECC_AGG_U_BASE SDL_ECC_AGG_R5SS0_CORE0_U_BASE
+#elif defined (R5F0_1_INPUTS)
+#define SDL_ECC_AGG_U_BASE SDL_ECC_AGG_R5SS0_CORE1_U_BASE
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -69,7 +73,7 @@
 
 static int32_t ECC_errNegativeTest(void)
 {
-    SDL_ecc_aggrRegs *pEccAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGG_R5SS0_CORE0_U_BASE));// R5 core
+    SDL_ecc_aggrRegs *pEccAggrRegs = ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_ECC_AGG_U_BASE));// R5 core
     SDL_Ecc_AggrEccRamErrorStatusInfo eccRamErrorStatus;
     SDL_Ecc_AggrErrorInfo eccErrorInfo;
     SDL_ECC_staticRegs eccStaticRegs;
@@ -1240,39 +1244,6 @@ static int32_t ECC_errNegativeTest(void)
     }
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        if (SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM, SDL_R5FSS1_CORE0_ATCM0, 0x7U) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
-    }
-	if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM, SDL_R5FSS1_CORE1_B1TCM1, 0x700000U) != SDL_PASS)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
-    }
-	if (testStatus == SDL_APP_TEST_PASS)
-    {
-        if (SDL_ECC_tcmParity(SDL_R5SS1_CPU0_TCM, 13U, 0x700000U) != SDL_EFAIL)
-        {
-            testStatus = SDL_APP_TEST_FAILED;
-        }
-    }
-    if (testStatus != SDL_APP_TEST_PASS)
-    {
-        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
-    }
-	if (testStatus == SDL_APP_TEST_PASS)
-    {
         if (SDL_ECC_tcmParity(2U, 13U, 0x700000U) != SDL_EFAIL)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -1313,6 +1284,23 @@ static int32_t ECC_errNegativeTest(void)
     {
         DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
     }
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_tpccParity(7u, 0x11u, SDL_PARAM_REG_1, 0x7u) == SDL_EFAIL)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("sdlEccAggr_negTest: failure on line no. %d \n", __LINE__);
+    }
+
+    SDL_ECC_enableTMUROMParity();
+    SDL_ECC_enableTMUROMParityForceError();
+    SDL_ECC_disableTMUROMParity();
+    SDL_ECC_disableTMUROMParityErrorForce();
+    SDL_ECC_clearTMUROMParityError();
 
     return (testStatus);
 }

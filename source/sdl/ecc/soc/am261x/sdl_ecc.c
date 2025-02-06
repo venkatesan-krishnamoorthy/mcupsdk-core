@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2022-2024
+ *  Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1134,8 +1134,7 @@ int32_t SDL_ECC_injectError(SDL_ECC_MemType eccMemType,
             }
             else
             {
-                if((eccMemType == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR)
-                   || (eccMemType == SDL_R5FSS1_CORE0_ECC_AGGR)|| (eccMemType == SDL_R5FSS1_CORE1_ECC_AGGR))
+                if((eccMemType == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR))
                 {
                     if((memSubType > 0x14U) && (memSubType < 0x17U))
                     {

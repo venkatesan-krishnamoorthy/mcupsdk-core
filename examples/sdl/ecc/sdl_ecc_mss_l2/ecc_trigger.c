@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -96,7 +96,7 @@
 #define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0x2u) /* Bank 2*/
 #endif
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x70100008u) /*MSS_L2_SLV2 address*/
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_SOC_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_ID
@@ -106,6 +106,18 @@
 #define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53000020u)
 #define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0xcu) /*Bank 3*/
 #endif
+
+#if defined (SOC_AM261X)
+#define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x70100008u) /*MSS_L2_SLV2 address*/
+#define SDL_EXAMPLE_ECC_AGGR                        SDL_SOC_ECC_AGGR
+#define SDL_EXAMPLE_ECC_RAM_ID                      SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_ID
+
+#define SDL_MSS_L2_MEM_INIT_ADDR                    (0x50D00330)
+#define SDL_MSS_L2_MEM_INIT_DONE_ADDR               (0x50D00334)
+#define SDL_ECC_AGGR_ERROR_STATUS1_ADDR             (0x53000020u)
+#define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0x6u) /*Bank 2*/
+#endif
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -122,7 +134,7 @@ static SDL_ECC_InitConfig_t ECC_Test_MSS_L2_ECCInitConfig =
     /**< Sub type list  */
 };
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 static uint32_t arg;
 
@@ -139,6 +151,37 @@ SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
     .errorpinBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
+};
+
+extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
+                                                   SDL_ESM_IntType esmIntType,
+                                                   uint32_t grpChannel,
+                                                   uint32_t index,
+                                                   uint32_t intSrc,
+                                                   void *arg);
+
+#endif
+
+#if defined (SOC_AM261X)
+
+static uint32_t arg;
+
+SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
+{
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x000000c0u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events enable: except clkstop events for unused clocks
+     *   and PCIE events */
+    /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x000000c0u, 0x000000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x000000c0u, 0x00000000u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */

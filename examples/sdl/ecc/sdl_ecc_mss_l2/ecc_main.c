@@ -130,7 +130,11 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
     /* Errata i2427  - Applicable for MSS-L2 and MBOX memories.*/
     /* Check if the callback API is called because of Single Bit Error. */
-    if(intSrc == 0x13U)
+#if defined (SOC_AM261X)
+    if(intSrc == SDL_ESM_INTR_LEVEL_SOC_ECCAGG_CORR_LEVEL)
+#else
+    if(intSrc == SDL_ESM0_ECC_AGGREGATOR_SOC_ECCAGG_CORR_LEVEL)
+#endif
     {
         /* SEC error for MSS-L2. */
         /* Check if the error address is configured as non-cacheble. */

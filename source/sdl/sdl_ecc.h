@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2022-2024
+ *  Copyright (c) Texas Instruments Incorporated 2022-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -74,7 +74,7 @@ extern "C" {
     @{
  *
  */
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 #define SDL_SOC_ECC_AGGR                                            (0U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR                                   (1U)
@@ -123,6 +123,37 @@ extern "C" {
 #define SDL_R5FSS1_CORE1_B1TCM1                                     (12U)
 /* TPCC */
 #define SDL_TPCC0                                                   (2)
+#endif
+
+#if defined(SOC_AM261X)
+#define SDL_SOC_ECC_AGGR                                            (0U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR                                   (1U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR                                   (2U)
+#define SDL_HSM_ECC_AGGR                                            (3U)
+#define SDL_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR                        (4U)
+#define SDL_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR                        (5U)
+#define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (6U)
+#define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (7U)
+#define SDL_CPSW3GCSS_ECC_AGGR                                      (8U)
+#define SDL_FSS_OSPI_RAM_ECC_AGGR                                   (9U)
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR                              (10U)
+#define SDL_OSPI1_RAM_ECC_AGGR                                      (11U)
+
+#define SDL_ECC_MEMTYPE_MAX                                         (SDL_OSPI1_RAM_ECC_AGGR + 1U)
+
+/* Parity */
+#define SDL_R5SS0_CPU0_TCM                                          (0U)
+/* SDL_R5SS0_CPU0_TCM */
+#define SDL_R5FSS0_CORE0_ATCM0                                      (1U)
+#define SDL_R5FSS0_CORE0_B0TCM0                                     (3U)
+#define SDL_R5FSS0_CORE0_B1TCM0                                     (5U)
+/* SDL_R5SS0_CPU10_TCM */
+#define SDL_R5FSS0_CORE1_ATCM1                                      (2U)
+#define SDL_R5FSS0_CORE1_B0TCM1                                     (4U)
+#define SDL_R5FSS0_CORE1_B1TCM1                                     (6U)
+/* TPCC */
+#define SDL_TPCC0                                                   (2)
+
 #endif
 
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
