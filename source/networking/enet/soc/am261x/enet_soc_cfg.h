@@ -144,7 +144,7 @@ extern "C" {
 #define ENET_CFG_CPSW_MACPORT_EST                   (ENET_ON)
 
 /*! \brief Cut-thru switching support. This feature is not supported by the hardware */
-#define ENET_CFG_CPSW_CUTTHRU                       (ENET_OFF)
+#define ENET_CFG_CPSW_CUTTHRU                       (ENET_ON)
 
 /*! \brief MDIO Clause-45 frame support. */
 #define ENET_CFG_MDIO_CLAUSE45                      (ENET_ON)
