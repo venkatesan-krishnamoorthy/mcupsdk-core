@@ -123,7 +123,7 @@ FLC_API_STS_t FLC_wasWriteError(FLC_RegionInfo * const regionInfo, uint32_t *sta
     {
         CSL_rl2_of_r5fss0_core0Regs *regs;
         regs = (CSL_rl2_of_r5fss0_core0Regs*)regionInfo->baseAddress;
-        *status = (regs->IRQSTATUS_RAW & CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_WR_ERR_MASK) >> CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_WR_HIT_SHIFT;
+        *status = (regs->IRQSTATUS_RAW & CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_WRERR_MASK) >> CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_WRERR_SHIFT;
     }
     return retStatus;
 }
@@ -206,7 +206,7 @@ FLC_API_STS_t FLC_enableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interru
         switch(intr)
         {
             case FLC_INTERRUPT_DONE:
-                regs->IRQENABLE_SET = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK;
+                regs->IRQENABLE_SET = CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_SET_EN_FLC_DON_MASK;
                 break;
             case FLC_INTERRUPT_WRITE_ERROR:
                 regs->IRQENABLE_SET = CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_SET_EN_FLC_WRERR_MASK;
@@ -266,7 +266,7 @@ FLC_API_STS_t FLC_disableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interr
         switch(intr)
         {
             case FLC_INTERRUPT_DONE:
-                regs->IRQENABLE_CLR = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK;
+                regs->IRQENABLE_CLR = CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_CLR_EN_FLC_DON_MASK;
                 break;
             case FLC_INTERRUPT_WRITE_ERROR:
                 regs->IRQENABLE_CLR = CSL_RL2_OF_R5FSS0_CORE0_IRQENABLE_CLR_EN_FLC_WRERR_MASK;
