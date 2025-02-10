@@ -132,8 +132,8 @@ extern uint32_t             gCANFDConfigNum;
  *  execution until the transaction has completed
  *
  *  In #CANFD_TRANSFER_MODE_CALLBACK #CANFD_write() does not block code
- *  execution and instead calls a #CANFD_TransferCallbackFxn callback function when the
- *  transaction has completed
+ *  execution and instead calls a #CANFD_TransferCallbackFxn callback function 
+ *  when the transaction has completed
  *
  *  @{
  */
@@ -164,7 +164,8 @@ extern uint32_t             gCANFDConfigNum;
 
 /**
  *  @{
- * \brief The section has a list of all the data structures which are exposed to the application
+ * \brief The section has a list of all the data structures which are exposed
+ *        to the application
  *
  */
 
@@ -308,7 +309,8 @@ typedef enum CANFD_MCANOperationMode_t
  *  \anchor   CANFD_Direction
  *  \name     CANFD Direction
  * 
- *  \brief    This enumeration defines the values used to set the direction of message object
+ *  \brief    This enumeration defines the values used to set the direction
+ *            of message object
  */
 typedef enum CANFD_Direction_t
 {
@@ -323,7 +325,8 @@ typedef enum CANFD_Direction_t
  *  \anchor   CANFD_MCANXidType
  *  \name     CANFD Identifier Type
  * 
- *  \brief    This enumeration defines the values used to represent the CAN Identifier Type
+ *  \brief    This enumeration defines the values used to represent the 
+ *            CAN Identifier Type
  */
 typedef enum CANFD_MCANXidType_t
 {
@@ -397,9 +400,9 @@ typedef enum CANFD_MCANLoopBackMode_t
     /*! This mode can be used for hot self-test and this mode will not affect bus state. */
     CANFD_MCANLoopBackMode_INTERNAL = 0U,
 
-    /*! In this mode, MCAN the MCAN treats its own transmitted messages as received messages
-     *  and stores them (if they pass acceptance filtering) into an Rx Buffer or an Rx FIFO.
-     *  This mode will affect bus state.
+    /*! In this mode, MCAN the MCAN treats its own transmitted messages 
+     *  as received messages and stores them (if they pass acceptance filtering) 
+     *  into an Rx Buffer or an Rx FIFO. This mode will affect bus state.
      */
     CANFD_MCANLoopBackMode_EXTERNAL = 1U
 }CANFD_MCANLoopBackMode;
@@ -474,9 +477,9 @@ typedef enum CANFD_MCANErrCode_t
      */
     CANFD_MCANErrCode_CRC_ERROR = 6U,
 
-    /*! Any read access to the Protocol Status Register re-initializes the LEC to 7.
-     * When the LEC shows the value 7, no CANFD bus event was detected since the last
-     * CPU read access to the Protocol Status Register.
+    /*! Any read access to the Protocol Status Register re-initializes the
+     *   LEC to 7. When the LEC shows the value 7, no CANFD bus event was 
+     *   detected since the last CPU read access to the Protocol Status Register.
      */
     CANFD_MCANErrCode_NO_CHANGE = 7U
 }CANFD_MCANErrCode;
@@ -485,13 +488,14 @@ typedef enum CANFD_MCANErrCode_t
  *  \anchor CANFD_Reason
  *  \name   CANFD reason
  *
- *  \brief  This enumeration describes a list of all the reasons for which the driver will
- *          invoke application callback functions.
+ *  \brief  This enumeration describes a list of all the reasons for which
+ *          the driver will invoke application callback functions.   
  */
 typedef enum CANFD_Reason_t
 {
     /**
-     * \brief  Data has been received and the application is required to read and process the data.
+     * \brief  Data has been received and the application is required to 
+     *         read and process the data.
      */
     CANFD_Reason_RX                         = 0x1,
 
@@ -540,22 +544,26 @@ typedef enum CANFD_Option_t
     /*! Used to get the MCAN Tx and Rx error counters
      * @sa CANFD_getOptions
      *
-     * NOTE: The length in the TLV should be sizeof(CANFD_MCANErrCntStatus) for this option.
+     * NOTE: The length in the TLV should be sizeof(CANFD_MCANErrCntStatus) 
+     *       for this option.
      */
     CANFD_Option_MCAN_ERROR_COUNTER,
 
     /*! Used to get the MCAN protocol status
      * @sa CANFD_getOptions
      *
-     * NOTE: The length in the TLV should be sizeof(CANFD_MCANProtocolStatus) for this option.
+     * NOTE: The length in the TLV should be sizeof(CANFD_MCANProtocolStatus) 
+     *       for this option.
      */
     CANFD_Option_MCAN_PROTOCOL_STATUS,
 
     /*! Used to get the MCAN message object software maintained statistics
      * @sa CANFD_getOptions
      *
-     * NOTE: The length in the TLV should be sizeof(CANFD_MCANMsgObjectStats) for this option.
-     *      Application must fill in the message object handle for which the statistics is requested.
+     * NOTE: The length in the TLV should be sizeof(CANFD_MCANMsgObjectStats)
+     *       for this option.
+     *       Application must fill in the message object handle for which the 
+     *       statistics is requested.
      *
      */
     CANFD_Option_MCAN_MSG_OBJECT_STATS,
@@ -571,7 +579,8 @@ typedef enum CANFD_Option_t
     /*! Used to enable or disable internal/external loopback mode
      * @sa CANFD_setOptions
      *
-     * NOTE: The length in the TLV should be sizeof(CANFD_MCANLoopbackCfgParams) for this option.
+     * NOTE: The length in the TLV should be sizeof(CANFD_MCANLoopbackCfgParams)
+     *       for this option.
      *
      */
     CANFD_Option_MCAN_LOOPBACK,
@@ -1057,6 +1066,11 @@ typedef struct CANFD_Attrs_s
     uint32_t         rxMemType;
 
     /**
+     * \brief   FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).
+     */
+    uint32_t               fifoNum;
+
+    /**
      * \brief    void pointer to #MCAN_ExtMsgIDFilterElement or 
      *           #MCAN_StdMsgIDFilterElement structure. It will point 
      *            to any of the two structure based on fdMode. 
@@ -1109,7 +1123,8 @@ typedef void (*CANFD_TransferCallbackFxn) (void *args, CANFD_Reason reason);
  *  \param reason          Cause of the interrupt which prompted the callback.
  *  \param errStatusResp   Erros status Response
  */
-typedef void (*CANFD_ErrorCallbackFxn) (void *args, CANFD_Reason reason, CANFD_ErrStatusResp* errStatusResp);
+typedef void (*CANFD_ErrorCallbackFxn) (void *args, CANFD_Reason reason, 
+                          CANFD_ErrStatusResp* errStatusResp);
 
 
 /**
@@ -1423,6 +1438,9 @@ typedef struct CANFD_Object_t
     /**< Interrupt object */
     HwiP_Object             hwiObj1;
 
+    /* Revision ID and Core Release Info */
+    MCAN_RevisionId         revId;
+
 }CANFD_Object;
 
 /**
@@ -1508,13 +1526,13 @@ typedef struct CANFD_MessageObject_t
 {
     /**
      * \brief   Starting range of the Message Id to which the configuration belongs.
-     * For Tx and single Message Id objects the startMsgId = endMsgId.
+     *          For Tx and single Message Id objects the startMsgId = endMsgId.
      */
     uint32_t                startMsgId;
 
     /**
      * \brief   Ending range of the Message Id to which the configuration belongs
-     * For Tx and single Message Id objects the startMsgId = endMsgId.
+     *          For Tx and single Message Id objects the startMsgId = endMsgId.
      */
     uint32_t                endMsgId;
 
@@ -1555,17 +1573,19 @@ typedef struct CANFD_MessageObject_t
     uint32_t                rxElement;
 
     /**
-     * \brief   Part of message ram to accessed by this message object. Refer enum #MCAN_MemType.
+     * \brief   Part of message ram to accessed by this message object. 
+     *          Refer enum #MCAN_MemType.
      */
     MCAN_MemType            txMemType;
 
     /**
-     * \brief   Part of message ram to accessed by this message object. Refer enum #MCAN_MemType.
+     * \brief   Part of message ram to accessed by this message object. 
+     *          Refer enum #MCAN_MemType.
      */
     MCAN_MemType            rxMemType;
 
     /**
-     * \brief   FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_0).
+     * \brief   FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).
      */
     uint32_t               fifoNum;
 
@@ -1624,11 +1644,15 @@ typedef struct CANFD_MCANMsgObjectStats_t
     uint32_t                direction;
 
     /*! Starting range of the Message Id to which the configuration belongs.
-     * For Tx and single Message Id objects the startMsgIdentifier = endMsgIdentifier */
+     * For Tx and single Message Id objects the 
+     * startMsgIdentifier = endMsgIdentifier 
+     */
     uint32_t                startMsgIdentifier;
 
     /*! Ending range of the Message Id to which the configuration belongs
-     * For Tx and single Message Id objects the startMsgIdentifier = endMsgIdentifier. */
+     *  For Tx and single Message Id objects the 
+     *  startMsgIdentifier = endMsgIdentifier. 
+     */
     uint32_t                endMsgIdentifier;
 
     /*! Number of interrupts received */
@@ -1642,14 +1666,17 @@ typedef struct CANFD_MCANMsgObjectStats_t
  *  \anchor CANFD_DmaConfig
  *  \name   CANFD Dma Config 
  * 
- * \brief CANFD DMA Configuration, these are filled by SysCfg based on the DMA driver(EDMA/UDMA) that is selected
+ * \brief CANFD DMA Configuration, these are filled by SysCfg based on the
+ *        DMA driver(EDMA/UDMA) that is selected
  */
 typedef struct CANFD_DmaConfig_s
 {
 	void          *canfdDmaArgs;
-	/* Arguments specific to a DMA driver. This will be typecasted to the specific DMA driver args struct
-	 * when used by the appropriate callback. This struct will be defined in the specific DMA driver header file.
-	 * Allocation of this struct will be done statically using Sysconfig code generation in the example code
+	/* Arguments specific to a DMA driver. This will be typecasted to the  
+	 * specific DMA driver args structwhen used by the appropriate callback. 
+	 * This struct will be defined in the specific DMA driver header file. 
+     * Allocation of this struct will be done statically using Sysconfig 
+     * code generation in the example code
 	 */
 } CANFD_DmaConfig;
 
@@ -1705,10 +1732,11 @@ int32_t CANFD_configBitTime(CANFD_Handle handle, const CANFD_MCANBitTimingParams
 /**
  *  \brief
  *      Function configures the receive or transmit message object.
- *      It also enables Tx completion and Tx cancelation interrupts .
- *      The callback function will be invoked on data transmit complete for transmit message objects
- *      OR
- *      upon receiving data for receive message objects. The application MUST then call CANFD_read() API to process the received data.
+ *      It also enables Tx completion and Tx cancelation interrupts.
+ *      The callback function will be invoked on data transmit complete
+ *      for transmit message objects OR upon receiving data for receive
+ *      message objects. The application MUST then call CANFD_read() API 
+ *      to process the received data.
  *
  *  \param  handle
  *      Handle to the CANFD Driver
@@ -1719,7 +1747,8 @@ int32_t CANFD_configBitTime(CANFD_Handle handle, const CANFD_MCANBitTimingParams
  *  \return
  *      Error   -   NULL
  */
-int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMsgObj);
+int32_t CANFD_createMsgObject(CANFD_Handle handle, 
+                              CANFD_MessageObject* ptrCanMsgObj);
 
 /**
  *   \brief
@@ -1737,7 +1766,8 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMs
  *  \return
  *      Error   -   NULL
  */
-int32_t CANFD_createRxRangeMsgObject(CANFD_Handle handle, CANFD_MessageObject* ptrCanMsgObj);
+int32_t CANFD_createRxRangeMsgObject(CANFD_Handle handle, 
+                                     CANFD_MessageObject* ptrCanMsgObj);
 
 /**
  *   \brief
@@ -1769,7 +1799,9 @@ int32_t CANFD_deleteMsgObject(CANFD_MsgObjHandle handle);
  *  \return SystemP_SUCCESS on success, else failure
  * 
  */
-int32_t CANFD_write(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const uint8_t* data);
+int32_t CANFD_write(CANFD_MsgObjHandle handle, uint32_t id, 
+                    CANFD_MCANFrameType frameType, uint32_t numMsgs, 
+                    const uint8_t* data);
 
 /**
  *   \brief
@@ -1806,7 +1838,9 @@ int32_t CANFD_writeCancel(CANFD_MsgObjHandle handle);
  *  \return SystemP_SUCCESS on success, else failure 
  * 
  */
-int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameType frameType, uint32_t numMsgs, const void* data);
+int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, 
+                       CANFD_MCANFrameType frameType, 
+                       uint32_t numMsgs, const void* data);
 
 /**
  *   \brief
@@ -1827,18 +1861,21 @@ uint32_t CANFD_getFilterEventConfig(uint32_t eventNum);
 
 /**
  *   \brief
+ *      Function is used by the application to get the CAN message from message
+ *      RAM using a receive message object.
+ *      NOTE: This API must ONLY be called from the callback context.
  *      Function is used by the application to get the CAN message from message RAM using a receive message object.
  *
- *  \param  handle
+ *  \param  rxMsgHandle
  *      Handle to the message object
  *  \param  numMsgs
  *      Number of message count. Applicale only for DMA Mode, for other modes, provide 0.
  *  \param  data
- *      Received data.
+ *      Pointer to the receiver's buffer, where read data will be stored.
  *  \return SystemP_SUCCESS on success, else failure
  * 
  */
-int32_t CANFD_read(CANFD_MsgObjHandle handle, uint32_t numMsgs, uint8_t* data);
+int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t numMsgs, uint8_t* data);
 
 /**
  *   \brief
@@ -1901,7 +1938,8 @@ void CANFD_int1Isr (void *args);
  * specified message object.
  *
  *  \param  args
- *      void pointer basically Message object handle for which the callback function is invoked.
+ *      void pointer basically Message object handle for which the 
+ *      callback function is invoked.
  *  \param  reason
  *      Cause of the interrupt which prompted the callback.
  */
@@ -1917,15 +1955,18 @@ void CANFD_transferCallBack(void *args, CANFD_Reason reason);
  *  \param  reason
  *      Cause of the interrupt which prompted the callback.
  *  \param  errStatusResp
- *      Response structure populated with the value of the fields that caused the error or status interrupt.
- *      Processing of this structure is dependent on the callback reason.
+ *      Response structure populated with the value of the fields that caused
+ *      the error or status interrupt. Processing of this structure is dependent
+ *      on the callback reason.
  */
-void CANFD_errStatusCallBack(CANFD_Handle handle, CANFD_Reason reason, CANFD_ErrStatusResp* errStatusResp);
+void CANFD_errStatusCallBack(CANFD_Handle handle, CANFD_Reason reason, 
+                             CANFD_ErrStatusResp* errStatusResp);
 
 /**
  * \brief API to open an CANFD DMA channel
  *
- * This API will open a DMA Channel using the appropriate DMA driver callbacks and the registered via Sysconfig
+ *  This API will open a DMA Channel using the appropriate DMA driver callbacks and
+ *  the registered via Sysconfig
  *
  * \param canfdHandle    CANFD Handle
  * \param dmaChCfg       CANFD Channel config
@@ -1944,24 +1985,28 @@ int32_t CANFD_dmaOpen(CANFD_Handle canfdHandle, CANFD_DmaChConfig dmaChCfg);
 int32_t CANFD_dmaClose(CANFD_Handle canfdHandle);
 
 /**
- * \brief API to configure dma for the Tx message object. Called from the API CANFD_createMsgObject.
+ * \brief API to configure dma for the Tx message object. Called from the 
+ *        API CANFD_createMsgObject.
  *
  * \param ptrCanFdObj   pointer to the CANFD driver object
  * \param ptrCanMsgObj  pointer to the CANFD message object
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t CANFD_createDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_MessageObject* ptrCanMsgObj);
+int32_t CANFD_createDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, 
+                                   CANFD_MessageObject* ptrCanMsgObj);
 
 /**
- * \brief API to delete dma configuration for the Tx message object. Called from the API CANFD_deleteMsgObject.
+ * \brief API to delete dma configuration for the Tx message object. Called 
+ *        from the API CANFD_deleteMsgObject.
  *
  * \param ptrCanFdObj   pointer to the CANFD driver object
  * \param ptrCanMsgObj  pointer to the CANFD message object
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t CANFD_deleteDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_MessageObject* ptrCanMsgObj);
+int32_t CANFD_deleteDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, 
+                            const CANFD_MessageObject* ptrCanMsgObj);
 
 /**
  * \brief API to enable dma event transfer for the Tx. Called from the API CANFD_writeDma.
@@ -1974,7 +2019,9 @@ int32_t CANFD_deleteDmaTxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObject* ptrCanMsgObj, uint32_t dataLengthPerMsg, uint32_t numMsgs, const void* data);
+int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, 
+                    CANFD_MessageObject* ptrCanMsgObj, uint32_t dataLengthPerMsg, 
+                    uint32_t numMsgs, const void* data);
 
 /**
  * \brief API to disbale dma event transfer for the Tx to cancel the transfer.
@@ -1984,41 +2031,48 @@ int32_t CANFD_configureDmaTx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObjec
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t CANFD_cancelDmaTx(const CANFD_Object *ptrCanFdObj, const CANFD_MessageObject* ptrCanMsgObj);
+int32_t CANFD_cancelDmaTx(const CANFD_Object *ptrCanFdObj, 
+                const CANFD_MessageObject* ptrCanMsgObj);
 
 /**
  * \brief Callback function for the Tx completion.
- *        This is called for each message in the array of msgs provided in CANFD_configureDmaTx.
- *        data will point to the current transmitted message.
- *        For intermediate message transfer completion the completionType will be set to CANFD_DMA_TX_COMPLETION_INTERMEDIATE
- *        for last message transfer completion the completionType will be set to CANFD_DMA_TX_COMPLETION_FINAL
+ *        This is called for each message in the array of msgs provided in 
+ *        CANFD_configureDmaTx. Data will point to the current transmitted message.
+ *        For intermediate message transfer completion the completionType will be 
+ *        set to CANFD_DMA_TX_COMPLETION_INTERMEDIATE for last message transfer 
+ *        completion the completionType will be set to CANFD_DMA_TX_COMPLETION_FINAL
  *
  * \param ptrCanMsgObj    pointer to the CANFD message object
  * \param data            pointer to current completed message
  * \param completionType  specifie completion type for the callback
  *
  */
-void CANFD_dmaTxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, const void *data, uint32_t completionType);
+void CANFD_dmaTxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, 
+                const void *data, uint32_t completionType);
 
 /**
- * \brief API to configure dma for the Rx message object. Called from the CANFD_createMsgObject.
+ * \brief API to configure dma for the Rx message object. Called from
+ *        the CANFD_createMsgObject.
  *
  * \param ptrCanFdObj   pointer to the CANFD driver object
  * \param ptrCanMsgObj  pointer to the CANFD message object
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t CANFD_createDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, CANFD_MessageObject* ptrCanMsgObj);
+int32_t CANFD_createDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, 
+                CANFD_MessageObject* ptrCanMsgObj);
 
 /**
- * \brief API to delete dma configuration for the Rx message object. Called from the CANFD_deleteMsgObject.
+ * \brief API to delete dma configuration for the Rx message object. Called 
+ *        from the CANFD_deleteMsgObject.
  *
  * \param ptrCanFdObj   pointer to the CANFD driver object
  * \param ptrCanMsgObj  pointer to the CANFD message object
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t CANFD_deleteDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_MessageObject* ptrCanMsgObj);
+int32_t CANFD_deleteDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, 
+                                   const CANFD_MessageObject* ptrCanMsgObj);
 
 /**
  * \brief API to enable dma event transfer for the Rx. Called from the API CANFD_readDma.
@@ -2030,25 +2084,30 @@ int32_t CANFD_deleteDmaRxMsgObject(const CANFD_Object *ptrCanFdObj, const CANFD_
  * \param data              pointer to the data buffer to transmit
  *
  */
-int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj, CANFD_MessageObject* ptrCanMsgObj, uint32_t dataLengthPerMsg, uint32_t numMsgs, const void* data);
+int32_t CANFD_configureDmaRx(const CANFD_Object *ptrCanFdObj, 
+                             CANFD_MessageObject* ptrCanMsgObj, 
+                             uint32_t dataLengthPerMsg, uint32_t numMsgs, 
+                             const void* data);
 
 /**
  * \brief Callback function for the Rx completion.
- *        This is called for each message in the array of msgs provided in CANFD_configureDmaRx.
- *        data will point to the current received message.
- *        For intermediate message transfer completion the completionType will be set to CANFD_DMA_RX_COMPLETION_INTERMEDIATE
- *        for last message transfer completion the completionType will be set to CANFD_DMA_RX_COMPLETION_FINAL
+ *        This is called for each message in the array of msgs provided in 
+ *        CANFD_configureDmaRx. Data will point to the current received message.
+ *        For intermediate message transfer completion the completionType will be 
+ *        set to CANFD_DMA_RX_COMPLETION_INTERMEDIATE for last message transfer 
+ *        completion the completionType will be set to CANFD_DMA_RX_COMPLETION_FINAL
  *
  * \param ptrCanMsgObj    pointer to the CANFD message object
  * \param data            pointer to current recieved message
  * \param completionType  specifie completion type for the callback
  *
  */
-void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, const void *data, uint32_t completionType);
+void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, const void *data, 
+                                   uint32_t completionType);
 
 
 /**
- * \brief Function to verify the the data Size is valid or not.
+ * \brief Function to validate the data Size.
  *
  * \param dataSize  CANFD data Size
  * \return SystemP_SUCCESS on success, else failure

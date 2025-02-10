@@ -435,8 +435,7 @@ static uint32_t MCAN_SsAddr(uint32_t baseAddr)
     return ((uint32_t) mcanSsAddr);
 }
 
-static uint32_t MCAN_CfgAddr(uint32_t baseAddr);
-static uint32_t MCAN_CfgAddr(uint32_t baseAddr)
+uint32_t MCAN_CfgAddr(uint32_t baseAddr)
 {
     int64_t mcanCfgAddr = (int64_t)NULL;
     const MCAN_OffsetAddr *offsetAddr = MCAN_getOffsetAddr(baseAddr);

@@ -2658,6 +2658,15 @@ void MCAN_initMsgRamConfigParams(MCAN_MsgRAMConfigParams
 int32_t MCAN_calcMsgRamParamsStartAddr(MCAN_MsgRAMConfigParams
                                        *msgRAMConfigParams);
 
+/**
+ * \brief   This API will calculate configure addresses register for the
+ *          MCAN module.
+ * \param   baseAddr       Base Address of mcan module
+ *
+ * \return  status         Address calculation status.
+ */
+uint32_t MCAN_CfgAddr(uint32_t baseAddr);
+
 #ifdef __cplusplus
 }
 
