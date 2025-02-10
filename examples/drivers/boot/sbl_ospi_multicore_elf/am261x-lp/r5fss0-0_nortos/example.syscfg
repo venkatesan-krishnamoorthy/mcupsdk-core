@@ -49,7 +49,7 @@ pmic1.$name = "CONFIG_PMIC0";
 pmic1.name  = "TPS65036xx";
 
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset = "0x00080000";
+bootloader1.appImageOffset = "0x00081000";
 
 bootloader1.flashDriver                   = flash1;
 flash1.$name                              = "CONFIG_FLASH0";

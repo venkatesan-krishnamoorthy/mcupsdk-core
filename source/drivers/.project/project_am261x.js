@@ -29,14 +29,15 @@ const files_r5f = {
 		"eqep.c",
         "etpwm.c",
 		"flc.c",
-        // "flsopskd_v0.c",
-        // "fota_fw_arr.c",
+        "flsopskd_v0.c",
+        "fota_fw_arr.c",
+		"fota_agent.c",
 		"fsi_rx.c",
 		"fsi_tx.c",
 		"fsi_rx_hld.c",
 		"fsi_tx_hld.c",
 		"fsi_dma_edma.c",
-		// "fss_v0.c",
+		"fss_v0.c",
 		"gpio.c",
 		// "gpmc_v0.c",
         // "gpmc_priv_v0.c",
@@ -82,6 +83,7 @@ const files_r5f = {
 		"watchdog_rti.c",
 		"watchdog_soc.c",
 		"xmodem.c",
+		"fota_agent.c"
 	],
 };
 
@@ -144,6 +146,9 @@ const filedirs = {
 		"watchdog/v0",
         "optiflash/v0/flc",
         "optiflash/v0/rl2",
+		"flsopskd/v0",
+		"fota_agent",
+		"fss/v0"
 	],
 };
 

@@ -41,6 +41,7 @@ help:
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -C ../examples/drivers/fss/fss_switch_b/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
@@ -78,10 +79,10 @@ help:
 	@echo  $(MAKE) -s -C kernel/dpl/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/optiflash/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/optiflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/optiflash/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/optiflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/common/DebugP_log/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -175,6 +176,7 @@ help:
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
+	@echo  $(MAKE) -s -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_notify/am261x-som/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_notify/am261x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am261x-som/system_freertos [all clean syscfg-gui syscfg]
@@ -266,6 +268,7 @@ $(BUILD_COMBO_SCRUB_doxy_samples):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eeprom_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eeprom_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_flash_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -299,10 +302,10 @@ BUILD_COMBO_EXAMPLE_ALL += test_dpl_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dpl_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dpl_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dpl_am261x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_AddrTranslateP_null_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_AddrTranslateP_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_ClockP_nortos_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_ClockP_nortos_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_DebugP_log_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -393,6 +396,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 
 # Various System Example Targets
+BUILD_COMBO_EXAMPLE_ALL += flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am261x-som_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am261x-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am261x-som_system_freertos
@@ -418,6 +422,9 @@ examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C ../examples/drivers/fss/fss_switch_b/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
@@ -530,17 +537,17 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_dpl_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C kernel/dpl/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C drivers/optiflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
- test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C drivers/optiflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
  dpl_ut_AddrTranslateP_null_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  dpl_ut_AddrTranslateP_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/optiflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/optiflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  dpl_ut_ClockP_nortos_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -812,6 +819,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile all
+
  test_ipc_notify_am261x-som_system_freertos_nortos:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile all
 
@@ -839,6 +849,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -872,10 +883,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am261x-som_r5fss0-0_nortos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_AddrTranslateP_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_AddrTranslateP_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_ClockP_nortos_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_ClockP_nortos_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_DebugP_log_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -965,6 +976,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_hmac_sha_am261x-lp_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am261x-som_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am261x-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am261x-som_system_freertos_clean
@@ -986,6 +998,9 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += switch_am261x-lp_icss_m0_pru1_fw_ti-pru
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../examples/drivers/fss/fss_switch_b/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
@@ -1098,17 +1113,17 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_dpl_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C kernel/dpl/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/optiflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
- test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/optiflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
  dpl_ut_AddrTranslateP_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  dpl_ut_AddrTranslateP_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/optiflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/optiflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  dpl_ut_ClockP_nortos_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1380,6 +1395,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_clean:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile clean
+
  test_ipc_notify_am261x-som_system_freertos_nortos_clean:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile clean
 
@@ -1407,6 +1425,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1440,10 +1459,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am261x-som_r5fss0-0_nortos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_AddrTranslateP_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_AddrTranslateP_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_ClockP_nortos_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_ClockP_nortos_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_DebugP_log_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1533,6 +1552,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_hmac_sha_am261x-lp_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_sha_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dthe_sha_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am261x-som_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am261x-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am261x-som_system_freertos_scrub
@@ -1554,6 +1574,9 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += switch_am261x-lp_icss_m0_pru1_fw_ti-pru
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C ../examples/drivers/fss/fss_switch_b/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
@@ -1666,17 +1689,17 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_dpl_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C kernel/dpl/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
- test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/optiflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
- test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/optiflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
  dpl_ut_AddrTranslateP_null_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  dpl_ut_AddrTranslateP_null_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/AddrTranslateP_null/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_optiflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/optiflash/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_optiflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/optiflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  dpl_ut_ClockP_nortos_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C kernel/dpl/dpl_ut/nortos/common/ClockP_nortos/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -1947,6 +1970,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_scrub:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile scrub
 
  test_ipc_notify_am261x-som_system_freertos_nortos_scrub:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile scrub

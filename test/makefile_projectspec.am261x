@@ -1,9 +1,11 @@
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -16,6 +18,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += switch_am261x-lp_icss_m0_pr
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
 
 all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
+
+ switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C ../examples/drivers/fss/fss_switch_b/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
@@ -35,13 +40,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_build:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile_projectspec all
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 # Various Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -54,6 +64,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += switch_am261x-lp_icss_m0_pr
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
 
 clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
+
+ switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C ../examples/drivers/fss/fss_switch_b/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
@@ -73,13 +86,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_clean:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile_projectspec clean
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 # Various Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -92,6 +110,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += switch_am261x-lp_icss_m0_p
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
 
 export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+ switch_to_b_image_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C ../examples/drivers/fss/fss_switch_b/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  dual_emac_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
@@ -110,6 +131,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  flasher_jtag_uniflash_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_export:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile_projectspec export
 
 
 
@@ -131,6 +155,7 @@ help:
 	@echo  .
 	@echo  Example ProjectSpec build targets,
 	@echo  ==================================
+	@echo  $(MAKE) -s -C ../examples/drivers/fss/fss_switch_b/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
@@ -140,6 +165,7 @@ help:
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
+	@echo  $(MAKE) -s -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private

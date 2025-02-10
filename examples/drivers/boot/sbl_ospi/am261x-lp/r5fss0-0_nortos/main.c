@@ -79,6 +79,20 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
+
+int32_t enable_flash_dac_phy()
+{
+    int32_t status = SystemP_SUCCESS;
+    /* enable Phy and Phy pipeline for XIP execution */
+    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+    {
+        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+    }
+    status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
+    return status;
+}
+
 int main(void)
 {
     int32_t status;
@@ -146,17 +160,7 @@ int main(void)
             if (status == SystemP_SUCCESS)
             {
                 /* enable Phy and Phy pipeline for XIP execution */
-                if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
-                {
-                    status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
-                    DebugP_assert(status == SystemP_SUCCESS);
-
-                    status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
-                    DebugP_assert(status == SystemP_SUCCESS);
-
-                    status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
-                    DebugP_assert(status == SystemP_SUCCESS);
-                }
+                DebugP_assert(enable_flash_dac_phy() == SystemP_SUCCESS);
             }
 
             /* Run CPUs */
@@ -177,17 +181,7 @@ int main(void)
                         enable Phy and Phy pipeline for XIP execution
                         again because those would be disabled by Bootloader_rprcImageLoad
                     */
-                    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
-                    {
-                        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-
-                        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-
-                        status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-                    }
+                    DebugP_assert(enable_flash_dac_phy() == SystemP_SUCCESS);
                 }
                 if(status == SystemP_SUCCESS)
                 {

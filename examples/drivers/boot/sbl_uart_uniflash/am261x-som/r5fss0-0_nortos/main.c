@@ -40,6 +40,8 @@
 #include <drivers/bootloader/bootloader_xmodem.h>
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
+#define BOOTLOADER_UNIFLASH_FLASH_REMAP     (0xABCDABCD)
+
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x140000) /* This has to match the size of MSRAM1 section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
@@ -109,7 +111,22 @@ int main(void)
             uniflashConfig.verifyBufSize = BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE;
 
             /* Process the flash commands and return a response */
-            Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
+            Bootloader_UniflashFileHeader fileHeader;
+            memcpy(&fileHeader, uniflashConfig.buf, sizeof(Bootloader_UniflashFileHeader));
+
+            if((fileHeader.magicNumber == BOOTLOADER_UNIFLASH_FILE_HEADER_MAGIC_NUMBER) && (fileHeader.rsv1 == BOOTLOADER_UNIFLASH_FLASH_REMAP))
+            {
+                gFlashConfig[uniflashConfig.flashIndex].rwOffset = (Flash_getAttrs(uniflashConfig.flashIndex)->flashSize)/2;
+                /* Process the flash commands and return a response */
+                Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);
+                /* Reset the flash rw offset to 0 */
+                gFlashConfig[uniflashConfig.flashIndex].rwOffset = 0;
+            }
+            else
+            {
+                /* Process the flash commands and return a response */
+                Bootloader_uniflashProcessFlashCommands(&uniflashConfig, &respHeader);            
+            }
 
             status = Bootloader_xmodemTransmit(CONFIG_UART0, (uint8_t *)&respHeader, sizeof(Bootloader_UniflashResponseHeader));
         }

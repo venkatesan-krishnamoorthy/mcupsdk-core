@@ -155,6 +155,20 @@ uint32_t get_Hsmrt_size()
     return (hsmrt_image_Size + hsmrt_Cert_Len);
 }
 %}
+
+int32_t enable_flash_dac_phy()
+{
+    int32_t status = SystemP_SUCCESS;
+    /* enable Phy and Phy pipeline for XIP execution */
+    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+    {
+        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+    }
+    status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
+    return status;
+}
+
 int main(void)
 {
     int32_t status;
@@ -253,6 +267,7 @@ int main(void)
 			volatile uint8_t bootrgn;
             bootinfo_sector_t *bootinfo;
             Flash_Attrs *flashAttr = Flash_getAttrs(CONFIG_FLASH0);
+            DebugP_assert(enable_flash_dac_phy() == SystemP_SUCCESS);
             bootinfo = (bootinfo_sector_t *)__TI_SBL_FLASH_BOOTINFO_SECTOR_START;
             fssConf.extFlashSize = flashAttr->flashSize;
             /*
@@ -282,6 +297,7 @@ int main(void)
             */
             if(status == SystemP_FAILURE)
             {
+                DebugP_assert(enable_flash_dac_phy() == SystemP_SUCCESS);
                 if (bootrgn == BOOT_REGION_B)
                 {
                     FSS_selectRegionA((FSS_Handle)&fssConf);
@@ -329,6 +345,7 @@ int main(void)
             */
             if(status == SystemP_FAILURE)
             {
+                DebugP_assert(enable_flash_dac_phy() == SystemP_SUCCESS);
                 if (bootrgn == BOOT_REGION_B)
                 {
                     FSS_selectRegionA((FSS_Handle)&fssConf);
@@ -349,17 +366,7 @@ int main(void)
             if (status == SystemP_SUCCESS)
             {
                 /* enable Phy and Phy pipeline for XIP execution */
-                if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
-                {
-                    status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
-                    DebugP_assert(status == SystemP_SUCCESS);
-
-                    status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
-                    DebugP_assert(status == SystemP_SUCCESS);
-
-                    status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
-                    DebugP_assert(status == SystemP_SUCCESS);
-                }
+                DebugP_assert(enable_flash_dac_phy() == SystemP_SUCCESS);
             }
 
             /* Run CPUs */
@@ -382,17 +389,7 @@ int main(void)
                         enable Phy and Phy pipeline for XIP execution
                         again because those would be disabled by Bootloader_rprcImageLoad
                     */
-                    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
-                    {
-                        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-
-                        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-
-                        status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-                    }
+                    DebugP_assert(enable_flash_dac_phy() == SystemP_SUCCESS);
                 }
 %if(enableFastBoot === false){
                 if(status == SystemP_SUCCESS)

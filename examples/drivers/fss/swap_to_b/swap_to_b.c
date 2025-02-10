@@ -37,11 +37,24 @@
 #include <drivers/ospi.h>
 
 #define APP_OSPI_FLASH_OFFSET_REIGON_A  (0x200000U)
-#define APP_OSPI_FLASH_OFFSET_REIGON_B  (0x1200000U)
+#define APP_OSPI_FLASH_OFFSET_REIGON_B  (0x600000U)
 #define BUFFER_DATA_SIZE (4096)
 
 uint8_t gTxBuff[BUFFER_DATA_SIZE] __attribute__((aligned(4096U))) = {0};
 uint8_t gRxBuf[BUFFER_DATA_SIZE] __attribute__((aligned(4096U))) = {0};
+
+int32_t enable_flash_dac_phy()
+{
+    int32_t status = SystemP_SUCCESS;
+    /* enable Phy and Phy pipeline for XIP execution */
+    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+    {
+        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+    }
+    status = OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
+    return status;
+}
 
 /*
     This example: 
@@ -61,7 +74,7 @@ void swap_main(void *args)
     Drivers_open();
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
-
+    
     for(uint32_t i = 0U; i < BUFFER_DATA_SIZE; i++)
     {
         gTxBuff[i] = i % 256;
@@ -69,8 +82,8 @@ void swap_main(void *args)
     }
 
     /*
-        Assume that flash address from 0 to 16MB is region A
-        and 16MB to 32MB is region B. Following program will
+        Assume that flash address from 0 to 4MB is region A
+        and 4MB to 8MB is region B. Following program will
         write the buffer in region B.
     */
 
@@ -95,6 +108,7 @@ void swap_main(void *args)
             /*
                 Now using Bootseg IP, will switch A and B.
             */
+            enable_flash_dac_phy();
             fssConf.ipBaseAddress = CSL_MSS_CTRL_U_BASE;
             fssConf.extFlashSize = flashAttr->flashSize;
             FSS_selectRegionB((FSS_Handle)&fssConf);
