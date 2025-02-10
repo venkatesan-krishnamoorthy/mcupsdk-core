@@ -3136,3 +3136,277 @@ void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj,
     
     return;
 }
+
+/* This function return endianness value of MCAN module. */
+int32_t CANFD_getEndianVal(CANFD_Handle canfdHandle)
+{
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+    int32_t       endVal = 0;
+
+    if(canfdHandle != NULL)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+
+        endVal = MCAN_getEndianVal(baseAddr);
+    }
+
+    return endVal;
+}
+
+/* This API is used get the MCAN revision ID. */
+void CANFD_getRevisionId(CANFD_Handle canfdHandle)
+{
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+
+    DebugP_assert(NULL_PTR != canfdHandle);
+    config      = (CANFD_Config*) canfdHandle;
+    ptrCanFdObj = (CANFD_Object*) config->object;
+    DebugP_assert(NULL_PTR != ptrCanFdObj);
+    baseAddr    = ptrCanFdObj->regBaseAddress;
+
+    MCAN_getRevisionId(baseAddr, &ptrCanFdObj->revId);
+
+    return;
+}
+
+/*  This API add clock stop request for MCAN module to put it
+ *  in power down mode. 
+ */
+void CANFD_addClockStopRequest(CANFD_Handle canfdHandle, uint32_t enable)
+{
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+
+        MCAN_addClockStopRequest(baseAddr, enable);
+    }
+
+    return;
+}
+
+/*  This API stops the clock for MCAN module.
+ *  It return whether MCAN is power down mode or not. 
+ */
+uint32_t CANFD_clockStopReq(CANFD_Handle canfdHandle)
+{
+    int32_t       clkAck = SystemP_SUCCESS;
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+        /* Request for clk stop request */
+        clkAck = MCAN_getClockStopAck(baseAddr);
+    }
+
+    return clkAck;
+}
+
+/*  This API will return clock stop acknowledgement for MCAN module. */
+uint32_t CANFD_getClkStopAck(CANFD_Handle canfdHandle)
+{
+    int32_t       clkAck = SystemP_SUCCESS;
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+
+        clkAck = MCAN_getClkStopAck(baseAddr);
+    }
+
+    return clkAck;
+}
+
+/* This API will return Rx pin state of MCAN module. */
+uint32_t CANFD_getRxPinState(CANFD_Handle canfdHandle)
+{
+    uint32_t       pinState = 0U;
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+
+        pinState = MCAN_getRxPinState(baseAddr);
+    }
+
+    return pinState;
+}
+
+/* This API will set Tx pin state of MCAN module. */
+void CANFD_setTxPinState(CANFD_Handle canfdHandle, uint32_t state)
+{
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+
+        MCAN_setTxPinState(baseAddr, state);
+    }
+}
+
+/* This API will return Tx pin state of MCAN module. */
+uint32_t CANFD_getTxPinState(CANFD_Handle canfdHandle)
+{
+    uint32_t      pinState = 0U;
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+
+        pinState = MCAN_getTxPinState(baseAddr);
+    }
+
+    return pinState;
+}
+
+/* This API will get the configured bit timings for MCAN module. */
+void CANFD_getBitTime(CANFD_Handle canfdHandle)
+{
+    CANFD_Config* config = NULL;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+    CANFD_MCANBitTimingParams  *bitTimingParams;
+    MCAN_BitTimingParams configParams;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+        bitTimingParams = &config->attrs->CANFDMcanBitTimingParams;
+
+        configParams.nomSynchJumpWidth = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_NBTP,
+                                                    MCAN_NBTP_NSJW);
+        configParams.nomTimeSeg2 = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_NBTP,
+                                                MCAN_NBTP_NTSEG2);
+        configParams.nomTimeSeg1 = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_NBTP,
+                                                MCAN_NBTP_NTSEG1);
+        configParams.nomRatePrescalar = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_NBTP,
+                                                    MCAN_NBTP_NBRP);
+
+        configParams.dataSynchJumpWidth = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_DBTP,
+                                                        MCAN_DBTP_DSJW);
+        configParams.dataTimeSeg2 = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_DBTP,
+                                                MCAN_DBTP_DTSEG2);
+        configParams.dataTimeSeg1 = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_DBTP,
+                                                MCAN_DBTP_DTSEG1);
+        configParams.dataRatePrescalar = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_DBTP,
+                                                    MCAN_DBTP_DBRP);
+
+        if((configParams.nomTimeSeg1 % 2) == 0U)
+        {
+            bitTimingParams->nomPropSeg = configParams.nomTimeSeg1 / 2U;
+            bitTimingParams->nomPseg1 = configParams.nomTimeSeg1 / 2U;
+        }
+        else
+        {
+            bitTimingParams->nomPropSeg = (configParams.nomTimeSeg1 / 2U) + 1U;
+            bitTimingParams->nomPseg1 = configParams.nomTimeSeg1 - bitTimingParams->nomPropSeg;
+
+        }
+        bitTimingParams->nomBrp = configParams.nomRatePrescalar;
+        bitTimingParams->nomPseg2 = configParams.nomTimeSeg2;
+        bitTimingParams->nomSjw = configParams.nomSynchJumpWidth + 1U;
+
+        if((configParams.dataTimeSeg1 % 2U) == 0U)
+        {
+            bitTimingParams->dataPropSeg = configParams.dataTimeSeg1 / 2U;
+            bitTimingParams->dataPseg1 = configParams.dataTimeSeg1 / 2U;
+        }
+        else
+        {
+            bitTimingParams->nomPropSeg = (configParams.nomTimeSeg1 / 2U) - 1U;
+            bitTimingParams->nomPseg1 = configParams.nomTimeSeg1 - bitTimingParams->nomPropSeg;
+
+        }
+        bitTimingParams->dataBrp = configParams.dataRatePrescalar;
+        bitTimingParams->dataPseg2 = configParams.dataTimeSeg2;
+        bitTimingParams->dataSjw =  configParams.dataSynchJumpWidth;
+    }
+
+    return;
+}
+
+/* This API will return current timestamp counter value. */
+uint32_t CANFD_getTSCounterVal(CANFD_Handle canfdHandle)
+{
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr, timeStampVal = 0U;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+
+        timeStampVal = MCAN_getTSCounterVal(baseAddr);
+    }
+
+    return timeStampVal;
+}
+
+/* This API will reset timestamp counter value. */
+void CANFD_resetTSCounter(CANFD_Handle canfdHandle)
+{
+    CANFD_Config* config;
+    CANFD_Object* ptrCanFdObj;
+    uint32_t      baseAddr;
+
+    if(NULL_PTR != canfdHandle)
+    {
+        config      = (CANFD_Config*) canfdHandle;
+        ptrCanFdObj = (CANFD_Object*) config->object;
+        DebugP_assert(NULL_PTR != ptrCanFdObj);
+        baseAddr    = ptrCanFdObj->regBaseAddress;
+
+        MCAN_resetTSCounter(baseAddr);
+    }
+
+    return;
+}

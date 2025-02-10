@@ -2114,6 +2114,121 @@ void CANFD_dmaRxCompletionCallback(CANFD_MessageObject* ptrCanMsgObj, const void
  */
 int32_t CANFD_isDataSizeValid(uint32_t dataSize);
 
+/* ========================================================================== */
+/*                          Advance Functions                                 */
+/* ========================================================================== */
+
+/**
+ * \brief   This function return endianness value of MCAN module.
+ *
+ * \param   canfdHandle   #CANFD_Handle returned from #CANFD_open()
+ *
+ * \retval  val           Endianness value. (0x87654321)
+ */
+int32_t CANFD_getEndianVal(CANFD_Handle canfdHandle);
+
+/**
+ * \brief   This API is used get the MCAN revision ID.
+ *
+ * \param   canfdHandle   #CANFD_Handle returned from #CANFD_open()
+ * 
+ */
+void CANFD_getRevisionId(CANFD_Handle canfdHandle);
+
+/**
+ * \brief   This API add clock stop request for MCAN module to put it in
+ *          power down mode.
+ *
+ * \param   canfdHandle     #CANFD_Handle returned from #CANFD_open()
+ * \param   enable          Add CLock Stop Request.
+ *                          Adds Clock Clock stop Request is TRUE otherwise
+ *                          removes it.
+ */
+void CANFD_addClockStopRequest(CANFD_Handle canfdHandle, uint32_t enable);
+
+/**
+ * \brief   This API get clock stop acknowledgement for MCAN module.
+ *          It return whether MCAN is power down mode or not.
+ *
+ * \param   canfdHandle     #CANFD_Handle returned from #CANFD_open()
+ * \return  status          Return Clock Stop Acknowledgement status.
+ *                          Return '1' if M_CAN is set in power down mode else
+ *                          returns '0'.
+ */
+uint32_t CANFD_clockStopReq(CANFD_Handle canfdHandle);
+
+/**
+ * \brief   This API will return clock stop acknowledgement
+ *          for MCAN module.
+ *
+ * \param   canfdHandle     #CANFD_Handle returned from #CANFD_open()
+ * \return  ack             Clock Stop Acknowledge
+ *                          0= No clock stop acknowledged
+ *                          1= M_CAN may be set in power down
+ */
+uint32_t CANFD_getClkStopAck(CANFD_Handle canfdHandle);
+
+/**
+ * \brief   This API will return Rx pin state of MCAN module.
+ * 
+ * \param   canfdHandle     #CANFD_Handle returned from #CANFD_open()
+ * \return  state           MCAN Rx Pin State.
+ *                          0= The CAN bus is dominant
+ *                          1= The CAN bus is recessive
+ */
+uint32_t CANFD_getRxPinState(CANFD_Handle canfdHandle);
+
+/**
+ * \brief   This API will set Tx pin state of MCAN module.
+ *
+ * \param   canfdHandle     #CANFD_Handle returned from #CANFD_open()
+ * \param   state           MCAN Tx Pin State.
+ *                          00= Reset value
+ *                          01= Sample Point can be monitored at tx pin
+ *                          10= The CAN bus is dominant
+ *                          11= The CAN bus is recessive
+ *                          other= It will treated as 11.
+ */
+void CANFD_setTxPinState(CANFD_Handle canfdHandle, uint32_t state);
+
+/**
+ * \brief   This API will return Tx pin state of MCAN module.
+ *
+ * \param   canfdHandle     #CANFD_Handle returned from #CANFD_open()
+ * \return  state           MCAN Tx Pin State.
+ *                          00= Reset value
+ *                          01= Sample Point can be monitored at tx pin
+ *                          10= The CAN bus is dominant
+ *                          11= The CAN bus is recessive
+ */
+uint32_t CANFD_getTxPinState(CANFD_Handle canfdHandle);
+
+/**
+ * \brief   This API will get the configured bit timings for MCAN module.
+ *
+ * \param   canfdHandle     #CANFD_Handle returned from #CANFD_open()
+ * \param   configParams    Configuration parameters for MCAN bit timing.
+ *                          Refer struct MCAN_BitTimingParams.
+ */
+void CANFD_getBitTime(CANFD_Handle canfdHandle);
+
+/**
+ * \brief   This API will return current timestamp counter value.
+ *
+ * \param   canfdHandle    #CANFD_Handle returned from #CANFD_open()
+ *
+ * \return  val            Current Timestamp counter value.
+ */
+uint32_t CANFD_getTSCounterVal(CANFD_Handle canfdHandle);
+
+/**
+ * \brief   This API will reset timestamp counter value.
+ *
+ * \param   canfdHandle    #CANFD_Handle returned from #CANFD_open()
+ *
+ */
+void CANFD_resetTSCounter(CANFD_Handle canfdHandle);
+
 /** @} */
 
 #ifdef __cplusplus
