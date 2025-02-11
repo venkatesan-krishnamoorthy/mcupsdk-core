@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2018-2024
+ *  Copyright (c) Texas Instruments Incorporated 2018-2025
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -63,6 +63,7 @@
 #define SDL_ECC_INVALID_SELF_TEST_RAM_ID (0xffffffffu)
 #define SDL_ECC_INVALID_CHECKER_TYPE     (0xffffffffu)
 
+SDL_ecc_aggrRegs * SDL_ECC_aggrTransBaseAddressTable[SDL_ECC_MEMTYPE_MAX];
 
 #if defined (M4F_CORE)
 /* Event BitMap for ECC ESM callback for MAIN */
