@@ -15,8 +15,6 @@ const ioexp       = scripting.addModule("/board/ioexp/ioexp", {}, false);
 const ioexp1      = ioexp.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
-const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1       = gpio.addInstance();
 const clock       = scripting.addModule("/kernel/dpl/clock");
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
@@ -75,6 +73,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
 flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
 flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
 flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO61";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -84,11 +83,6 @@ edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
-
-gpio1.pinDir         = "OUTPUT";
-gpio1.$name          = "GPIO_OSPI_RST";
-gpio1.defaultValue   = "1";
-gpio1.GPIO_n.$assign = "GPIO61";
 
 const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1              = i2c.addInstance({}, false);

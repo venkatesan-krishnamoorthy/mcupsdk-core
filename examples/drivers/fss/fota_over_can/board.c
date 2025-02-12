@@ -60,6 +60,9 @@
 #define EEPROM_OFFSET_READ_PCB_REV                  (0x0022U)
 #define EEPROM_READ_PCB_REV_DATA_LEN                (0x2U)
 
+#define PIN_STATE_HIGH      (1U)
+#define PIN_STATE_LOW       (0U)
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -161,7 +164,7 @@ int32_t TCA6424_Mcan_Transceiver(void)
     return status;
 }
 
-void i2c_flash_reset(void)
+void board_flash_reset(OSPI_Handle oHandle)
 {
     int32_t status = SystemP_SUCCESS;
 
@@ -170,10 +173,14 @@ void i2c_flash_reset(void)
     status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, gBoardVer, EEPROM_READ_PCB_REV_DATA_LEN);
     if(status == SystemP_SUCCESS)
     {
-        if(gBoardVer[1] == '0' && gBoardVer[0] == 'A')
+        if(gBoardVer[0] == 'A' && gBoardVer[1] == '\0')
         {
             /* boardVer is REV A */
-            /* OSPI RESET signal comes from SOC directly, not via IO expander */
+            /* OSPI RESET signal does not come via IO expander */
+            /* Toggle the reset pin directly */
+            
+            OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+            OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
         }
         else if(gBoardVer[1] == '2' && gBoardVer[0] == 'E')
         {

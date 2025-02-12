@@ -52,7 +52,7 @@ uint32_t gRunApp;
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
-void board_flash_reset(void);
+void board_flash_reset(OSPI_Handle oHandle);
 void mcanEnableTransceiver(void);
 int32_t enableOspiReset(void);
 
@@ -263,7 +263,7 @@ int main(void)
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    board_flash_reset();
+    board_flash_reset(oHandle);
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

@@ -50,6 +50,8 @@
 #define IO_MUX_MCAN_STB                             (10U)
 /* MCAN_STB PIN OUTPUT   -> 0 */
 #define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)
+#define PIN_STATE_HIGH      (1U)
+#define PIN_STATE_LOW       (0U)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -91,8 +93,10 @@ void mcanEnableTransceiver(void)
 }
 
 
-void board_flash_reset(void)
+void board_flash_reset(OSPI_Handle oHandle)
 {
-    /* Dummy function */
-    /* OSPI RESET signal comes from SOC directly */
+    /* Toggle the reset pin directly */
+    
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
 }

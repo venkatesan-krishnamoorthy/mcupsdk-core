@@ -43,10 +43,6 @@ int main(void)
     System_init();
     Board_init();
 
-    Drivers_i2cOpen();
-    board_flash_reset();
-    Drivers_i2cClose();
-
     ospi_dual_flash_io_main(NULL);
 
     Board_deinit();

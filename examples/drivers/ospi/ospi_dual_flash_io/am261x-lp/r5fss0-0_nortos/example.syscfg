@@ -14,9 +14,6 @@ const flash1          = flash.addInstance();
 const flash2          = flash.addInstance();
 const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
 const ioexp1          = ioexp.addInstance();
-const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1           = gpio.addInstance();
-const gpio2           = gpio.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
@@ -85,6 +82,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
 flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
 flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
 flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO66";
 flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
 flash2.device                             = "CUSTOM_FLASH";
@@ -118,19 +116,10 @@ flash2.peripheralDriver.OSPI.D3.$assign   = "GPIO33";
 flash2.peripheralDriver.OSPI.D2.$assign   = "GPIO32";
 flash2.peripheralDriver.OSPI.D1.$assign   = "GPIO31";
 flash2.peripheralDriver.OSPI.D0.$assign   = "GPIO30";
+flash2.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO61";
 flash2.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_template1";
 
 ioexp1.$name = "CONFIG_IOEXP0";
-
-gpio1.pinDir         = "OUTPUT";
-gpio1.defaultValue   = "1";
-gpio1.$name          = "GPIO_OSPI_RST";
-gpio1.GPIO_n.$assign = "GPIO61";
-
-gpio2.$name          = "GPIO_FLASH1_RESET";
-gpio2.pinDir         = "OUTPUT";
-gpio2.defaultValue   = "1";
-gpio2.GPIO_n.$assign = "GPIO66";
 
 const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1              = i2c.addInstance({}, false);

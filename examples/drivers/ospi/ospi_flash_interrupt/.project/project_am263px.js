@@ -21,6 +21,7 @@ const files = {
         [
             "ospi_flash_interrupt.c",
             "main.c",
+            "board.c"
         ],
     }
 }

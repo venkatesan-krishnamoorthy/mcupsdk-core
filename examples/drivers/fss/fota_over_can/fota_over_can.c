@@ -85,14 +85,14 @@ void write_to_flash();
 void led_blink() __attribute__((section(".task0")));
 int32_t swap_to_b(uint32_t bootregion);
 void mcanEnableTransceiver(void);
-void i2c_flash_reset(void);
+void board_flash_reset(OSPI_Handle oHandle);
 int32_t CANTransfer_TransmitResp(uint8_t *src);
 int32_t CANTransfer_ReceiveFile(uint32_t *fileSize, uint8_t *dstBuf, uint32_t *run, uint8_t *lastChunk);
 void CANTransfer_Init(uint64_t systemAddr);
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    i2c_flash_reset();
+    board_flash_reset(oHandle);
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

@@ -50,7 +50,7 @@ static char inputStr[INPUT_STR_MAX_LEN];
 static char filename[FILE_NAME_MAX_LEN];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
-void gpio_flash_reset(void);
+void board_flash_reset(OSPI_Handle oHandle);
 
 char gMainMenu[] = {
     " \r\n"
@@ -319,7 +319,7 @@ int main(void)
         DebugP_log("All tests have passed!!\r\n");
     }
     
-    gpio_flash_reset();
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
 
     Board_driversClose();
     Drivers_close();
@@ -327,7 +327,7 @@ int main(void)
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    gpio_flash_reset();
+    board_flash_reset(oHandle);
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

@@ -43,6 +43,9 @@
 #define EEPROM_OFFSET_READ_PCB_REV    (0x0022U)
 #define EEPROM_READ_PCB_REV_DATA_LEN    (0x2U)
 
+#define PIN_STATE_HIGH      (1U)
+#define PIN_STATE_LOW       (0U)
+
 int32_t TCA6424_Flash_reset()
 {
     static TCA6424_Config  gTCA6424_Config;
@@ -101,7 +104,7 @@ int32_t TCA6416_Flash_reset()
 }
 
 
-void i2c_flash_reset(void)
+void board_flash_reset(OSPI_Handle oHandle)
 {
     int32_t status = SystemP_SUCCESS;
     uint8_t boardVer[2] = "";
@@ -114,7 +117,11 @@ void i2c_flash_reset(void)
         if(boardVer[0] == 'A' && boardVer[1] == '\0')
         {
             /* boardVer is REV A */
-            /* OSPI RESET signal comes from SOC directly, not via IO expander */
+            /* OSPI RESET signal does not come via IO expander */
+            /* Toggle the reset pin directly */
+            
+            OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+            OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
         }
         else if(boardVer[1] == '2' && boardVer[0] == 'E')
         {

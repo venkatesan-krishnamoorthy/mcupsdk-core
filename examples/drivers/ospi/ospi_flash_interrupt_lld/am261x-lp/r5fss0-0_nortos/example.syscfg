@@ -57,6 +57,7 @@ ospi1.OSPI.D3.$assign   = "GPIO69";
 ospi1.OSPI.D2.$assign   = "GPIO7";
 ospi1.OSPI.D1.$assign   = "GPIO70";
 ospi1.OSPI.D0.$assign   = "GPIO2";
+ospi1.OSPI.RESET_OUT0.$assign   = "GPIO61";
 ospi1.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_lld_template0";
 
 debug_log.enableUartLog            = true;

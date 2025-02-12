@@ -43,6 +43,7 @@ uint8_t gOspiRxBuf[APP_OSPI_DATA_SIZE] __attribute__((aligned(128U)));
 
 void ospi_flash_io_fill_buffers(void);
 int32_t ospi_flash_io_compare_buffers(void);
+void board_flash_reset(OSPI_Handle oHandle);
 
 void ospi_flash_io_main(void *args)
 {
@@ -53,6 +54,11 @@ void ospi_flash_io_main(void *args)
 
     /* Open OSPI Driver, among others */
     Drivers_open();
+
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
+
     /* Open Flash drivers with OSPI instance as input */
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);

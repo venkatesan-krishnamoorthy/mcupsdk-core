@@ -77,6 +77,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
 flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
 flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
 flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO61";
 
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";

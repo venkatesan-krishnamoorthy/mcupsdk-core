@@ -46,6 +46,7 @@
 #include <drivers/soc.h>
 #include <drivers/hw_include/cslr_soc.h>
 #include <kernel/dpl/CpuIdP.h>
+#include <drivers/ospi.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -59,7 +60,7 @@
 void test_socSetFrequencyR5FSS(void *args);
 void test_socPhyToVirtAndVirtToPhy(void *args);
 void test_socSwWarmReset(void *args);
-void i2c_flash_reset();
+void board_flash_reset(OSPI_Handle oHandle);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -264,7 +265,9 @@ void test_socSwWarmReset(void *args)
          * and make it available for the ROM to load the image from the flash
          */
         #if (CPU_R5_0_0)
-        i2c_flash_reset();
+        Drivers_open();
+        board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+        Drivers_close();
         #endif
         SOC_generateSwWarmReset();
     }

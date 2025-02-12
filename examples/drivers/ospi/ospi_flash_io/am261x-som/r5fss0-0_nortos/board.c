@@ -36,18 +36,14 @@
 #include "ti_drivers_config.h"
 #include "ti_board_open_close.h"
 
-void gpio_flash_reset(void)
-{
-    uint32_t    gpioBaseAddr, pinNum;
-    /* Get address after translation translate */
-    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_OSPI_RST_BASE_ADDR);
-    pinNum       = GPIO_OSPI_RST_PIN;
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_OSPI_RST_DIR);
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
-    GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
-}
+#define PIN_STATE_HIGH      (1U)
+#define PIN_STATE_LOW       (0U)
 
-void board_flash_reset(void)
+void board_flash_reset(OSPI_Handle oHandle)
 {
-    gpio_flash_reset();
+    /* OSPI RESET signal does not come via IO expander */
+    /* Toggle the reset pin directly */
+    
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
 }

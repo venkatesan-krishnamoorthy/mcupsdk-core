@@ -300,3 +300,4 @@ littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO6"
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO5";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO4";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution   = "GPIO66";

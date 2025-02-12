@@ -37,4 +37,4 @@
  * reset the flash to a known state.
  *
  */
-void i2c_flash_reset(void);
+void board_flash_reset(void);

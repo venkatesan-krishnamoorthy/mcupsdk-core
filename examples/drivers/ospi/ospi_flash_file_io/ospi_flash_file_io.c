@@ -43,6 +43,9 @@
 extern struct lfs_config gLfsCfg[CONFIG_LFS_NUM_INSTANCES];
 extern LFS_FLASH_Config *gLfsFlashConfig;
 
+void board_flash_reset(OSPI_Handle oHandle);
+
+
 void ospi_flash_file_io_main(void *args)
 {
     int32_t status = SystemP_SUCCESS;
@@ -54,6 +57,11 @@ void ospi_flash_file_io_main(void *args)
     uint32_t blk, page;
 
     Drivers_open();
+
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
+
     Board_driversOpen();
 
     for(int lfs_inst = 0; lfs_inst < CONFIG_LFS_NUM_INSTANCES; lfs_inst++)

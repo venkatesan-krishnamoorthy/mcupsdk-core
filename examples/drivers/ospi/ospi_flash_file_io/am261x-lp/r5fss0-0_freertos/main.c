@@ -47,13 +47,9 @@ StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
 
 void ospi_flash_file_io_main(void *args);
-void board_flash_reset(void);
 
 void freertos_main(void *args)
 {
-    Drivers_i2cOpen();
-    board_flash_reset();
-    Drivers_i2cClose();
     ospi_flash_file_io_main(NULL);
 
     vTaskDelete(NULL);

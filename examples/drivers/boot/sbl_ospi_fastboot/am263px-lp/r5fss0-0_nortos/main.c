@@ -61,7 +61,7 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle);
  * @brief Does the actual reset of the flash on board
  * 
  */
-void board_flash_reset(void);
+void board_flash_reset(OSPI_Handle oHandle);
 
 /**
  * @brief Configure OTFA and ECCM module
@@ -232,7 +232,7 @@ int main(void)
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    board_flash_reset();
+    board_flash_reset(oHandle);
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

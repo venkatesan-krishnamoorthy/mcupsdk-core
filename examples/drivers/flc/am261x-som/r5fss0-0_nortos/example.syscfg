@@ -337,4 +337,5 @@ flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO6";
 flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO5";
 flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO4";
 flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO0";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO66";
 debug_log.uartLog.UART.$suggestSolution            = "UART0";

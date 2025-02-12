@@ -54,6 +54,7 @@ ospi1.OSPI.D3.$assign   = "GPIO6";
 ospi1.OSPI.D2.$assign   = "GPIO5";
 ospi1.OSPI.D1.$assign   = "GPIO4";
 ospi1.OSPI.D0.$assign   = "GPIO3";
+ospi1.OSPI.RESET_OUT0.$assign   = "GPIO66";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";

@@ -31,8 +31,16 @@
  */
 
 #include <stdint.h>
+#include "ti_board_open_close.h"
 
-void i2c_flash_reset()
+#define PIN_STATE_HIGH      (1U)
+#define PIN_STATE_LOW       (0U)
+
+void board_flash_reset(OSPI_Handle oHandle)
 {
-
+    /* OSPI RESET signal does not come via IO expander */
+    /* Toggle the reset pin directly */
+    
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
 }

@@ -32,15 +32,16 @@
 
 #include <stdint.h>
 #include <string.h>
-
 #include "ti_board_open_close.h"
 
-void gpio_flash_reset(void)
-{
-    /* Flash Reset logic needs to be added based on the som hardware*/
-}
+#define PIN_STATE_HIGH      (1U)
+#define PIN_STATE_LOW       (0U)
 
-void board_flash_reset(void)
+void board_flash_reset(OSPI_Handle oHandle)
 {
-    gpio_flash_reset();
+    /* OSPI RESET signal does not come via IO expander */
+    /* Toggle the reset pin directly */
+    
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
 }

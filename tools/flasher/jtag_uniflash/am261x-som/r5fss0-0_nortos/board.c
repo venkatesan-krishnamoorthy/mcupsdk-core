@@ -31,19 +31,18 @@
  */
 
 #include <stdint.h>
-#include <drivers/gpio.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include <kernel/dpl/ClockP.h>
 #include "ti_drivers_config.h"
 
+#define PIN_STATE_HIGH      (1U)
+#define PIN_STATE_LOW       (0U)
 
-void gpio_flash_reset(void)
+void board_flash_reset(OSPI_Handle oHandle)
 {
-    uint32_t    gpioBaseAddr, pinNum;
-    /* Get address after translation translate */
-    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_OSPI_RST_BASE_ADDR);
-    pinNum       = GPIO_OSPI_RST_PIN;
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_OSPI_RST_DIR);
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
-    GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
+    /* OSPI RESET signal does not come via IO expander */
+    /* Toggle the reset pin directly */
+    
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+    OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
 }

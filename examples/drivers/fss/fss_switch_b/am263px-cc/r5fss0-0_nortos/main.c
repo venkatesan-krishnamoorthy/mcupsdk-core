@@ -42,9 +42,6 @@ int main(void)
 {
     System_init();
     Board_init();
-    Drivers_i2cOpen();
-    i2c_flash_reset();
-    Drivers_i2cClose();
 
     switch_b_img_main(NULL);
 

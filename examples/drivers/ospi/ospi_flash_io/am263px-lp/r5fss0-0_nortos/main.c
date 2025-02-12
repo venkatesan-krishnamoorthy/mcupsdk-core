@@ -42,7 +42,6 @@ int main(void)
     System_init();
     Board_init();
 
-    board_flash_reset();
     ospi_flash_io_main(NULL);
 
     Board_deinit();

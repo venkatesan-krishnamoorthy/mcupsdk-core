@@ -13,8 +13,6 @@ const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
 const ioexp1          = ioexp.addInstance();
 const edma            = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1           = edma.addInstance();
-const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1           = gpio.addInstance();
 const littlefs        = scripting.addModule("/fs/littlefs/littlefs", {}, false);
 const littlefs1       = littlefs.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
@@ -57,11 +55,6 @@ edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
-gpio1.pinDir         = "OUTPUT";
-gpio1.defaultValue   = "1";
-gpio1.$name          = "GPIO_OSPI_RST";
-gpio1.GPIO_n.$assign = "GPIO61";
-
 const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1              = i2c.addInstance({}, false);
 i2c1.$name              = "CONFIG_I2C0";
@@ -91,6 +84,7 @@ littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
 littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO61";
 littlefs1.peripheralDriver.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_template1";
 
 debug_log.enableUartLog            = true;

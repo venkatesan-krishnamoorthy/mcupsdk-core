@@ -46,6 +46,7 @@ int32_t ospi_flash_io_compare_buffers(void);
 int32_t flash1WriteRead(void);
 int32_t flash0WriteRead(void);
 int32_t flash1_diagnosticTest(void);
+void board_flash_reset(OSPI_Handle oHandle);
 Flash_Attrs *flashAttrs;
 uint32_t offset;
 uint32_t blk, page;
@@ -55,6 +56,11 @@ void ospi_dual_flash_io_main(void *args)
     int32_t status = SystemP_SUCCESS;
     /* Open OSPI Driver, among others */
     Drivers_open();
+
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
+
     /* Open Flash drivers with OSPI instance as input */
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);

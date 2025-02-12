@@ -67,6 +67,7 @@ flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO6";
 flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO5";
 flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO4";
 flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO3";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO66";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);

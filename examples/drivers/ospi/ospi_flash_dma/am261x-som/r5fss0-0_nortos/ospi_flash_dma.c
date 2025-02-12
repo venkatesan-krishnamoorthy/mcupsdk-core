@@ -55,6 +55,7 @@ uint8_t gOspiRxBuf[APP_OSPI_DATA_SIZE] __attribute__((aligned(CacheP_CACHELINE_A
 
 void ospi_flash_diag_test_fill_buffers(void);
 int32_t ospi_flash_diag_test_compare_buffers(void);
+void board_flash_reset(OSPI_Handle oHandle);
 
 void ospi_flash_dma_main(void *args)
 {
@@ -65,6 +66,9 @@ void ospi_flash_dma_main(void *args)
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
+
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+
     Board_driversOpen();
 
     DebugP_log("[OSPI Flash DMA Transfer Test] Starting ...\r\n");

@@ -294,4 +294,5 @@ ospi1.OSPI.D3.$suggestSolution          = "GPIO6";
 ospi1.OSPI.D2.$suggestSolution          = "GPIO5";
 ospi1.OSPI.D1.$suggestSolution          = "GPIO4";
 ospi1.OSPI.D0.$suggestSolution          = "GPIO0";
+ospi1.OSPI.RESET_OUT0.$assign   = "GPIO66";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

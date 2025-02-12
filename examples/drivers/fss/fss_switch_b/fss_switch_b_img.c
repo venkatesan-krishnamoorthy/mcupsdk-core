@@ -54,6 +54,8 @@ typedef union bootinfo_sector_u_t
     uint8_t bin[FLASH_SECTOR_SIZE];
 }bootinfo_sector_t;
 
+void board_flash_reset(OSPI_Handle oHandle);
+
 /*
     This example: 
     1. writes data to flash at 18MB offset. 
@@ -69,6 +71,11 @@ void switch_b_img_main(void *args)
     uint32_t sector, page;
 
     Drivers_open();
+
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
+
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
 

@@ -41,7 +41,7 @@
  *
  */
 
-void i2c_flash_reset(void);
+void board_flash_reset();
 
 
 

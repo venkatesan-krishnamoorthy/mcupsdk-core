@@ -78,6 +78,8 @@
 uint8_t gTxBuff[BUFFER_DATA_SIZE] __attribute__((aligned(4096U))) = {0};
 uint8_t gRxBuf[BUFFER_DATA_SIZE] __attribute__((aligned(4096U))) = {0};
 
+void board_flash_reset(OSPI_Handle oHandle);
+
 int32_t enable_flash_dac_phy()
 {
     int32_t status = SystemP_SUCCESS;
@@ -100,6 +102,11 @@ void swap_main(void *args)
     uint32_t blk, page;
 
     Drivers_open();
+
+#if defined (SOC_AM263PX)|| defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
+
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
     

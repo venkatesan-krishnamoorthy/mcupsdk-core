@@ -31,25 +31,40 @@
  */
 
 #include <stdint.h>
-#include <drivers/gpio.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
+#define PIN_STATE_HIGH      (1U)
+#define PIN_STATE_LOW       (0U)
+
 int32_t enableOspiResetSignal(uint16_t enable);
 
-void gpio_flash_reset(void)
+void board_flash_reset(OSPI_Handle oHandle)
 {
-    enableOspiResetSignal(TRUE);
-    uint32_t    gpioBaseAddr, pinNum;
-    /* Get address after translation translate */
-    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_OSPI_RST_BASE_ADDR);
-    pinNum       = GPIO_OSPI_RST_PIN;
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_OSPI_RST_DIR);
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
-    GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
-    enableOspiResetSignal(FALSE);
+    int32_t status = SystemP_FAILURE;
+
+    /* Toggle the level translator to enable the ospi reset signal */
+    status = enableOspiResetSignal(TRUE);
+
+    if(status == SystemP_SUCCESS)
+    {
+        /* Now toggle the ospi reset line */
+        OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+        OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
+    }
+    else
+    {
+        DebugP_log("Failed to enable the ospi reset line!\r\n");
+    }
 }
+
+
+/*
+ * BP_BO_MUX_EN is set high in Board_driversOpen to enable mcan transceiver.
+ * This API pulls this signal to low once the application is received,
+ * to allow OSPI Reset to be possible.
+ */
 
 int32_t enableOspiResetSignal(uint16_t enable)
 {
