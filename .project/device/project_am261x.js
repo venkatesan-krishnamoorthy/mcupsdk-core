@@ -443,6 +443,7 @@ function getSysCfgDevice(board) {
         case "am261x-lp (dp83tg720 phy)":
             return "AM261x_ZFG";
         case "am261x-som":
+            return "AM261x_ZCZ";
 	default:
             return "AM261x_ZCZ";
     }
@@ -459,6 +460,7 @@ function getProjectSpecDevice(board) {
         case "am261x-lp (dp83tg720 phy)":
             return "AM261x";
         case "am261x-som":
+            return "AM261x";
         default:
             return "AM261x";
     }
@@ -477,6 +479,7 @@ function getSysCfgPkg(board) {
         case "am261x-lp (dp83tg720 phy)":
             return "ZFG";
         case "am261x-som":
+            return "ZCZ";
         default:
             return "ZCZ";
     }
@@ -491,6 +494,7 @@ function getSysCfgPart(board) {
         case "am261x-lp (dp83tg720 phy)":
             return "AM2612";
         case "am261x-som":
+            return "AM2611";
         default:
             return "AM2611";
     }
