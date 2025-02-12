@@ -943,6 +943,18 @@ int32_t OSPI_readBaudRateDivFromReg(OSPI_Handle handle, uint32_t *baudDiv);
  */
 int32_t OSPI_getBaudRateDivFromObj(OSPI_Handle handle, uint32_t *baudDiv);
 
+/**
+ *  \brief  This function activates the RESET pin feature
+ *
+ *  \pre    OSPI controller has been opened using #OSPI_open()
+ *
+ *  \param  handle       An #OSPI_Handle returned from an #OSPI_open()
+ *  \param  pinStatus    pinStatus - HIGH/LOW
+ *
+ *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
+int32_t OSPI_setResetPinStatus(OSPI_Handle handle, uint32_t pinStatus);
+
 /** @} */
 
 /** @} */

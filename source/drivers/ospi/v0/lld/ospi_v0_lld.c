@@ -1649,6 +1649,26 @@ int32_t OSPI_lld_configResetPin(OSPILLD_Handle hOspi, uint32_t config)
     return status;
 }
 
+int32_t OSPI_lld_setResetPinStatus(OSPILLD_Handle hOspi, uint32_t pinStatus)
+{
+    int32_t status = OSPI_SYSTEM_SUCCESS;
+
+    if(NULL != hOspi)
+    {
+        const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(hOspi->baseAddr);
+
+        CSL_REG32_FINS(&pReg->CONFIG_REG,
+                                OSPI_FLASH_CFG_CONFIG_REG_RESET_PIN_FLD,
+                                pinStatus);
+    }
+    else
+    {
+        status = OSPI_SYSTEM_FAILURE;
+    }
+
+    return status;
+}
+
 int32_t OSPI_lld_configBaudrate(OSPILLD_Handle hOspi, uint32_t baud)
 {
     int32_t status = OSPI_SYSTEM_SUCCESS;

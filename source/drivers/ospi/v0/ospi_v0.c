@@ -1016,6 +1016,25 @@ int32_t OSPI_configResetPin(OSPI_Handle handle, uint32_t config)
     return status;
 }
 
+int32_t OSPI_setResetPinStatus(OSPI_Handle handle, uint32_t pinStatus)
+{
+    int32_t status = SystemP_SUCCESS;
+    OSPILLD_Handle hOspi;
+
+    if((OSPI_Handle) NULL != handle)
+    {
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        hOspi = &obj->ospilldObject;
+        status = OSPI_lld_setResetPinStatus(hOspi,pinStatus);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
 int32_t OSPI_configBaudrate(OSPI_Handle handle, uint32_t baud)
 {
     int32_t status = SystemP_SUCCESS;
