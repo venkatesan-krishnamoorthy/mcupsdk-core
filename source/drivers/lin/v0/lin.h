@@ -31,7 +31,7 @@
  */
 
 /**
- *  \defgroup DRV_LIN_MODULE APIs for LIN
+ *  \defgroup DRV_LIN_MODULE APIs for LIN LLD
  *  \ingroup DRV_MODULE
  *
  *  This module contains APIs to program and use the LIN.
@@ -449,7 +449,7 @@ LIN_setLINMode(uint32_t base, LIN_LINMode mode)
  *  \brief  Set Maximum Baud Rate Prescaler.
  *
  *  \param  base is the base address of the LIN commander.
- *  \param  clock is the device system clock (Hz).
+ *  \param  clockVal is the device system clock (Hz).
  *
  *  In LIN mode only, this function is used to set the maximum baud rate
  *  prescaler used during synchronization phase of a responder module if the
@@ -462,13 +462,13 @@ LIN_setLINMode(uint32_t base, LIN_LINMode mode)
  *
  */
 static inline void
-LIN_setMaximumBaudRate(uint32_t base, uint32_t clock)
+LIN_setMaximumBaudRate(uint32_t base, uint32_t clockVal)
 {
     /* Parameter Validation */
     DebugP_assert(LIN_isBaseValid(base));
 
     /* Calculate maximum baud rate prescaler */
-    HW_WR_FIELD32_RAW((base + CSL_LIN_MBRSR), CSL_LIN_MBRSR_MBR_MASK, CSL_LIN_MBRSR_MBR_SHIFT, (clock / 20000U));
+    HW_WR_FIELD32_RAW((base + CSL_LIN_MBRSR), CSL_LIN_MBRSR_MBR_MASK, CSL_LIN_MBRSR_MBR_SHIFT, (clockVal / 20000U));
 }
 
 /**

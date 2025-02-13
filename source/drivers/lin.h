@@ -42,6 +42,7 @@ extern "C"
 
 #if defined (DRV_VERSION_LIN_V0)
 #include <drivers/lin/v0/lin.h>
+#include <drivers/lin/v0/sci_lin.h>
 #endif
 
 #ifdef __cplusplus

@@ -55,6 +55,9 @@ FILES_common := \
     ipc_rpmsg.c \
     ipc_rpmsg_vring.c \
     lin.c \
+    sci_lin_internal.c \
+    sci_lin.c \
+    sci_lin_dma_edma.c \
     mcan.c \
     mcspi_dma_edma.c \
     mcspi_v0.c \
@@ -119,6 +122,8 @@ FILES_PATH_common = \
     ipc_notify/v1/soc/am261x \
     ipc_rpmsg/ \
     lin/v0 \
+    lin/v0/internal \
+    lin/v0/dma/edma \
     mcan/v0 \
     mcan/v0/soc/am261x \
     mcan/v0/dma/edma \
