@@ -306,6 +306,14 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_polling/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_polling/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/lin/lin_loopback_polling/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_responder_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_responder_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_responder_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_responder_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_commander_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_commander_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_commander_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/lin/lin_commander_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_read_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_read_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_read_write/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1231,6 +1239,14 @@ BUILD_COMBO_EXAMPLE_ALL += lin_loopback_polling_am263x-cc_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_ALL += lin_loopback_polling_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += lin_loopback_polling_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += lin_loopback_polling_am263x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lin_responder_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lin_responder_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lin_responder_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lin_responder_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lin_commander_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lin_commander_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lin_commander_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lin_commander_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_external_read_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_external_read_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_external_read_write_am263x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -2228,6 +2244,30 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  lin_loopback_polling_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ lin_responder_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/lin/lin_responder_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ lin_responder_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/lin/lin_responder_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ lin_responder_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/lin/lin_responder_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ lin_responder_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/lin/lin_responder_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ lin_commander_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/lin/lin_commander_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ lin_commander_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/lin/lin_commander_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ lin_commander_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/lin/lin_commander_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ lin_commander_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/lin/lin_commander_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  mcan_external_read_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3445,6 +3485,14 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_loopback_polling_am263x-cc_r5fss0-0_nortos_
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_loopback_polling_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_loopback_polling_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_loopback_polling_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_responder_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_responder_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_responder_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_responder_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_commander_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_commander_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_commander_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lin_commander_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_external_read_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_external_read_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_external_read_write_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4437,6 +4485,30 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  lin_loopback_polling_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ lin_responder_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_responder_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ lin_responder_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_responder_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ lin_responder_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_responder_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ lin_responder_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_responder_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ lin_commander_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_commander_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ lin_commander_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_commander_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ lin_commander_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_commander_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ lin_commander_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/lin/lin_commander_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  mcan_external_read_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5654,6 +5726,14 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_loopback_polling_am263x-cc_r5fss0-0_nortos_
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_loopback_polling_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_loopback_polling_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_loopback_polling_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_responder_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_responder_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_responder_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_responder_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_commander_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_commander_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_commander_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lin_commander_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_external_read_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_external_read_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_external_read_write_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6646,6 +6726,30 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  lin_loopback_polling_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/lin/lin_loopback_polling/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ lin_responder_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/lin/lin_responder_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ lin_responder_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/lin/lin_responder_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ lin_responder_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/lin/lin_responder_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ lin_responder_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/lin/lin_responder_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ lin_commander_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/lin/lin_commander_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ lin_commander_write_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/lin/lin_commander_write/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ lin_commander_read_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/lin/lin_commander_read/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ lin_commander_read_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/lin/lin_commander_read/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  mcan_external_read_write_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_read_write/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
