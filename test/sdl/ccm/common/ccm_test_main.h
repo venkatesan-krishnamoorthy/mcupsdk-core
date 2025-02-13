@@ -79,7 +79,7 @@ extern "C"
 #define  CCM_TOTAL_NUM_TESTS      (5U)
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX)
-#define  CCM_NUM_INSTANCE         (3U)
+#define  CCM_NUM_INSTANCE         (2U)
 #define INSTANCE 		SDL_R5SS0_CCM
 #endif
 #if defined (SOC_AM261X)
