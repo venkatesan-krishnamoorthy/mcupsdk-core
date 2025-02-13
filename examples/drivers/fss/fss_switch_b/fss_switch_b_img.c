@@ -101,7 +101,7 @@ void switch_b_img_main(void *args)
             else
             {
                 
-                DebugP_log("\r\nAll Test Passed\r\n");
+                DebugP_log("\r\nPlease reset the board.\r\nAll Test Passed\r\n");
             }
         }
     }
