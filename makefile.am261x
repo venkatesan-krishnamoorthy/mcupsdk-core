@@ -648,6 +648,7 @@ help:
 	@echo  $(MAKE) -s -C examples/empty/am261x-lp/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am261x-som/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am261x-lp/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos [all clean syscfg-gui syscfg]
 	@echo  .
 
 # Various Component Targets
@@ -1638,6 +1639,7 @@ BUILD_COMBO_EXAMPLE_ALL += empty_am261x-som_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am261x-lp_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am261x-som_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += empty_am261x-lp_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += sdl_stc_am261x-som_system_nortos_nortos
 
 
 
@@ -3266,6 +3268,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_am261x-lp_system_nortos:
 	$(MAKE) -C examples/empty/am261x-lp/system_nortos -f makefile all
 
+ sdl_stc_am261x-som_system_nortos_nortos:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos -f makefile all
+
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
@@ -3779,6 +3784,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am261x-som_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am261x-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am261x-som_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am261x-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_am261x-som_system_nortos_nortos_clean
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
@@ -5403,6 +5409,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  empty_am261x-lp_system_nortos_clean:
 	$(MAKE) -C examples/empty/am261x-lp/system_nortos -f makefile clean
 
+ sdl_stc_am261x-som_system_nortos_nortos_clean:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos -f makefile clean
+
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
@@ -5916,6 +5925,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am261x-som_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am261x-lp_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am261x-som_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am261x-lp_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_am261x-som_system_nortos_nortos_scrub
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
@@ -7539,6 +7549,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  empty_am261x-lp_system_nortos_scrub:
 	$(MAKE) -C examples/empty/am261x-lp/system_nortos -f makefile scrub
+
+ sdl_stc_am261x-som_system_nortos_nortos_scrub:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos -f makefile scrub
 
 
 sbl: libs

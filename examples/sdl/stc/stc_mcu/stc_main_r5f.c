@@ -83,7 +83,12 @@ void STC_test_main(int32_t coreNumber );
 /**
  *  \brief global variable for holding data buffer.
  */
+#if defined (SOC_AM261X)
+static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0};
+#else
 static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0, SDL_STC_INST_MAINR5F1};
+#endif
+
 static  int32_t test_Result;
 
 /*===========================================================================*/
@@ -137,6 +142,9 @@ void STC_main(void *args)
 
 #ifdef SOC_AM263PX
     for (i=countInst; i>=1 ; i--)
+#elif SOC_AM261X
+    countInst=0;
+    for (i=countInst; i>=0 ; i--)
 #else
     for (i=countInst; i>=0 ; i--)
 #endif

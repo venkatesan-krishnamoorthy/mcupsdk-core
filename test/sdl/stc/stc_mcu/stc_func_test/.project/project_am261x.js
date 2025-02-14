@@ -39,8 +39,6 @@ const libs_nortos_r5f = {
     ],
 };
 
-
-
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -66,7 +64,6 @@ const templates_nortos_r5f =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos",isPartOfSystemProject: true},
-
 ];
 
 const systemProjects = [
@@ -78,7 +75,6 @@ const systemProjects = [
         board: "am261x-som",
         projects: [
             { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
-
         ],
     }
 ];
@@ -105,16 +101,12 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
 
-
-
     if(buildOption.cpu.match(/r5f*/)) {
         {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
-
         }
     }
-
 
     return build_property;
 }

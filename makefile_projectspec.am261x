@@ -540,6 +540,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am261x-som_system_freertos_bu
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am261x-lp_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am261x-som_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am261x-lp_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stc_am261x-som_system_nortos_nortos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -2163,6 +2164,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  empty_am261x-lp_system_nortos_build:
 	$(MAKE) -C examples/empty/am261x-lp/system_nortos -f makefile_projectspec all
 
+ sdl_stc_am261x-som_system_nortos_nortos_build:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos -f makefile_projectspec all
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
@@ -2706,6 +2710,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am261x-som_system_freertos_cl
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am261x-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am261x-som_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am261x-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stc_am261x-som_system_nortos_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -4329,6 +4334,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  empty_am261x-lp_system_nortos_clean:
 	$(MAKE) -C examples/empty/am261x-lp/system_nortos -f makefile_projectspec clean
 
+ sdl_stc_am261x-som_system_nortos_nortos_clean:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos -f makefile_projectspec clean
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
@@ -4872,6 +4880,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am261x-som_system_freertos_e
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am261x-lp_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am261x-som_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am261x-lp_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stc_am261x-som_system_nortos_nortos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -6495,6 +6504,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  empty_am261x-lp_system_nortos_export:
 	$(MAKE) -C examples/empty/am261x-lp/system_nortos -f makefile_projectspec export
 
+ sdl_stc_am261x-som_system_nortos_nortos_export:
+	$(MAKE) -C examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos -f makefile_projectspec export
+
 
 
 help:
@@ -7056,6 +7068,7 @@ help:
 	@echo  $(MAKE) -s -C examples/empty/am261x-lp/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am261x-som/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am261x-lp/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private

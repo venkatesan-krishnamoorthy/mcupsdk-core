@@ -79,7 +79,6 @@ extern "C" {
 typedef enum {
 
     SDL_STC_INST_MAINR5F0,
-    SDL_STC_INST_MAINR5F1,
     SDL_STC_INVALID_INSTANCE,
 
 } SDL_STC_Inst;

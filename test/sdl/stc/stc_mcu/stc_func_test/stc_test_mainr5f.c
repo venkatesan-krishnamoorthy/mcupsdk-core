@@ -83,7 +83,12 @@ void STC_test_main(int32_t coreNumber,int32_t testType);
 /**
  *  \brief global variable for holding data buffer.
  */
+#if defined (SOC_AM261X)
+static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0};
+#else
 static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0, SDL_STC_INST_MAINR5F1};
+#endif
+
 static  int32_t test_Result;
 
 /*===========================================================================*/
@@ -133,9 +138,6 @@ void STC_test_main(int32_t coreNumber,int32_t testType)
         DebugP_log("STC Test Could not completed Successfully.\r\n");
     }
 }
-
-
-
 
 void STC_func_test_main(void *args)
 {
