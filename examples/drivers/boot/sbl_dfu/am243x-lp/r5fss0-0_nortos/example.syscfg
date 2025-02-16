@@ -203,6 +203,8 @@ section6.type                        = "NOLOAD";
 section6.output_section.create(1);
 section6.output_section[0].$name     = ".bss.nocache";
 section6.output_section[0].alignment = 0;
+section6.output_section[0].output_sections_start = "__BSS_NOCACHE_START";
+section6.output_section[0].output_sections_end   = "__BSS_NOCACHE_END";
 
 tinyusb1.$name = "CONFIG_TINYUSB0";
 

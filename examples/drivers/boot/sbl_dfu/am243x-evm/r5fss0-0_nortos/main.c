@@ -65,6 +65,9 @@ uint8_t gManifestDone = MANIFEST_PENDING;
 
 extern char __DFU_CTX_START, __DFU_CTX_END ;
 
+extern uint32_t __BSS_NOCACHE_START;
+extern uint32_t __BSS_NOCACHE_END;
+
 /* TinyUSB dfu context struct */
 typedef struct
 {
@@ -116,6 +119,13 @@ int dfu_task(void)
     return 0;
 }
 
+int32_t _bss_init(void)
+{
+    uint32_t bss_size = ((uintptr_t)&__BSS_NOCACHE_END - (uintptr_t)&__BSS_NOCACHE_START);
+    (void) memset((void*)&__BSS_NOCACHE_START, 0x00, bss_size);
+    return 1;
+}
+
 int main(void)
 {
     int32_t status = SystemP_SUCCESS;
@@ -151,6 +161,9 @@ int main(void)
     }
 
     System_init();
+
+    /* Initialize the custom bss sections */
+    _bss_init();
 
     Bootloader_socOpenFirewalls();
 
