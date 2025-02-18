@@ -61,6 +61,7 @@ extern "C"
 #endif
 #if defined (SOC_AM261X)
 #include <sdl/r5/v0/am261x/sdl_soc_ccm.h>
+#include <sdl/r5/v0/sdl_ip_ccm.h>
 #endif
 #if defined (SOC_AM273X)
 #include <sdl/r5/v0/am273x/sdl_soc_ccm.h>
