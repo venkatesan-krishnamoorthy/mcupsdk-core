@@ -58,8 +58,9 @@
 
 #define EEPROM_OFFSET_READ_PCB_REV                  (0x0022U)
 #define EEPROM_READ_PCB_REV_DATA_LEN                (0x2U)
-#define PIN_STATE_HIGH      (1U)
-#define PIN_STATE_LOW       (0U)
+#define SIP_FLASH_CFG_VALUE                         (0x55)
+#define PIN_STATE_HIGH                              (1U)
+#define PIN_STATE_LOW                               (0U)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -165,37 +166,50 @@ int32_t TCA6424_Mcan_Transceiver(void)
 void board_flash_reset(OSPI_Handle oHandle)
 {
     int32_t status = SystemP_SUCCESS;
-    uint8_t boardVer[2] = "";
+    CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
 
     Board_eepromOpen();
 
-    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
-    if(status == SystemP_SUCCESS)
+    uint32_t sipVal = (((ptrTopCtrlRegs->EFUSE2_ROW_6) & 
+            CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_MASK) >> 
+                    CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_SHIFT);
+
+    if(!(sipVal == SIP_FLASH_CFG_VALUE))
     {
-        if(boardVer[0] == 'A' && boardVer[1] == '\0')
+        status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, gBoardVer, EEPROM_READ_PCB_REV_DATA_LEN);
+
+        if(status == SystemP_SUCCESS)
         {
-            /* boardVer is REV A */
-            /* OSPI RESET signal does not come via IO expander */
-            /* Toggle the reset pin directly */
-            
-            OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
-            OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
+            if(gBoardVer[0] == 'A' && gBoardVer[1] == '\0')
+            {
+                /* boardVer is REV A */
+                /* OSPI RESET signal does not come via IO expander */
+                /* Toggle the reset pin directly */
+                
+                OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+                OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
+            }
+            else if(gBoardVer[1] == '2' && gBoardVer[0] == 'E')
+            {
+                /* boardVer is E2 */
+                status = TCA6424_Flash_reset();
+            }
+            else if(gBoardVer[1] == '1' && gBoardVer[0] == 'E')
+            {
+                /* boardVer is E1 */
+                status = TCA6416_Flash_reset();
+            }
+            else
+            {
+                /* boardVer is invalid */
+                /* Do nothing */
+            }
         }
-        else if(boardVer[1] == '2' && boardVer[0] == 'E')
-        {
-            /* boardVer is E2 */
-            status = TCA6424_Flash_reset();
-        }
-        else if(boardVer[1] == '1' && boardVer[0] == 'E')
-        {
-            /* boardVer is E1 */
-            status = TCA6416_Flash_reset();
-        }
-        else
-        {
-            /* boardVer is invalid */
-            /* Do nothing */
-        }
+    }
+    else
+    {
+        OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
+        OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
     }
 
     DebugP_assert(status == SystemP_SUCCESS);

@@ -38,13 +38,14 @@
 #include <board/ioexp/ioexp_tca6416.h>
 #include <board/eeprom.h>
 
-#define IO_MUX_OSPI_RST_SEL_PORT_LINE (0U)      // PORT 0, PIN 0    -> ioIndex : 0*8 + 0 = 0
+#define IO_MUX_OSPI_RST_SEL_PORT_LINE   (0U)      // PORT 0, PIN 0    -> ioIndex : 0*8 + 0 = 0
 
-#define EEPROM_OFFSET_READ_PCB_REV    (0x0022U)
+#define EEPROM_OFFSET_READ_PCB_REV      (0x0022U)
 #define EEPROM_READ_PCB_REV_DATA_LEN    (0x2U)
+#define SIP_FLASH_CFG_VALUE             (0x55)
 
-#define PIN_STATE_HIGH      (1U)
-#define PIN_STATE_LOW       (0U)
+#define PIN_STATE_HIGH                  (1U)
+#define PIN_STATE_LOW                   (0U)
 
 int32_t TCA6424_Flash_reset()
 {
@@ -109,37 +110,55 @@ void board_flash_reset()
     int32_t status = SystemP_SUCCESS;
     uint8_t boardVer[2] = "";
 
+    CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
+
     Board_eepromOpen();
 
-    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
-    if(status == SystemP_SUCCESS)
-    {
-        if(boardVer[0] == 'A' && boardVer[1] == '\0')
-        {
-            /* boardVer is REV A */
-            /* OSPI RESET signal does not come via IO expander */
+    uint32_t sipVal = (((ptrTopCtrlRegs->EFUSE2_ROW_6) & 
+            CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_MASK) >> 
+                    CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_SHIFT);
 
-            /* Uncomment below functions if this API needs to be called */
-            /* Pass OSPI_Handle object as parameter */
-            /* OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH); */
-            /* OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW); */
-        }
-        else if(boardVer[1] == '2' && boardVer[0] == 'E')
+    if(!(sipVal == SIP_FLASH_CFG_VALUE))
+    {
+        status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
+
+        if(status == SystemP_SUCCESS)
         {
-            /* boardVer is E2 */
-            status = TCA6424_Flash_reset();
-        }
-        else if(boardVer[1] == '1' && boardVer[0] == 'E')
-        {
-            /* boardVer is E1 */
-            status = TCA6416_Flash_reset();
-        }
-        else
-        {
-            /* boardVer is invalid */
-            /* Do nothing */
+            if(boardVer[0] == 'A' && boardVer[1] == '\0')
+            {
+                /* boardVer is REV A */
+                /* OSPI RESET signal does not come via IO expander */
+                
+                /* Uncomment below functions if this API needs to be called */
+                /* Pass OSPI_Handle object as parameter */
+                /* OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH); */
+                /* OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW); */
+            }
+            else if(boardVer[1] == '2' && boardVer[0] == 'E')
+            {
+                /* boardVer is E2 */
+                status = TCA6424_Flash_reset();
+            }
+            else if(boardVer[1] == '1' && boardVer[0] == 'E')
+            {
+                /* boardVer is E1 */
+                status = TCA6416_Flash_reset();
+            }
+            else
+            {
+                /* boardVer is invalid */
+                /* Do nothing */
+            }
         }
     }
+    else
+    {
+        /* Uncomment below functions if this API needs to be called */
+        /* Pass OSPI_Handle object as parameter */
+        /* OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH); */
+        /* OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW); */
+    }
+
 
     DebugP_assert(status == SystemP_SUCCESS);
     Board_eepromClose();
