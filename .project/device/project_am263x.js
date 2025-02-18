@@ -242,6 +242,8 @@ const example_file_list = [
     // "source/networking/enet/core/examples/tsn/lldp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_cpsw_app/.project/project.js",
     "source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/.project/project.js",
+    "source/networking/enet/core/examples/tsn/aafpcmlistener_app/.project/project.js",
+    "source/networking/enet/core/examples/tsn/aafpcmtalker_app/.project/project.js",
     "source/networking/enet/core/examples/ether_ring/.project/project.js",
     "source/networking/enet/core/examples/etherring_trafficgen/.project/project.js",
     "examples/pru_io/sent/encoder/firmware/.project/project.js",

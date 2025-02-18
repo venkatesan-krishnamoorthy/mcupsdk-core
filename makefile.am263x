@@ -551,6 +551,10 @@ help:
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/aafpcmlistener_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/aafpcmlistener_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/aafpcmtalker_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C source/networking/enet/core/examples/tsn/aafpcmtalker_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/ether_ring/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C source/networking/enet/core/examples/etherring_trafficgen/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/firmware/am263x-cc/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
@@ -1489,6 +1493,10 @@ BUILD_COMBO_EXAMPLE_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += gptp_lwip_cpsw_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += gptp_lwip_cpsw_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += aafpcmlistener_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += aafpcmlistener_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += aafpcmtalker_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += aafpcmtalker_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ether_ring_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += etherring_trafficgen_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sent_encoder_am263x-cc_r5fss0-0_freertos_ti-arm-clang
@@ -2990,6 +2998,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  gptp_lwip_cpsw_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ aafpcmlistener_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmlistener_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ aafpcmlistener_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmlistener_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ aafpcmtalker_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmtalker_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ aafpcmtalker_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmtalker_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  ether_ring_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C source/networking/enet/core/examples/ether_ring/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
@@ -3755,6 +3775,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_lwip_cpsw_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += gptp_lwip_cpsw_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += aafpcmlistener_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += aafpcmlistener_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += aafpcmtalker_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += aafpcmtalker_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ether_ring_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += etherring_trafficgen_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sent_encoder_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
@@ -5251,6 +5275,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  gptp_lwip_cpsw_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ aafpcmlistener_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmlistener_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ aafpcmlistener_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmlistener_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ aafpcmtalker_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmtalker_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ aafpcmtalker_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmtalker_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  ether_ring_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C source/networking/enet/core/examples/ether_ring/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
@@ -6016,6 +6052,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_lwip_cpsw_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += gptp_lwip_cpsw_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += aafpcmlistener_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += aafpcmlistener_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += aafpcmtalker_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += aafpcmtalker_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ether_ring_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += etherring_trafficgen_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sent_encoder_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -7511,6 +7551,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  gptp_lwip_cpsw_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C source/networking/enet/core/examples/tsn/gptp_lwip_cpsw/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ aafpcmlistener_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmlistener_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ aafpcmlistener_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmlistener_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ aafpcmtalker_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmtalker_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ aafpcmtalker_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C source/networking/enet/core/examples/tsn/aafpcmtalker_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  ether_ring_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C source/networking/enet/core/examples/ether_ring/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
