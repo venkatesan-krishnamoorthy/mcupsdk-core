@@ -4,15 +4,16 @@
 This section provides the performance numbers of Ethernet drivers using CPSW peripheral in MCU+ SDK
 
 # Setup Details
+
+\cond SOC_AM64X
 SOC Details           | Values          |
 ----------------------|-----------------|
 Core                  | R5F             |
 Core Operating Speed  | 800 MHz         |
 Memory Type           | MSRAM           |
 Cache status          | Enabled         |
-EVM Type              | AM243x-LP E3 / AM64X-EVM    |
+EVM Type              | AM64X-EVM    |
 \n
-\cond SOC_AM64X
 
 SOC Details           | Values          |
 ----------------------|-----------------|
@@ -23,6 +24,16 @@ Cache status          | Enabled         |
 EVM Type              | AM64X-EVM       |
 
 
+\endcond
+
+\cond SOC_AM243X
+SOC Details           | Values          |
+----------------------|-----------------|
+Core                  | R5F             |
+Core Operating Speed  | 800 MHz         |
+Memory Type           | MSRAM           |
+Cache status          | Enabled         |
+EVM Type              | AM243x-LP/AM243x-EVM   |
 \endcond
 
 # Layer 2 Performance
@@ -187,6 +198,9 @@ Number of Tx packet buffers     | 16                       |
 
 \endcond
 ### TCP Throughput
+
+\cond SOC_AM243X
+<b>AM243-LP</b>
 <table>
     <tr>
         <td style="text-align: left;"><b>Test</b></td>
@@ -203,6 +217,64 @@ Number of Tx packet buffers     | 16                       |
         <td>TCP Bidirectional</td><td>RX=93 \n TX=93</td><td>63</td>
     </tr>
 </table>
+\n
+<b>AM243-EVM</b>
+<table>
+    <tr>
+        <td style="text-align: left;"><b>Test</b></td>
+        <td style="text-align: center;"><b>Bandwidth \n (Mbps)</b></td>
+        <td style="text-align: center;"><b>CPU Load \n (%) </b></td>
+    </tr>
+    <tr>
+        <td>TCP RX</td><td>93.3</td><td>43</td>
+    </tr>
+    <tr>
+        <td>TCP TX</td><td>93</td><td>72</td>
+    </tr>
+    <tr>
+        <td>TCP Bidirectional</td><td>RX=81.5 \n TX=81.5</td><td>99</td>
+    </tr>
+</table>
+\endcond
+
+\cond SOC_AM64X
+<b>R5F core as host </b>
+<table>
+    <tr>
+        <td style="text-align: left;"><b>Test</b></td>
+        <td style="text-align: center;"><b>Bandwidth \n (Mbps)</b></td>
+        <td style="text-align: center;"><b>CPU Load \n (%) </b></td>
+    </tr>
+    <tr>
+        <td>TCP RX</td><td>93.3</td><td>43</td>
+    </tr>
+    <tr>
+        <td>TCP TX</td><td>93</td><td>72</td>
+    </tr>
+    <tr>
+        <td>TCP Bidirectional</td><td>RX=81.5 \n TX=81.5</td><td>99</td>
+    </tr>
+</table>
+
+
+<b>A53 core as host </b>
+<table>
+    <tr>
+        <td style="text-align: left;"><b>Test</b></td>
+        <td style="text-align: center;"><b>Bandwidth \n (Mbps)</b></td>
+        <td style="text-align: center;"><b>CPU Load \n (%) </b></td>
+    </tr>
+    <tr>
+        <td>TCP RX</td><td>93.5</td><td>17</td>
+    </tr>
+    <tr>
+        <td>TCP TX</td><td>93</td><td>23</td>
+    </tr>
+    <tr>
+        <td>TCP Bidirectional</td><td>RX=93 \n TX=93</td><td>40</td>
+    </tr>
+</table>
+\endcond
 
 <b>Host PC commands:</b>
 - TCP Rx and Tx (Sequential):\n
@@ -211,6 +283,99 @@ Number of Tx packet buffers     | 16                       |
     $```iperf -c <evm_ip> -d```\n
 
 ### UDP Throughput
+
+\cond SOC_AM64X
+<b>R5F core as host </b>
+<table>
+    <tr>
+        <td rowspan="2" style="text-align: left;"><b>Test</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 256B</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 512B</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 1470B</b></td>
+    </tr>
+    <tr>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+    </tr>
+    <tr>
+        <td rowspan="3">UDP RX</td>
+        <td>5</td><td>14</td><td>0.0</td>
+        <td>25</td><td>27</td><td>0.011</td>
+        <td>50</td><td>25</td><td>0.051</td>
+    </tr>
+    <tr>
+        <td>10</td><td>21</td><td>0.08</td>
+        <td>50</td><td>49</td><td>0.35</td>
+        <td>65</td><td>31</td><td>0.18</td>
+    </tr>
+    <tr>
+        <td>25</td><td>46</td><td>0.22</td>
+        <td>65</td><td>59</td><td>6.5</td>
+        <td>95</td><td>43</td><td>0.28</td>
+    </tr>
+    <tr>
+        <td>UDP RX (Max)</td>
+        <td>28</td><td>50</td><td>0.29</td>
+        <td>59</td><td>57</td><td>0.6</td>
+        <td>155</td><td>68</td><td>0.26</td>
+    </tr>
+    <tr>
+        <td>UDP TX (Max)</td>
+        <td>68</td><td>100</td><td>0.0</td>
+        <td>136</td><td>100</td><td>0.0</td>
+        <td>389</td><td>100</td><td>0.0</td>
+    </tr>
+</table>
+
+\cond SOC_AM64X
+<b>A53 core as host </b>
+<table>
+    <tr>
+        <td rowspan="2" style="text-align: left;"><b>Test</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 256B</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 512B</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 1470B</b></td>
+    </tr>
+    <tr>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+    </tr>
+    <tr>
+        <td rowspan="3">UDP RX</td>
+        <td>5</td><td>6</td><td>0.0</td>
+        <td>25</td><td>13</td><td>0.08</td>
+        <td>50</td><td>10</td><td>0.02</td>
+    </tr>
+    <tr>
+        <td>10</td><td>10</td><td>0.04</td>
+        <td>50</td><td>25</td><td>0.19</td>
+        <td>65</td><td>12</td><td>0.06</td>
+    </tr>
+    <tr>
+        <td>25</td><td>25</td><td>0.19</td>
+        <td>65</td><td>42</td><td>4.6</td>
+        <td>95</td><td>68</td><td>0.0</td>
+    </tr>
+    <tr>
+        <td>UDP RX (Max)</td>
+        <td>30</td><td>29</td><td>1</td>
+        <td>60</td><td>30</td><td>0.6</td>
+        <td>170</td><td>31</td><td>0.2</td>
+    </tr>
+    <tr>
+        <td>UDP TX (Max)</td>
+        <td>114</td><td>100</td><td>0.0</td>
+        <td>227</td><td>100</td><td>0.0</td>
+        <td>652</td><td>100</td><td>0.0</td>
+    </tr>
+</table>
+\endcond
+\endcond
+\cond SOC_AM243X
+
+<b>AM243-LP </b>
 <table>
     <tr>
         <td rowspan="2" style="text-align: left;"><b>Test</b></td>
@@ -259,6 +424,50 @@ Number of Tx packet buffers     | 16                       |
         <td>535</td><td>100</td><td>0.0</td>
     </tr>
 </table>
+
+<b>AM243-EVM </b>
+<table>
+    <tr>
+        <td rowspan="2" style="text-align: left;"><b>Test</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 256B</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 512B</b></td>
+        <td colspan="3" style="text-align: center;"><b>Datagram Length = 1470B</b></td>
+    </tr>
+    <tr>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+        <td><b>Bandwidth (Mbps)</b></td><td><b>CPU Load (%)</b></td><td><b>Packet Loss (%)</b></td>
+    </tr>
+    <tr>
+        <td rowspan="3">UDP RX</td>
+        <td>5</td><td>14</td><td>0.0</td>
+        <td>25</td><td>27</td><td>0.011</td>
+        <td>50</td><td>25</td><td>0.051</td>
+    </tr>
+    <tr>
+        <td>10</td><td>21</td><td>0.08</td>
+        <td>50</td><td>49</td><td>0.35</td>
+        <td>65</td><td>31</td><td>0.18</td>
+    </tr>
+    <tr>
+        <td>25</td><td>46</td><td>0.22</td>
+        <td>65</td><td>59</td><td>6.5</td>
+        <td>95</td><td>43</td><td>0.28</td>
+    </tr>
+    <tr>
+        <td>UDP RX (Max)</td>
+        <td>28</td><td>50</td><td>0.29</td>
+        <td>59</td><td>57</td><td>0.6</td>
+        <td>155</td><td>68</td><td>0.26</td>
+    </tr>
+    <tr>
+        <td>UDP TX (Max)</td>
+        <td>68</td><td>100</td><td>0.0</td>
+        <td>136</td><td>100</td><td>0.0</td>
+        <td>389</td><td>100</td><td>0.0</td>
+    </tr>
+</table>
+\endcond
 
 <b>Host PC commands:</b>
 - Test with datagram length of 64B:\n
