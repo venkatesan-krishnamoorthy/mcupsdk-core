@@ -69,6 +69,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/mcan/mcan_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcan/canfd_hld/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/mpu_firewall/mpu_firewall_test_am261x/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/rti/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/rti/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/sdfm/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -328,6 +329,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_canfd_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_mpu_firewall_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_rti_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_rti_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -578,6 +580,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_mpu_firewall_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am261x/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_rti_am261x-som_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/rti/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -1053,6 +1058,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_canfd_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mpu_firewall_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rti_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_rti_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1298,6 +1304,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_mpu_firewall_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am261x/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_rti_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/rti/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1773,6 +1782,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am261x-som_r5fss0-0_freertos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_canfd_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mpu_firewall_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rti_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_rti_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sdfm_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2018,6 +2028,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_mcspi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mcspi/mcspi/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_mpu_firewall_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am261x/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_rti_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/rti/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
