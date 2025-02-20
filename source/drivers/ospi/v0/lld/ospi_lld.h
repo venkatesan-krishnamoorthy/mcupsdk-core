@@ -179,7 +179,7 @@ typedef void *OSPI_DrvHandle;
 *
 *  @{
 */
-#define OSPI_NOR_PROTOCOL(cmd, data, addr, dtr) (uint32_t)(((uint32_t)(dtr) << 24) | \
+#define OSPI_NOR_PROTOCOL(cmd, addr, data, dtr) (uint32_t)(((uint32_t)(dtr) << 24) | \
                                                            ((uint32_t)(cmd) << 16) | \
                                                            ((uint32_t)(addr) << 8) | \
                                                            ((uint32_t)(data) << 0))
