@@ -498,6 +498,7 @@ int32_t OSPI_lld_enableDDR(OSPILLD_Handle hOspi)
         CSL_REG32_FINS(&pReg->CONFIG_REG,
                    OSPI_FLASH_CFG_CONFIG_REG_ENABLE_DTR_PROTOCOL_FLD,
                    TRUE);
+                   
     }
     else
     {
@@ -752,6 +753,7 @@ void OSPI_lld_setProtocol(OSPILLD_Handle hOspi, uint32_t protocol)
                 if(protocol == OSPI_NOR_PROTOCOL(8,8,8,1))
                 {
                     OSPI_lld_enableDDR(hOspi);
+                    OSPI_lld_enableDdrRdCmds(hOspi);
                     OSPI_lld_setDualOpCodeMode(hOspi);
                 }
                 if(protocol == OSPI_NOR_PROTOCOL(4,4,4,1))

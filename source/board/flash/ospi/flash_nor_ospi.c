@@ -661,12 +661,13 @@ static int32_t Flash_set888mode(Flash_Config *config, uint8_t seq)
     }
     if((seq & (1 << 2)) != 0)
     {
+        uint8_t regVal = 0x2;
         status = Flash_norOspiCmdWrite(config, devCfg->cmdWren, OSPI_CMD_INVALID_ADDR, 0, NULL, 0);
         if(status == SystemP_SUCCESS)
         {
             status = Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
         }
-        status = Flash_norOspiCmdWrite(config, 0x72, 0, 0, NULL, 0);
+        status = Flash_norOspiCmdWrite(config, 0x72, 0, 0, &regVal, 1);
         OSPI_setProtocol((OSPI_Handle)(obj->ospiHandle), gFlashToSpiProtocolMap[pCfg->protocol]);
         obj->currentProtocol = pCfg->protocol;
         if(status == SystemP_SUCCESS)
@@ -849,7 +850,9 @@ static int32_t Flash_norOspiReadId(Flash_Config *config)
     Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
     Flash_DevConfig *devCfg = config->devConfig;
     FlashCfg_ReadIDConfig *idCfg = &(devCfg->idCfg);
+    FlashCfg_ProtoEnConfig *pCfg = &(devCfg->protocolCfg);
 
+    uint8_t  seq = pCfg->enableSeq;
     uint8_t  idCode[FLASH_OSPI_JEDEC_ID_SIZE_MAX] = {0};
     uint32_t cmdAddr = OSPI_CMD_INVALID_ADDR;
     uint32_t dummyBits = 0;
@@ -859,9 +862,7 @@ static int32_t Flash_norOspiReadId(Flash_Config *config)
     if(obj->currentProtocol == FLASH_CFG_PROTO_8D_8D_8D)
     {
         dummyBits = idCfg->dummy8;
-        if(idCfg->dummy8 != 8){
-            cmdAddr = 0U;
-        }
+        cmdAddr = 0U;
         idNumBytes = 4; /* Can't read odd bytes in octal DDR */
     }
     else
@@ -876,13 +877,10 @@ static int32_t Flash_norOspiReadId(Flash_Config *config)
     {
         uint32_t manfID, devID;
 
-        manfID = (uint32_t)idCode[0];
-        devID = ((uint32_t)idCode[1] << 8) | ((uint32_t)idCode[2]);
-        if (!((manfID == config->attrs->manufacturerId) && (devID == config->attrs->deviceId)))
+        if((obj->currentProtocol == FLASH_CFG_PROTO_8D_8D_8D) &&  ((seq & (1 << 2)) != 0))
         {
-            /* Try the other 3 bytes */
             manfID = (uint32_t)idCode[3];
-            devID = ((uint32_t)idCode[4] << 8) | ((uint32_t)idCode[5]);
+            devID = ((uint32_t)idCode[0] << 8) | ((uint32_t)idCode[1]);
             if (!((manfID == config->attrs->manufacturerId) && (devID == config->attrs->deviceId)))
             {
                 status = SystemP_FAILURE;
@@ -890,8 +888,25 @@ static int32_t Flash_norOspiReadId(Flash_Config *config)
         }
         else
         {
-            /* Success, nothing to do */;
+            manfID = (uint32_t)idCode[0];
+            devID = ((uint32_t)idCode[1] << 8) | ((uint32_t)idCode[2]);
+
+            if (!((manfID == config->attrs->manufacturerId) && (devID == config->attrs->deviceId)))
+            {
+                /* Try the other 3 bytes */
+                manfID = (uint32_t)idCode[3];
+                devID = ((uint32_t)idCode[4] << 8) | ((uint32_t)idCode[5]);
+                if (!((manfID == config->attrs->manufacturerId) && (devID == config->attrs->deviceId)))
+                {
+                    status = SystemP_FAILURE;
+                }
+            }
+            else
+            {
+                /* Success, nothing to do */;
+            }
         }
+        
     }
 
     return status;
@@ -1263,6 +1278,14 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
                 Flash_norOspiEraseSector(config, sect);
                 Flash_norOspiWrite(config, phyTuningOffset, (uint8_t *)phyTuningData, phyTuningDataSize);
                 attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+                
+                readDataCapDelay = 4U;
+                while((attackVectorStatus != SystemP_SUCCESS) && (readDataCapDelay > 0U))
+                {
+                    OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
+                    attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+                    readDataCapDelay--;
+                }
             }
 
             if(attackVectorStatus == SystemP_SUCCESS)
