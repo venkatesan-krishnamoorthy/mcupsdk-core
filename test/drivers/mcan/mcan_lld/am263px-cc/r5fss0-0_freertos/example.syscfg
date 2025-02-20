@@ -1,22 +1,26 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.21.2+3837"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const eeprom          = scripting.addModule("/board/eeprom/eeprom", {}, false);
+const eeprom1         = eeprom.addInstance();
 const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1            = i2c.addInstance();
+const i2c2            = i2c.addInstance();
 const mcan            = scripting.addModule("/drivers/mcan/mcan", {}, false);
 const mcan1           = mcan.addInstance();
 const mcan2           = mcan.addInstance();
 const mcan3           = mcan.addInstance();
 const mcan4           = mcan.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -45,20 +49,25 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+eeprom1.$name = "CONFIG_EEPROM0";
+
 i2c1.$name           = "CONFIG_I2C0";
 i2c1.I2C.$assign     = "I2C2";
 i2c1.I2C.SCL.$assign = "UART0_RTSn";
 i2c1.I2C.SDA.$assign = "UART0_CTSn";
+i2c1.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
 
-mcan1.$name           = "CONFIG_MCAN0";
-mcan1.MCAN.$assign    = "MCAN0";
-mcan1.MCAN.RX.$suggestSolution = "MCAN0_RX";
-mcan1.MCAN.TX.$suggestSolution = "MCAN0_TX";
+i2c2.$name               = "EEPROM_I2C_CONFIG";
+eeprom1.peripheralDriver = i2c2;
+i2c2.I2C.SCL.$assign     = "I2C0_SCL";
+i2c2.I2C.SDA.$assign     = "I2C0_SDA";
+i2c2.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template1";
 
-mcan2.$name           = "CONFIG_MCAN1";
-mcan2.MCAN.$assign    = "MCAN1";
-mcan2.MCAN.RX.$suggestSolution = "MCAN1_RX";
-mcan2.MCAN.TX.$suggestSolution = "MCAN1_TX";
+mcan1.$name        = "CONFIG_MCAN0";
+mcan1.MCAN.$assign = "MCAN0";
+
+mcan2.$name        = "CONFIG_MCAN1";
+mcan2.MCAN.$assign = "MCAN1";
 
 mcan3.$name           = "CONFIG_MCAN2";
 mcan3.MCAN.RX.$assign = "MCAN2_RX";
@@ -66,11 +75,20 @@ mcan3.MCAN.TX.$assign = "MCAN2_TX";
 
 mcan4.$name = "CONFIG_MCAN3";
 
+const mcan_v1_template  = scripting.addModule("/drivers/mcan/v1/mcan_v1_template", {}, false);
+const mcan_v1_template1 = mcan_v1_template.addInstance({}, false);
+mcan_v1_template1.$name = "drivers_mcan_v1_mcan_v1_template0";
+mcan1.child             = mcan_v1_template1;
+mcan2.child             = mcan_v1_template1;
+mcan3.child             = mcan_v1_template1;
+mcan4.child             = mcan_v1_template1;
+
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -286,6 +304,11 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+i2c2.I2C.$suggestSolution      = "I2C0";
+mcan1.MCAN.RX.$suggestSolution = "MCAN0_RX";
+mcan1.MCAN.TX.$suggestSolution = "MCAN0_TX";
+mcan2.MCAN.RX.$suggestSolution = "MCAN1_RX";
+mcan2.MCAN.TX.$suggestSolution = "MCAN1_TX";
 mcan3.MCAN.$suggestSolution    = "MCAN2";
 mcan4.MCAN.$suggestSolution    = "MCAN3";
 mcan4.MCAN.RX.$suggestSolution = "SDFM0_D3";
