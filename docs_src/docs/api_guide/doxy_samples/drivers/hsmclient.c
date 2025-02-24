@@ -347,6 +347,198 @@ Emulation = 1
 
 //![hsm_services_example_ospi]
 
+//![hsm_services_example_ospi_am261x]
+[HSM_CLIENT] New Client Registered with Client Id = 0
+ Starting OSPI Bootloader ...
+[BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
+[BOOTLOADER_PROFILE] Boot Media Clock : 133.333 MHz
+[BOOTLOADER_PROFILE] Boot Image Size  : 0 KB
+[BOOTLOADER_PROFILE] Cores present    :
+r5f0-0
+[BOOTLOADER PROFILE] System_init                      :        259us
+[BOOTLOADER PROFILE] Drivers_open                     :         91us
+[BOOTLOADER PROFILE] LoadHsmRtFw                      :      13409us
+[BOOTLOADER PROFILE] Board_driversOpen                :      62004us
+[BOOTLOADER PROFILE] CPU load                         :         79us
+[BOOTLOADER_PROFILE] SBL Total Time Taken             :      75848us
+
+Image loading done, switching to application ...
+
+ [HSM_CLIENT] New Client Registered with Client Id = 2
+
+ [HSM CLIENT] Sending UID Request to HSM Server..                                                                                            
+                                                                                                                                             
+ [HSM CLIENT] Device UID Successfully retrived from the HSM Server.                                                                          
+                                                                                                                                             
+                                                                                                                                             
+
+ [HSM CLIENT_PROFILE] Time taken by GetUID Request : 38us                                                                                    
+
+
+
+ [HSM CLIENT] Device UID is : 7CC1C9926C58DE089FD806633FCAE579D65A3DA22E58284FB4F11D610DF00DDDF3BDDD2D2E6B0D6E65EF788CBBD15272A0C4CD9EC4A1893BF4ADB3F38DE5A979[HSM CLIENT] TIFS-MCU 64bit version string = 0
+x0015506000a0001
+
+
+
+ [HSM CLIENT] TIFS-MCU Information
+
+[Soc Type]          = AM261X
+
+[Device Type]       = HS-FS
+
+[HSM Type]          = HSM_V1
+
+[Bin Type]          = STANDARD
+
+[TIFS-MCU Version]  = 10.0.1 
+
+
+
+RNG output word -- 0x11835797
+
+RNG output word -- 0xA70FB732
+
+RNG output word -- 0x3872E9E1
+
+RNG output word -- 0x3A6C3BE1
+
+
+
+
+ [HSM CLIENT_PROFILE] Time taken by get RNG request : 361us
+
+Firewall request #1 status = 11111111 11111111
+
+Firewall Id = 13
+
+Firewall region number = 3
+
+Start Address = 0x502f0000
+
+End Address = 0x502f0fff
+
+Aid Config = 0x10
+
+Supervisor Read = 1
+
+Supervisor Write = 1
+
+Supervisor Execute = 1
+
+User Read = 1
+
+User Write = 1
+
+User Execute = 1
+
+Non Secure Access = 1
+
+Emulation = 1
+
+
+
+Firewall Id = 15
+
+Firewall region number = 3
+
+Start Address = 0x502f0000
+
+End Address = 0x502f0fff
+
+Aid Config = 0x10
+
+Supervisor Read = 1
+
+Supervisor Write = 1
+
+Supervisor Execute = 1
+
+User Read = 1
+
+User Write = 1
+
+User Execute = 1
+
+Non Secure Access = 1
+
+Emulation = 1
+
+
+
+Firewall request #2 status = 11111111 11111111
+
+Firewall Id = 5
+
+Firewall region number = 0
+
+Start Address = 0x72000400
+
+End Address = 0x720007ff
+
+Aid Config = 0x20
+
+Supervisor Read = 0
+
+Supervisor Write = 0
+
+Supervisor Execute = 0
+
+User Read = 0
+
+User Write = 0
+
+User Execute = 0
+
+Non Secure Access = 1
+
+Emulation = 1
+//![hsm_services_example_ospi_am261x]
+
+ 
+//![mpu_firewall_services_demo_ospi_am261x]
+[HSM_CLIENT] New Client Registered with Client Id = 0
+ Starting QSPI Bootloader ...
+[BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
+[BOOTLOADER_PROFILE] Boot Media Clock : 80.000 MHz
+[BOOTLOADER_PROFILE] Boot Image Size  : 28 KB
+[BOOTLOADER_PROFILE] Cores present    :
+r5f0-1
+r5f0-0
+[BOOTLOADER PROFILE] System_init                      :        286us
+[BOOTLOADER PROFILE] Drivers_open                     :         75us
+[BOOTLOADER PROFILE] LoadHsmRtFw                      :      14503us
+[BOOTLOADER PROFILE] Board_driversOpen                :       2975us
+[BOOTLOADER PROFILE] CPU load                         :       2292us
+[BOOTLOADER_PROFILE] SBL Total Time Taken             :      20134us
+
+Image loading done, switching to application ...                                                                                             
+                                                                                                                                             
+                                                                                                                                             
+                                                                                                                                             
+ [HSM_CLIENT] New Client Registered with Client Id = 2                                                                                       
+                                                                                                                                             
+                                                                                                                                             
+
+ Enabling the interrupt for both address violation and protection violation for MPU_R5SS0_CORE1_AHB                                          
+
+Firewall request #1 status = 11111111 11111111
+
+
+
+ Permissions for peripheral region(0x52300000 - 0x523003FF) are revoked for R5FSS0_1 
+
+
+
+ [HSM_CLIENT] New Client Registered with Client Id = 2
+
+ 
+
+ Interrupt registeration successful, notifying remote core to read CSL_UART0_U_BASE register 
+
+Success
+//![mpu_firewall_services_demo_ospi_am261x]
+
 //![mpu_firewall_services_demo_qspi]
  [HSM_CLIENT] New Client Registered with Client Id = 0
  Starting QSPI Bootloader ...

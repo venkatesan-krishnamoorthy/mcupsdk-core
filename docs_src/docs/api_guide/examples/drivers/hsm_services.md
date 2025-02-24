@@ -13,7 +13,7 @@ Three services are available.
 
 # Supported Combinations {#EXAMPLES_HSM_SERVICES_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM261X
 
  Parameter             | Value
  ----------------------|-----------
@@ -35,6 +35,12 @@ Three services are available.
 ### Sample output
 
 On successful boot, following message will be seen on terminal.
+
+\cond SOC_AM261X
+
+\snippet hsmclient.c hsm_services_example_ospi_am261x
+
+\endcond
 
 \cond SOC_AM263X
 

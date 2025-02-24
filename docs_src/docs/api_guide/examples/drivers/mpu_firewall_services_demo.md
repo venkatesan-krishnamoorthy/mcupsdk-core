@@ -53,3 +53,9 @@ the R5F application has not been side-loaded yet.
 
 \endcond
 
+\cond SOC_AM261X
+
+\snippet hsmclient.c mpu_firewall_services_demo_ospi_am261x
+
+\endcond
+

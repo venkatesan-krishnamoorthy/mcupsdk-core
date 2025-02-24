@@ -11,6 +11,7 @@ DTHE provides the following features:
 	* AES: 128, 192, and 256 bit keys
 	* Cipher modes ECB, CTR, CBC, GCM, CCM, F9, F8, XTS, CFB, ICM, CTR,
       CBC-MAC, CMAC based on AES
+\cond !(SOC_AM261X)
 * Asymmetric cryptography
 	* High performance PKA (public key engine) for large vector math/modulus operation
 	* RSA2048, RSA3092, RSA4096
@@ -27,6 +28,26 @@ DTHE provides the following features:
     - <b>EIP57T</b> : SHA/MD5 accelerator
     - <b>EIP36T</b> : AES accelerator
     - <b>EIP76T</b> : True Random Number Generation
+\endcond
+
+\cond SOC_AM261X
+* Asymmetric cryptography
+	* High performance PKE (public key engine) for large vector math/modulus operation
+	* RSA2048, RSA3092, RSA4096
+	* ECC (accelerated using PKE module)
+* Hashing
+	* MD5, SHA-1, SHA-224, SHA-256, SHA-384 and SHA-512
+	* HMAC-SHA256, HMAC-SHA512  keyed hashing
+* Random number generator
+	* 128 bit True random number generator
+    * 128 bit Deterministic random bit generator
+
+- This module wraps following IP inside
+    - <b>EIP29T</b> : PKE accelerator
+    - <b>EIP57T</b> : SHA/MD5 accelerator
+    - <b>EIP36T</b> : AES accelerator
+    - <b>EIP76T</b> : True Random Number Generation
+\endcond
 
 Apart from this the module holds HW accelerator for <b>CRC and Checksum</b>.
 
@@ -42,10 +63,19 @@ The IP supports the following features:
 (x^32+x^28+x^27+x^26+x^25+x^23+x^22+x^20+x^19+x^18+x^14+x^13+ x^11+x^10+x^9+x^8+x^6+1)
 *  Supports TCP CheckSum (CSUM)
 
+\cond !(SOC_AM261X)
 ### Features Supported In Driver
 \note True Random Number Generation (TRNG) and PKA (Public Key Accelerator) are not supported from R5F on HS-SE/HS-FS devices as these are secure assets and are locked for HSM.
 
 \note TRNG and PKA are single context engines and hence are secure assets on HS-SE/HS-FS devices.
+\endcond
+
+\cond SOC_AM261X
+### Features Supported In Driver
+\note True Random Number Generation (TRNG) and PKE (Public Key Engine) are not supported from R5F on HS-SE/HS-FS devices as these are secure assets and are locked for HSM.
+
+\note TRNG and PKE are single context engines and hence are secure assets on HS-SE/HS-FS devices.
+\endcond
 
 \cond SOC_AM273X || SOC_AWR294X
 
@@ -66,10 +96,23 @@ The IP supports the following features:
         - <b>AES-CFB</b>(128/192/256)(<b>C</b>ipher <b>F</b>eed<b>B</b>ack)
         - <b>AES-CMAC</b>(128/256)(<b>C</b>ipher-based <b>M</b>essage <b>A</b>uthentication <b>C</b>ode)
 \endcond
+
+\cond !(SOC_AM261X)
 ### Block diagram
 
 \imageStyle{dthe_block_diagram.png,width:60%}
 \image html dthe_block_diagram.png "DTHE block diagram"
+
+\endcond
+
+\cond SOC_AM261X
+
+### Block diagram
+
+\imageStyle{dthe_block_diagram_am261x.png,width:60%}
+\image html dthe_block_diagram_am261x.png "DTHE block diagram"
+
+\endcond
 
 ### Functional description
 - #DTHE_open() checks if the #DTHE_Handle is already open and if it is not open it continues to initialize the #DTHE_Handle with the desired SOC configuration.
