@@ -17491,7 +17491,7 @@
             "example.general"
         ],
         "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_stog_r5f",
+        "name": "tog_app",
         "location": "../../examples/sdl/stog/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
@@ -17523,7 +17523,7 @@
             "example.general"
         ],
         "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is R5FSS0-1 running NORTOS.",
-        "name": "sdl_stog_r5f",
+        "name": "tog_app",
         "location": "../../examples/sdl/stog/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
@@ -17619,7 +17619,7 @@
             "example.general"
         ],
         "description": "This example verifies VTM operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "vtm_example",
+        "name": "vtm_app",
         "location": "../../examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
@@ -17652,7 +17652,7 @@
             "example.general"
         ],
         "description": "This example verifies VTM operation CPU is R5FSS0-1 running NORTOS.",
-        "name": "vtm_example",
+        "name": "vtm_app",
         "location": "../../examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM261-SOM-EVM"
