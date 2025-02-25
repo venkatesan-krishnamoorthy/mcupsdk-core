@@ -196,7 +196,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-#if !defined (SOC_AM263PX)
+#if !defined (SOC_AM263PX) && !defined (SOC_AM261X) 
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_QSPI) != SDL_PASS)
@@ -302,6 +302,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
 #endif
 
 #if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD) != SDL_PASS)
@@ -398,6 +399,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_MBOX) != SDL_PASS)
@@ -422,7 +424,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-#if !defined (SOC_AM263PX)
+#if !defined (SOC_AM263PX) && !defined (SOC_AM261X) 
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_QSPI) != SDL_PASS)
@@ -472,7 +474,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_PDSP0) != SDL_PASS)
@@ -509,6 +511,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_DAP) != SDL_PASS)
@@ -802,7 +805,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
 #endif
 
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_redErrorClear(SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD) != SDL_PASS)
@@ -1752,6 +1755,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     /* Test cases for SDL_ECC_BUS_SAFETY_MSS_secErrorClear with different input parameter */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -1765,6 +1769,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+#endif
     /* Test cases for SDL_ECC_BUS_SAFETY_MSS_secErrorClear with different input parameter */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -2066,7 +2071,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-#if !defined (SOC_AM263PX)
+#if !defined (SOC_AM263PX) && !defined (SOC_AM261X) 
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_MSS_QSPI,&status) != SDL_PASS)

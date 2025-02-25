@@ -596,7 +596,6 @@ void test_edmaATransfer(uint32_t busSftyNode, uint32_t dmaCh, uint32_t tcc,uint3
 
 }
 
-
 #if defined (SOC_AM273X) ||  defined(SOC_AWR294X)
 #if defined (SUBSYS_MSS)
 

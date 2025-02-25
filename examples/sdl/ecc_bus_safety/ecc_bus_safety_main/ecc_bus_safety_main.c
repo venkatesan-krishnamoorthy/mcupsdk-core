@@ -321,12 +321,26 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_MCRC_SEC_Test,                    "MSS_MCRC_SEC_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MCRC_DED_Test,                    "MSS_MCRC_DED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MCRC_RED_Test,                    "MSS_MCRC_RED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
-#if !defined (SOC_AM263PX) && !defined (SOC_AM261X)
+#if defined (SOC_AM263X)
     /* MSS_QSPI */
     {SDL_ECC_BUS_SAFETY_MSS_QSPI_SEC_Test,                    "MSS_QSPI_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_QSPI_DED_Test,                    "MSS_QSPI_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_QSPI_RED_Test,                    "MSS_QSPI_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+#elif defined (SOC_AM261X)
+    /* MSS_OSPI */
+    {SDL_ECC_BUS_SAFETY_MSS_OSPI_SEC_Test,                    "MSS_OSPI_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_OSPI_DED_Test,                    "MSS_OSPI_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_OSPI_RED_Test,                    "MSS_OSPI_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    /* MSS_USBSS_RD */
+    {SDL_ECC_BUS_SAFETY_MSS_USBSS_RD_SEC_Test,                "MSS_USBSS_RD_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_USBSS_RD_DED_Test,                "MSS_USBSS_RD_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_USBSS_RD_RED_Test,                "MSS_USBSS_RD_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    /* MSS_USBSS_WR */
+    {SDL_ECC_BUS_SAFETY_MSS_USBSS_WR_SEC_Test,                "MSS_USBSS_WR_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_USBSS_WR_DED_Test,                "MSS_USBSS_WR_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_USBSS_WR_RED_Test,                "MSS_USBSS_WR_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
 #endif
+
     /* MSS_STM_STIM */
     {SDL_ECC_BUS_SAFETY_MSS_STM_STIM_SEC_Test,                "MSS_STM_STIM_SEC_Test in Interrupt  Method",      SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_STM_STIM_DED_Test,                "MSS_STM_STIM_DED_Test in Interrupt  Method",      SDL_APP_NOT_RUN },
@@ -437,7 +451,7 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_MMC_SEC_Test,                     "MSS_MMC_S_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MMC_DED_Test,                     "MSS_MMC_S_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MMC_RED_Test,                     "MSS_MMC_S_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
-    #if !defined(SOC_AM263PX) && !defined (SOC_AM261X)
+    #if !defined(SOC_AM263PX) || defined (SOC_AM261X)
     /* Node MSS_GPMC */
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_SEC_Test,                    "MSS_GPMC_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_Test,                    "MSS_GPMC_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
@@ -457,6 +471,12 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_MAIN_VBUSP_RED_Test,              "MAIN_VBUSP_RED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
     /* Node _PERI_VBUSP */
     {SDL_ECC_BUS_SAFETY_MSS_PERI_VBUSP_RED_Test,              "PERI_VBUSP_RED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
+#if defined (SOC_AM261X)
+    /* Node MSS_CPSW */
+    {SDL_ECC_BUS_SAFETY_MSS_CPSW_SEC_Test,                    "MSS_CPSW_SEC_Test in Interrupt Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_CPSW_DED_Test,                    "MSS_CPSW_DED_Test in Interrupt Method",          SDL_APP_NOT_RUN },
+    {SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_Test,                    "MSS_CPSW_RED_Test in Interrupt Method",          SDL_APP_NOT_RUN },
+#endif
 #endif
     {NULL,                                                    "TERMINATING CONDITION",                            SDL_APP_NOT_RUN }
 };

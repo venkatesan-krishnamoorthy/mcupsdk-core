@@ -519,7 +519,11 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
+#if defined (SOC_AM261X)
+        if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_DAP+30U, &status) != SDL_EBADARGS)
+#else
         if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_DAP+2U, &status) != SDL_EBADARGS)
+#endif
         {
             testStatus = SDL_APP_TEST_FAILED;
         }
@@ -578,7 +582,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-#if !defined (SOC_AM263PX)
+#if !defined (SOC_AM263PX) && !defined (SOC_AM261X) 
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,0XCA000000U, writeData) != SDL_EBADARGS)
@@ -690,7 +694,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-#if !defined (SOC_AM263PX)
+#if !defined (SOC_AM263PX) && !defined (SOC_AM261X) 
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,0XCA000000U, writeData) != SDL_EBADARGS)
