@@ -39,7 +39,16 @@ SECTIONS
 
     .bss.filebuf (NOLOAD) : { KEEP(*(.bss.filebuf)) } > MSRAM_2
 
-    .bss.nocache (NOLOAD) : { KEEP(*(.bss.nocache)) } > NON_CACHE_MEM
+    .bss.nocache (NOLOAD) : {
+        __bss_nocache_start__ = .;
+        __BSS_NOCACHE_START = .;
+
+        KEEP(*(.bss.nocache))
+
+        __BSS_NOCACHE_END = .;
+        __bss_nocache_end__ = .;
+        
+    } > NON_CACHE_MEM
 
     .bss : {
         __bss_start__ = .;
