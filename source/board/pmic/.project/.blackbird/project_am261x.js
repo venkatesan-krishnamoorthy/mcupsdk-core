@@ -4,34 +4,34 @@ let device = "am261x";
 
 const files_r5f = {
     common: [
+        "pmic_tps653860xx.c",
+        "pmic.c",
+        "pmic_common.c",
         "pmic_core.c",
-        "pmic_esm.c",
         "pmic_io.c",
-        "pmic_irq.c",
         "pmic_power.c",
         "pmic_wdg.c",
-        "pmic.c",
-        "pmic_lld.c",
-        "pmic_tps65036xx.c"
+        "pmic_lld.c"
     ],
 };
 
 const defines = {
     common: [
-        "DERBY",
+        "BLACKBIRD",
     ],
 };
 
 const filedirs = {
     common: [
-        "pmic_lld/derby/src",
+        "pmic_lld/blackbird/src",
     ],
 };
 
 const includes = {
     common: [
         "../",
-        "pmic_lld/derby/include",
+        "pmic_lld/blackbird/src",
+        "pmic_lld/blackbird/include",
     ],
 };
 
@@ -44,10 +44,10 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "../..");
     property.type = "library";
-    property.name = "pmic_derby";
+    property.name = "pmic_blackbird";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
-    property.tag = "derby";
+    property.tag = "blackbird";
 
     return property;
 }
@@ -55,9 +55,9 @@ function getComponentProperty() {
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
-    build_property.defines = defines;
     build_property.filedirs = filedirs;
     build_property.includes = includes;
+    build_property.defines = defines;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
     }
