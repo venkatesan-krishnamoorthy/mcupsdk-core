@@ -41,9 +41,6 @@
 #include <security/security_common/drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 
-#define MAX_HSMRT_SIZE_IN_BYTES (184 * 1024U)
-
-const uint8_t gHsmRtFw[MAX_HSMRT_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")));
 
 
 extern HsmClient_t gHSMClient ;
@@ -103,6 +100,8 @@ int main(void)
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
 
+    Bootloader_socInitL2MailBoxMemory();
+
     /* 
         Calculate the HSM Runtime image size from the flash offset specified. 
     */
@@ -111,14 +110,14 @@ int main(void)
     /* 
         Read the HSM Runtime image from the flash offset specified. 
     */
-    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) gHsmRtFw, hsmrt_size);
-    CacheP_wb((void *)gHsmRtFw, hsmrt_size, CacheP_TYPE_ALL);
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) HSMRT_LOAD_ADDRESS, hsmrt_size);
+    CacheP_wb((void *)HSMRT_LOAD_ADDRESS, hsmrt_size, CacheP_TYPE_ALL);
 
-    Bootloader_socInitL2MailBoxMemory();
+    
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, (uint8_t *) HSMRT_LOAD_ADDRESS, hsmrt_size);
 
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
