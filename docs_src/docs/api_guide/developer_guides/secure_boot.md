@@ -275,6 +275,13 @@ For signing the binaries, two different scripts are used:
 
 ### Generating Secure Boot Image
 
+#### HSMRt Image Generation 
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\note
+The out of box HSMRt image that is provided, is for HSFS device. In order to do a complete secure boot, HSMRt needs to be rebuilt with TIFS-MCU package for HSSE device. For more information please follow the build steps for HSMRt image in TIFS-MCU documentation.
+\endcond 
+
 #### SBL Image Generation {#SBL_SECURE_IMAGE}
 
 \cond SOC_AM64X || SOC_AM243X

@@ -43,7 +43,7 @@ DTHE provides the following features:
     * 128 bit Deterministic random bit generator
 
 - This module wraps following IP inside
-    - <b>EIP29T</b> : PKE accelerator
+	- <b>PKEv4_DPA</b> : PKE accelerator
     - <b>EIP57T</b> : SHA/MD5 accelerator
     - <b>EIP36T</b> : AES accelerator
     - <b>EIP76T</b> : True Random Number Generation
