@@ -73,7 +73,7 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
     int32_t status = SystemP_SUCCESS;
     uint32_t offset;
     uint32_t fileSize;
-    uint32_t eraseBlkSize;
+    uint32_t eraseSctSize;
     uint32_t flashSize;
     FILE *fp;
 
@@ -118,13 +118,13 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
         }    
         else
         {
-            eraseBlkSize = flashAttrs->blockSize;
+            eraseSctSize = flashAttrs->sectorSize;
             flashSize = flashAttrs->flashSize;
 
-            if( (offset % eraseBlkSize) != 0)
+            if( (offset % eraseSctSize) != 0)
             {
-                DebugP_log(" [FLASH WRITER] Flash offset MUST be multiple of erase block size of 0x%08x !!!\r\n",
-                    eraseBlkSize
+                DebugP_log(" [FLASH WRITER] Flash offset MUST be multiple of erase sector size of 0x%08x !!!\r\n",
+                    eraseSctSize
                     );
                 status = SystemP_FAILURE;
             }
@@ -162,7 +162,7 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
         if(optype == '2')
         {
             /* Operation is FLASH */
-            uniflashHeader.operationTypeAndFlags = BOOTLOADER_UNIFLASH_OPTYPE_FLASH;
+            uniflashHeader.operationTypeAndFlags = BOOTLOADER_UNIFLASH_OPTYPE_FLASH_SECTOR;
         }
         else if(optype == '3')
         {

@@ -59,6 +59,7 @@ void ospi_dual_flash_io_main(void *args)
 
 #if defined (SOC_AM263PX) || defined (SOC_AM261X)
     board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+    board_flash_reset(gOspiHandle[CONFIG_OSPI1]);
 #endif
 
     /* Open Flash drivers with OSPI instance as input */

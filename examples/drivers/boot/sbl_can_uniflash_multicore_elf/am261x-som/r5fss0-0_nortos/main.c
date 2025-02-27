@@ -54,7 +54,7 @@ extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
 void board_flash_reset(OSPI_Handle oHandle);
 void mcanEnableTransceiver(void);
-int32_t enableOspiReset(void);
+int32_t enableOspiResetSignal(uint16_t enable);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -184,7 +184,7 @@ int main(void)
             /* Release the ospi reset line */
             if (status == SystemP_SUCCESS)
             {
-                status = enableOspiReset();
+                status = enableOspiResetSignal(FALSE);
             }
 
             /* Run CPUs */

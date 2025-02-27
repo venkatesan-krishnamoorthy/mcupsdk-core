@@ -51,7 +51,7 @@ extern HsmClient_t gHSMClient ;
 uint32_t gRunApp;
 
 void mcanEnableTransceiver(void);
-int32_t enableOspiReset(void);
+int32_t enableOspiResetSignal(uint16_t enable);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -192,7 +192,7 @@ int main()
             /* Release the ospi reset line */
             if (status == SystemP_SUCCESS)
             {
-                status = enableOspiReset();
+                status = enableOspiResetSignal(FALSE);
             }
 
             /* Run CPUs */

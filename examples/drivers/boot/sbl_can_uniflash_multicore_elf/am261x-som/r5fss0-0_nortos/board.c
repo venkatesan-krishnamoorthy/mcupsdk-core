@@ -62,7 +62,7 @@ void mcanEnableTransceiver(void)
     
 }
 
-int32_t enableOspiReset(void)
+int32_t enableOspiResetSignal(uint16_t enable)
 {
     return SystemP_SUCCESS;
 }

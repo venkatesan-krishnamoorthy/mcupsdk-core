@@ -63,38 +63,42 @@ void mcanEnableTransceiver(void)
  * to allow OSPI Reset to be possible.
  */
 
-int32_t enableOspiReset(void)
+int32_t enableOspiResetSignal(uint16_t enable)
 {
-    int32_t  status = SystemP_SUCCESS;
-    static TCA6408_Config  gTCA6408_Config;
-    TCA6408_Params      TCA6408Params;
+    int32_t status = SystemP_SUCCESS;
+    static TCA6408_Config gTCA6408_Config;
+    TCA6408_Params TCA6408Params;
     TCA6408_Params_init(&TCA6408Params);
-    TCA6408Params.i2cAddress  = 0x20U;
-    TCA6408Params.i2cInstance = CONFIG_I2C0;
+    TCA6408Params.i2cAddress = 0x20U;
 
     status = TCA6408_open(&gTCA6408_Config, &TCA6408Params);
 
-    /* Configure State */
-    status = TCA6408_setOutput(
-                    &gTCA6408_Config,
-                    IO_EXP_BP_BO_MUX_EN_LINE,
-                    TCA6408_OUT_STATE_LOW);
-
     /* Configure as output  */
     status += TCA6408_config(
-                    &gTCA6408_Config,
-                    IO_EXP_BP_BO_MUX_EN_LINE,
-                    TCA6408_MODE_OUTPUT);
+        &gTCA6408_Config,
+        IO_EXP_BP_BO_MUX_EN_LINE,
+        TCA6408_MODE_OUTPUT);
+    if (enable == TRUE)
+    {
+        /* Configure State */
+        status = TCA6408_setOutput(
+            &gTCA6408_Config,
+            IO_EXP_BP_BO_MUX_EN_LINE,
+            TCA6408_OUT_STATE_HIGH);
+    }
+    else
+    {
+        /* Configure State */
+        status = TCA6408_setOutput(
+            &gTCA6408_Config,
+            IO_EXP_BP_BO_MUX_EN_LINE,
+            TCA6408_OUT_STATE_LOW);
+    }
 
-    if(status != SystemP_SUCCESS)
+    if (status != SystemP_SUCCESS)
     {
         DebugP_log("Failed to enable OSPI Reset Signal\r\n");
         TCA6408_close(&gTCA6408_Config);
-    }
-
-    if(SystemP_FAILURE == status)
-    {
-        /* Exit gracefully */
     }
 
     return status;

@@ -53,6 +53,12 @@ void board_flash_reset(OSPI_Handle oHandle)
         /* Now toggle the ospi reset line */
         OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
         OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
+        
+        status = enableOspiResetSignal(FALSE);
+        if (status == SystemP_FAILURE)
+        {
+            DebugP_log("Failed to disable the ospi reset line!\r\n");
+        }
     }
     else
     {
@@ -62,7 +68,7 @@ void board_flash_reset(OSPI_Handle oHandle)
 
 
 /*
- * BP_BO_MUX_EN is set high in Board_driversOpen to enable mcan transceiver.
+ * BP_BO_MUX_EN is set high in Board_driversOpen
  * This API pulls this signal to low once the application is received,
  * to allow OSPI Reset to be possible.
  */
@@ -82,6 +88,7 @@ int32_t enableOspiResetSignal(uint16_t enable)
                     &gTCA6408_Config,
                     IO_EXP_BP_BO_MUX_EN_LINE,
                     TCA6408_MODE_OUTPUT);
+
     if(enable == TRUE)
     {
         /* Configure State */

@@ -88,7 +88,7 @@ const templates_lp =
         options: template_options_lp
     },
     {
-        input: ".project/templates/am261x/sbl/sbl_ospi/am261x-som/board.c.xdt",
+        input: ".project/templates/am261x/sbl/sbl_ospi/am261x-lp/board.c.xdt",
         output: "../board.c",
         options: template_options_lp
     }
