@@ -52,11 +52,11 @@
 /**********************************************************************
  *************************** Local Functions **************************
  **********************************************************************/;
-static void dis_eventbuf_intr(dwc_usb3_device_t *dev, int bufno);
-static void ena_eventbuf_intr(dwc_usb3_device_t *dev, int bufno);
-static void update_eventbuf_count(dwc_usb3_device_t *dev, int bufno, int cnt);
-static int get_eventbuf_count(dwc_usb3_device_t *dev, int bufno);
-static u32 get_eventbuf_event(dwc_usb3_device_t *dev, int bufno, int size);
+static void dis_eventbuf_intr(volatile dwc_usb3_device_t *dev, int bufno);
+static void ena_eventbuf_intr(volatile dwc_usb3_device_t *dev, int bufno);
+static void update_eventbuf_count(volatile dwc_usb3_device_t *dev, int bufno, int cnt);
+static int get_eventbuf_count(volatile dwc_usb3_device_t *dev, int bufno);
+static u32 get_eventbuf_event(volatile dwc_usb3_device_t *dev, int bufno, int size);
 
 /* counter to track excess events */
 int msg_cnt __attribute__((section(".usbCxtRam")));;
@@ -64,7 +64,7 @@ int msg_cnt __attribute__((section(".usbCxtRam")));;
 /**
  * This routine enables the Event Buffer interrupt.
  */
-static void ena_eventbuf_intr(dwc_usb3_device_t *dev, int bufno)
+static void ena_eventbuf_intr(volatile dwc_usb3_device_t *dev, int bufno)
 {
 	u32 eventsiz;
 
@@ -78,7 +78,7 @@ static void ena_eventbuf_intr(dwc_usb3_device_t *dev, int bufno)
 /**
  * This routine disables the Event Buffer interrupt.
  */
-static void dis_eventbuf_intr(dwc_usb3_device_t *dev, int bufno)
+static void dis_eventbuf_intr(volatile dwc_usb3_device_t *dev, int bufno)
 {
 	u32 eventsiz;
 
@@ -93,7 +93,7 @@ static void dis_eventbuf_intr(dwc_usb3_device_t *dev, int bufno)
  * This routine disables the Event Buffer interrupt and flushes any pending
  * events from the buffer.
  */
-void dwc_usb3_dis_flush_eventbuf_intr(dwc_usb3_device_t *dev, int bufno)
+void dwc_usb3_dis_flush_eventbuf_intr(volatile dwc_usb3_device_t *dev, int bufno)
 {
 	u32 cnt;
 
@@ -109,7 +109,7 @@ void dwc_usb3_dis_flush_eventbuf_intr(dwc_usb3_device_t *dev, int bufno)
 /**
  * This routine reads the current Event Buffer count.
  */
-static int get_eventbuf_count(dwc_usb3_device_t *dev, int bufno)
+static int get_eventbuf_count(volatile dwc_usb3_device_t *dev, int bufno)
 {
 	u32 cnt;
 
@@ -120,7 +120,7 @@ static int get_eventbuf_count(dwc_usb3_device_t *dev, int bufno)
 /**
  * This routine writes the Event Buffer count.
  */
-static void update_eventbuf_count(dwc_usb3_device_t *dev, int bufno, int cnt)
+static void update_eventbuf_count(volatile dwc_usb3_device_t *dev, int bufno, int cnt)
 {
 	dwc_wr32(dev, &dev->core_global_regs->geventbuf[bufno].geventcnt, cnt);
 }
@@ -128,7 +128,7 @@ static void update_eventbuf_count(dwc_usb3_device_t *dev, int bufno, int cnt)
 /**
  * This routine fetches the next event from the Event Buffer.
  */
-static u32 get_eventbuf_event(dwc_usb3_device_t *dev, int bufno, int size)
+static u32 get_eventbuf_event(volatile dwc_usb3_device_t *dev, int bufno, int size)
 {
 	u32 event;
 
@@ -142,8 +142,8 @@ static u32 get_eventbuf_event(dwc_usb3_device_t *dev, int bufno, int size)
 /**
  * This routine initializes an Event Buffer.
  */
-void dwc_usb3_init_eventbuf(dwc_usb3_device_t *dev, int bufno,
-			    u32 *addr, u32 size, dwc_dma_t dma_addr)
+void dwc_usb3_init_eventbuf(volatile dwc_usb3_device_t *dev, int bufno,
+			    volatile u32 *addr, u32 size, dwc_dma_t dma_addr)
 {
 	dwc_debug4(dev, "Event buf %d addr 0x%08lx phys 0x%08lx size %d\n",
 		   bufno, (unsigned long)addr, (unsigned long)dma_addr, size);
@@ -165,7 +165,7 @@ void dwc_usb3_init_eventbuf(dwc_usb3_device_t *dev, int bufno,
  *
  * @param dev   Programming view of DWC_usb3 controller.
  */
-void dwc_usb3_enable_common_interrupts(dwc_usb3_device_t *dev)
+void dwc_usb3_enable_common_interrupts(volatile dwc_usb3_device_t *dev)
 {
 	/* Clear any pending interrupts */
 	dwc_usb3_dis_flush_eventbuf_intr(dev, 0);
@@ -178,7 +178,7 @@ void dwc_usb3_enable_common_interrupts(dwc_usb3_device_t *dev)
  *
  * @param dev   Programming view of DWC_usb3 controller.
  */
-void dwc_usb3_enable_device_interrupts(dwc_usb3_device_t *dev)
+void dwc_usb3_enable_device_interrupts(volatile dwc_usb3_device_t *dev)
 {
 	u32 devten;
 
@@ -214,9 +214,9 @@ void dwc_usb3_enable_device_interrupts(dwc_usb3_device_t *dev)
  * @param dev   Programming view of DWC_usb3 controller.
  * return       1 if an interrupt event was seen, 0 if not.
  */
-int dwc_usb3_handle_event(dwc_usb3_device_t *dev)
+int dwc_usb3_handle_event(volatile dwc_usb3_device_t *dev)
 {
-    dwc_usb3_pcd_t *pcd = &dev->pcd;
+    volatile dwc_usb3_pcd_t *pcd = &dev->pcd;
     u32 event;
     u32 count, i;
     int ret = 0;
@@ -280,9 +280,9 @@ out:
 }
 
 
-int dwc_usb3_task(dwc_usb3_device_t *dev)
+int dwc_usb3_task(volatile dwc_usb3_device_t *dev)
 {
-    dwc_usb3_pcd_t *pcd = &dev->pcd;
+    volatile dwc_usb3_pcd_t *pcd = &dev->pcd;
     u32 event;
     u32 intr, physep;
     int ret = 0;
@@ -337,7 +337,7 @@ out:
 
 #ifdef SSIC
 
-static int ssic_read_attr(dwc_usb3_device_t *dev, u32 aid, u32 *aval)
+static int ssic_read_attr(volatile dwc_usb3_device_t *dev, u32 aid, u32 *aval)
 {
 	int i;
 	u32 sevt = 0;
@@ -373,7 +373,7 @@ static int ssic_read_attr(dwc_usb3_device_t *dev, u32 aid, u32 *aval)
 	return 0;
 }
 
-static int ssic_write_attr(dwc_usb3_device_t *dev, u32 aid, u32 aval)
+static int ssic_write_attr(volatile dwc_usb3_device_t *dev, u32 aid, u32 aval)
 {
 	int i;
 	u32 sctl = 0;
@@ -402,7 +402,7 @@ static int ssic_write_attr(dwc_usb3_device_t *dev, u32 aid, u32 aval)
 	return 0;
 }
 
-static int ssic_rrap_response(dwc_usb3_device_t *dev, int write, u32 aid, u32 aeid, u32 aval)
+static int ssic_rrap_response(volatile dwc_usb3_device_t *dev, int write, u32 aid, u32 aeid, u32 aval)
 {
 	int i;
 	u32 sctl = 0;
@@ -441,7 +441,7 @@ static int ssic_rrap_response(dwc_usb3_device_t *dev, int write, u32 aid, u32 ae
 	return 0;
 }
 
-static int ssic_cfg_done(dwc_usb3_device_t *dev)
+static int ssic_cfg_done(volatile dwc_usb3_device_t *dev)
 {
 	u32 temp;
 	int usec = 100000;
@@ -470,7 +470,7 @@ static int ssic_cfg_done(dwc_usb3_device_t *dev)
 	return 0;
 }
 
-static int dwc_usb3_handle_ssic_event(dwc_usb3_device_t *dev)
+static int dwc_usb3_handle_ssic_event(volatile dwc_usb3_device_t *dev)
 {
 	int retval = -1;
 	u32 sevt = dwc_rd32(dev, &dev->ssic_regs->sevt[0]);
@@ -560,7 +560,7 @@ static int dwc_usb3_handle_ssic_event(dwc_usb3_device_t *dev)
  * @param irq   IRQ number passed in by Linux kernel.
  * @return      1 if an interrupt event was seen, 0 if not.
  */
-int dwc_usb3_irq(dwc_usb3_device_t *dev, int irq)
+int dwc_usb3_irq(volatile dwc_usb3_device_t *dev, int irq)
 {
 	u32 state, temp, ret;
 

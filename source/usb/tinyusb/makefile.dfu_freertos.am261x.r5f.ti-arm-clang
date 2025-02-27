@@ -77,6 +77,7 @@ CFLAGS_common := \
 
 CFLAGS_release := \
     -Os \
+    -O0 \
 
 CFLAGS_cpp_common := \
     -Wno-c99-designator \

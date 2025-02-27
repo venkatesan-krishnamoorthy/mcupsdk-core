@@ -47,17 +47,17 @@
  *************************** Local Functions **************************
  **********************************************************************/
 
-static void dwc_reenable_xfer_and_restart(dwc_usb3_pcd_t *pcd,dwc_usb3_pcd_ep_t *ep);
+static void dwc_reenable_xfer_and_restart(volatile dwc_usb3_pcd_t *pcd, volatile dwc_usb3_pcd_ep_t *ep);
 
 /**
  * This routine sends the core into hibernation, saving the core's runtime
  * state if requested.
  */
-void dwc_enter_hibernation(dwc_usb3_pcd_t *pcd, int save_state)
+void dwc_enter_hibernation(volatile dwc_usb3_pcd_t *pcd, int save_state)
 {
-	dwc_usb3_device_t *dev = pcd->usb3_dev;
+	volatile dwc_usb3_device_t *dev = pcd->usb3_dev;
 	dwc_usb3_dev_ep_regs_t __iomem *ep_reg;
-	dwc_usb3_pcd_ep_t *ep;
+	volatile dwc_usb3_pcd_ep_t *ep;
 	int num_in_eps, num_out_eps, i;
 	u32 temp;
 
@@ -78,7 +78,7 @@ void dwc_enter_hibernation(dwc_usb3_pcd_t *pcd, int save_state)
 			ep_reg = ep->dwc_ep.in_ep_reg;
 			ep->dwc_ep.condition = 0;
 			dwc_usb3_dep_endxfer(pcd, ep_reg, (u32)ep->dwc_ep.tri_in - 1U,
-					     0, &ep->dwc_ep.condition);
+					     0, (void *)&ep->dwc_ep.condition);
 			ep->dwc_ep.tri_in = 0;
 		}
 
@@ -87,7 +87,7 @@ void dwc_enter_hibernation(dwc_usb3_pcd_t *pcd, int save_state)
 			ep_reg = ep->dwc_ep.out_ep_reg;
 			ep->dwc_ep.condition = 0;
 			dwc_usb3_dep_endxfer(pcd, ep_reg, (u32)ep->dwc_ep.tri_out - 1U,
-					     0, &ep->dwc_ep.condition);
+					     0, (void *)&ep->dwc_ep.condition);
 			ep->dwc_ep.tri_out = 0;
 		}
 	}
@@ -100,7 +100,7 @@ void dwc_enter_hibernation(dwc_usb3_pcd_t *pcd, int save_state)
 			ep_reg = ep->dwc_ep.in_ep_reg;
 			ep->dwc_ep.condition = 0;
 			dwc_usb3_dep_endxfer(pcd, ep_reg, (u32)ep->dwc_ep.tri_in - 1U,
-					     0, &ep->dwc_ep.condition);
+					     0, (void *)&ep->dwc_ep.condition);
 			ep->dwc_ep.tri_in = 0;
 		}
 		ep->dwc_ep.xfer_started = 0;
@@ -114,7 +114,7 @@ void dwc_enter_hibernation(dwc_usb3_pcd_t *pcd, int save_state)
 			ep_reg = ep->dwc_ep.out_ep_reg;
 			ep->dwc_ep.condition = 0;
 			dwc_usb3_dep_endxfer(pcd, ep_reg, (u32)ep->dwc_ep.tri_out - 1U,
-					     0, &ep->dwc_ep.condition);
+					     0, (void *)&ep->dwc_ep.condition);
 			ep->dwc_ep.tri_out = 0;
 		}
 		ep->dwc_ep.xfer_started = 0;
@@ -281,13 +281,13 @@ void dwc_enter_hibernation(dwc_usb3_pcd_t *pcd, int save_state)
  * This routine restarts any transfer that was in progress on an EP when the
  * core entered hibernation.
  */
-static void dwc_reenable_xfer_and_restart(dwc_usb3_pcd_t *pcd,
-					  dwc_usb3_pcd_ep_t *ep)
+static void dwc_reenable_xfer_and_restart(volatile dwc_usb3_pcd_t *pcd,
+					 volatile dwc_usb3_pcd_ep_t *ep)
 {
 	dwc_usb3_dev_ep_regs_t __iomem *ep_reg;
 	dwc_usb3_dma_desc_t *desc;
 	dwc_dma_t desc_dma;
-	u8 *tri;
+	volatile u8 *tri;
 	int i, owned;
 
 	dwc_debug1(pcd->usb3_dev, "%s()\n", __func__);
@@ -391,9 +391,9 @@ static void dwc_reenable_xfer_and_restart(dwc_usb3_pcd_t *pcd,
 /**
  * This routine finishes exiting from hibernation once the device is connected.
  */
-void dwc_exit_hibernation_after_connect(dwc_usb3_pcd_t *pcd, int connected)
+void dwc_exit_hibernation_after_connect(volatile dwc_usb3_pcd_t *pcd, int connected)
 {
-	dwc_usb3_pcd_ep_t *ep;
+	volatile dwc_usb3_pcd_ep_t *ep;
 	int num_in_eps, num_out_eps, i;
 	u32 temp;
 
@@ -512,9 +512,9 @@ void dwc_exit_hibernation_after_connect(dwc_usb3_pcd_t *pcd, int connected)
 /**
  * This routine wakes the core from hibernation.
  */
-int dwc_exit_hibernation(dwc_usb3_pcd_t *pcd, int restore_state)
+int dwc_exit_hibernation(volatile dwc_usb3_pcd_t *pcd, int restore_state)
 {
-	dwc_usb3_device_t *dev = pcd->usb3_dev;
+	volatile dwc_usb3_device_t *dev = pcd->usb3_dev;
 	u32 temp;
 
 	dwc_debug2(dev, "%s(%d)\n", __func__, restore_state);

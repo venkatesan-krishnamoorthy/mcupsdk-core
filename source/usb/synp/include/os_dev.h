@@ -61,12 +61,12 @@ extern "C" {
 /**
  * Register read/write.
  */
-static inline u32 dwc_rd32(struct dwc_usb3_device *dev, volatile u32 __iomem *adr)
+static inline u32 dwc_rd32(volatile struct dwc_usb3_device *dev, volatile u32 __iomem *adr)
 {
 	return *adr;
 }
 
-static inline void dwc_wr32(struct dwc_usb3_device *dev, volatile u32 __iomem *adr, u32 val)
+static inline void dwc_wr32(volatile struct dwc_usb3_device *dev, volatile u32 __iomem *adr, u32 val)
 {
 	*adr = val;
 }

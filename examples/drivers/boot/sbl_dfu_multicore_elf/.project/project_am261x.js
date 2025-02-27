@@ -56,6 +56,11 @@ const libs_nortos_r5f = {
     ],
 };
 
+const cflags = {
+    release: [
+        "-O0", /* [MCUSDK-14055]: USB applications fail with optimization, Workaround - force the compiler to use '-O0' instead of '-Os' in release build */
+    ],
+}
 
 const lnkfiles = {
     common: [
@@ -108,6 +113,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.defines = defines;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
+    build_property.cflags = cflags;
 
     if(buildOption.board === "am261x-lp")
     {

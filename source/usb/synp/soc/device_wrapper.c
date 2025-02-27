@@ -39,7 +39,7 @@
 /* 5 milli sec timeout for per pll locking and usb reg reset while loop */ 
 #define CONFIG_TIMEOUT   (5U)
 
-usb_handle_t usb_handle __attribute__((section(".usbCxtRam")));      /* global so it can be accessed in ISRs */
+volatile usb_handle_t usb_handle __attribute__((section(".usbCxtRam")));      /* global so it can be accessed in ISRs */
 
 /**
  *  @b  Description 
@@ -54,7 +54,7 @@ void usbCoreIntrHandler(void *args);
 /*
  *  ======== USB Init ========
  */
-void USB_init()
+void USB_init() 
 {
     usb_handle.cfg_base = USB_DWC_3;
     usb_handle.dwc_usb3_dev = NULL;
@@ -85,13 +85,14 @@ void USB_dwcTask()
 
 void usbdIntrConfig()
 {
-	HwiP_Params usb_hwi_handle = usb_handle.hwiParamsUsb;
+	HwiP_Params usb_hwi_handle;
+	memcpy(&usb_hwi_handle, (const void *)&usb_handle.hwiParamsUsb, sizeof(HwiP_Params));
 
     /* Initialize the interrupt controller (VIM is already hooked up). */
-    HwiP_Params_init(&usb_handle.hwiParamsUsb);
+    HwiP_Params_init((HwiP_Params *)&usb_handle.hwiParamsUsb);
     usb_hwi_handle.intNum = USB20_MAIN0_INT;
     usb_hwi_handle.callback = usbCoreIntrHandler;
-    HwiP_construct(&usb_handle.hwiObjUsb, &usb_hwi_handle);
+    HwiP_construct((HwiP_Object *)&usb_handle.hwiObjUsb, &usb_hwi_handle);
 
     /* Enable interrupts for R5 */
     HwiP_enableInt(USB20_MAIN0_INT);

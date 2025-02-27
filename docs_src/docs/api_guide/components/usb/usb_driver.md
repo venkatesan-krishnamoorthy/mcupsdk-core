@@ -2,6 +2,12 @@
 
 [TOC]
 
+\cond SOC_AM261X
+\note 1. There are known issues about SBL DFU's inconsistency in transfering larger .appimage files
+\note 2. There are known issues about USB CDC application failing loopback tests after some iterations.
+\note 3. There are known issues with USB libraries when compiled with Optimization flags, by default they are compiled with "-O0" right now.
+\endcond
+
 ## Introduction
 
 The USB SW stack in MCU+ SDK is shown below.

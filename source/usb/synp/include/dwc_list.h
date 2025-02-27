@@ -225,7 +225,7 @@ struct {								\
 
 #define DWC_SIMPLEQ_REMOVE_HEAD(head, field) do {			\
 	if (((head)->sqh_first = (head)->sqh_first->field.sqe_next) == NULL) \
-		(head)->sqh_last = &(head)->sqh_first;			\
+		(head)->sqh_last = (struct dwc_usb3_event_req **) &(head)->sqh_first; \
 } while (0)
 
 /*

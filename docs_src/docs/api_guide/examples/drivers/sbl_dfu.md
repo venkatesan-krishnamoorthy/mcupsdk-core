@@ -101,7 +101,39 @@ The standard DFU-Utility is not compatible with the AM261x device. Instead, plea
 
 - Another option is to use the \ref USB_BOOTLOADER which abstracts the setps 3 and 4 mentioned above. 
 
+\cond SOC_AM261X 
+# Flashing Failure
+
+If the flashing fails, the error message will give a hint as to why it failed.
+Some common error messages, reasons and potential solutions are listed below.
+
+<table>
+<tr>
+    <th>Error
+    <th>Possible Reason
+    <th>Solution
+</tr>
+<tr>
+    <td> No DFU capable USB device available 
+    <td> AM261x ROM USB enumeration failed. 
+    <td> Check the USB connection between host machine and AM261x. Power cycle the AM261x and try running 'dfu-util -l' command to see the enumerated device list.
+</tr>
+<tr>
+    <td> Transfering .appimage gets stuck (LIBUSB_ERROR_PIPE)
+    <td> AM261x USB did not respond to Host request or the Host Stopped communicating with AM261x
+    <td> Power cycle EVM and try again.
+</tr>
+<tr>
+    <td> DFU Timeout while transfering large .appimage (LIBUSB_ERROR_TIMEOUT)
+    <td> DFU-UTIL tool timed out
+    <td> Reduce the size of application image if the dfu-util tool is facing time-out issues due to large appimage OR create a custom dfu-util tool with increased timeout which suits your requirements.
+</tr>
+</table>
+\endcond
+
 # See Also
+
+\ref USB_DEVICE_DRIVER
 
 \ref DRIVERS_BOOTLOADER_PAGE
 
