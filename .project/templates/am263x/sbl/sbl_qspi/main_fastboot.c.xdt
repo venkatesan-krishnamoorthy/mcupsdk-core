@@ -63,10 +63,6 @@
 %if(enableFastBoot === false){
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
-%}else{
-#define MAX_HSMRT_SIZE_IN_BYTES (184 * 1024U)
-
-const uint8_t gHsmRtFw[MAX_HSMRT_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")));
 %}
 
 
@@ -146,6 +142,8 @@ int main(void)
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 %} else {
 
+    Bootloader_socInitL2MailBoxMemory();
+
     /* 
         Calculate the HSM Runtime image size from the flash offset specified. 
     */
@@ -154,8 +152,8 @@ int main(void)
     /* 
         Read the HSM Runtime image from the flash offset specified. 
     */
-    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) gHsmRtFw, hsmrt_size);
-    CacheP_wb((void *)gHsmRtFw, hsmrt_size, CacheP_TYPE_ALL);
+    Flash_read(gFlashHandle[0U], HSMRT_FLASH_OFFSET, (uint8_t *) HSMRT_LOAD_ADDRESS, hsmrt_size);
+    CacheP_wb((void *)HSMRT_LOAD_ADDRESS, hsmrt_size, CacheP_TYPE_ALL);
 
 %}
 %if(enableFastBoot === false) {
@@ -166,11 +164,11 @@ int main(void)
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
 %} else {   
-    Bootloader_socInitL2MailBoxMemory();
+    
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, (uint8_t *) HSMRT_LOAD_ADDRESS, hsmrt_size);
 %}
 %if(enableFastBoot === false) {
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
