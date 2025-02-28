@@ -47,9 +47,9 @@ gpio1.GPIO_n.$assign = "QSPI_CSn1";
 
 rti1.$name          = "CONFIG_RTI0";
 rti1.compareSource1 = "1";
-rti1.usecPerTick1   = 1000000;
+rti1.nsecPerTick1   = 1000000000;
 rti1.cntr1OpFreq    = 100000;
-rti1.usecPerTick0   = 10000;
+rti1.nsecPerTick0   = 10000000;
 rti1.cntr0OpFreq    = 100000;
 rti1.eventCallback1 = "";
 rti1.intrPriority1  = 0;

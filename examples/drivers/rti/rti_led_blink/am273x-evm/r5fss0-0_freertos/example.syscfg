@@ -51,7 +51,7 @@ gpio1.MSS_GPIO.gpioPin.$assign = "PAD_AZ";
 rti1.$name          = "CONFIG_RTI0";
 rti1.counter0Enable = true;
 rti1.compare0Enable = true;
-rti1.usecPerTick0   = 1000000;
+rti1.nsecPerTick0   = 1000000000;
 rti1.enableIntr0    = true;
 rti1.eventCallback0 = "rtiEvent0";
 
