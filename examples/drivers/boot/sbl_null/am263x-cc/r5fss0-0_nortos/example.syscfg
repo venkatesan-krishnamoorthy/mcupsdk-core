@@ -12,8 +12,8 @@ const bootloader      = scripting.addModule("/drivers/bootloader/bootloader", {}
 const bootloader1     = bootloader.addInstance();
 const hsmclient       = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1      = hsmclient.addInstance();
-const mcu_bist        = scripting.addModule("/drivers/mcu_bist/mcu_bist", {}, false);
-const mcu_bist1       = mcu_bist.addInstance();
+const mcu_pbist        = scripting.addModule("/drivers/mcu_pbist/mcu_pbist", {}, false);
+const mcu_pbist1       = mcu_pbist.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
@@ -48,7 +48,7 @@ bootloader1.R5FSS1operatingMode = "Standalone";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
-mcu_bist1.$name = "CONFIG_MCU_BIST0";
+mcu_pbist1.$name = "CONFIG_MCU_PBIST0";
 
 debug_log.enableUartLog            = true;
 debug_log.enableCssLog             = false;
