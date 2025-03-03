@@ -85,6 +85,7 @@ int main(void)
     System_init();
     Drivers_open();
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
     Bootloader_socInitL2MailBoxMemory();
 
     status = Keyring_init(&gHSMClient);

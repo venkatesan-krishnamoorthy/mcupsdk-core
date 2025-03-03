@@ -188,14 +188,8 @@ int main(void)
 %if(enableFastBoot === false){
     Bootloader_profileAddProfilePoint("Drivers_open");
     
-    % if (options.board == "am261x-lp") {
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
-    % }
-    % else {
-    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    // Bootloader_profileAddProfilePoint("LoadHsmRtFw");
-    % }
     Bootloader_socInitL2MailBoxMemory();
 
     % if (options.board == "am261x-lp") {
@@ -235,12 +229,7 @@ int main(void)
     /* 
         Request the HSM ROM to load the HSMRT image onto itself. 
     */
-    % if (options.board == "am261x-lp") {
     Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
-    % }
-    % else {
-    // Bootloader_socLoadHsmRtFwNonBlocking(&gHSMClient, gHsmRtFw, hsmrt_size);
-    % }
 
     /* 
         Keyring init
