@@ -183,6 +183,14 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <th> Workaround
 </tr>
 <tr>
+    <td> MCUSDK-14148
+    <td> AM261x : ZNC : Package in the early samples has ADC issue. Needs SW checks undone for ADC
+    <td> ADC
+    <td> 10.00.00 onwards
+    <td> \b Details : ZNC package currently (Jan 2025), has, ADC 0 Reference lines not connected with that of the ADC 1's. There are some packages were shipped with the ADC Reference Monitor checks are Bypassed for the ADC front end enablement in the EFUSE. the SW code gen from the syscfg will assert the ADC init if the monitor throws a fault. It is requested to bypass the SW check as well to enable the customer to use the ADC.\n
+    \b Workaround : only applicable in the devices with forementioned conditions.\n 1. Go to the file \code source/sysconfig/drivers/.meta/soc_ctrl/templates/soc_ctrl_adc_config.c.xdt \endcode\n 2. Find line with \code DebugP_assert(SOC_getAdcReferenceStatus(`montior2AdcMap[monitor][0]`) == true); \endcode \n 3.Change it to \code //DebugP_assert(SOC_getAdcReferenceStatus(`montior2AdcMap[monitor][0]`) == true); \endcode
+</tr>
+<tr>
     <td> MCUSDK-13865
     <td> HRPWM Deadband sfo example has 1ns jitter
     <td> EPWM
