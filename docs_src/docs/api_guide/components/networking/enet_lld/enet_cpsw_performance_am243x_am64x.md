@@ -17,10 +17,10 @@ EVM Type              | AM243x-LP E3 / AM64X-EVM    |
 SOC Details           | Values          |
 ----------------------|-----------------|
 Core                  | A53             |
-Core Operating Speed  | 1 GHz         |
-Memory Type           | DDR           |
+Core Operating Speed  | 1 GHz           |
+Memory Type           | DDR             |
 Cache status          | Enabled         |
-EVM Type              | AM64X-EVM    |
+EVM Type              | AM64X-EVM       |
 
 
 \endcond
@@ -30,7 +30,7 @@ EVM Type              | AM64X-EVM    |
   \image html CPSW_latency_measurement_diagram.bmp Latency defination
 
 ## Configuration Details
-Configuration          | Value                    |
+Configuration                   | Value                    |
 --------------------------------|--------------------------|
 Processing Core                 | Main R5F0 Core 0         |
 Core Frequency                  | 800 MHz                  |
@@ -38,19 +38,19 @@ Ethernet Interface Type         | RGMII at 1 Gbps          |
 Packet buffer memory            | MSRAM                    |
 Scatter-gather TX               | Yes                      |
 Scatter-gather RX               | Yes                      |
-UDMA interrupt pacing          | NO                       |
+UDMA interrupt pacing           | NO                       |
 RTOS                            | FreeRTOS                 |
 RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
 Host PC tool version            | nload                    |
-Rx packet length     | 200 B                               |
-Tx packet length     | 200 B                               |
+Rx packet length                | 200 B                    |
+Tx packet length                | 200 B                    |
 \n
 
 \cond SOC_AM64X
-Configuration          | Value                             |
+Configuration                   | Value                    |
 --------------------------------|--------------------------|
 Processing Core                 | Main A53S0 Core 0        |
-Core Frequency                  | 1 MGz                    |
+Core Frequency                  | 1 GHz                    |
 Ethernet Interface Type         | RGMII at 1 Gbps          |
 Packet buffer memory            | DDR (uncached)           |
 Scatter-gather TX               | Yes                      |
@@ -58,14 +58,14 @@ Scatter-gather RX               | Yes                      |
 UDMA interrupt pacing           | NO   (UDMA is polled)    |
 RTOS                            | FreeRTOS                 |
 RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
-Host PC tool version            | nload                   |
-Rx packet length                | 200 B                       |
-Tx packet length                | 200 B                       |
+Host PC tool version            | nload                    |
+Rx packet length                | 200 B                    |
+Tx packet length                | 200 B                    |
 \n
 
 \endcond
 
-## Layer 2 Latency
+### Layer 2 Latency
 <table>
     <tr>
         <td style="text-align: center;"><b>Parameter</b></td>
@@ -84,6 +84,63 @@ Tx packet length                | 200 B                       |
         <td>7000</td>
         <td>384</td>
         <td>7384</td>
+    </tr>
+</table>
+
+### Layer-2 Hardware Switching Latency for CPSW
+
+Configuration                   | Value                    |
+--------------------------------|--------------------------|
+EVM Type                        | AM243x-LP E3             |
+CPSW CPPI Frequency             | 320 MHz                  |
+Ethernet Interface Type         | RGMII                    |
+PHY model number                | DP83869                  |
+Ethernet Cable Spec             | CAT-6                    |
+Sample size                     | 10 Million Packets       |
+RTOS application                | Modified \ref EXAMPLES_ENET_LAYER2_CPSW_SWITCH \n example   |
+\n
+
+### Test Setup
+
+\imageStyle{CPSW_Latency_measurement.png,width:15==20%}
+\image html CPSW_Latency_measurement.png "Connections for Latency Measurement"
+
+### CPSW Latency for RGMII
+<table>
+    <tr>
+        <td rowspan="2" style="text-align: left;"><b>Datagram Length</b></td>
+        <td colspan="2" style="text-align: center;"><b>Latency @ 1Gbps link (in us)</b></td>
+        <td colspan="2" style="text-align: center;"><b>Latency @ 100Mbps link (in us)</b></td>
+        <td colspan="2" style="text-align: center;"><b>Latency @ 10Mbps link (in us)</b></td>
+    </tr>
+    <tr>
+        <td><b>Without Cut-Through</b></td><td><b>With Cut-Through</b></td>
+        <td><b>Without Cut-Through</b></td><td><b>With Cut-Through</b></td>
+        <td><b>Without Cut-Through</b></td><td><b>With Cut-Through</b></td>
+    </tr>
+    <tr>
+        <td><b>64 Bytes</b></td>
+        <td>1.8</td><td>1.7</td>
+        <td>7.9</td><td>7.8</td>
+        <td>73.4</td><td>71.9</td>
+    </tr>
+    <tr>
+        <td><b>256 Bytes</b></td>
+        <td>3.1</td><td>2.0</td>
+        <td>23.0</td><td>13.8</td>
+        <td>227.3</td><td>135.6</td>
+    </tr>
+    <tr>
+        <td><b>512 Bytes</b></td>
+        <td>5.2</td><td>2.0</td>
+        <td>43.5</td><td>13.8</td>
+        <td>432.0</td><td>135.6</td>
+    </tr>
+    <tr>
+        <td><b>1518 Bytes</b></td>
+        <td>13.3</td><td>2.0</td>
+        <td>124.0</td><td>13.8</td>
+        <td>1237.0</td><td>135.6</td>
     </tr>
 </table>
 
