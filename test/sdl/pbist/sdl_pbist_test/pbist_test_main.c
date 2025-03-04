@@ -240,6 +240,9 @@ void test_main(void *args)
     Board_driversOpen();
     /* Declaration of variables */
     int32_t  testResult;
+#if defined (SOC_AM261X) || defined (SOC_AM263PX)
+    CacheP_disable(CacheP_TYPE_L1P | CacheP_TYPE_L1D);
+#endif
 #ifndef SDL_SOC_MCU_R5F
     /* Init Board */
     testResult = PBIST_appInitBoard();
@@ -264,7 +267,9 @@ void test_main(void *args)
         DebugP_log("\r\nBoard Init failed. Exiting the app.\r\n");
     }
 #endif
-
+#if defined (SOC_AM261X) || defined (SOC_AM263PX)
+    CacheP_enable(CacheP_TYPE_L1P | CacheP_TYPE_L1D);
+#endif
     Board_driversClose();
     Drivers_close();
 

@@ -1054,6 +1054,8 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for MSS R5SS0 RL2 CPU1\r\n");
             DebugP_log(" PBIST complete for MSS TRACE\r\n");
             DebugP_log(" PBIST complete for MSS USB\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS0 C0\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS0 C1\r\n");
             DebugP_log(" PBIST complete for MSS_L2_1\r\n");
             DebugP_log(" PBIST complete for MSS_L2_2\r\n");
             DebugP_log(" PBIST complete for MSS MMCH0\r\n");
