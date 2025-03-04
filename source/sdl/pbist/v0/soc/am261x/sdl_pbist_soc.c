@@ -262,6 +262,22 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
                 /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
                 /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
                 .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 28u,  /* Choose MSS R5SS0 C0*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 29u,  /* Choose MSS R5SS0 C1*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
                 .memoryGroupsBitMap = 31u,  /* Choose MSS_L2_1 */
                 .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
