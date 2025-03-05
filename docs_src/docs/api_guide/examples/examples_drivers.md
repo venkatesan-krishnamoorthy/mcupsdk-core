@@ -6,7 +6,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# ADC
    -# \subpage EXAMPLES_DRIVERS_ADC_SINGLESHOT
 -# CRC
-   -# \subpage EXAMPLES_DRIVERS_CRC_FULL_CPU   
+   -# \subpage EXAMPLES_DRIVERS_CRC_FULL_CPU
 -# DDR
    -# \subpage EXAMPLES_DRIVERS_DDR_ECC_TEST_MAIN_ESM
 \cond SOC_AM64X
@@ -363,7 +363,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
 \cond SOC_AM263PX || SOC_AM261X
    -# \subpage EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO_OPTISHARE
-\endcond 
+\endcond
    -# \subpage EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO
    -# \subpage EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO
    -# \subpage EXAMPLES_DRIVERS_IPC_SPINLOCK_SHAREDMEM
@@ -373,6 +373,12 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_SCI_DMA_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_LIN_INTERNAL_LOOPBACK_POLLING
    -# \subpage EXAMPLES_DRIVERS_LIN_EXTERNAL_COMMANDER
+\cond SOC_AM263PX || SOC_AM263X
+   -# \subpage EXAMPLES_DRIVERS_LIN_COMMANDER_WRITE_HLD
+   -# \subpage EXAMPLES_DRIVERS_LIN_COMMANDER_READ_HLD
+   -# \subpage EXAMPLES_DRIVERS_LIN_RESPONDER_WRITE_HLD
+   -# \subpage EXAMPLES_DRIVERS_LIN_RESPONDER_READ_HLD
+\endcond
 -# MCAN
    -# \subpage EXAMPLES_DRIVERS_MCAN_EXTERNAL_READ_WRITE
    -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_INTERRUPT

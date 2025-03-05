@@ -273,18 +273,21 @@ function getComponentBuildProperty(buildOption) {
     {
         build_property.files = files_am263x;
         build_property.files.common.push("I2c_lld_sample_v1.c");
+        build_property.files.common.push("Lin_Hld_sample_v0.c");
         build_property.includes = includes;
     }
     if(buildOption.device=="am263px")
     {
         build_property.files = files_am263px;
         build_property.files.common.push("I2c_lld_sample_v1.c");
+        build_property.files.common.push("Lin_Hld_sample_v0.c");
         build_property.includes = includes;
     }
     if(buildOption.device=="am261x")
     {
         build_property.files = files_am261x;
         build_property.files.common.push("I2c_lld_sample_v1.c");
+        build_property.files.common.push("Lin_Hld_sample_v0.c");
         build_property.includes = includes;
     }
     if(buildOption.device=="am64x" || buildOption.device=="am243x")
