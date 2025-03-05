@@ -74,6 +74,7 @@ extern "C"
 #define VIM_INT_PRI(j)   (0x1000u + ((j) * 0x4u))
 #define VIM_INT_VEC(j)   (0x2000u + ((j) * 0x4u))
 
+#define ARMV7R_USER_MODE      (0x10u)
 #define ARMV7R_FIQ_MODE       (0x11u)
 #define ARMV7R_IRQ_MODE       (0x12u)
 #define ARMV7R_SVC_MODE       (0x13u)
