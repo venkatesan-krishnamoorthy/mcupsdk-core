@@ -53,6 +53,7 @@ int32_t OSPI_norFlashInit1s1s1s(OSPI_Handle handle)
     {
         OSPI_Object *obj = ((OSPI_Config *)handle)->object;
         hOspi = &obj->ospilldObject;
+        OSPI_configResetPin(handle, OSPI_RESETPIN_DEDICATED);
         status = OSPI_lld_norFlashInit1s1s1s(hOspi);
     }
 
