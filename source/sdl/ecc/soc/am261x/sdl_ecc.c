@@ -362,7 +362,7 @@ static bool SDL_ECC_getIntSrcErrInfo(SDL_ESM_Inst instance, uint32_t intSrc, uin
 
     for (i = ((uint32_t)0); i < (uint32_t)SDL_ECC_MEMTYPE_MAX; i++)
     {
-        if (SDL_ECC_aggrTable[i].esmInst == (uint32_t)instance)
+        if (SDL_ECC_aggrTable[i].esmInst == instance)
         {
             if (SDL_ECC_aggrTable[i].esmIntSEC == intSrc)
             {

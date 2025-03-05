@@ -61,8 +61,8 @@
 #define SDL_HSM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                                  (10U)
 #define SDL_PRU_ICSSM0_ICSS_G_CORE_BORG_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES          (5U)
 #define SDL_PRU_ICSSM1_ICSS_G_CORE_BORG_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES          (5U)
-#define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (2U)
-#define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (2U)
+#define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
+#define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
 #define SDL_CPSW3GCSS_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                            (8U)
 #define SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (1U)
 #define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                    (1U)
@@ -99,6 +99,29 @@
 /*param registers */
 #define SDL_PARAM_REG_1							(SDL_PARAM_REG_SET0 + 0x20U)
 #define SDL_PARAM_REG_2							(SDL_PARAM_REG_SET0 + 0x30U)
+
+/** ----------------------------------------------------------------------------------
+ * This structure holds the ECC interconnect Group Checker information for
+ SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS RAM ID
+ * -----------------------------------------------------------------------------------
+ */
+static const SDL_GrpChkConfig_t SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_groupEntries[SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_MAX_NUM_CHECKERS] =
+{
+    { SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_GROUP_0_CHECKER_TYPE,
+      SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_GROUP_0_WIDTH },
+};
+
+/** ----------------------------------------------------------------------------------
+ * This structure holds the ECC interconnect Group Checker information for
+ SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS RAM ID
+ * -----------------------------------------------------------------------------------
+ */
+static const SDL_GrpChkConfig_t SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_groupEntries[SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_MAX_NUM_CHECKERS] =
+{
+    { SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_GROUP_0_CHECKER_TYPE,
+      SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_GROUP_0_WIDTH },
+};
+
 /** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_SOC_ECC_AGGR
  * -----------------------------------------------------------------------------------
@@ -965,7 +988,12 @@ static const SDL_RAMIdEntry_t SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable[S
       SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE,
       SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE,
       0u,
-      NULL }
+      NULL },
+    { SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_RAM_ID,
+      SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_INJECT_TYPE,
+      SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_ECC_TYPE,
+      SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_MAX_NUM_CHECKERS,
+      SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_groupEntries },
 };
 
 /** ------------------------------------------------------------------------------------
@@ -978,7 +1006,12 @@ static const SDL_RAMIdEntry_t SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable[S
       SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE,
       SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE,
       0u,
-      NULL }
+      NULL },
+    { SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_RAM_ID,
+      SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_INJECT_TYPE,
+      SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_ECC_TYPE,
+      SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_MAX_NUM_CHECKERS,
+      SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_CTRL_EDC_VBUSS_groupEntries },
 };
 
 /** ------------------------------------------------------------------------------------
