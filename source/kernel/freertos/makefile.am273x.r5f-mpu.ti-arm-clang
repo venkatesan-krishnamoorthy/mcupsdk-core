@@ -10,7 +10,7 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=freertos.am273x.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=freertos.am273x.r5f-mpu.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     boot_armv7r.c \
@@ -58,6 +58,7 @@ FILES_common := \
     FreeRTOS_POSIX_unistd.c \
     FreeRTOS_POSIX_utils.c \
     port.c \
+    mpu_wrappers_v2.c \
 
 ASMFILES_common := \
     boot_armv7r_asm.S \
@@ -70,6 +71,7 @@ ASMFILES_common := \
     HwiP_armv7r_vectors_freertos_asm.S \
     HwiP_armv7r_handlers_freertos_asm.S \
     portASM.S \
+    mpu_wrappers_v2_asm.S \
 
 FILES_PATH_common = \
     ../nortos/dpl/r5 \
@@ -79,7 +81,8 @@ FILES_PATH_common = \
     FreeRTOS-Kernel/ \
     FreeRTOS-Kernel/portable/MemMang \
     FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/ \
-    portable/TI_ARM_CLANG/ARM_CR5F \
+    portable/TI_ARM_CLANG/ARM_CR5F_MPU \
+    FreeRTOS-Kernel/portable/Common \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -89,8 +92,8 @@ INCLUDES_common := \
     -IFreeRTOS-POSIX/include/private \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable \
-    -Iportable/TI_ARM_CLANG/ARM_CR5F \
-    -Iconfig/am273x/r5f \
+    -Iportable/TI_ARM_CLANG/ARM_CR5F_MPU \
+    -Iconfig/am273x/r5f_mpu \
 
 DEFINES_common := \
     -DSOC_AM273X \
@@ -147,7 +150,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am273x/ti-arm-clang/$(PROFILE)/r5f/freertos/
+OBJDIR := obj/am273x/ti-arm-clang/$(PROFILE)/r5f-mpu/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

@@ -57,8 +57,8 @@ FILES_common := \
     FreeRTOS_POSIX_timer.c \
     FreeRTOS_POSIX_unistd.c \
     FreeRTOS_POSIX_utils.c \
-    port.c \
     FreeRTOS_CLI.c \
+    port.c \
 
 ASMFILES_common := \
     boot_armv7r_asm.S \
@@ -69,8 +69,8 @@ ASMFILES_common := \
     PmuP_armv7r_asm.S \
     HwiP_armv7r_vectors_freertos_asm.S \
     HwiP_armv7r_handlers_freertos_asm.S \
-    portASM.S \
     Mutex_armv7r_asm.S \
+    portASM.S \
 
 FILES_PATH_common = \
     ../nortos/dpl/r5 \
@@ -80,20 +80,20 @@ FILES_PATH_common = \
     FreeRTOS-Kernel/ \
     FreeRTOS-Kernel/portable/MemMang \
     FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/ \
-    portable/TI_ARM_CLANG/ARM_CR5F \
     FreeRTOS-Plus-CLI/ \
+    portable/TI_ARM_CLANG/ARM_CR5F \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/arm-none-eabi/include \
     -I${MCU_PLUS_SDK_PATH}/source \
     -IFreeRTOS-Kernel/include \
-    -Iportable/TI_ARM_CLANG/ARM_CR5F \
-    -Iconfig/am243x/r5f \
     -IFreeRTOS-POSIX/include \
     -IFreeRTOS-POSIX/include/private \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable \
     -IFreeRTOS-Plus-CLI \
+    -Iportable/TI_ARM_CLANG/ARM_CR5F \
+    -Iconfig/am243x/r5f \
 
 DEFINES_common := \
     -DSOC_AM243X \

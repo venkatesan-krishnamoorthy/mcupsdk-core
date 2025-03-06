@@ -1,6 +1,6 @@
 let path = require('path');
 
-const files_r5f = {
+const files_r5f_common = {
     common: [
         // picked from nortos DPL
         "boot_armv7r.c",
@@ -50,8 +50,24 @@ const files_r5f = {
         "FreeRTOS_POSIX_timer.c",
         "FreeRTOS_POSIX_unistd.c",
         "FreeRTOS_POSIX_utils.c",
-        // picked from freertos "portable"
+    ]
+};
+
+const files_r5f = {
+    common: [
+        ...files_r5f_common.common,
+        // picked from freertos "portable/TI_ARM_CLANG/ARM_CR5F"
         "port.c",
+    ]
+};
+
+const files_r5f_mpu = {
+    common: [
+        ...files_r5f_common.common,
+        // picked from freertos "portable/TI_ARM_CLANG/ARM_CR5F_MPU"
+        "port.c",
+        // picked from freertos "FreeRTOS-Kernel/portable/Common"
+        "mpu_wrappers_v2.c"
     ]
 };
 
@@ -108,15 +124,29 @@ const files_c66 = {
     ]
 };
 
-const includes_r5f = {
+const includes_r5f_common = {
     common: [
         "FreeRTOS-Kernel/include",
-        "portable/TI_ARM_CLANG/ARM_CR5F",
-        "config/am273x/r5f",
         "FreeRTOS-POSIX/include",
         "FreeRTOS-POSIX/include/private",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable",
+    ],
+};
+
+const includes_r5f = {
+    common: [
+        ...includes_r5f_common.common,
+        "portable/TI_ARM_CLANG/ARM_CR5F",
+        "config/am273x/r5f",
+    ],
+};
+
+const includes_r5f_mpu = {
+    common: [
+        ...includes_r5f_common.common,
+        "portable/TI_ARM_CLANG/ARM_CR5F_MPU",
+        "config/am273x/r5f_mpu",
     ],
 };
 
@@ -132,7 +162,7 @@ const includes_c66 = {
     ],
 };
 
-const cflags_r5f = {
+const cflags_r5f_common = {
     common: [
         "-Wno-extra"
     ],
@@ -142,12 +172,20 @@ const cflags_r5f = {
     ],
 };
 
+const cflags_r5f = {
+    ...cflags_r5f_common,
+};
+
+const cflags_r5f_mpu = {
+    ...cflags_r5f_common,
+};
+
 const cflags_c66 = {
     common: [
     ]
 };
 
-const asmfiles_r5f = {
+const asmfiles_r5f_common = {
     common: [
         // picked from nortos DPL
         "boot_armv7r_asm.S",
@@ -160,8 +198,23 @@ const asmfiles_r5f = {
         // picked from freertos DPL
         "HwiP_armv7r_vectors_freertos_asm.S",
         "HwiP_armv7r_handlers_freertos_asm.S",
-        // picked from freertos "portable"
+    ],
+};
+
+const asmfiles_r5f = {
+    common: [
+        ...asmfiles_r5f_common.common,
+        // picked from freertos "portable/TI_ARM_CLANG/ARM_CR5F"
         "portASM.S",
+    ],
+};
+
+const asmfiles_r5f_mpu = {
+    common: [
+        ...asmfiles_r5f_common.common,
+        // picked from freertos "portable/TI_ARM_CLANG/ARM_CR5F_MPU"
+        "portASM.S",
+        "mpu_wrappers_v2_asm.S",
     ],
 };
 
@@ -177,7 +230,7 @@ const asmfiles_c66 = {
     ],
 };
 
-const filedirs_r5f = {
+const filedirs_r5f_common = {
     common: [
         // picked from nortos DPL
         "../nortos/dpl/r5",
@@ -190,8 +243,21 @@ const filedirs_r5f = {
         "FreeRTOS-Kernel/portable/MemMang",
         // picked from freertos "posix"
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/",
-        // picked from freertos "portable"
+    ],
+};
+
+const filedirs_r5f = {
+    common: [
+        ...filedirs_r5f_common.common,
         "portable/TI_ARM_CLANG/ARM_CR5F",
+    ],
+};
+
+const filedirs_r5f_mpu = {
+    common: [
+        ...filedirs_r5f_common.common,
+        "portable/TI_ARM_CLANG/ARM_CR5F_MPU",
+        "FreeRTOS-Kernel/portable/Common",
     ],
 };
 
@@ -215,6 +281,7 @@ const filedirs_c66 = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
+    { device: device, cpu: "r5f-mpu", cgt: "ti-arm-clang", os: "freertos"},
     { device: device, cpu: "c66", cgt: "ti-c6000",     os: "freertos"},
 ];
 
@@ -223,6 +290,17 @@ const templates_freertos_r5f =
     {
         input: ".project/templates/am273x/freertos/FreeRTOSConfig.h.xdt",
         output: "config/am273x/r5f/FreeRTOSConfig.h",
+        options: {
+
+        },
+    }
+];
+
+const templates_freertos_r5f_mpu =
+[
+    {
+        input: ".project/templates/am273x/freertos/FreeRTOSConfig_mpu.h.xdt",
+        output: "config/am273x/r5f_mpu/FreeRTOSConfig.h",
         options: {
 
         },
@@ -263,7 +341,14 @@ function getComponentBuildProperty(buildOption) {
         build_property.cflags = cflags_r5f;
         build_property.templates = templates_freertos_r5f;
     }
-
+    if(buildOption.cpu == "r5f-mpu") {
+        build_property.files = files_r5f_mpu;
+        build_property.includes = includes_r5f_mpu;
+        build_property.asmfiles = asmfiles_r5f_mpu;
+        build_property.filedirs = filedirs_r5f_mpu;
+        build_property.cflags = cflags_r5f_mpu;
+        build_property.templates = templates_freertos_r5f_mpu;
+    }
     if(buildOption.cpu == "c66") {
         build_property.files = files_c66;
         build_property.includes = includes_c66;

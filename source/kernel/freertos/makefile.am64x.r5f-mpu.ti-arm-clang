@@ -10,33 +10,33 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=freertos.am273x.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=freertos.am64x.r5f-mpu.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     boot_armv7r.c \
-    AddrTranslateP_null.c \
     DebugP_shmLogWriter.c \
     DebugP_shmLogReader.c \
     DebugP_uartLogWriter.c \
     DebugP_uartScanf.c \
     DebugP_memTraceLogWriter.c \
     DebugP_log.c \
-    TimerP_rti.c \
+    TimerP.c \
     HwiP_armv7r_vim.c \
     MpuP_armv7r.c \
     CacheP_armv7r.c \
     CpuId_armv7r.c \
     HeapP_internal.c \
     printf.c \
+    AddrTranslateP.c \
     PmuP_armv7r.c \
     QueueP_nortos.c \
     ClockP_freertos.c \
     ClockP_freertos_r5.c \
+    SemaphoreP_freertos.c \
+    HwiP_armv7r_handlers_freertos.c \
+    HeapP_freertos.c \
     DebugP_freertos.c \
     DebugP_shmLogReader_freertos.c \
-    HeapP_freertos.c \
-    HwiP_armv7r_handlers_freertos.c \
-    SemaphoreP_freertos.c \
     TaskP_freertos.c \
     EventP_freertos.c \
     MailboxP_freertos.c \
@@ -58,6 +58,7 @@ FILES_common := \
     FreeRTOS_POSIX_unistd.c \
     FreeRTOS_POSIX_utils.c \
     port.c \
+    mpu_wrappers_v2.c \
 
 ASMFILES_common := \
     boot_armv7r_asm.S \
@@ -66,10 +67,11 @@ ASMFILES_common := \
     CacheP_armv7r_asm.S \
     CpuId_armv7r_asm.S \
     PmuP_armv7r_asm.S \
-    Mutex_armv7r_asm.S \
     HwiP_armv7r_vectors_freertos_asm.S \
     HwiP_armv7r_handlers_freertos_asm.S \
+    Mutex_armv7r_asm.S \
     portASM.S \
+    mpu_wrappers_v2_asm.S \
 
 FILES_PATH_common = \
     ../nortos/dpl/r5 \
@@ -79,7 +81,8 @@ FILES_PATH_common = \
     FreeRTOS-Kernel/ \
     FreeRTOS-Kernel/portable/MemMang \
     FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/ \
-    portable/TI_ARM_CLANG/ARM_CR5F \
+    portable/TI_ARM_CLANG/ARM_CR5F_MPU \
+    FreeRTOS-Kernel/portable/Common \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -89,11 +92,11 @@ INCLUDES_common := \
     -IFreeRTOS-POSIX/include/private \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable \
-    -Iportable/TI_ARM_CLANG/ARM_CR5F \
-    -Iconfig/am273x/r5f \
+    -Iportable/TI_ARM_CLANG/ARM_CR5F_MPU \
+    -Iconfig/am64x/r5f_mpu \
 
 DEFINES_common := \
-    -DSOC_AM273X \
+    -DSOC_AM64X \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -106,11 +109,6 @@ CFLAGS_common := \
     -Wno-gnu-variable-sized-type-not-at-end \
     -Wno-unused-function \
     -Wno-extra \
-
-CFLAGS_release := \
-    -Os \
-    -Oz \
-    -flto \
 
 CFLAGS_cpp_common := \
     -Wno-c99-designator \
@@ -127,6 +125,9 @@ CFLAGS_cpp_common := \
 
 CFLAGS_debug := \
     -D_DEBUG_=1 \
+
+CFLAGS_release := \
+    -Os \
 
 ARFLAGS_common := \
     rc \
@@ -147,7 +148,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am273x/ti-arm-clang/$(PROFILE)/r5f/freertos/
+OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f-mpu/freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

@@ -68,8 +68,8 @@ ASMFILES_common := \
     PmuP_armv7r_asm.S \
     HwiP_armv7r_vectors_freertos_asm.S \
     HwiP_armv7r_handlers_freertos_asm.S \
-    portASM.S \
     Mutex_armv7r_asm.S \
+    portASM.S \
 
 FILES_PATH_common = \
     ../nortos/dpl/r5 \
@@ -85,12 +85,12 @@ INCLUDES_common := \
     -I${CG_TOOL_ROOT}/arm-none-eabi/include \
     -I${MCU_PLUS_SDK_PATH}/source \
     -IFreeRTOS-Kernel/include \
-    -Iportable/TI_ARM_CLANG/ARM_CR5F \
-    -Iconfig/am64x/r5f \
     -IFreeRTOS-POSIX/include \
     -IFreeRTOS-POSIX/include/private \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable \
+    -Iportable/TI_ARM_CLANG/ARM_CR5F \
+    -Iconfig/am64x/r5f \
 
 DEFINES_common := \
     -DSOC_AM64X \
