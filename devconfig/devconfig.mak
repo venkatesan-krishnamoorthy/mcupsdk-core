@@ -1,6 +1,9 @@
 # Device type (HS/GP)
 DEVICE_TYPE?=GP
 
+# Algorithm (RSA/ECDSA)
+ALGORITHM?=RSA4k
+
 # Path to the signing tools, keys etc
 SIGNING_TOOL_PATH?=$(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing
 
@@ -17,7 +20,22 @@ else ifeq ($(DEVICE),am273x)
 	CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
 	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
 else ifeq ($(DEVICE),am261x)
-	CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
+# CustMPK support for ECDSA is available for AM261x in ROM.
+    ifeq ($(ALGORITHM),RSA4k)
+		CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
+    endif
+    ifeq ($(ALGORITHM),ECDSA256R1)
+        CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk_secp256r1.pem
+    endif
+    ifeq ($(ALGORITHM),ECDSA384R1)
+        CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk_secp384r1.pem
+    endif
+    ifeq ($(ALGORITHM),ECDSA521R1)
+        CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk_secp521r1.pem
+    endif
+    ifeq ($(ALGORITHM),BRAINPOOL512)
+        CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk_brainpool512.pem
+    endif
 	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
 else ifeq ($(DEVICE),awr294x)
 	CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
