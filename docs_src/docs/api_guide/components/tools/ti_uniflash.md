@@ -24,18 +24,53 @@ To perform flash operations on your device, you must initiate a flash session ta
 -  Auto Detect
     - When connecting a board, UniFlash automatically chooses the appropriate connection for you.
     Auto-detect uses JTAG serial to recognize the device. If you start the session using auto detect, JTAG connection is automatically selected for the session.
+    \if SOC_AM261X
+    \image html detected_device_am261x.png "Detected Devices"
+    \elseif SOC_AM263PX
+    \image html detected_device_am263px.png "Detected Devices"
+    \elseif SOC_AM263X
+    \image html detected_device_am263x.png "Detected Devices"
+    \else
     \image html detected_device.png "Detected Devices"
+    \endif
 -  Board or Device/Connection Combination
     - You can manually select your device by choosing **Sitara MCU** filter and selecting your device and connection type.
     - JTAG connection type is selected by default if you choose your device with on-chip type.
+    \if SOC_AM261X
+    \imageStyle{new_config_am261x.png,width:40%}
+    \image html new_config_am261x.png "New JTAG Configuration"
+    \elseif SOC_AM263PX
+    \imageStyle{new_config_am263px.png,width:70%}
+    \image html new_config_am263px.png "New JTAG Configuration"
+    \elseif SOC_AM263X
+    \imageStyle{new_config_am263x.png,width:70%}
+    \image html new_config_am263x.png "New JTAG Configuration"
+    \else
     \imageStyle{new_config.png,width:80%}
     \image html new_config.png "New JTAG Configuration"
+    \endif
     - Use the device name ending with (Serial) to initiate a serial (UART) flashing session. In this case, the serial connection is automatically selected.
+    \if SOC_AM261X
+    \imageStyle{serial_config_am261x.png,width:40%}
+    \image html serial_config_am261x.png "New Serial Configuration"
+    \elseif SOC_AM263PX
+    \imageStyle{serial_config_am263px.png,width:70%}
+    \image html serial_config_am263px.png "New Serial Configuration"
+    \elseif SOC_AM263X
+    \imageStyle{serial_config_am263x.png,width:70%}
+    \image html serial_config_am263x.png "New Serial Configuration"
+    \else
     \imageStyle{serial_config.png,width:80%}
     \image html serial_config.png "New Serial Configuration"
+    \endif
     - Select the correct part number to use a different connection. If you select the device by board name, the default connection type will be automatically selected for you.
+    \if (SOC_AM261X || SOC_AM263PX || SOC_AM263X)
+    \imageStyle{connection_xds110.png,width:40%}
+    \image html connection_xds110.png "Connection Type"
+    \else
     \imageStyle{connection.png,width:80%}
     \image html connection.png "Connection Type"
+    \endif
 -   Loading a Previously Saved Session
     - Loading a saved session restores your prior selections, including device, connection, and settings. If you haven't saved a session in Uniflash before, this tab will not be visible.
     \imageStyle{recent_session.png,width:80%}
@@ -82,19 +117,46 @@ After setting up one of the above session launch type, Click the Start button to
 2.  Choose a Program to Flash:
     - Click the "Browse" button to select the program you want to flash.
     - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
-    \imageStyle{load_jtag_2.png,width:70%}
+    \imageStyle{load_jtag_2.png,width:80%}
     \image html load_jtag_2.png "Load Binary Image"
     - Do not modify the address field for XIP file type. The field is used by the flash loader to recognize XIP files.
 3.  Flash Address Table:
     - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
+        \if SOC_AM261X
+        <table>
+        <tr>
+        <th> Board
+        <th> Program
+        <th> Start Address
+        </tr>
+        <tr>
+        <td rowspan=2> AM261x-LP
+        <td> SBL
+        <td> 0x60000000
+        </tr>
+        <tr>
+        <td> Application
+        <td> 0x60081000
+        </tr>
+        <tr>
+        <td rowspan=2> AM261x-SOM
+        <td> SBL
+        <td> 0x60000000
+        </tr>
+        <tr>
+        <td> Application
+        <td> 0x60080000
+        </tr>
+        </table>
+        \else
         | Program     | Start Address |
         |-------------|---------------|
         | SBL         | 0x60000000    |
-        | Application | 0x60080000    |
+        | Application | 0x60081000    |
+        \endif
     - Edit the application offset field only, if your sbl is configured with custom application offset
 4.  Initiating Programming:
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
-\note The default flasher included in the uniflash package is incompatible with the E2 revision of the board. Please refer to the \ref TI_UNIFLASH_TROUBLESHOOTING for instructions on how to make it work on the E2 board.
 \endcond
 
 \cond SOC_AM263X
@@ -148,7 +210,7 @@ After setting up one of the above session launch type, Click the Start button to
 3.  Choose a Program to Flash:
     - Click the "Browse" button to select the program you want to flash. Serial Uniflash session supports three binary image formats - SBL, application image, XIP application image. It is not necessary to have three images in order to carry out the operation.
     - The SBL and application image flash offsets are handled internally based on the device's SBL configuration.
-    \imageStyle{uart_load_2.png,width:80%}
+    \imageStyle{uart_load_2.png,width:60%}
     \image html uart_load_2.png "Load Binary Image"
     - Change the application offset from the settings. This step is only needed if you are using sbl with custom application offset.
     \imageStyle{image_offset.png,width:80%}
@@ -177,6 +239,24 @@ After setting up one of the above session launch type, Click the Start button to
 4.  Initiating Programming:
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
 \endcond
+
+\if SOC_AM261X
+### Flashing to AM261x-SOM board
+- Go to Settings & Utilities tab.
+- Under 'Board Type' select SOM.
+    \imageStyle{board_type_som.png,width:60%}
+    \image html board_type_som.png "Board Type - SOM"
+- Follow the same steps for flashing via JTAG/UART mentioned in \ref PROGRAM_THE_DEVICE.
+\endif
+
+\if SOC_AM263PX
+### Flashing to AM263Px-SIP board
+- Go to Settings & Utilities tab.
+- Under 'Part Variant' select SIP.
+    \imageStyle{part_var_sip.png,width:20%}
+    \image html part_var_sip.png "Part Variant - SIP"
+- Follow the same steps for flashing via JTAG/UART mentioned in \ref PROGRAM_THE_DEVICE.
+\endif
 
 ## Custom Flash Support{#CUSTOM_FLASH}
 \cond SOC_AM263PX || SOC_AM243X || SOC_AM263X || SOC_AM261X
