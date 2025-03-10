@@ -29,12 +29,12 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#ifndef __BOARD_H__
+#define __BOARD_H__
 
-/**
- * @brief Reset Flash
- *
- * FLASH reset is connected over I2C IO expander. Use this function to
- * reset the flash to a known state.
- *
- */
-void board_flash_reset(OSPI_Handle oHandle);
+#define ERASE_OP_CODE                   (0x21U)
+#define ERASE_EXOP_CODE                 ERASE_OP_CODE
+#define FLASH_PAGE_SIZE                 (256U)
+#define ERASE_SECTOR_SIZE               (4096U)
+
+#endif

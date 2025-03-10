@@ -31,6 +31,9 @@
         compilerBuildOptions="
             -I${CG_TOOL_ROOT}/include/c
             -I${MCU_PLUS_SDK_PATH}/source
+            -I..
+            -I../..
+            -I../../..
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -46,6 +49,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/middleware/lib
             -i${CG_TOOL_ROOT}/lib
             -m=switch_to_b_image.${ConfigName}.map
             --diag_suppress=10063
@@ -71,6 +75,7 @@
                 -lnortos.am263px.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.debug.lib
                 -lboard.am263px.r5f.ti-arm-clang.debug.lib
+                -lmiddleware.am263px.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -83,6 +88,7 @@
                 -lnortos.am263px.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.release.lib
                 -lboard.am263px.r5f.ti-arm-clang.release.lib
+                -lmiddleware.am263px.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -92,9 +98,9 @@
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../board.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../new_application_images.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../board.h" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../board.h" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

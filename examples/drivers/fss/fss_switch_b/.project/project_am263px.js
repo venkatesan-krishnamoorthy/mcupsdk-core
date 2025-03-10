@@ -2,9 +2,6 @@ let path = require('path');
 
 const device = "am263px";
 
-const TAG_CC_BOARD  = "am263px-cc";
-const TAG_LP_BOARD  = "am263px-lp";
-
 const files = {
     "am263px-cc":
     {
@@ -12,7 +9,7 @@ const files = {
         [
             "fss_switch_b_img.c",
             "main.c",
-            "board.c"
+            "new_application_images.c"
         ],
     }
 }
@@ -33,6 +30,7 @@ const projectSpecFiles = {
 const filedirs = {
     common: [
         "..",       /* core_os_combo base */
+        "../..",
         "../../..", /* Example base */
     ],
 };
@@ -42,6 +40,7 @@ const libdirs = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/middleware/lib",
     ],
 };
 
@@ -50,6 +49,7 @@ const libs_r5f = {
         "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "middleware.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -73,7 +73,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "switch_to_b_image";
-    property.isInternal = true;
+    property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -84,6 +84,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files[buildOption.board];
     build_property.projectspecfiles = projectSpecFiles[buildOption.board];
     build_property.filedirs = filedirs;
+    build_property.includes = filedirs;
     build_property.libdirs = libdirs;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
