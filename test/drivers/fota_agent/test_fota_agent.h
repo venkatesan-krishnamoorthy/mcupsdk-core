@@ -30,59 +30,30 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdint.h>
+#ifndef __TEST_FLSOPSKD_H__
+#define __TEST_FLSOPSKD_H__
+
+#include <drivers/gpio.h>
 #include <string.h>
-#include <assert.h>
-
-#include <kernel/dpl/HwiP.h>
 #include <kernel/dpl/DebugP.h>
+#include <unity.h>
+#include "ti_drivers_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include <drivers/hw_include/soc_config.h>
 
+#define ELF_FILE1_SIZE (8436U)
+#define ELF_FILE2_SIZE (8436U)
+#define ELF_FILE3_SIZE (16420U)
 
+extern uint8_t elf_file1 [ELF_FILE1_SIZE];
+extern uint8_t elf_file2 [ELF_FILE2_SIZE];
+extern uint8_t elf_file3 [ELF_FILE3_SIZE];
 
+void test_fota_agent_init(void*);
+void test_fota_agent_elf_file1(void*);
+void test_fota_agent_elf_file2(void*);
+void test_fota_agent_elf_file3(void*);
+void test_fota_agent_plain_elf(void*);
 
-#include "csl_arm_r5_pmu.h"
-
-#include "appprofile.h"
-
-#define PMU_EVENT_COUNTER_1 (CSL_ARM_R5_PMU_EVENT_TYPE_ICACHE_STALL)
-#define PMU_EVENT_COUNTER_2 (CSL_ARM_R5_PMU_EVENT_TYPE_I_X)
-#define PMU_EVENT_COUNTER_3 (CSL_ARM_R5_PMU_EVENT_TYPE_ICACHE_MISS)
-
-
-
-#define UTILS_ARRAYSIZE(x) sizeof(x)/sizeof (x[0U])
-#define UTILS_ALIGN(x,align)  ((((x) + ((align) - 1))/(align)) * (align))
-
-
-void config_pmu(void)
-{
-
-    CSL_armR5PmuCfg(0, 0 ,1);
-    CSL_armR5PmuEnableAllCntrs(1);
-    int num_cnt = CSL_armR5PmuGetNumCntrs();
-
-    DebugP_assert(num_cnt == 3);
-    CSL_armR5PmuCfgCntr(0, PMU_EVENT_COUNTER_1);
-    CSL_armR5PmuCfgCntr(1, PMU_EVENT_COUNTER_2);
-    CSL_armR5PmuCfgCntr(2, PMU_EVENT_COUNTER_3);
-
-    CSL_armR5PmuEnableCntrOverflowIntr(0, 0);
-    CSL_armR5PmuEnableCntrOverflowIntr(1, 0);
-    CSL_armR5PmuEnableCntrOverflowIntr(2, 0);
-    CSL_armR5PmuResetCntrs();
-    CSL_armR5PmuEnableCntr(0, 1);
-    CSL_armR5PmuEnableCntr(1, 1);
-    CSL_armR5PmuEnableCntr(2, 1);
-}
-
-
-
-
-
-
-
-
-
-
-
-
+#endif //__TEST_FLSOPSKD_H__

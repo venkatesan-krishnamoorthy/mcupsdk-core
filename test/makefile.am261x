@@ -57,6 +57,8 @@ help:
 	@echo  $(MAKE) -s -C drivers/edma/edma_ut_am261x/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/fsi/fsi_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/fsi/fsi_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/flsopskd/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/fota_agent/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/gpio/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/gpio/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/i2c/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -216,7 +218,7 @@ help:
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
-	@echo  $(MAKE) -s -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C ../examples/benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_notify/am261x-som/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_notify/am261x-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am261x-som/system_freertos [all clean syscfg-gui syscfg]
@@ -321,6 +323,8 @@ BUILD_COMBO_EXAMPLE_ALL += edma_ut_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += edma_ut_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_fsi_am261x-som_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_fsi_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_flsopskd_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_fota_agent_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_gpio_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_gpio_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_i2c_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -552,6 +556,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_fsi_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/fsi/fsi_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_flsopskd_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/flsopskd/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_fota_agent_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/fota_agent/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_gpio_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/gpio/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1022,7 +1032,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark:
-	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile all
+	$(MAKE) -C ../examples/benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile all
 
  test_ipc_notify_am261x-som_system_freertos_nortos:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile all
@@ -1066,6 +1076,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_ut_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_ut_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_fsi_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_fsi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flsopskd_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_fota_agent_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1292,6 +1304,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_fsi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/fsi/fsi_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_flsopskd_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/flsopskd/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_fota_agent_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/fota_agent/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_gpio_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/gpio/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1762,7 +1780,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_clean:
-	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile clean
+	$(MAKE) -C ../examples/benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile clean
 
  test_ipc_notify_am261x-som_system_freertos_nortos_clean:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile clean
@@ -1806,6 +1824,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_ut_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_ut_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_fsi_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_fsi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flsopskd_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_fota_agent_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2032,6 +2052,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_fsi_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/fsi/fsi_lld/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_flsopskd_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/flsopskd/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_fota_agent_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/fota_agent/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_gpio_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/gpio/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -2502,7 +2528,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  flsopskd_benchmark_am261x-lp_system_flsopskd_benchmark_scrub:
-	$(MAKE) -C benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile scrub
+	$(MAKE) -C ../examples/benchmarks/flsopskd_benchmark/am261x-lp/system_flsopskd_benchmark -f makefile scrub
 
  test_ipc_notify_am261x-som_system_freertos_nortos_scrub:
 	$(MAKE) -C drivers/ipc_notify/am261x-som/system_freertos_nortos -f makefile scrub

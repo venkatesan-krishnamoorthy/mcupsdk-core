@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,19 +30,21 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __BOARD_H__
-#define __BOARD_H__
+#include <stdlib.h>
+#include "ti_drivers_config.h"
+#include "ti_board_config.h"
 
-/**
- * @brief Reset Flash
- *
- * FLASH reset is connected over I2C IO expander. Use this function to
- * reset the flash to a known state.
- *
- */
+void test_main(void *args);
 
-void board_flash_reset();
+int main(void)
+{
+    System_init();
+    Board_init();
 
+    test_main(NULL);
 
+    Board_deinit();
+    System_deinit();
 
-#endif
+    return 0;
+}

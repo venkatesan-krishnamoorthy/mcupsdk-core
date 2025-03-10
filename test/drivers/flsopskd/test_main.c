@@ -30,25 +30,42 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __BASE__H__
-#define __BASE__H__
 
-#include <stdio.h>
-#include <kernel/dpl/DebugP.h>
-#include <stdlib.h>
-#include <string.h>
+#include "test_flsopskd.h"
 
-#include "ti_drivers_config.h"
-#include "ti_board_config.h"
-#include "ti_drivers_config.h"
-#include "ti_drivers_open_close.h"
-#include "ti_board_open_close.h"
-#include "appprofile.h"
-#include "csl_arm_r5_pmu.h"
-#include "board.h"
-#include <drivers/flsopskd.h>
 
-extern volatile uint32_t maxSingleSectorEraseTime;
-extern volatile uint32_t maxSinglePageProgramTime;
+void test_main(void *args)
+{
+    Drivers_open();
+    Board_driversOpen();
 
-#endif
+    for(unsigned int i = 0; i < TEST_DATA_LENGTH; i++)
+    {
+        gByteArrayDecRef[i] = gByteArrayDec[i];
+    }
+
+    UNITY_BEGIN();
+
+    RUN_TEST(test_flsopskd_init_seq, 14209, (void*)NULL);
+    RUN_TEST(test_flsopskd_read, 14210, (void*)NULL);
+    RUN_TEST(test_flsopskd_erase, 14211, (void*)NULL);
+    RUN_TEST(test_flsopskd_write, 14212, (void*)NULL);
+
+    UNITY_END();
+
+    Board_driversClose();
+    Drivers_close();
+}
+
+/*
+ * Unity framework required functions
+ */
+void setUp(void)
+{
+
+}
+
+void tearDown(void)
+{
+
+}
