@@ -43,40 +43,19 @@
 
 /**
  * @brief 0xFD shuts down phy pipeline
- * 
+ *
  */
 #define PIPELINE_SHUTDOWN_MASK (0xFDU)
 
 uint8_t gStig_opcode = 0;
 uint8_t gStig_exopcode = 0;
-uint8_t gStig_readbytes = 0;
-uint8_t gStig_writebytes = 10;
-uint8_t gStig_addressBytes = 0;
-uint8_t gStig_dummyCyc = 0;
-
-uint8_t gStig_wrdata_0 = 0;
-uint8_t gStig_wrdata_1 = 0;
-uint8_t gStig_wrdata_2 = 0;
-uint8_t gStig_wrdata_3 = 0;
-uint8_t gStig_wrdata_4 = 0;
-uint8_t gStig_wrdata_5 = 0;
-uint8_t gStig_wrdata_6 = 0;
-uint8_t gStig_wrdata_7 = 0;
-uint8_t gStig_rdData_4 = 0;
-uint8_t gStig_rdData_5 = 0;
-uint8_t gStig_rdData_6 = 0;
-uint8_t gStig_rdData_7 = 0;
-uint8_t gStig_rdData_0 = 0;
-uint8_t gStig_rdData_1 = 0;
-uint8_t gStig_rdData_2 = 0;
-uint8_t gStig_rdData_3 = 0;
 uint16_t time_h = 0;
 uint16_t time_l = 0;
 uint16_t time_tot = 0;
 
 void main()
 {
-    const uint8_t cfgmask = PIPELINE_SHUTDOWN_MASK; 
+    const uint8_t cfgmask = PIPELINE_SHUTDOWN_MASK;
 
     uint8_t i = 0;
     uint8_t rdata3 = 0;
@@ -188,7 +167,7 @@ void main()
             TCON = 0x00;
             time_l = TL0;
             time_h =  (uint16_t)(TH0<<8);
-            time_tot =  time_tot + (time_h<<8) + (time_l);
+            time_tot =  time_tot + time_h + (time_l);
             ESFR_FOTA_GP1_VAL0 = (uint8_t)time_tot;
             ESFR_FOTA_GP1_VAL1 = (time_tot>>8);
             FOTA_ReleaseCfgBusOwnership();
@@ -211,200 +190,10 @@ void main()
                 case 1:
                     gStig_exopcode = ESFR_FOTA_GP0_VAL2;
                     break;
-                case 3:
-                    gStig_readbytes = (ESFR_FOTA_GP0_VAL2 & 0xf) << 4;
-                    break;
-                case 4:
-                    gStig_writebytes = (ESFR_FOTA_GP0_VAL2 & 0xf) << 4;
-                    break;
-                case 5:
-                    gStig_addressBytes = ESFR_FOTA_GP0_VAL2 & 0xf;
-                    break;
-                case 6:
-                    gStig_dummyCyc = ESFR_FOTA_GP0_VAL2;
-                    break;
-                case 7:
-                    gStig_wrdata_0 = ESFR_MCU_DAT_ADDR0;
-                    gStig_wrdata_1 = ESFR_MCU_DAT_ADDR1;
-                    gStig_wrdata_2 = ESFR_MCU_DAT_ADDR2;
-                    gStig_wrdata_3 = ESFR_MCU_DAT_ADDR3;
-                    break;
-                case 8:
-                    gStig_wrdata_4 = ESFR_MCU_DAT_ADDR0;
-                    gStig_wrdata_5 = ESFR_MCU_DAT_ADDR1;
-                    gStig_wrdata_6 = ESFR_MCU_DAT_ADDR2;
-                    gStig_wrdata_7 = ESFR_MCU_DAT_ADDR3;
-                    break;
-                case 9:
-                    ESFR_FOTA_GP1_VAL0 = gStig_rdData_0;
-                    ESFR_FOTA_GP1_VAL1 = gStig_rdData_1;
-                    ESFR_FOTA_GP1_VAL2 = gStig_rdData_2;
-                    ESFR_FOTA_GP1_VAL3 = gStig_rdData_3;
-                    break;
-                case 10:
-                    ESFR_FOTA_GP1_VAL0 = gStig_rdData_4;
-                    ESFR_FOTA_GP1_VAL1 = gStig_rdData_5;
-                    ESFR_FOTA_GP1_VAL2 = gStig_rdData_6;
-                    ESFR_FOTA_GP1_VAL3 = gStig_rdData_7;
-                    break;
 
                 default:
                     break;
             }
-        }
-        break;
-        case 3:
-        {
-            uint8_t initOspiCfg_0 = 0; // oritinal ospi cfg register values
-            uint8_t initOspiCfg_1 = 0; // oritinal ospi cfg register values
-            uint8_t initOspiCfg_2 = 0; // oritinal ospi cfg register values
-            uint8_t initOspiCfg_3 = 0; // oritinal ospi cfg register values
-
-            uint8_t initOspiRdCfg_0 = 0; // oritinal ospi cfg register values
-            uint8_t initOspiRdCfg_1 = 0; // oritinal ospi cfg register values
-            uint8_t initOspiRdCfg_2 = 0; // oritinal ospi cfg register values
-            uint8_t initOspiRdCfg_3 = 0; // oritinal ospi cfg register values
-
-            FOTA_GetCfgBusOwnership();
-            // before entering the FOTA code need to be certain that the
-            // OSPI SPI pins are idle
-            rdata3 = 0x00;
-            while (rdata3 != 0x80)
-            {
-                for (i = 0; i < 5; i++)
-                {
-                }
-
-                FOTA_ReadCfg(OPTISPI_CFG_REG, ESFR_OSPI_REGS_RSEL);
-                // FOTA_ReadCfg(OPTISPI_STIG_REG,ESFR_OSPI_REGS_RSEL);
-                rdata3 = ESFR_MCU_CFG_RD_DAT3 & 0x80;
-            }
-
-            FOTA_ReadCfg(OPTISPI_DEV_INSTR_RD_CONFIG_REG, ESFR_OSPI_REGS_RSEL);
-            initOspiRdCfg_3 = ESFR_MCU_CFG_RD_DAT3;
-            initOspiRdCfg_2 = ESFR_MCU_CFG_RD_DAT2;
-            initOspiRdCfg_1 = ESFR_MCU_CFG_RD_DAT1;
-            initOspiRdCfg_0 = ESFR_MCU_CFG_RD_DAT0;
-
-            // configure stig address
-            ESFR_MCU_CFG_WR_DAT3 = ESFR_MCU_DAT_ADDR3;
-            ESFR_MCU_CFG_WR_DAT2 = ESFR_MCU_DAT_ADDR2;
-            ESFR_MCU_CFG_WR_DAT1 = ESFR_MCU_DAT_ADDR1;
-            ESFR_MCU_CFG_WR_DAT0 = ESFR_MCU_DAT_ADDR0;
-            FOTA_WriteCfg(OPTISPI_CMD_ADDR_REG, ESFR_OSPI_REGS_RSEL);
-
-            ESFR_MCU_CFG_WR_DAT3 = gStig_wrdata_3;
-            ESFR_MCU_CFG_WR_DAT2 = gStig_wrdata_2;
-            ESFR_MCU_CFG_WR_DAT1 = gStig_wrdata_1;
-            ESFR_MCU_CFG_WR_DAT0 = gStig_wrdata_0;
-            FOTA_WriteCfg(OPTISPI_CMD_WRDATA_LOW_REG, ESFR_OSPI_REGS_RSEL);
-
-            ESFR_MCU_CFG_WR_DAT3 = gStig_wrdata_7;
-            ESFR_MCU_CFG_WR_DAT2 = gStig_wrdata_6;
-            ESFR_MCU_CFG_WR_DAT1 = gStig_wrdata_5;
-            ESFR_MCU_CFG_WR_DAT0 = gStig_wrdata_4;
-            FOTA_WriteCfg(OPTISPI_CMD_WRDATA_HIGH_REG, ESFR_OSPI_REGS_RSEL);
-
-            FOTA_ReadCfg(OPTISPI_CFG_OPCODE_EXT_LOWER_REG, ESFR_OSPI_REGS_RSEL);
-            ESFR_MCU_CFG_WR_DAT3 = ESFR_MCU_CFG_RD_DAT3;
-            ESFR_MCU_CFG_WR_DAT2 = ESFR_MCU_CFG_RD_DAT2;
-            ESFR_MCU_CFG_WR_DAT1 = ESFR_MCU_CFG_RD_DAT1;
-            ESFR_MCU_CFG_WR_DAT0 = gStig_exopcode;
-            FOTA_WriteCfg(OPTISPI_CFG_OPCODE_EXT_LOWER_REG, ESFR_OSPI_REGS_RSEL);
-
-            // configure STIG registers
-            ESFR_MCU_CFG_WR_DAT3 = gStig_opcode;
-            ESFR_MCU_CFG_WR_DAT2 = gStig_readbytes | gStig_addressBytes;
-            ESFR_MCU_CFG_WR_DAT1 = gStig_writebytes |((gStig_dummyCyc >> 1) & 0xf);
-            ESFR_MCU_CFG_WR_DAT0 = ((gStig_dummyCyc & 1) << 7);
-            FOTA_WriteCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
-
-            // 2.
-            FOTA_ReadCfg(OPTISPI_CFG_REG, ESFR_OSPI_REGS_RSEL);
-            initOspiCfg_3 = ESFR_MCU_CFG_RD_DAT3;
-            initOspiCfg_2 = ESFR_MCU_CFG_RD_DAT2;
-            initOspiCfg_1 = ESFR_MCU_CFG_RD_DAT1;
-            initOspiCfg_0 = ESFR_MCU_CFG_RD_DAT0;
-            ESFR_MCU_CFG_WR_DAT3 = initOspiCfg_3 & cfgmask;
-            ESFR_MCU_CFG_WR_DAT2 = initOspiCfg_2;
-            ESFR_MCU_CFG_WR_DAT1 = initOspiCfg_1;
-            ESFR_MCU_CFG_WR_DAT0 = initOspiCfg_0;
-
-            // Preload the ADDR0/1 registers with the target address for
-            // cfg write to optimize the time of the timing sensitive
-            // block.
-            ESFR_MCU_CFG_ADDR0 = OPTISPI_CFG_REG & 0x00FF; // write the address out to esfr registers
-            ESFR_MCU_CFG_ADDR1 = (OPTISPI_CFG_REG >> 8) & 0x00FF;
-
-            // disable pipeline
-            rdata3 = 0x00;
-            while (rdata3 != 0x80)
-            {
-                for (i = 0; i < 5; i++)
-                {
-                }
-
-                FOTA_ReadCfg(OPTISPI_CFG_REG, ESFR_OSPI_REGS_RSEL);
-                // FOTA_ReadCfg(OPTISPI_STIG_REG,ESFR_OSPI_REGS_RSEL);
-                rdata3 = ESFR_MCU_CFG_RD_DAT3 & 0x80;
-            }
-            FOTA_GetDatBusOwnership();
-            FOTA_WriteCfgPreload(ESFR_OSPI_REGS_RSEL);
-            // now send stig command
-            FOTA_ReadCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
-            ESFR_MCU_CFG_WR_DAT3 = ESFR_MCU_CFG_RD_DAT3;
-            ESFR_MCU_CFG_WR_DAT2 = ESFR_MCU_CFG_RD_DAT2;
-            ESFR_MCU_CFG_WR_DAT1 = ESFR_MCU_CFG_RD_DAT1;
-            ESFR_MCU_CFG_WR_DAT0 = ESFR_MCU_CFG_RD_DAT0 | 1;
-            FOTA_WriteCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
-
-            // wait for the stig command to complete
-            uint8_t stigflag = 0x02; // set to stig active until reading act ual
-            while (stigflag == 0x02)
-            {
-                for (i = 0; i < 5; i++)
-                {
-                }
-                FOTA_ReadCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
-                stigflag = ESFR_MCU_CFG_RD_DAT0 & 0x02;
-            }
-             
-            // release the dat bus
-            // END TIMING OPTIMIZED CODE BLOCK
-            // restore the cfg register, re-enable the phy pipeline
-            ESFR_MCU_CFG_WR_DAT3 = initOspiCfg_3;
-            ESFR_MCU_CFG_WR_DAT2 = initOspiCfg_2;
-            ESFR_MCU_CFG_WR_DAT1 = initOspiCfg_1;
-            ESFR_MCU_CFG_WR_DAT0 = initOspiCfg_0;
-            FOTA_WriteCfg(OPTISPI_CFG_REG, ESFR_OSPI_REGS_RSEL);
-            FOTA_ReleaseDatBusOwnership();
-
-            ESFR_MCU_CFG_WR_DAT3 = 0;
-            ESFR_MCU_CFG_WR_DAT2 = 0;
-            ESFR_MCU_CFG_WR_DAT1 = 0;
-            ESFR_MCU_CFG_WR_DAT0 = 0;
-            FOTA_WriteCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
-
-            ESFR_MCU_CFG_WR_DAT3 = initOspiRdCfg_3;
-            ESFR_MCU_CFG_WR_DAT2 = initOspiRdCfg_2;
-            ESFR_MCU_CFG_WR_DAT1 = initOspiRdCfg_1;
-            ESFR_MCU_CFG_WR_DAT0 = initOspiRdCfg_0;
-            FOTA_WriteCfg(OPTISPI_DEV_INSTR_RD_CONFIG_REG, ESFR_OSPI_REGS_RSEL);
-
-            FOTA_ReadCfg(OPTISPI_FLHCMD_RD_REG_L, ESFR_OSPI_REGS_RSEL);
-            gStig_rdData_0 = ESFR_MCU_CFG_RD_DAT0;
-            gStig_rdData_1 = ESFR_MCU_CFG_RD_DAT1;
-            gStig_rdData_2 = ESFR_MCU_CFG_RD_DAT2;
-            gStig_rdData_3 = ESFR_MCU_CFG_RD_DAT3;
-
-            FOTA_ReadCfg(OPTISPI_FLHCMD_RD_REG_U, ESFR_OSPI_REGS_RSEL);
-            gStig_rdData_4 = ESFR_MCU_CFG_RD_DAT0;
-            gStig_rdData_5 = ESFR_MCU_CFG_RD_DAT1;
-            gStig_rdData_6 = ESFR_MCU_CFG_RD_DAT2;
-            gStig_rdData_7 = ESFR_MCU_CFG_RD_DAT3;
-
-
-            FOTA_ReleaseCfgBusOwnership();
         }
         break;
         case 4:
@@ -688,6 +477,13 @@ void FOTA_EraseSector()
     ESFR_MCU_CFG_WR_DAT2 = 0x00;
     ESFR_MCU_CFG_WR_DAT3 = 0x06;
 
+    time_h = 0;
+    time_l = 0;
+    time_tot = 0;
+    TL0 =  0x00;
+    TH0 = (0x00);
+    TMOD = 0x1;
+    TCON = 0x10;
     FOTA_GetDatBusOwnership();
     FOTA_WriteCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
 
@@ -706,12 +502,12 @@ void FOTA_EraseSector()
     ESFR_MCU_CFG_WR_DAT3 = ESFR_MCU_CFG_RD_DAT3;
     ESFR_MCU_CFG_WR_DAT2 = ESFR_MCU_CFG_RD_DAT2;
     ESFR_MCU_CFG_WR_DAT1 = ESFR_MCU_CFG_RD_DAT1;
-    ESFR_MCU_CFG_WR_DAT0 = 0x21;
+    ESFR_MCU_CFG_WR_DAT0 = gStig_opcode;
     FOTA_WriteCfg(OPTISPI_CFG_OPCODE_EXT_LOWER_REG, ESFR_OSPI_REGS_RSEL);
     ESFR_MCU_CFG_WR_DAT0 = 0x01;
     ESFR_MCU_CFG_WR_DAT1 = 0x00;
     ESFR_MCU_CFG_WR_DAT2 = 0x0B;
-    ESFR_MCU_CFG_WR_DAT3 = 0x21;
+    ESFR_MCU_CFG_WR_DAT3 = gStig_exopcode;
     FOTA_WriteCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
 
     // poll to determine when the STIG command is done
@@ -731,6 +527,12 @@ void FOTA_EraseSector()
     // FOTA_WriteCfg(OPTISPI_STIG_REG,ESFR_OSPI_REGS_RSEL);
     FOTA_ReleaseDatBusOwnership();
     FOTA_ReleaseCfgBusOwnership();
+    TCON = 0x00;
+    time_l = TL0;
+    time_h =  (uint16_t)(TH0<<8);
+    time_tot =  time_tot + time_h + (time_l);
+    ESFR_FOTA_GP1_VAL0 = (uint8_t)time_tot;
+    ESFR_FOTA_GP1_VAL1 = (time_tot>>8);
     P1 = 0xA5;
     // Poll the Flash wait until erase has complted
    FOTA_WaitFlashBusy(0x0001,1000);

@@ -34,7 +34,7 @@
 #ifndef __FOTA_FW_ARR_H__
 #define __FOTA_FW_ARR_H__
 
-#define FOTA_FW_SIZE (1731U)
+#define FOTA_FW_SIZE (1318U)
 
 extern const uint8_t FOTA_FW_ARR[FOTA_FW_SIZE]; 
 #endif //__FOTA_FW_ARR_H__

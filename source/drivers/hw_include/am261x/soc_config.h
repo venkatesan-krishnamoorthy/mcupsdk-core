@@ -73,6 +73,7 @@ extern "C"
 #define DRV_VERSION_FLASH_V2
 #define DRV_VERSION_FSI_V1
 #define DRV_VERSION_FSS_V0
+#define DRV_VERSION_FLSOPSKD_V0
 #define DRV_VERSION_GPIO_V0
 #define DRV_VERSION_GPMC_V0
 #define DRV_VERSION_I2C_V1
@@ -89,7 +90,6 @@ extern "C"
 #define DRV_VERSION_SPINLOCK_V0
 #define DRV_VERSION_UART_V0
 #define DRV_VERSION_WATCHDOG_V0
-#define DRV_VERSION_FLSOPSKD_V0
 
 /* Driver DMA integration */
 #define DMA_VERSION_MCSPI_EDMA

@@ -160,7 +160,7 @@ void FOTA_GetFlashStatusSTIG();
  * @param delay amount of delay to wait
  * @param loop_count number of times to poll 
  */
-void FOTA_WaitFlashBusy(uint16_t delay, uint16_t loop_count)
+void FOTA_WaitFlashBusy(uint16_t delay, uint16_t loop_count);
 
 /**
  * @brief This function will erase the flash sector
