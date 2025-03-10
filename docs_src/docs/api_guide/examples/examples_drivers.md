@@ -321,10 +321,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_EQEP_SPEED_DIRECTION
    -# \subpage EXAMPLES_DRIVERS_EQEP_FREQ_CAL_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_EQEP_CW_CCW
-\cond SOC_AM263PX
--# FOTA
-   -# \subpage EXAMPLES_DRIVERS_FOTA_OVER_CAN
-\endcond
+
 -# FSI
    -# \subpage EXAMPLES_DRIVERS_FSI_LOOPBACK_DMA
    -# \subpage EXAMPLES_DRIVERS_FSI_LOOPBACK_INTERRUPT

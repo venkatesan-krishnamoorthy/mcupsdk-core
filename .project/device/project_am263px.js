@@ -138,7 +138,6 @@ const example_file_list = [
     "examples/drivers/flc/.project/project_am263px.js",
     "examples/drivers/fss/swap_to_b/.project/project.js",
     "examples/drivers/fss/fss_switch_b/.project/project.js",
-	"examples/drivers/fss/fota_over_can/.project/project.js",
     "examples/drivers/fsi/fsi_loopback_dma/.project/project.js",
 	"examples/drivers/fsi/fsi_loopback_interrupt/.project/project.js",
 	"examples/drivers/fsi/fsi_loopback_polling/.project/project.js",
