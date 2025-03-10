@@ -49,7 +49,7 @@ then reading back the same data from the EEPROM.
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
@@ -77,7 +77,7 @@ then reading back the same data from the EEPROM.
 
 Shown below is a sample output when the application is run,
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
 \code
 [I2C] Writing data to EEPROM ... !!!
