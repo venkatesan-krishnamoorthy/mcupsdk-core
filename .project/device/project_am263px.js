@@ -42,6 +42,7 @@ const device_defines = {
 
 const example_file_list = [
     "examples/benchmarks/coremark_benchmark/.project/project.js",
+    "examples/benchmarks/flsopskd_benchmark/.project/project.js",
     "examples/benchmarks/dhrystone_benchmark/.project/project.js",
     "examples/benchmarks/ocmc_benchmarking/.project/project.js",
     "examples/benchmarks/sram_overlay_benchmark/.project/project.js",
@@ -369,6 +370,7 @@ const example_file_list = [
 	"test/drivers/epwm/.project/project.js",
 	"test/drivers/eqep/.project/project.js",
 	"test/drivers/fsi/fsi_lld/.project/project.js",
+    "test/drivers/fota_agent/.project/project.js",
 	"test/drivers/gpio/.project/project.js",
 	"test/drivers/i2c/.project/project.js",
 	"test/drivers/ipc_notify/.project/project.js",
@@ -385,7 +387,6 @@ const example_file_list = [
     "test/drivers/optiflash/.project/project.js",
 	"test/drivers/ospi/.project/project.js",
     "test/benchmarks/memory_access_latency/.project/project.js",
-    "test/benchmarks/flsopskd_benchmark/.project/project.js",
 	"test/drivers/sdfm/.project/project.js",
 	"test/drivers/resolver/.project/project.js",
     "test/drivers/rti/.project/project.js",

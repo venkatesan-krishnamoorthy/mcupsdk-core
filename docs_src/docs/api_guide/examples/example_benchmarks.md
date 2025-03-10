@@ -11,6 +11,10 @@ This page lists all the examples related to benchmarks of SOC and board peripher
 \endcond
 
 \cond SOC_AM263PX || SOC_AM261X
+   -# \subpage EXAMPLES_FLSOPSKD_BENCHMARK
+\endcond
+
+\cond SOC_AM263PX || SOC_AM261X
    -# \subpage EXAMPLES_OPTIFLASH_OCRAM_BENCHMARK
    -# \subpage EXAMPLES_OPTIFLASH_XIP_8K_BENCHMARK
    -# \subpage EXAMPLES_OPTIFLASH_XIP_16K_BENCHMARK
