@@ -52,7 +52,7 @@ extern "C" {
 #define CSL_UART_PER_CNT                (6U)
 
 /** @brief Number of SPI instances */
-#define CSL_SPI_PER_CNT                (5U)
+#define CSL_SPI_PER_CNT                (8U)
 
 /** @brief Number of LIN instances */
 #define CSL_LIN_PER_CNT                (5U)
@@ -61,13 +61,13 @@ extern "C" {
 #define CSL_I2C_PER_CNT                (4U)
 
 /** @brief Number of MCAN instances */
-#define CSL_MCAN_PER_CNT                (4U)
+#define CSL_MCAN_PER_CNT                (8U)
 
 /** @brief Number of ETPWM instances */
 #define CSL_ETPWM_PER_CNT                (32U)
 
 /** @brief Number of ECAP instances */
-#define CSL_ECAP_PER_CNT                (10U)
+#define CSL_ECAP_PER_CNT                (16U)
 
 /** @brief Number of EQEP instances */
 #define CSL_EQEP_PER_CNT                (3U)
