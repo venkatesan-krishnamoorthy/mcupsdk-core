@@ -33,6 +33,9 @@
 #include <drivers/soc.h>
 #include <kernel/dpl/AddrTranslateP.h>
 #include <kernel/dpl/CpuIdP.h>
+#include <drivers/hw_include/am263px/cslr_mss_ctrl.h>
+#include <drivers/hw_include/am263px/cslr_soc_defines.h>
+#include <drivers/hw_include/am263px/cslr_soc_baseaddress.h>
 
 #define EPWM_HALTEN_STEP  (CSL_CONTROLSS_CTRL_EPWM1_HALTEN - CSL_CONTROLSS_CTRL_EPWM0_HALTEN)
 #define ECAP_HALTEN_STEP  (CSL_CONTROLSS_CTRL_ECAP1_HALTEN - CSL_CONTROLSS_CTRL_ECAP0_HALTEN)
@@ -1472,7 +1475,7 @@ uint64_t SOC_virtToPhy(void *virtAddr)
 #endif
 
 #if (__ARM_ARCH == 7) && (__ARM_ARCH_PROFILE == 'M')
-    if ( temp >= (CSL_HSM_M4_RAM_BASE - CSL_HSM_M4_RAM_BASE) && 
+    if ( temp >= (CSL_HSM_M4_RAM_BASE - CSL_HSM_M4_RAM_BASE) &&
         (temp < CSL_HSM_M4_RAM_SIZE))
     {
         phyAddr += EDMA_M4F_VIRT_TO_PHY_OFFSET;
@@ -1619,4 +1622,27 @@ void *SOC_phyToVirt(uint64_t phyAddr)
 uint32_t SOC_getFlashDataBaseAddr(void)
 {
     return CSL_EXT_FLASH0_U_BASE;
+}
+
+void SOC_sendSoftwareInterrupt(uint16_t coreId)
+{
+    volatile CSL_mss_ctrlRegs * regs = (volatile CSL_mss_ctrlRegs*)CSL_MSS_CTRL_U_BASE;
+    switch(coreId)
+    {
+        case CSL_CORE_ID_R5FSS0_0:
+            regs->R5SS0_CORE0_SW_INT = 1;
+            break;
+
+        case CSL_CORE_ID_R5FSS0_1:
+            regs->R5SS0_CORE1_SW_INT = 1;
+            break;
+
+        case CSL_CORE_ID_R5FSS1_0:
+            regs->R5SS1_CORE0_SW_INT = 1;
+            break;
+
+        case CSL_CORE_ID_R5FSS1_1:
+            regs->R5SS1_CORE1_SW_INT = 1;
+            break;
+    };
 }

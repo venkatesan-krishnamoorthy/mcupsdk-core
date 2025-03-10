@@ -710,6 +710,13 @@ void *SOC_phyToVirt(uint64_t phyAddr);
  */
 uint32_t SOC_getFlashDataBaseAddr(void);
 
+/**
+ * \brief Send SOC level software triggered address.
+ *
+ * @param coreId  [in] see \ref CSL_CoreID
+ */
+void SOC_sendSoftwareInterrupt(uint16_t coreId);
+
 /** \brief API to validate UART base address */
 static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
 {
