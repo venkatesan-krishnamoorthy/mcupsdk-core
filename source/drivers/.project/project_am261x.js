@@ -31,6 +31,7 @@ const files_r5f = {
 		"flc.c",
         "flsopskd_v0.c",
         "fota_fw_arr.c",
+		"FOTAAgent_BufferManager.c",
 		"fota_agent.c",
 		"fsi_rx.c",
 		"fsi_tx.c",
@@ -152,7 +153,7 @@ const filedirs = {
         "optiflash/v0/flc",
         "optiflash/v0/rl2",
 		"flsopskd/v0",
-		"fota_agent",
+		"fota_agent/v0",
 		"fss/v0"
 	],
 };

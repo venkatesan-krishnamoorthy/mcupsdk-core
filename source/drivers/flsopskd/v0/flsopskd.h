@@ -158,7 +158,7 @@ int32_t FLSOPSKD_write(FLSOPSKD_Handle *pHandle, uint32_t destAddr, uint8_t * pS
  * field is sent via eraseOffsetInBytes argument.
  *
  * @param pHandle [in] pointer to FLSOPSKD_Handle instance.
- * @param offset [in] block offset.
+ * @param eraseOffsetInBytes [in] block offset in bytes.
  * @return SystemP_FAILURE
  * @return SystemP_SUCCESS
  */
