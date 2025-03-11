@@ -12,7 +12,8 @@ const files_r5f = {
         "pmic_wdg.c",
         "pmic.c",
         "pmic_lld.c",
-        "pmic_tps65036xx.c"
+        "pmic_tps65036xx.c",
+        "pmic_gpio.c"
     ],
 };
 

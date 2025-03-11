@@ -11,7 +11,12 @@ const files_r5f = {
         "pmic_io.c",
         "pmic_power.c",
         "pmic_wdg.c",
-        "pmic_lld.c"
+        "pmic_lld.c",
+        "pmic_irq.c",
+        "pmic_gpio.c",
+        "pmic_timer.c",
+        "pmic_fsm.c",
+        "pmic_esm.c",
     ],
 };
 

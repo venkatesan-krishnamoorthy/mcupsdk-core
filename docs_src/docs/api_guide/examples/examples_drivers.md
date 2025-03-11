@@ -435,8 +435,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \endcond
 \cond SOC_AM261X
 -# PMIC
+   -# \subpage EXAMPLES_PMIC_QA_WATCHDOG_INTERRUPT
    -# \subpage EXAMPLES_PMIC_QA_WATCHDOG_RESET
    -# \subpage EXAMPLES_PMIC_TRIGGER_WATCHDOG_RESET
+   -# \subpage EXAMPLES_PMIC_USER_REG_CFG
 \endcond
 -# PMU
    -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT

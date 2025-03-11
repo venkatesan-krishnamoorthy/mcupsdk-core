@@ -44,7 +44,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	pmic_qa_watchdog_reset.c \
+	pmic_qa_watchdog_derby_reset.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

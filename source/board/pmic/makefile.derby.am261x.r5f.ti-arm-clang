@@ -22,6 +22,7 @@ FILES_common := \
     pmic.c \
     pmic_lld.c \
     pmic_tps65036xx.c \
+    pmic_gpio.c \
 
 FILES_PATH_common = \
     pmic_lld/derby/src \

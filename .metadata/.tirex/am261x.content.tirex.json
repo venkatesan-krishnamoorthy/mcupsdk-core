@@ -11258,6 +11258,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An example to show PMIC watchdog operation in Q/A mode which generates a reset when MCU fails to send watchdog signal.  CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmic_qa_watchdog_reset",
+        "location": "../../examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_qa_watchdog_reset",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC watchdog operation in Q/A mode which generates a reset when MCU fails to send watchdog signal.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "pmic_qa_watchdog_reset",
+        "location": "../../examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_qa_watchdog_reset",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An example to show PMIC watchdog operation in trigger mode which generates a reset when MCU fails to send watchdog signal.  CPU is R5FSS0-0 running NORTOS.",
         "name": "pmic_trigger_watchdog_reset",
         "location": "../../examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -11307,6 +11373,204 @@
             "drivers",
             "pmic",
             "pmic_trigger_watchdog_reset",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC watchdog operation in Q/A mode which generates a Interrupt when MCU fails to send watchdog signal.  CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmic_qa_watchdog_interrupt",
+        "location": "../../examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_qa_watchdog_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC watchdog operation in Q/A mode which generates a Interrupt when MCU fails to send watchdog signal.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "pmic_qa_watchdog_interrupt",
+        "location": "../../examples/drivers/pmic/pmic_qa_watchdog_interrupt/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_qa_watchdog_interrupt",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC user space register configurations, set and get verious configurations like gpio, vmon, thermal...  CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmic_user_reg_cfg",
+        "location": "../../examples/drivers/pmic/pmic_user_reg_cfg/am261x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_user_reg_cfg",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC user space register configurations, set and get verious configurations like gpio, vmon, thermal...  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "pmic_user_reg_cfg",
+        "location": "../../examples/drivers/pmic/pmic_user_reg_cfg/am261x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM261"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_user_reg_cfg",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC user space register configurations, set and get verious configurations like gpio, vmon, thermal...  CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmic_user_reg_cfg",
+        "location": "../../examples/drivers/pmic/pmic_user_reg_cfg/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_user_reg_cfg",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An example to show PMIC user space register configurations, set and get verious configurations like gpio, vmon, thermal...  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "pmic_user_reg_cfg",
+        "location": "../../examples/drivers/pmic/pmic_user_reg_cfg/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM261-SOM-EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pmic",
+            "pmic_user_reg_cfg",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

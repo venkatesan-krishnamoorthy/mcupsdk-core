@@ -208,6 +208,8 @@ const example_file_list = [
 	// "examples/drivers/ospi/ospi_nand_flash_io/.project/project.js",
 	"examples/drivers/pmic/pmic_qa_watchdog_reset/.project/project.js",
 	"examples/drivers/pmic/pmic_trigger_watchdog_reset/.project/project.js",
+	"examples/drivers/pmic/pmic_qa_watchdog_interrupt/.project/project.js",
+	"examples/drivers/pmic/pmic_user_reg_cfg/.project/project_am261x.js",
 	"examples/drivers/pmu/pmu_multievent/.project/project.js",
 	"examples/drivers/rat/.project/project_nortos.js",
 	"examples/drivers/rl2/.project/project_nortos.js",
