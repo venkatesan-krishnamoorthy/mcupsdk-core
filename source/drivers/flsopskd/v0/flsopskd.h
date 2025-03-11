@@ -138,7 +138,7 @@ int32_t FLSOPSKD_init(FLSOPSKD_Handle *pHandle, FLSOPSKD_Params *pParams);
  * @param pHandle [in] pointer to FLSOPSKD_Handle instance.
  * @param destAddr [in] Flash address to which to write this buffer
  * @param pSrcBuffer [in] pointer to source buffer
- * @param bytesToWrite[in] size of the buffer to write
+ * @param bytesToWrite [in] size of the buffer to write
  * @return SystemP_FAILURE
  * @return SystemP_SUCCESS
  */

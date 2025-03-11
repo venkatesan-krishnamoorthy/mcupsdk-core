@@ -278,6 +278,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_cw_ccw/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/flc/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/fss/swap_to_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/fss/fss_switch_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/fsi/fsi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/fsi/fsi_loopback_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/fsi/fsi_loopback_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -669,6 +670,7 @@ help:
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
+	@echo  $(MAKE) -s -C examples/benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
@@ -1253,6 +1255,7 @@ BUILD_COMBO_EXAMPLE_ALL += eqep_cw_ccw_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += eqep_cw_ccw_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += flc_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += swap_to_b_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += switch_to_b_image_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += fsi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += fsi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += fsi_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1637,6 +1640,7 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_r5_d-tag_am263px-cc_r5fss0-0_nortos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_r5_d-tag_am263px-cc_r5fss1-0_nortos_ti-arm-clang
 
 # Various System Example Targets
+BUILD_COMBO_EXAMPLE_ALL += flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark
 BUILD_COMBO_EXAMPLE_ALL += ocmc_benchmarking_am263px-cc_system_tri_core
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos
@@ -2229,6 +2233,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  swap_to_b_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/fss/swap_to_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ switch_to_b_image_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/fss/fss_switch_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  fsi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/fsi/fsi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3394,6 +3401,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
 
+ flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark:
+	$(MAKE) -C examples/benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark -f makefile all
+
  ocmc_benchmarking_am263px-cc_system_tri_core:
 	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core -f makefile all
 
@@ -3622,6 +3632,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += eqep_cw_ccw_am263px-cc_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += eqep_cw_ccw_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += flc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += swap_to_b_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += switch_to_b_image_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += fsi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += fsi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += fsi_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4005,6 +4016,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5f_i-tag_am263px-cc_r5fss1-0_nortos_ti
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5_d-tag_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5_d-tag_am263px-cc_r5fss1-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ocmc_benchmarking_am263px-cc_system_tri_core_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_clean
@@ -4593,6 +4605,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  swap_to_b_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/fss/swap_to_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ switch_to_b_image_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/fss/fss_switch_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  fsi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/fsi/fsi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5758,6 +5773,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  empty_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
 
+ flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_clean:
+	$(MAKE) -C examples/benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark -f makefile clean
+
  ocmc_benchmarking_am263px-cc_system_tri_core_clean:
 	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core -f makefile clean
 
@@ -5986,6 +6004,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += eqep_cw_ccw_am263px-cc_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += eqep_cw_ccw_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += flc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += swap_to_b_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += switch_to_b_image_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += fsi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += fsi_loopback_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += fsi_loopback_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6369,6 +6388,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5f_i-tag_am263px-cc_r5fss1-0_nortos_ti
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5_d-tag_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5_d-tag_am263px-cc_r5fss1-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ocmc_benchmarking_am263px-cc_system_tri_core_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_scrub
@@ -6957,6 +6977,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  swap_to_b_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/fss/swap_to_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ switch_to_b_image_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/fss/fss_switch_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  fsi_loopback_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/fsi/fsi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -8121,6 +8144,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  empty_am263px-cc_icss_m0_pru1_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263px-cc/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
+
+ flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_scrub:
+	$(MAKE) -C examples/benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark -f makefile scrub
 
  ocmc_benchmarking_am263px-cc_system_tri_core_scrub:
 	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core -f makefile scrub

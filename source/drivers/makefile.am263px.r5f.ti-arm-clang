@@ -41,6 +41,8 @@ FILES_common := \
     flsopskd_v0.c \
     fota_fw_arr.c \
     fota_agent.c \
+    fota_agent.c \
+    FOTAAgent_BufferManager.c \
     fsi_rx.c \
     fsi_tx.c \
     fsi_rx_hld.c \
@@ -115,7 +117,7 @@ FILES_PATH_common = \
     edma/v0 \
     epwm/v1 \
     eqep/v1 \
-    fota_agent \
+    fota_agent/v0 \
     fsi/v1 \
     fsi/v1/dma/edma \
     fss/v0 \

@@ -69,6 +69,70 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An flsopskd_benchmark Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "flsopskd_benchmark",
+        "location": "../../examples/benchmarks/flsopskd_benchmark/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "flsopskd_benchmark",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An flsopskd_benchmark Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "flsopskd_benchmark",
+        "location": "../../examples/benchmarks/flsopskd_benchmark/am263px-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "flsopskd_benchmark",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "A Dhrystone Benchmark Example. CPU is R5FSS0-0 running NORTOS.",
@@ -6397,16 +6461,16 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.gettingstarted"
+            "example.general"
         ],
-        "description": "An Example to demonstrate Firmware updates Over Can CPU is R5FSS0-0 running FREERTOS.",
-        "name": "fota_over_can",
-        "location": "../../examples/drivers/fss/fota_over_can/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Switch To B Image Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "switch_to_b_image",
+        "location": "../../examples/drivers/fss/fss_switch_b/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
         "kernel": [
-            "freertos"
+            "nortos"
         ],
         "compiler": [
             "ticlang"
@@ -6414,8 +6478,8 @@
         "subCategories": [
             "drivers",
             "fss",
-            "fota_over_can",
-            "r5fss0-0_freertos"
+            "fss_switch_b",
+            "r5fss0-0_nortos"
         ],
         "mainCategories": [
             [
@@ -21010,6 +21074,35 @@
             "ecc",
             "sdl_ecc_r5_d-tag",
             "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An flsopskd_benchmark Example. System project.",
+        "name": "flsopskd_benchmark",
+        "location": "../../examples/benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "flsopskd_benchmark",
+            "system_flsopskd_benchmark"
         ],
         "mainCategories": [
             [
