@@ -45,7 +45,6 @@
 #include <drivers/mcspi/v0/lld/mcspi_lld.h>
 #include <drivers/mcspi/v0/lld/dma/edma/mcspi_dma_edma.h>
 #include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
-#include <kernel/dpl/CacheP.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */

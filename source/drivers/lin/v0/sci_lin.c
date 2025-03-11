@@ -45,7 +45,6 @@
 #include <drivers/lin/v0/dma/sci_lin_dma.h>
 #include <drivers/edma/v0/edma.h>
 #include <kernel/dpl/ClockP.h>
-#include <kernel/dpl/CacheP.h>
 #include <drivers/soc.h>
 
 /* ========================================================================== */

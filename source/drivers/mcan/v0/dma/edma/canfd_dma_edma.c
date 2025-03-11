@@ -44,7 +44,6 @@
 #include <drivers/soc.h>
 #include <drivers/mcan/v0/dma/edma/canfd_dma_edma.h>
 #include <drivers/mcan/v0/canfd.h>
-#include <kernel/dpl/CacheP.h>
 #include "canfd_dma_edma.h"
 
 /* ========================================================================== */

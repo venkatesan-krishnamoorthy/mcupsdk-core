@@ -45,7 +45,6 @@
 #include <stdint.h>
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
-#include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/SystemP.h>
 #include <drivers/mcan/v0/mcan.h>
 #include <drivers/mcan/v0/canfd.h>

@@ -46,7 +46,6 @@
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
 #include <drivers/uart/v0/lld/dma/edma/uart_dma_edma.h>
 #include <drivers/uart/v0/lld/uart_lld.h>
-#include <kernel/dpl/CacheP.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
