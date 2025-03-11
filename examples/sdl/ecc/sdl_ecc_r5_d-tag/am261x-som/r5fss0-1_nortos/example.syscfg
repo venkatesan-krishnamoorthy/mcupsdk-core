@@ -1,9 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.2+3837"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -17,6 +17,7 @@ const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
 const mpu_armv73 = mpu_armv7.addInstance();
 const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
 const general    = scripting.addModule("/memory_configurator/general", {}, false);
 const general1   = general.addInstance();
 const region     = scripting.addModule("/memory_configurator/region", {}, false);
@@ -34,11 +35,11 @@ const section9   = section.addInstance();
 const section10  = section.addInstance();
 const section11  = section.addInstance();
 const section12  = section.addInstance();
+const section13  = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "GPIO27";
@@ -64,12 +65,17 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
+mpu_armv74.attributes        = "NonCached";
+
+mpu_armv75.$name    = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr = 0x70080000;
+mpu_armv75.size     = 15;
 
 general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                                = "MEMORY_REGION_CONFIGURATION";
-region1.memory_region.create(12);
+region1.memory_region.create(13);
 region1.memory_region[0].type                = "TCMA";
 region1.memory_region[0].$name               = "R5F_VECS";
 region1.memory_region[0].auto                = false;
@@ -117,6 +123,10 @@ region1.memory_region[11].$name              = "MSS_CTRL";
 region1.memory_region[11].auto               = false;
 region1.memory_region[11].manualStartAddress = 0x50D00000;
 region1.memory_region[11].size               = 0x4000;
+region1.memory_region[12].$name              = "OCRAM_CACHED";
+region1.memory_region[12].auto               = false;
+region1.memory_region[12].manualStartAddress = 0x70080000;
+region1.memory_region[12].size               = 0x8000;
 
 section1.load_memory             = "R5F_VECS";
 section1.group                   = false;
@@ -222,6 +232,10 @@ section12.group                   = false;
 section12.output_section.create(1);
 section12.output_section[0].$name = ".bss.sipc_secure_host_queue_mem";
 
+section13.$name                   = "DATA_CACHE_STORAGE_MEMORY";
+section13.load_memory             = "OCRAM_CACHED";
+section13.output_section.create(1);
+section13.output_section[0].$name = ".DATA_Cache.buffer";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

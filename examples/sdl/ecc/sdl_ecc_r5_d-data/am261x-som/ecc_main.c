@@ -89,21 +89,11 @@ volatile bool uknownErr = false;
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-
-/* ========================================================================== */
-/*                 Internal Function Definitions                              */
-/* ========================================================================== */
-int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
-                                            SDL_ESM_IntType esmIntrType,
-                                            uint32_t grpChannel,
-                                            uint32_t index,
-                                            uint32_t intSrc,
-                                            uintptr_t *arg)
+#pragma clang optimize off
+void SDL_ECC_error_clear()
 {
 
-
-    int32_t retVal = 0;
-    uint32_t rd_data = 0, clearErr = 0;
+    uint32_t clearErr = 0;
 
 #if defined (R5F0_0_INPUTS)
     /* Stop the error injection from ECC aggr for dedicated ram_Id */
@@ -121,6 +111,25 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
     /* Wait for ECC Aggrs. register update properly */
     while( ((*((uint32_t *)SDL_ECC_AGG_R5SS0_CORE1_VECTOR)>>24)&0X1) != 1u);
 #endif
+}
+#pragma clang optimize on
+/* ========================================================================== */
+/*                 Internal Function Definitions                              */
+/* ========================================================================== */
+
+int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
+                                            SDL_ESM_IntType esmIntrType,
+                                            uint32_t grpChannel,
+                                            uint32_t index,
+                                            uint32_t intSrc,
+                                            uintptr_t *arg)
+{
+
+
+    int32_t retVal = 0;
+    uint32_t rd_data = 0, clearErr = 0;
+
+    void SDL_ECC_error_clear();
 
     DebugP_log("\r\nESM Call back function called : instType 0x%x, intType 0x%x, " \
                 "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
