@@ -12966,6 +12966,237 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "optiflash_ocram_benchmark",
+        "location": "../../examples/benchmarks/optiflash_benchmark/ocram/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "optiflash_benchmark",
+            "ocram",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "optiflash_xip_benchmark",
+        "location": "../../examples/benchmarks/optiflash_benchmark/flash_xip/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "optiflash_benchmark",
+            "flash_xip",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "optiflash_xip_benchmark_l2_8k",
+        "location": "../../examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_8k/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "optiflash_benchmark",
+            "flash_xip_l2_cache_8k",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "optiflash_xip_benchmark_l2_16k",
+        "location": "../../examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_16k/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "optiflash_benchmark",
+            "flash_xip_l2_cache_16k",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "optiflash_xip_benchmark_l2_32k",
+        "location": "../../examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_32k/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "optiflash_benchmark",
+            "flash_xip_l2_cache_32k",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "optiflash_xip_benchmark_l2_64k",
+        "location": "../../examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_64k/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "optiflash_benchmark",
+            "flash_xip_l2_cache_64k",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "optiflash_xip_smart_placement_benchmark",
+        "location": "../../examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "optiflash_benchmark",
+            "flash_xip_smart_placement",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

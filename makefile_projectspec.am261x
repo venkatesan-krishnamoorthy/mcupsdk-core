@@ -316,6 +316,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_interrupt_lld_am261x-som
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_interrupt_lld_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_dual_flash_io_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += optiflash_ocram_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += optiflash_xip_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += optiflash_xip_benchmark_l2_8k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += optiflash_xip_benchmark_l2_16k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += optiflash_xip_benchmark_l2_32k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
@@ -1503,6 +1510,27 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ optiflash_ocram_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/ocram/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ optiflash_xip_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ optiflash_xip_benchmark_l2_8k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_8k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ optiflash_xip_benchmark_l2_16k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_16k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ optiflash_xip_benchmark_l2_32k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_32k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_64k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
  pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -2518,6 +2546,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_interrupt_lld_am261x-som
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_interrupt_lld_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_dual_flash_io_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += optiflash_ocram_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += optiflash_xip_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += optiflash_xip_benchmark_l2_8k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += optiflash_xip_benchmark_l2_16k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += optiflash_xip_benchmark_l2_32k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3705,6 +3740,27 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ optiflash_ocram_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/ocram/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ optiflash_xip_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ optiflash_xip_benchmark_l2_8k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_8k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ optiflash_xip_benchmark_l2_16k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_16k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ optiflash_xip_benchmark_l2_32k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_32k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_64k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
  pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -4720,6 +4776,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_interrupt_lld_am261x-so
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_interrupt_lld_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_dual_flash_io_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += optiflash_ocram_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += optiflash_xip_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += optiflash_xip_benchmark_l2_8k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += optiflash_xip_benchmark_l2_16k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += optiflash_xip_benchmark_l2_32k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += pmic_trigger_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
@@ -5907,6 +5970,27 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  ospi_dual_flash_io_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ optiflash_ocram_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/ocram/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ optiflash_xip_benchmark_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ optiflash_xip_benchmark_l2_8k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_8k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ optiflash_xip_benchmark_l2_16k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_16k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ optiflash_xip_benchmark_l2_32k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_32k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ optiflash_xip_benchmark_l2_64k_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_64k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ ocmc_benchmarking_am261x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
  pmic_qa_watchdog_reset_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -6938,6 +7022,13 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_interrupt_lld/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_dual_flash_io/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_dual_flash_io/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/ocram/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_8k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_16k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_32k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_64k/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_qa_watchdog_reset/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/pmic/pmic_trigger_watchdog_reset/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
