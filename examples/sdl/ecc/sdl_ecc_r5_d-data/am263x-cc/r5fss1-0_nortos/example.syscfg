@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss1-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2631-Q1" --package "NFBGA (ZCZ)" --context "r5fss1-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss1-0" --product "MCU_PLUS_SDK_AM263x@10.01.00"
+ * @v2CliArgs --device "AM2631-Q1" --package "NFBGA (ZCZ)" --context "r5fss1-0" --product "MCU_PLUS_SDK_AM263x@10.01.00"
  * @versions {"tool":"1.21.2+3837"}
  */
 
@@ -19,6 +19,7 @@ const mpu_armv73      = mpu_armv7.addInstance();
 const mpu_armv74      = mpu_armv7.addInstance();
 const mpu_armv75      = mpu_armv7.addInstance();
 const mpu_armv76      = mpu_armv7.addInstance();
+const mpu_armv77      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -38,6 +39,7 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
+const section13       = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -65,6 +67,7 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
+mpu_armv74.attributes        = "NonCached";
 
 mpu_armv75.$name        = "CONFIG_MPU_REGION4";
 mpu_armv75.size         = 14;
@@ -78,13 +81,17 @@ mpu_armv76.allowExecute = false;
 mpu_armv76.attributes   = "NonCached";
 mpu_armv76.baseAddr     = 0x72000000;
 
+mpu_armv77.$name    = "CONFIG_MPU_REGION6";
+mpu_armv77.baseAddr = 0x70080000;
+mpu_armv77.size     = 15;
+
 default_linker1.$name = "memory_configurator_default_linker0";
 
 general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                                = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(11);
+region1.memory_region.create(12);
 region1.memory_region[0].type                = "TCMA";
 region1.memory_region[0].$name               = "R5F_VECS";
 region1.memory_region[0].auto                = false;
@@ -130,6 +137,10 @@ region1.memory_region[10].$name              = "MAILBOX_R5F";
 region1.memory_region[10].auto               = false;
 region1.memory_region[10].manualStartAddress = 0x44000400;
 region1.memory_region[10].size               = 0x3CE;
+region1.memory_region[11].$name              = "OCRAM_CACHED";
+region1.memory_region[11].auto               = false;
+region1.memory_region[11].manualStartAddress = 0x70080000;
+region1.memory_region[11].size               = 0x8000;
 
 section1.load_memory                  = "R5F_VECS";
 section1.group                        = false;
@@ -256,3 +267,17 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
+
+section13.$name                   = "DATA_CACHE_STORAGE_MEMORY";
+section13.load_memory             = "OCRAM_CACHED";
+section13.output_section.create(1);
+section13.output_section[0].$name = ".DATA_Cache.buffer";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.UART.$suggestSolution     = "UART1";
+debug_log.uartLog.UART.RXD.$suggestSolution = "LIN1_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution = "LIN1_TXD";

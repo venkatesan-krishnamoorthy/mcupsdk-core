@@ -62,12 +62,16 @@
 /* ========================================================================== */
 
 #define SDL_R5FSS0_CORE0_MAX_MEM_SECTIONS           (1u)
+#define SDL_SINGLE_ERROR_CORRECTION                 (1u)
+#define SDL_DOUBLE_ERROR_DETECTION                  (2u)
 #if defined (R5F0_INPUTS)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS0_CORE0_ECC_AGGR
+#define SDL_MSS_ECC_AGG_R5_U_BASE                   SDL_ECC_AGG_R5SS0_CORE0_U_BASE
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID
 #define SDL_EXAMPLE_ECC_RAM_ID_NUM                  SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID
 #elif defined (R5F1_INPUTS)
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_R5FSS1_CORE0_ECC_AGGR
+#define SDL_MSS_ECC_AGG_R5_U_BASE                   SDL_ECC_AGG_R5SS1_CORE0_U_BASE
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM0_RAM_ID
 #define SDL_EXAMPLE_ECC_RAM_ID_NUM                  SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_DTAG_RAM3_RAM_ID
 #endif
@@ -254,89 +258,89 @@ int32_t ECC_Example_init (void)
     return retValue;
 }/* End of ECC_Example_init() */
 
+
 /*********************************************************************
- * @fn      ECC_Test_run_R5FSS0_CORE0_D_TAG_1BitInjectTest
+ * @fn      ECC_D_Cache_InjectTest
  *
- * @brief   Execute ECC R5FSS0 CORE0 D-DATA 1 bit inject test
+ * @brief   Execute ECC R5FSSx CORE0 D-DATA 1/2 bit inject test
  *
  * @param   None
  *
  * @return  0 : Success; < 0 for failures
  ********************************************************************/
-int32_t ECC_Test_run_R5FSS0_CORE0_D_TAG_1BitInjectTest(int32_t ram_Id)
+int32_t ECC_D_Cache_InjectTest(uint32_t ram_Id,SDL_ECC_InjectErrorType errorType,uint32_t num_bits)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
+    uint32_t maxTimeOutMilliSeconds = 1000000000;
+    uint32_t timeOutCnt = 0;
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-    volatile uint32_t testLocationValue;
 
-	DebugP_log("\r\nR5FSS0 CORE0 D_TAG Single bit error inject: starting \r\n");
+    CacheP_wbInvAll(CacheP_TYPE_L1D);
 
-    /* Note the address is relative to start of ram */
+    for(uint32_t cache_byte_count = 0u; cache_byte_count < SDL_ECC_CACHE_ARRAY_SIZE; cache_byte_count++)
+    {
+        SDL_ECC_ddata_cache[cache_byte_count] = (cache_byte_count%256)+1;
+    }
+
     injectErrorConfig.pErrMem = (uint32_t *)(0x0u);
+    if(num_bits == 1)
+    {
+        injectErrorConfig.flipBitMask = 0x10;                   /* Run test for D_Cache 1 bit error */
+    }
+    else
+    {
+        injectErrorConfig.flipBitMask = 0x03;                   /* Run test for D_Cache 2 bit error */
+    }
 
-    /* Run one shot test for R5FSS0 CORE0 D_TAG 1 bit error */
-    injectErrorConfig.flipBitMask = 0x10;
     result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
-                                 (SDL_ECC_MemSubType)ram_Id,
-                                 SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
+                                 ram_Id,
+                                 errorType,
                                  &injectErrorConfig);
 
+    if (result != SDL_PASS )
+    {
+        return (int32_t)result;
+    }
+    if(num_bits == 2u)
+    {
+        SDL_REG32_WR(SDL_MSS_ECC_AGG_R5_U_BASE+0x14, 0x57U);
+    }
 
-    if (result != SDL_PASS ) {
-        retVal = -1;
-    } else {
-        /* Access the memory where injection is expected */
-        testLocationValue = injectErrorConfig.pErrMem[0];
+    for(uint32_t cache_byte_count = 0u; cache_byte_count < SDL_ECC_CACHE_ARRAY_SIZE; cache_byte_count++)
+    {
+        SDL_ECC_ddata_cache[cache_byte_count] = (cache_byte_count%256)+1;
+    }
+    /* idle cycle needed for error injection in R5F cache */
+    asm("NOP");
 
-        DebugP_log("\r\nR5FSS0 CORE0 D_TAG Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete\r\n",
-                   injectErrorConfig.pErrMem, testLocationValue);
+    if (result == SDL_PASS)
+    {
+        DebugP_log("\r\nWaiting for ESM Interrupt \r\n");
+        do
+        {
+            timeOutCnt += 1;
+            if (timeOutCnt > maxTimeOutMilliSeconds)
+            {
+                result = SDL_EFAIL;
+                break;
+            }
+        } while (esmError == false);
+    }
+    if(result == SDL_PASS)
+    {
+        DebugP_log("\r\nInjected error and got ESM Interrupt for ram_Id = %d\r\n", ram_Id);
+        /* Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation */
+        esmError = false;
+    }
+    if (result != SDL_PASS)
+    {
+        DebugP_log("\r\nDCache error injection failed...\r\n");
     }
 
     return retVal;
-}/* End of ECC_Test_run_R5FSS0_CORE0_D_TAG_1BitInjectTest() */
-
-/*********************************************************************
- * @fn      ECC_Test_run_R5FSS0_CORE0_D_TAG_2BitInjectTest
- *
- * @brief   Execute ECC R5FSS0 CORE0 D_TAG 2 bit Inject test
- *
- * @param   None
- *
- * @return  0 : Success; < 0 for failures
- ********************************************************************/
-int32_t ECC_Test_run_R5FSS0_CORE0_D_TAG_2BitInjectTest(uint32_t ram_Id)
-{
-    SDL_ErrType_t result;
-    int32_t retVal=0;
-
-    SDL_ECC_InjectErrorConfig_t injectErrorConfig;
-    volatile uint32_t testLocationValue;
-
-	DebugP_log("\r\nR5FSS0 CORE0 D_TAG Double bit error inject: starting \r\n");
-
-    /* Run one shot test for R5FSS0 CORE0 D_TAG 2 bit error */
-    /* Note the address is relative to start of ram */
-    injectErrorConfig.pErrMem = (uint32_t *)(0x0u);
-
-    injectErrorConfig.flipBitMask = 0x03;
-    result = SDL_ECC_injectError(SDL_EXAMPLE_ECC_AGGR,
-                                 (SDL_ECC_MemSubType)ram_Id,
-                                SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_ONCE,
-                                 &injectErrorConfig);
-
-    if (result != SDL_PASS ) {
-       retVal = -1;
-    } else {
-        /* Access the memory where injection is expected */
-        testLocationValue = injectErrorConfig.pErrMem[0];
-        DebugP_log("\r\nR5FSS0 CORE0 D_TAG Double bit error inject: pErrMem fixed location = 0x%p once test complete: the value of pErrMem is 0x%p\r\n",
-                   injectErrorConfig.pErrMem, testLocationValue);
-    }
-
-    return retVal;
-}/* End of ECC_Test_run_R5FSS0_CORE0_D_TAG_2BitInjectTest() */
+}/* End of ECC_D_Cache_InjectTest() */
 
 /*********************************************************************
  * @fn      ECC_sdlFuncTest
@@ -349,51 +353,21 @@ int32_t ECC_Test_run_R5FSS0_CORE0_D_TAG_2BitInjectTest(uint32_t ram_Id)
  **********************************************************************/
 static int32_t ECC_sdlFuncTest(void)
 {
-    int32_t result;
     int32_t retVal = 0;
-    uint32_t maxTimeOutMilliSeconds = 1000000000;
-    uint32_t timeOutCnt = 0;
-    uint8_t SDL_ECC_cache_ddata[SDL_ECC_CACHE_ARRAY_SIZE];
     uint32_t ram_Id = 0;
 
+    DebugP_log("\r\nStarting Tests for Dtag cache - single error correction\r\n");
     for (ram_Id = SDL_EXAMPLE_ECC_RAM_ID; ram_Id <= SDL_EXAMPLE_ECC_RAM_ID_NUM; ram_Id++)
     {
-        if (retVal == 0)
-        {
-            result = ECC_Test_run_R5FSS0_CORE0_D_TAG_1BitInjectTest(ram_Id);
-            asm("NOP"); /* Idle cycle needed for error injection in R5F cache */
-
-            for(uint32_t cache_byte_count = 0u; cache_byte_count < SDL_ECC_CACHE_ARRAY_SIZE; cache_byte_count++)
-            {
-                SDL_ECC_cache_ddata[cache_byte_count] = SDL_ECC_cache_ddata[cache_byte_count];
-            }
-
-            if (result == SDL_PASS)
-            {
-                DebugP_log("\r\nWaiting for ESM Interrupt \r\n");
-                do
-                {
-                    timeOutCnt += 1;
-                    if (timeOutCnt > maxTimeOutMilliSeconds)
-                    {
-                        result = SDL_EFAIL;
-                        break;
-                    }
-                } while (esmError == false);
-            }
-            if(result == SDL_PASS){
-                DebugP_log("\r\nUC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = %d\r\n", ram_Id);
-                /* Clear the global variable before ECC error injecting , in case ESM callback occurred due to any other operation */
-                esmError = false;
-            }
-
-            if (result != SDL_PASS) {
-                retVal = -1;
-                DebugP_log("\r\nESM_ECC_Example_run: UC-1 has failed...\r\n");
-                /* UC-1 Low priority R5F interrupt */
-            }
-        }
+        retVal |= ECC_D_Cache_InjectTest(ram_Id, SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE, SDL_SINGLE_ERROR_CORRECTION);
     }
+
+    DebugP_log("\r\nStarting Tests for Dtag cache - double error detection\r\n");
+    for (ram_Id = SDL_EXAMPLE_ECC_RAM_ID; ram_Id <= SDL_EXAMPLE_ECC_RAM_ID_NUM; ram_Id++)
+    {
+        retVal |= ECC_D_Cache_InjectTest(ram_Id, SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT, SDL_DOUBLE_ERROR_DETECTION);
+    }
+
     return retVal;
 }/* End of ECC_sdlFuncTest() */
 
