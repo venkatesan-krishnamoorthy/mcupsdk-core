@@ -8,10 +8,11 @@ The example shows how to setup and use the ECC Safety Diagnostic operation on d-
 Shows the generation of SEC error on R5F ECC Aggregator for DDATA cache moemories.
 Use Cases
 ---------
-\cond (SOC_AM263X || SOC_AM263PX)
+\cond (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
  Use Case | Description
  ---------|------------
  UC-1     | Single bit error injection.
+ UC-2     | Double bit error injection.
 \endcond
 
 
@@ -22,6 +23,15 @@ Use Cases
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  ^              | r5fss1-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/ecc/sdl_ecc_r5_d-data/
+\endcond
+\cond (SOC_AM261X)
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss0-1 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/ecc/sdl_ecc_r5_d-data/
@@ -43,166 +53,88 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
 \code
 
 ECC Example Application
 
-ECC UC-1 Test 
+ECC UC-1 and UC-2 Test 
 
 ECC_Test_init: Exception init complete 
 
 ESM_Test_init: Init MSS ESM complete 
 
-ECC_Test_init: R5FSS0 CORE0 ECC initialization is completed 
+ECC_Test_init: R5FSS0 ECC initialization is completed 
 
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
+Starting Tests for Ddata cache - single error correction
 
 Waiting for ESM Interrupt 
 
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 13
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
+Injected error and got ESM Interrupt for ram_Id = 13
 
 Waiting for ESM Interrupt 
 
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 14
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
+Injected error and got ESM Interrupt for ram_Id = 14
 
 Waiting for ESM Interrupt 
 
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 15
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
+Injected error and got ESM Interrupt for ram_Id = 15
 
 Waiting for ESM Interrupt 
 
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 16
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
+Injected error and got ESM Interrupt for ram_Id = 16
 
 Waiting for ESM Interrupt 
 
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 17
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
+Injected error and got ESM Interrupt for ram_Id = 17
 
 Waiting for ESM Interrupt 
 
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 18
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
+Injected error and got ESM Interrupt for ram_Id = 18
 
 Waiting for ESM Interrupt 
 
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 19
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
+Injected error and got ESM Interrupt for ram_Id = 19
 
 Waiting for ESM Interrupt 
 
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 20
+Injected error and got ESM Interrupt for ram_Id = 20
+
+Starting Tests for Ddata cache - double error detection
+
+Waiting for ESM Interrupt 
+
+Injected error and got ESM Interrupt for ram_Id = 13
+
+Waiting for ESM Interrupt 
+
+Injected error and got ESM Interrupt for ram_Id = 14
+
+Waiting for ESM Interrupt 
+
+Injected error and got ESM Interrupt for ram_Id = 15
+
+Waiting for ESM Interrupt 
+
+Injected error and got ESM Interrupt for ram_Id = 16
+
+Waiting for ESM Interrupt 
+
+Injected error and got ESM Interrupt for ram_Id = 17
+
+Waiting for ESM Interrupt 
+
+Injected error and got ESM Interrupt for ram_Id = 18
+
+Waiting for ESM Interrupt 
+
+Injected error and got ESM Interrupt for ram_Id = 19
+
+Waiting for ESM Interrupt 
+
+Injected error and got ESM Interrupt for ram_Id = 20
 
 All tests have passed. 
-
-\endcode
-\endcond
-
-\cond (SOC_AM263PX)
-\code
-
-ECC Example Application
-
-ECC UC-1 Test
-
-ECC_Test_init: Exception init complete 
-
-ESM_Test_init: Init MSS ESM complete 
-
-ECC_Test_init: R5FSS0 CORE0 ECC initialization is completed 
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
-
-Waiting for ESM Interrupt 
-
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 13
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
-
-Waiting for ESM Interrupt 
-
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 14
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
-
-Waiting for ESM Interrupt 
-
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 15
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
-
-Waiting for ESM Interrupt 
-
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 16
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
-
-Waiting for ESM Interrupt 
-
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 17
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
-
-Waiting for ESM Interrupt 
-
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 18
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
-
-Waiting for ESM Interrupt 
-
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 19
-
-R5FSS0 CORE0 D_DATA Single bit error inject: starting 
-
-R5FSS0 CORE0 D_DATA Single bit error inject at pErrMem = 0x00000000 and the value of pErrMem is 0xE59FF018 :test complete
-
-Waiting for ESM Interrupt 
-
-UC-1: Injected 1-bit error and got ESM Interrupt for ram_Id = 20
-
-All tests have passed.  
 
 \endcode
 \endcond

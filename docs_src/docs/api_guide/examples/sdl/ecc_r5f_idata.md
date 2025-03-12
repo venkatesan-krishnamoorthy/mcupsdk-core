@@ -8,7 +8,7 @@ The example shows how to setup and use the ECC Safety Diagnostic operation on i-
 Shows the generation of SEC error on R5F ECC Aggregator for IDATA cache moemories.
 Use Cases
 ---------
-\cond (SOC_AM263X || SOC_AM263PX)
+\cond (SOC_AM263X || SOC_AM263PX || SOC_AM261X)
  Use Case | Description
  ---------|------------
  UC-1     | Single bit error injection.
@@ -17,6 +17,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_R5F_ECC_IDATA_COMBOS}
 
+\cond (SOC_AM263X || SOC_AM263PX)
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
@@ -24,7 +25,16 @@ Use Cases
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/ecc/sdl_ecc_r5_i-data/
-
+\endcond
+\cond (SOC_AM261X)
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss0-1 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/ecc/sdl_ecc_r5_i-data/
+\endcond
 
 # Steps to Run the Example
 
@@ -92,7 +102,7 @@ All tests have passed.
 \endcode
 \endcond
 
-\cond (SOC_AM263PX)
+\cond (SOC_AM263PX || SOC_AM261X)
 \code
 
  ECC Example Application
