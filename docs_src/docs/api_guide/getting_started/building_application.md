@@ -96,6 +96,45 @@ Shown below are the different steps that are done to convert the compiler+linker
 \imageStyle{mcelf_bootflow_post_build_steps_no_xip.png,width:50%}
 \image html mcelf_bootflow_post_build_steps_no_xip.png "Post build steps MCELF"
 
+### Generating HEX binary
+
+  - TI does not provide a proprietary tool for hex conversion of binaries. Instead use available tools like SRecord that is compatible with both Windows and Linux platforms. It supports conversion of binaries to Intel hex, Motorola S-record and other commonly used formats.
+
+#### Installing SRecord on Windows
+  - Start on this page [SRecord 1.65](https://srecord.sourceforge.net). Click on Download.
+  - On the next page, click on **SourceForge.net download mirrors** under the "Pre-compiled Windows Executable" heading. 
+  - On the page that comes up, click on the green box that contains the text **Download Latest Version**. 
+  - The file downloaded is named srecord-1.65.0-win64.exe. Run it to install the software.
+
+#### Installing SRecord on Linux
+  - Start on this page [SRecord 1.65](https://srecord.sourceforge.net). Click on Download.
+  - On the next page click on **1.65 release folder** under SourceForge Downloads ---> Unix and Linux downloads.
+  - Click on the green box that contains the text **Download Latest Version**.
+  - The file downloaded is named srecord-1.65.0-Linux.tar.gz. Extract the package.
+
+#### Converting .mcelf/.appimage to Intel hex:
+
+  - Order of invocation:
+  \code
+    {Path to srecord folder}\bin\srec_cat {Path to input binary} -{Type of input file} -offset {application offset from flash} -o {Path to output binary} -{Type of hex file}
+  \endcode
+
+  - Example to generate hex file for hello world:
+    \if (SOC_AM263PX || SOC_AM261X)
+    \code
+      {Path to srecord folder}\bin\srec_cat {SDK_PATH}\examples\hello_world\\<soc>-<board>\r5fss0-0_nortos\ti-arm-clang\hello_world.release.mcelf -Binary -offset 0x81000 -o hello_world.release.hex -Intel
+    \endcode
+    \else
+    \code
+      {Path to srecord folder}\bin\srec_cat {SDK_PATH}\examples\hello_world\\<soc>-<board>\r5fss0-0_nortos\ti-arm-clang\hello_world.release.mcelf -Binary -offset 0x80000 -o hello_world.release.hex -Intel
+    \endcode
+    \endif
+
+  - This generated file can be flashed using your custom flashwriter (not Uniflash).
+
+\note This process treats the .mcelf file as a raw binary and converts it as it is to hex. The contents after writing to flash will still be of mcelf format so that TI Bootloader can parse, load and boot the application. TI Bootloader cannot understand HEX format in flash.
+
+
 ### Signing the binary
 
 Image			            |	HSFS			|	HSSE
