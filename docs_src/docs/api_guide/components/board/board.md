@@ -21,3 +21,6 @@ It consists of below sub-modules
 - \subpage BOARD_FLASH_PAGE
 - \subpage BOARD_LED_PAGE
 \endcond
+\cond SOC_AM263PX || SOC_AM261X
+- \subpage BOARD_PMIC_PAGE
+\endcond

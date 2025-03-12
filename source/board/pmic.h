@@ -31,10 +31,10 @@
  */
 
 /**
- *  \defgroup BOARD_PMIC_MODULE APIs for MCSPI based PMIC driver
+ *  \defgroup BOARD_PMIC_MODULE APIs for I2C/MCSPI based PMIC driver
  *  \ingroup BOARD_MODULE
  *
- *  This module contains APIs to program and use MCSPI based PMIC module
+ *  This module contains APIs to program and use I2C/MCSPI based PMIC module
  *  on the board.
  *
  *  See \ref BOARD_PMIC_PAGE for more details.
@@ -130,14 +130,11 @@ typedef void (*PMIC_CloseFxn)(PMIC_Config *config);
 struct PMIC_Params_s
 {
     uint32_t        deviceType;
-    /**< PMIC device type
-     *  For Valid Values: \ref Pmic_DeviceType */
+    /**< PMIC device type */
     uint32_t        commMode;
-    /**<  PMIC Interface mode - Single I2C, Dual I2C or SPI.
-     *  For Valid Values: \ref Pmic_CommMode */
+    /**<  PMIC Interface mode - Single I2C, Dual I2C or SPI. */
     uint32_t        instType;
-    /**< PMIC Instance type.
-     *  For Valid Values: \ref Pmic_InstType */
+    /**< PMIC Instance type. */
     uint32_t        i2cAddr;
     /**< Underlying I2C peripheral device address that is
      *  used by the PMIC driver */
