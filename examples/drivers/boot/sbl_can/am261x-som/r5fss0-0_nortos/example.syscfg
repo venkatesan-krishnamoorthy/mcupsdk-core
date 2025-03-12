@@ -33,6 +33,7 @@ const section2    = section.addInstance();
 const section3    = section.addInstance();
 const section4    = section.addInstance();
 const section5    = section.addInstance();
+const section6    = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -200,3 +201,8 @@ section5.$name                       = "Bss File Buffer";
 section5.output_section.create(1);
 section5.output_section[0].$name     = ".bss.filebuf";
 section5.output_section[0].alignment = 0;
+
+section6.$name                   = "Hsmrt";
+section6.load_memory             = "MSRAM_HSMRT";
+section6.output_section.create(1);
+section6.output_section[0].$name = ".rodata.hsmrt";
