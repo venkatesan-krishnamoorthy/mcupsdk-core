@@ -63,6 +63,14 @@ typedef enum MpuP_AccessPerm_
 } MpuP_AccessPerm;
 
 /**
+ * \brief Enum's to authorize access requests for a given MPU region
+ */
+typedef enum MpuP_RegionPerm_ {
+    MpuP_RP_R  = 1U, /**< Read-only */
+    MpuP_RP_RW = 2U  /**< Read-Write */
+} MpuP_RegionPerm;
+    
+/**
  * \brief Enum's to represent different possible MPU region size
  */
 typedef enum MpuP_RegionSize_ {
@@ -182,6 +190,17 @@ uint32_t MpuP_isEnable(void);
  *
  */
 void MpuP_init(void);
+
+/**
+ * \brief Check if the user is authorized to access a specific memory
+ *
+ * \param memAddr [in] Pointer to the memory start address
+ * \param memLength [in] Length of the memory in bytes
+ * \param perm [in] Permissions to check, see \ref MpuP_RegionPerm
+ *
+ * \return 0: User is not authorized, 1: User is authorized
+ */
+uint32_t MpuP_isUserAuthorizedToAccessMemory(uint32_t memAddr, uint32_t memLength, MpuP_RegionPerm perm);
 
 /** @} */
 

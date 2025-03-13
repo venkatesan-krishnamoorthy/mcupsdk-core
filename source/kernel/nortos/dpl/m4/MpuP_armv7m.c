@@ -191,3 +191,55 @@ void MPU_SECTION MpuP_init(void)
         MpuP_enable();
     }
 }
+
+/* Decode the MpuP_RegionSize enum value to actual size in bytes */
+static uint32_t MPU_SECTION MpuP_decodeRegionSize(uint32_t regionSize) 
+{
+    /* Adjust for enum offset (0x4) and power of 2 calculation */
+    return (1U << (regionSize + 1U));
+}
+
+uint32_t MPU_SECTION MpuP_isUserAuthorizedToAccessMemory(uint32_t memAddr, uint32_t memLength, MpuP_RegionPerm perm)
+{
+    uint32_t isGranted = 0U;
+    uint32_t i;
+
+    for (i = 0; i < gMpuConfig.numRegions; i++)
+    {
+        uint32_t baseAddr   = gMpuRegionConfig[i].baseAddr;
+        uint32_t sizeBytes  = MpuP_decodeRegionSize(gMpuRegionConfig[i].size);
+        uint8_t  accessPerm = gMpuRegionConfig[i].attrs.accessPerm;  
+        
+        if ((memAddr >= baseAddr) &&
+            ((memAddr + memLength) <= (baseAddr + sizeBytes)))
+        {
+            if (perm == MpuP_RP_R)
+            {
+                if ((accessPerm == MpuP_AP_S_RW_U_R) ||
+                    (accessPerm == MpuP_AP_ALL_R) ||
+                    (accessPerm == MpuP_AP_ALL_RW))
+                {
+                    isGranted = 1U;
+                }
+            }
+            else if (perm == MpuP_RP_RW) 
+            {
+                if (accessPerm == MpuP_AP_ALL_RW)
+                {
+                    isGranted = 1U;
+                }
+            }
+            else
+            {
+                /* Do Nothing */
+            }
+
+            if (isGranted == 1U)
+            {
+                break;
+            }
+        }
+    }
+
+    return isGranted;
+}
