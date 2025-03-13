@@ -90,6 +90,11 @@ CFLAGS_common := \
 	-g \
 	-Wno-gnu-variable-sized-type-not-at-end \
 	-Wno-unused-function \
+	-Oz \
+	-flto \
+
+CFLAGS_release := \
+	-Os \
 
 CFLAGS_cpp_common := \
 	-Wno-c99-designator \
@@ -106,9 +111,6 @@ CFLAGS_cpp_common := \
 
 CFLAGS_debug := \
 	-D_DEBUG_=1 \
-
-CFLAGS_release := \
-	-Os \
 
 LNK_FILES_common = \
 	generated/linker.cmd \
@@ -139,7 +141,17 @@ LFLAGS_common = \
 	-Wl,--ram_model \
 	-Wl,--reread_libs \
 	-Wl,--gen_xml_func_hash \
+	-Wl,--zero_init=on \
+	-Wl,--use_memset=fast \
+	-Wl,--use_memcpy=fast \
 
+LNKOPTFLAGS_release = \
+		   -mcpu=cortex-r5 \
+		   -mfloat-abi=hard \
+		   -mfpu=vfpv3-d16 \
+		   -mthumb \
+		   -Oz \
+		   -flto \
 
 LIBS_NAME = \
 	nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \

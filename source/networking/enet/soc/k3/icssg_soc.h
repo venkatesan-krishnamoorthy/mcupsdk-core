@@ -93,6 +93,9 @@ typedef struct IcssgSoc_Cfg_s
 
     /*! CPTS Hardware Push Event Count */
     uint32_t cptsHwPushCount;
+
+    /*! Soc Hardware Push Event Count */
+    uint32_t hwPushCnt;
 } IcssgSoc_Cfg;
 
 /* ========================================================================== */

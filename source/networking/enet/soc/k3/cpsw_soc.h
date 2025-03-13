@@ -147,6 +147,9 @@ typedef struct CpswSoc_Cfg_s
 
     /*! Rx Flow Count */
     uint32_t rxFlowCount;
+
+    /*! Soc Hardware Push Event Count */
+    uint32_t hwPushCnt;
 } CpswSoc_Cfg;
 
 /* ========================================================================== */

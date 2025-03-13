@@ -124,6 +124,9 @@ extern "C" {
 /*! \brief Maximum number of RX channels/flows allocated for Resource Manager */
 #define ENET_CFG_RM_RX_CH_MAX                       (16U)
 
+/*! \brief Maximum number of Hw Push instances that Enet RM can manage. */
+#define ENET_CFG_RM_HW_PUSH_MAX                     (0U)
+
 /* --------------------------------------------------------------------------*/
 /*       ICSS-G Peripheral and CPSW Module related config options            */
 /* --------------------------------------------------------------------------*/

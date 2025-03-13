@@ -81,6 +81,34 @@ const template_options = {
     enableFastBoot: false,
 }
 
+const cflags_r5f = {
+    common: [
+        "-Oz",
+        "-flto",
+    ],
+    release: [
+    ],
+};
+
+const lflags_r5f = {
+    common: [
+        "--zero_init=on",
+        "--use_memset=fast",
+        "--use_memcpy=fast"
+    ],
+};
+
+const loptflags_r5f = {
+    release: [
+        "-mcpu=cortex-r5",
+        "-mfloat-abi=hard",
+        "-mfpu=vfpv3-d16",
+        "-mthumb",
+        "-Oz",
+        "-flto"
+    ],
+};
+
 const templates =
 [
     {
@@ -125,6 +153,9 @@ function getComponentBuildProperty(buildOption) {
         build_property.defines = r5f0_macro;
     }
     build_property.includes = includes;
+    build_property.cflags = cflags_r5f;
+    build_property.loptflags = loptflags_r5f;
+    build_property.lflags = lflags_r5f;
 
     return build_property;
 }
