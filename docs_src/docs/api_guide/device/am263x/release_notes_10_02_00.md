@@ -425,7 +425,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Error building examples in CCS in mac
     <td> Infra
     <td> Example build fails in CCS only in MAC Machines
-    <td> Use makefile based build
+    <td> \ref CCS_MAC_ISSUE
 </tr>
 </table>
 

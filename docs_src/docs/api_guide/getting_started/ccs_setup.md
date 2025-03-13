@@ -451,6 +451,7 @@
 
 ## Known Issues
 
+### Using CCS debugger in Linux
 - To use the debugger correctly with CCS in Linux, some additional steps are required. There is a message which is shown during the CCS installation to do this, but more often than not this is missed.
 If you miss this, you might get an error similar to
 
@@ -464,3 +465,44 @@ invalid firmware update, invalid XDS110 serial number, or faulty USB cable. The 
 \else
 - There might be EVM specific issues in which the debugger maybe needs to be connected after the power is turned ON, or other similar issues. For this refer the evm specific setup page at \ref EVM_SETUP_PAGE
 \endif
+
+### Building projects in CCS in MAC machines {#CCS_MAC_ISSUE}
+
+- While building imported projects in CCS in MAC machines you might face an error like this related to missing cryptography python module:
+
+\code
+from cryptography.hazmat.bindings._rust import openssl as rust_openssl
+ImportError: dlopen(/Users/Library/Python/3.9/lib/python/site-packages/_cffi_backend.cpython-39-darwin.so, 0x0002): tried: '/Users/Library/Python/3.9/lib/python/site-packages/_cffi_backend.cpython-39-darwin.so' (mach-o file, but is an incompatible architecture (have 'arm64', need 'x86_64')), '/System/Volumes/Preboot/Cryptexes/OS/Users/Library/Python/3.9/lib/python/site-packages/_cffi_backend.cpython-39-darwin.so' (no such file), '/Users/Library/Python/3.9/lib/python/site-packages/_cffi_backend.cpython-39-darwin.so' (mach-o file, but is an incompatible architecture (have 'arm64', need 'x86_64'))
+\endcode
+
+#### Workaround 1 - Using python virtual environment
+
+- Use the instruction on this page to [Create a Virtual Environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments) on your machine.
+- After activating the virtual environment, pip install all required packages by typing 
+    \code
+        (.venv)$ python3 -m pip install -r {SDK_PATH}/requirements.txt
+    \endcode
+- Now launch CCS from this venv terminal by
+    \code
+        (.venv)$ open {PATH_TO_CCS_DIR}/ccs/eclipse/Ccsstudio.app
+    \endcode
+- Rebuilding the project should be successful now.
+
+#### Workaround 2 - Modifying CCS Makefile
+
+- Line `PYTHON=python3` in the `makefile_ccs_bootimage_gen` file of your project always defaults to the python present in your /usr/bin folder which might be an outdated python version incompatible with required packages.
+
+- Update the python path in the file to point to your custom installed latest python. For example,
+    \code
+    ifeq ($(OS), Windows_NT)
+        PYTHON=python
+    else
+        PYTHON=/opt/homebrew/bin/python3
+    endif
+    \endcode
+
+- Rebuild the project.
+
+#### Workaround 3 - Use CLI Makefile Build
+
+- Build projects via make in command line instead of CCS. Refer to this section \ref MAKEFILE_BUILD_PAGE.

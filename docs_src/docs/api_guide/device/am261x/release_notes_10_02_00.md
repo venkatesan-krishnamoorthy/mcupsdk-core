@@ -1,4 +1,4 @@
-# Release Notes 10.01.00 {#RELEASE_NOTES_10_01_00_PAGE}
+# Release Notes 10.02.00 {#RELEASE_NOTES_10_02_00_PAGE}
 
 [TOC]
 
@@ -273,6 +273,13 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <td> USB
     <td> 10.00.01 onwards
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14110
+    <td> Error building examples in CCS in mac
+    <td> Infra
+    <td> Example build fails in CCS only in MAC Machines
+    <td> \ref CCS_MAC_ISSUE
 </tr>
 <tr>
     <td> PINDSW-7715
