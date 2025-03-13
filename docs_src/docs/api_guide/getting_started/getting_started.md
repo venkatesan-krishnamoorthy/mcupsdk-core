@@ -152,7 +152,11 @@ I2C Target              | I2C device which responds to I2C Controller
 
 \endcond
 
-\cond  SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM261X
+\cond  SOC_AM263X || SOC_AM263PX || SOC_AM261X
+- **Step 6:** Optimized system level performance using Smart Placement. See \subpage SMART_PLACEMENT_GETTING_STARTED.
+\endcond
+
+\cond  SOC_AM243X
 - **Step 7:** Optimized system level performance using Smart Placement. See \subpage SMART_PLACEMENT_GETTING_STARTED.
 \endcond
 \endif
