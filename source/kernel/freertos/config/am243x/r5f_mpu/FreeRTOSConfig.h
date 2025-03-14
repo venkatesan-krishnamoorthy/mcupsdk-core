@@ -99,7 +99,7 @@ extern "C"
 #define configQUEUE_REGISTRY_SIZE               (32)
 #define configUSE_QUEUE_SETS                    (0)
 #define configUSE_STREAM_BUFFERS                (0)
-#define configUSE_EVENT_GROUPS                  (0)
+#define configUSE_EVENT_GROUPS                  (1)
 #define configUSE_TIME_SLICING                  (0) /* keep as 0 to get same functionality as SysBIOS6 */
 #define configUSE_NEWLIB_REENTRANT              (0)
 #define configENABLE_BACKWARD_COMPATIBILITY     (1)
@@ -167,6 +167,7 @@ extern "C"
 #define INCLUDE_xTimerPendFunctionCall   (1)
 #define INCLUDE_xTaskGetIdleTaskHandle   (1)
 #define INCLUDE_xSemaphoreGetMutexHolder (1)
+#define INCLUDE_xTaskGetSchedulerState   (1)
 
 #ifndef FREERTOS_ASSEMBLY
 #include <kernel/dpl/DebugP.h>
