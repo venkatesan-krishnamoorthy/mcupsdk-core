@@ -58,6 +58,9 @@
 #define PmuP_COUNTER_MASK_ALL_COUNTERS          (0xFFFFFFFFu)
 #define PmuP_SEC_TO_NANOSEC                     (1000000000ULL)
 
+#define PmuP_USER_ACCESS_DISABLE                (0u)
+#define PmuP_USER_ACCESS_ENABLE                 (1u)
+
 PMU_DATA_SECTION
 static uint64_t gCounterFreqHz = 0;
 
@@ -68,6 +71,7 @@ void PmuP_enableCounters(uint32_t counterMask);
 void PmuP_disableCounters(uint32_t counterMask);
 void PmuP_clearOverflowStatus(uint32_t counterMask);
 void PmuP_setup(uint32_t setupFlags);
+void PmuP_setUserEnable(uint32_t accessMask);
 #ifdef __cplusplus
 }
 #endif
@@ -98,3 +102,7 @@ void PMU_TEXT_SECTION CycleCounterP_reset(void)
     PmuP_enableCounters(PmuP_COUNTER_MASK_CYCLE_COUNTER); /* enable cycle counter only */
 }
 
+void PMU_TEXT_SECTION CycleCounterP_enableUserAccess(void)
+{
+    PmuP_setUserEnable(PmuP_USER_ACCESS_ENABLE);
+}

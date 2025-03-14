@@ -83,7 +83,7 @@ PmuP_getOverflowStatus:
         MRC     p15, 0, r0, c9, c12, 3  // read PMOVSR
         bx      LR
 
-/* FUNCTION DEF: uint32_t PmuP_clearOverflowStatus(void) */
+/* FUNCTION DEF: void PmuP_clearOverflowStatus(uint32_t) */
         .global PmuP_clearOverflowStatus
         .type PmuP_clearOverflowStatus,%function
         .section ".text.pmu","ax",%progbits
@@ -91,6 +91,16 @@ PmuP_getOverflowStatus:
         .align 2
 PmuP_clearOverflowStatus:
         MCR     p15, 0, r0, c9, c12, 3  // write PMOVSR
+        bx      LR
+
+/* FUNCTION DEF: void PmuP_setUserEnable(uint32_t) */
+        .global PmuP_setUserEnable
+        .type PmuP_setUserEnable,%function
+        .section ".text.pmu","ax",%progbits
+        .arm
+        .align 2
+PmuP_setUserEnable:
+        MCR     p15, 0, r0, c9, c14, 0 // write PMUSERENR
         bx      LR
 
 	.end

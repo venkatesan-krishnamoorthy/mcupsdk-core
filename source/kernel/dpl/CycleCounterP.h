@@ -91,6 +91,14 @@ uint64_t CycleCounterP_getCount64(void);
  */
 uint64_t CycleCounterP_nsToTicks(const uint64_t nanosecs);
 
+/**
+ * \brief Enable User mode access to performance monitor and validation registers
+ *
+ * This API should be called from Privileged mode before calling any other CycleCounterP APIs
+ * from user mode.
+ */
+void CycleCounterP_enableUserAccess(void);
+
 /** @} */
 
 #ifdef __cplusplus
