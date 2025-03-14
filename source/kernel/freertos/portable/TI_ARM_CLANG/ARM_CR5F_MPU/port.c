@@ -78,6 +78,7 @@
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/MpuP_armv7.h>
+#include <kernel/dpl/CycleCounterP.h>
 
 #undef MPU_WRAPPERS_INCLUDED_FROM_API_FILE
 
@@ -447,6 +448,8 @@ BaseType_t xPortStartScheduler( void )
     portDISABLE_INTERRUPTS();
 
     /* MPU is already enabled with static regions by the DPL config */
+
+    CycleCounterP_enableUserAccess();
 
     prvPortSchedulerRunning = pdTRUE;
 
