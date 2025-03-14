@@ -85,14 +85,11 @@ void USB_dwcTask()
 
 void usbdIntrConfig()
 {
-	HwiP_Params usb_hwi_handle;
-	memcpy(&usb_hwi_handle, (const void *)&usb_handle.hwiParamsUsb, sizeof(HwiP_Params));
-
     /* Initialize the interrupt controller (VIM is already hooked up). */
     HwiP_Params_init((HwiP_Params *)&usb_handle.hwiParamsUsb);
-    usb_hwi_handle.intNum = USB20_MAIN0_INT;
-    usb_hwi_handle.callback = usbCoreIntrHandler;
-    HwiP_construct((HwiP_Object *)&usb_handle.hwiObjUsb, &usb_hwi_handle);
+    usb_handle.hwiParamsUsb.intNum = USB20_MAIN0_INT;
+    usb_handle.hwiParamsUsb.callback = usbCoreIntrHandler;
+    HwiP_construct((HwiP_Object *)&usb_handle.hwiObjUsb, (HwiP_Params *)&usb_handle.hwiParamsUsb);
 
     /* Enable interrupts for R5 */
     HwiP_enableInt(USB20_MAIN0_INT);
