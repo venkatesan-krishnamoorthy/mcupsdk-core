@@ -185,6 +185,12 @@ const cflags_c66 = {
     ]
 };
 
+const defines_r5f_mpu = {
+    common: [
+        "MPU_FREERTOS",
+    ],
+};
+
 const asmfiles_r5f_common = {
     common: [
         // picked from nortos DPL
@@ -348,6 +354,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.filedirs = filedirs_r5f_mpu;
         build_property.cflags = cflags_r5f_mpu;
         build_property.templates = templates_freertos_r5f_mpu;
+        build_property.defines = defines_r5f_mpu;
     }
     if(buildOption.cpu == "c66") {
         build_property.files = files_c66;
