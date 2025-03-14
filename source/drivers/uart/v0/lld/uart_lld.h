@@ -477,7 +477,7 @@ typedef uint32_t (*UART_clockUsecToTick) (uint64_t usecs);
  *  \brief  The definition of a read complete callback function used by
  *  the UART driver when used in #UART_TRANSFER_MODE_CALLBACK
  *
- *  \param void*          void pointer
+ *  \param hUart          Handle to the UART instance used
  */
 typedef void (*UART_readCompCallbackFxn) (void *hUart);
 
@@ -485,7 +485,7 @@ typedef void (*UART_readCompCallbackFxn) (void *hUart);
  *  \brief  The definition of a write complete callback function used by
  *  the UART driver when used in #UART_TRANSFER_MODE_CALLBACK
  *
- *  \param void*          void pointer
+ *  \param hUart          Handle to the UART instance used
  */
 typedef void (*UART_writeCompCallbackFxn) (void *hUart);
 
@@ -493,7 +493,7 @@ typedef void (*UART_writeCompCallbackFxn) (void *hUart);
  *  \brief  The definition of a error callback function used by the UART driver
  *  when used in #UART_TRANSFER_MODE_CALLBACK
  *
- *  \param void*          void pointer
+ *  \param hUart          Handle to the UART instance used
  */
 typedef void (*UART_errorCallbackFxn) (void *hUart);
 

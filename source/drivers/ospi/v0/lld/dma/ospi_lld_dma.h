@@ -79,7 +79,6 @@ typedef int32_t (*OSPI_dmaOpenFxn)(void *ospiDmaArgs);
  * Typically this callback is hidden from the end application and is implemented
  * when a new DMA driver needs to be supported.
  *
- * \param OSPI_DmaHandle   [in] OSPI DMA Object handle returned from \ref OSPI_dmaOpen
  * \param ospiDmaArgs      [in] DMA specific arguments, obtained from the config
  *
  * \return SystemP_SUCCESS on success, else failure
@@ -96,6 +95,7 @@ typedef int32_t (*OSPI_dmaCloseFxn)(void *ospiDmaArgs);
  * \param dst           [in] Destination address to which the data is to be copied
  * \param src           [in] Source address from which the data is to be copied
  * \param length        [in] Data length
+ * \param timeout		[in] Time out
  *
  * \return SystemP_SUCCESS on success, else failure
  */

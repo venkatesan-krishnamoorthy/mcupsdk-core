@@ -130,7 +130,7 @@ There are two options:
 - Two or more dedicated Tx Buffers are configured with the same Message ID. In this case the Tx Buffer with
 the lowest buffer number is transmitted first.
 
-\note Please refer \ref DRV_MCAN_MODULE for more details and \ref MCAN_EXAMPLE_USAGE for code snippets.
+\note Please refer \ref DRIVERS_MCAN_PAGE for more details and \ref MCAN_EXAMPLE_USAGE for code snippets.
 
 ## Important Usage Guidelines
 
@@ -306,6 +306,6 @@ MCAN Interrupt De-Registration
 
 ## API
 
-\ref DRV_MCAN_MODULE
+\ref DRIVERS_MCAN_PAGE
 
 

@@ -1096,7 +1096,7 @@ typedef struct CANFD_OptionTLV_t
  *  \brief  The definition of a callback function used by the CANFD driver
  *  when used in #CANFD_TRANSFER_MODE_CALLBACK
  *
- *  \param void*           void pointer
+ *  \param args*           void pointer
  *  \param reason          Cause of the interrupt which prompted the callback.
  */
 typedef void (*CANFD_TransferCallbackFxn) (void *args, CANFD_Reason reason);
@@ -1105,8 +1105,9 @@ typedef void (*CANFD_TransferCallbackFxn) (void *args, CANFD_Reason reason);
  *  \brief  The definition of a callback function used by the CANFD driver
  *  when used in #CANFD_TRANSFER_MODE_CALLBACK in case of error
  *
- *  \param void*           void pointer
+ *  \param args*           void pointer
  *  \param reason          Cause of the interrupt which prompted the callback.
+ *  \param errStatusResp   Erros status Response
  */
 typedef void (*CANFD_ErrorCallbackFxn) (void *args, CANFD_Reason reason, CANFD_ErrStatusResp* errStatusResp);
 

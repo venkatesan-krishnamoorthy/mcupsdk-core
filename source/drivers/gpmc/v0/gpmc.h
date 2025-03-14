@@ -607,8 +607,8 @@ typedef struct GPMC_Transaction_s {
  *  \brief      The definition of a callback function used by the GPMC driver
  *              when used in GPMC_OPERATING_MODE_CALLBACK mode.
  *
- *  \param      GPMC_Handle          GPMC_Handle
- *  \param      GPMC_Transaction*    GPMC_Transaction*
+ *  \param      handle          GPMC_Handle
+ *  \param      transaction*    GPMC_Transaction*
  */
 typedef void (*GPMC_CallbackFxn)(GPMC_Handle handle,
                                  GPMC_Transaction * transaction);

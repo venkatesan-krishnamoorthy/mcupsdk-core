@@ -103,7 +103,6 @@ typedef struct Ram_Attrs_s {
  * when a new type of RAM device needs to be implemented.
  *
  * \param config [in] RAM configuration for the specific RAM device
- * \param params [in] User controllable parameters when opening the RAM device
  *
  * \return SystemP_SUCCESS on success, else failure
  */

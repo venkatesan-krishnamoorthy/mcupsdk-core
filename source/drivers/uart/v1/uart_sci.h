@@ -218,8 +218,8 @@ typedef struct
  *  \brief  The definition of a callback function used by the UART driver
  *  when used in #UART_TRANSFER_MODE_CALLBACK
  *
- *  \param UART_Handle          UART_Handle
- *  \param UART_Transaction*    Pointer to a #UART_Transaction
+ *  \param handle          UART_Handle
+ *  \param transaction*    Pointer to a #UART_Transaction
  */
 typedef void (*UART_CallbackFxn) (UART_Handle handle,
                                   UART_Transaction *transaction);

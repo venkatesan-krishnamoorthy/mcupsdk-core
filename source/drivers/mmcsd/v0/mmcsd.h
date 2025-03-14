@@ -103,7 +103,7 @@ typedef void* MMCSD_Handle;
  *  MMCSD transaction that just completed, and the status of Transaction.
  *
  *
- *  \param  handle          MMCSD_Handle
+ *  \param  mmcsdHandle          MMCSD_Handle
  *  \param  transferStatus  Results of the MMCSD transaction
  */
 

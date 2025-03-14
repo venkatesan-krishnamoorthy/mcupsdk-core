@@ -104,8 +104,8 @@ typedef void *MCSPI_Handle;
  *  \brief  The definition of a callback function used by the SPI driver
  *  when used in #MCSPI_TRANSFER_MODE_CALLBACK
  *
- *  \param MCSPI_Handle          MCSPI_Handle
- *  \param MCSPI_Transaction*    Pointer to a #MCSPI_Transaction
+ *  \param handle                MCSPI_Handle
+ *  \param transaction*          Pointer to a #MCSPI_Transaction
  */
 typedef void (*MCSPI_CallbackFxn) (MCSPI_Handle handle,
                                    MCSPI_Transaction *transaction);

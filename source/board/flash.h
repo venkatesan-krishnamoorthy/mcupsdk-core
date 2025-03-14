@@ -247,7 +247,6 @@ typedef int32_t (*Flash_EraseSectorFxn)(Flash_Config *config, uint32_t sectorNum
  * when a new type of flash device needs to be implemented.
  *
  * \param config [in] Flash configuration for the specific flash device
- * \param sectorNum [in] Sector number to erase.
  *
  * \return SystemP_SUCCESS on success, else failure
  */
