@@ -1,6 +1,5 @@
-
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -20515,4 +20514,3 @@ nop
 __hopperFnxFlash_page_63_quantum_15:
 blx r14
 
-        

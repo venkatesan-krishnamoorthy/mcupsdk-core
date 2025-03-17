@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,8 +37,8 @@
 #include <drivers/ospi.h>
 
 /*
- * This example: 
- *  1. writes data to flash at (flash_size/2) + 2MB offset. 
+ * This example:
+ *  1. writes data to flash at (flash_size/2) + 2MB offset.
  *  2. remaps address from (flash_size/2) and above to 0MB and above.
  *  3. reads back the data from 2MB offset.
  *  4. checks if data that is read back is correct or not.
@@ -46,7 +46,7 @@
 
 /**
  * @brief Offset from which tor read.
- * 
+ *
  */
 #define APP_OSPI_FLASH_OFFSET_REIGON_A  (0x200000U)
 #if defined (SOC_AM263PX)
@@ -54,7 +54,7 @@
  * @brief Write location of the buffer in flash.
  *
  * Assume that flash address from 0 to 4MB is region A
- * and 4MB to 8MB is region B. Write will happen 
+ * and 4MB to 8MB is region B. Write will happen
  * at this location of flash.
 */
 #define APP_OSPI_FLASH_OFFSET_REIGON_B  (0x1200000U)
@@ -63,15 +63,15 @@
  * @brief Write location of the buffer in flash.
  *
  * Assume that flash address from 0 to 16MB is region A
- * and 16MB to 32MB is region B. Writes will happen at 
+ * and 16MB to 32MB is region B. Writes will happen at
  * this location of flash.
 */
 #define APP_OSPI_FLASH_OFFSET_REIGON_B  (0x600000U)
-#endif 
+#endif
 
 /**
  * @brief Size of buffer data that is to be read.
- * 
+ *
  */
 #define BUFFER_DATA_SIZE (4096)
 
@@ -109,7 +109,7 @@ void swap_main(void *args)
 
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
-    
+
     for(uint32_t i = 0U; i < BUFFER_DATA_SIZE; i++)
     {
         gTxBuff[i] = i % 256;

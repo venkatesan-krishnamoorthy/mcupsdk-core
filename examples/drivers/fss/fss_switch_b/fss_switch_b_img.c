@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -156,14 +156,14 @@ void switch_b_img_main(void *args)
 
     /* Update boot segment */
     offset = BOOINFO_ADDRESS;
-    CacheP_inv((void *)(0x60000000 + offset), ERASE_SECTOR_SIZE, CacheP_TYPE_ALL);
-    memcpy((void *)&bootinfo.bin, (void *)(0x60000000 + offset), ERASE_SECTOR_SIZE);
+    CacheP_inv((void *)(SOC_getFlashDataBaseAddr() + offset), ERASE_SECTOR_SIZE, CacheP_TYPE_ALL);
+    memcpy((void *)&bootinfo.bin, (void *)(SOC_getFlashDataBaseAddr() + offset), ERASE_SECTOR_SIZE);
     bootinfo.fields.bootRegion = BOOT_REGION_B;
     status = FLSOPSKD_erase(&gFotaAgentHandle.flopsHandle, offset);
     DebugP_assert(status == SystemP_SUCCESS);
     status = FLSOPSKD_write(&gFotaAgentHandle.flopsHandle, offset, (uint8_t *)&bootinfo.bin, ERASE_SECTOR_SIZE);
     DebugP_assert(status == SystemP_SUCCESS);
-    CacheP_inv((void *)(0x60000000 + offset), ERASE_SECTOR_SIZE, CacheP_TYPE_ALL);
+    CacheP_inv((void *)(SOC_getFlashDataBaseAddr() + offset), ERASE_SECTOR_SIZE, CacheP_TYPE_ALL);
 
     DebugP_log("Finish Updating Flash's Boot Sector... Please reset board to start new application\r\n\r\n");
 

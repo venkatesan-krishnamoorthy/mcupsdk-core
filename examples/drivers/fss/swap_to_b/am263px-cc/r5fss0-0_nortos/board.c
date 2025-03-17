@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -114,8 +114,8 @@ void board_flash_reset(OSPI_Handle oHandle)
 
     Board_eepromOpen();
 
-    uint32_t sipVal = (((ptrTopCtrlRegs->EFUSE2_ROW_6) & 
-            CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_MASK) >> 
+    uint32_t sipVal = (((ptrTopCtrlRegs->EFUSE2_ROW_6) &
+            CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_MASK) >>
                     CSL_TOP_CTRL_EFUSE2_ROW_6_EFUSE2_ROW_6_BOOTROM_CFG_SHIFT);
 
     if(!(sipVal == SIP_FLASH_CFG_VALUE))
@@ -129,7 +129,7 @@ void board_flash_reset(OSPI_Handle oHandle)
                 /* boardVer is REV A */
                 /* OSPI RESET signal does not come via IO expander */
                 /* Toggle the reset pin directly */
-                
+
                 OSPI_setResetPinStatus(oHandle, PIN_STATE_HIGH);
                 OSPI_setResetPinStatus(oHandle, PIN_STATE_LOW);
             }
