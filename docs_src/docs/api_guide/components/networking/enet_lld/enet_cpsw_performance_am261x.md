@@ -54,6 +54,63 @@ Tx packet length     | 200 B                       |
     </tr>
 </table>
 
+### Layer-2 Hardware Switching Latency for CPSW
+
+Configuration                   | Value                    |
+--------------------------------|--------------------------|
+EVM Type                        | AM261x-SOM               |
+CPSW CPPI Frequency             | 320 MHz                  |
+Ethernet Interface Type         | RGMII                    |
+PHY model number                | DP83869                  |
+Ethernet Cable Spec             | CAT-6                    |
+Sample size                     | 10 Million Packets       |
+RTOS application                | Modified \ref EXAMPLES_ENET_LAYER2_CPSW_SWITCH \n example   |
+\n
+
+### Test Setup
+
+\imageStyle{CPSW_Latency_measurement.png,width:15==20%}
+\image html CPSW_Latency_measurement.png "Connections for Latency Measurement"
+
+### CPSW Latency for RGMII
+<table>
+    <tr>
+        <td rowspan="2" style="text-align: left;"><b>Datagram Length</b></td>
+        <td colspan="2" style="text-align: center;"><b>Latency @ 1Gbps link (in us)</b></td>
+        <td colspan="2" style="text-align: center;"><b>Latency @ 100Mbps link (in us)</b></td>
+        <td colspan="2" style="text-align: center;"><b>Latency @ 10Mbps link (in us)</b></td>
+    </tr>
+    <tr>
+        <td><b>Without Cut-Through</b></td><td><b>With Cut-Through</b></td>
+        <td><b>Without Cut-Through</b></td><td><b>With Cut-Through</b></td>
+        <td><b>Without Cut-Through</b></td><td><b>With Cut-Through</b></td>
+    </tr>
+    <tr>
+        <td><b>64 Bytes</b></td>
+        <td>1.8</td><td>1.7</td>
+        <td>7.9</td><td>7.8</td>
+        <td>73.4</td><td>71.9</td>
+    </tr>
+    <tr>
+        <td><b>256 Bytes</b></td>
+        <td>3.1</td><td>2.0</td>
+        <td>23.0</td><td>13.8</td>
+        <td>227.3</td><td>135.6</td>
+    </tr>
+    <tr>
+        <td><b>512 Bytes</b></td>
+        <td>5.2</td><td>2.0</td>
+        <td>43.5</td><td>13.8</td>
+        <td>432.0</td><td>135.6</td>
+    </tr>
+    <tr>
+        <td><b>1518 Bytes</b></td>
+        <td>13.2</td><td>2.0</td>
+        <td>124.0</td><td>13.8</td>
+        <td>1237.0</td><td>135.6</td>
+    </tr>
+</table>
+
 # TCP/IP Performance
 
 ## Configuration Details
