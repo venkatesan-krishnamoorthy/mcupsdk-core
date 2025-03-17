@@ -200,6 +200,10 @@ int32_t test_main(void)
     /* Declaration of variables */
     int32_t  testResult=SDL_PASS;
 
+#if defined (SOC_AM261X) || defined (SOC_AM263PX)
+    CacheP_disable(CacheP_TYPE_L1P | CacheP_TYPE_L1D);
+#endif
+
     if (testResult == SDL_PASS)
     {
         testResult = PBIST_dplInit();
@@ -218,6 +222,10 @@ int32_t test_main(void)
     {
         DebugP_log("\r\nBoard Init failed. Exiting the app.\r\n");
     }
+
+#if defined (SOC_AM261X) || defined (SOC_AM263PX)
+    CacheP_enable(CacheP_TYPE_L1P | CacheP_TYPE_L1D);
+#endif
 
     Board_driversClose();
     Drivers_close();
