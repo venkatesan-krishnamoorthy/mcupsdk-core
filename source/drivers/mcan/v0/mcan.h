@@ -31,7 +31,7 @@
  */
 
 /**
- *  \defgroup DRIVERS_MCAN_PAGE APIs for MCAN
+ *  \defgroup DRV_MCAN_MODULE APIs for MCAN
  *  \ingroup DRV_MODULE
  *
  *  This module contains APIs to program and use the MCAN module.
