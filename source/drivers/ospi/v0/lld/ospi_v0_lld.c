@@ -1526,7 +1526,31 @@ int32_t OSPI_lld_writeDirect(OSPILLD_Handle hOspi, OSPI_Transaction *trans)
 
     pDst = (uint8_t *)(hOspi->hOspiInit->dataBaseAddr + addrOffset);
 
-    memcpy(pDst, pSrc, trans->count);
+    uint8_t wrByte;
+    uint32_t size, remainingSize;
+
+    uint32_t *tempSrc = (uint32_t *)pSrc;
+    uint32_t *tempDst = (uint32_t *)pDst;
+
+    int i = 0;
+    {
+        remainingSize = trans->count & 3U;
+        size = trans->count - remainingSize;
+
+        for(i = 0; i < size; i+=4)
+        {
+            *tempDst = *tempSrc;
+            tempDst++;
+            tempSrc++;
+        }
+
+        //Dangling Bytes
+        for(i = 0; i < remainingSize; i++)
+        {
+            wrByte = CSL_REG8_RD(pSrc + size + i);
+            CSL_REG8_WR(pDst + size + i, wrByte);
+        }
+    }
 
     return status;
 }

@@ -73,6 +73,7 @@ uint32_t gNandFlashToSpiProtocolMap[] =
 {
     [FLASH_CFG_PROTO_1S_1S_1S] = OSPI_NAND_PROTOCOL(1,1,1,0),
     [FLASH_CFG_PROTO_1S_1S_4S] = OSPI_NAND_PROTOCOL(1,1,4,0),
+    [FLASH_CFG_PROTO_1S_8S_8S] = OSPI_NAND_PROTOCOL(1,8,8,0),
     [FLASH_CFG_PROTO_8D_8D_8D] = OSPI_NAND_PROTOCOL(8,8,8,1),
 };
 
@@ -162,11 +163,20 @@ static int32_t Flash_nandOspiOpen(Flash_Config *config, Flash_Params *params)
                 Flash_nandOspiWrite(config, phyTuningOffset, (uint8_t *)phyTuningData, phyTuningDataSize);
                 attackVectorStatus = Flash_nandOspiPageLoad(config, phyTuningOffset);
                 attackVectorStatus += OSPI_phyReadAttackVector(obj->ospiHandle, 0);
+
+                readDataCapDelay = 4U;
+                while((attackVectorStatus != SystemP_SUCCESS) && (readDataCapDelay > 0U))
+                {
+                    OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
+                    attackVectorStatus = Flash_nandOspiPageLoad(config, phyTuningOffset);
+                    attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+                    readDataCapDelay--;
+                }
             }
 
             if(attackVectorStatus == SystemP_SUCCESS)
             {
-                status += OSPI_phyTuneSDR(obj->ospiHandle, 0);
+                status += OSPI_phyTuneDDR(obj->ospiHandle, 0);
                 if(status == SystemP_SUCCESS)
                 {
                     obj->phyEnable = TRUE;
@@ -310,7 +320,8 @@ static int32_t Flash_nandOspiRead(Flash_Config *config, uint32_t offset, uint8_t
             addrLen = 2;
         }
         else if(obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_1S ||
-                obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_4S )
+                obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_4S ||
+                obj->currentProtocol == FLASH_CFG_PROTO_1S_8S_8S )
         {
             addrLen = 3;
         }
@@ -688,6 +699,8 @@ static int32_t Flash_nandOspiSetProtocol(Flash_Config *config, void *ospiHandle,
 
                 case FLASH_CFG_PROTO_1S_1S_4S:
 
+                case FLASH_CFG_PROTO_1S_8S_8S:
+
                     OSPI_enableSDR(obj->ospiHandle);
 
                     status += Flash_nandOspiSetDummyCycles(config);
@@ -814,7 +827,8 @@ static int32_t Flash_nandOspiWaitReady(Flash_Config *config, uint32_t timeOut)
             numAddrBytes = 2;
         }
         else if(obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_1S ||
-                obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_4S )
+                obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_4S ||
+                obj->currentProtocol == FLASH_CFG_PROTO_1S_8S_8S )
         {
             cmd = devCfg->cmdRdsr;
             cmdAddr = nandCfg->srWipReg;
@@ -1226,7 +1240,8 @@ static int32_t Flash_nandOspiCheckProgStatus(Flash_Config *config)
             readBytes = 2;
         }
         else if(obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_1S ||
-                obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_4S )
+                obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_4S ||
+                obj->currentProtocol == FLASH_CFG_PROTO_1S_8S_8S )
         {
             cmd = devCfg->cmdRdsr;
             dummyBits = 0;
@@ -1282,7 +1297,8 @@ static int32_t Flash_nandOspiCheckEraseStatus(Flash_Config *config)
             readBytes = 2;
         }
         else if(obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_1S ||
-                obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_4S )
+                obj->currentProtocol == FLASH_CFG_PROTO_1S_1S_4S ||
+                obj->currentProtocol == FLASH_CFG_PROTO_1S_8S_8S )
         {
             cmd = devCfg->cmdRdsr;
             dummyBits = 0;
@@ -1295,7 +1311,7 @@ static int32_t Flash_nandOspiCheckEraseStatus(Flash_Config *config)
 
         if(status == SystemP_SUCCESS)
         {
-            if((readStatus[0] && nandCfg->srEraseStatus) != 0)
+            if((readStatus[0] & nandCfg->srEraseStatus) != 0)
             {
                 status = SystemP_FAILURE;
             }

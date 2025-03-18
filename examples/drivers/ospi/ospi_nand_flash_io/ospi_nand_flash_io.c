@@ -51,17 +51,18 @@ void ospi_nand_flash_io_main(void *args)
     int32_t status = SystemP_SUCCESS;
     uint32_t offset;
     uint32_t blk, page;
-    uint32_t    gpioBaseAddr, pinNum;
-    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CSL_GPIO0_U_BASE);
-    pinNum       = CHIP_SEL_PIN;
 
     /* Open OSPI Driver, among others */
     Drivers_open();
 
     /*Select NAND flash*/
+#if defined (SOC_AM263PX)
+    uint32_t    gpioBaseAddr, pinNum;
+    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CSL_GPIO0_U_BASE);
+    pinNum       = CHIP_SEL_PIN;
     GPIO_setDirMode(gpioBaseAddr, pinNum, 0);
     GPIO_pinWriteLow(gpioBaseAddr, pinNum);
-
+#endif
     /* Open Flash drivers with OSPI instance as input */
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);

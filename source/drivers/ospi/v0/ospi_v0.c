@@ -965,9 +965,12 @@ int32_t OSPI_writeDirect(OSPI_Handle handle, OSPI_Transaction *trans)
     if((OSPI_Handle) NULL != handle)
     {
         OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+        const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
         hOspi = &obj->ospilldObject;
 
         status = OSPI_lld_writeDirect(hOspi, trans);
+
+        CacheP_wbInv((void*)(attrs->dataBaseAddr + trans->addrOffset), trans->count, CacheP_TYPE_ALL);
     }
     else
     {

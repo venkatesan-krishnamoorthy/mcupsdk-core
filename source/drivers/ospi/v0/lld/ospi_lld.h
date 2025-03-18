@@ -189,6 +189,7 @@ typedef void *OSPI_DrvHandle;
 #define OSPI_PROTO_1S_1S_2S (0x0002)
 #define OSPI_PROTO_1S_1S_4S (0x0003)
 #define OSPI_PROTO_1S_1S_8S (0x0004)
+#define OSPI_PROTO_1S_8S_8S (0x000A)
 #define OSPI_PROTO_4S_4S_4S (0x0005)
 #define OSPI_PROTO_4S_4D_4D (0x0006)
 #define OSPI_PROTO_8S_8S_8S (0x0007)
