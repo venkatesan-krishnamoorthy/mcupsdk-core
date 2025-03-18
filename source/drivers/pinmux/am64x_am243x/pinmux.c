@@ -47,6 +47,7 @@
 #include <drivers/hw_include/cslr_soc.h>
 #include <drivers/pinmux.h>
 #include <kernel/dpl/AddrTranslateP.h>
+#include <kernel/dpl/SemaphoreP.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -68,7 +69,18 @@
 /*                         Structures and Enums                               */
 /* ========================================================================== */
 
-/* None */
+typedef struct
+{
+    void                   *lock;
+    /**< Driver lock - to protect across open/close */
+    SemaphoreP_Object       lockObj;
+    /**< Driver lock object */
+} PINMUX_DrvObj;
+
+static PINMUX_DrvObj   gPinmuxDrvObj =
+{
+    .lock           = NULL,
+};
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
@@ -81,8 +93,7 @@ void Pinmux_unlockMMR(uint32_t domainId);
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* None */
-
+/*None*/
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -91,10 +102,22 @@ void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId)
 {
     uint32_t            baseAddr;
     volatile uint32_t  *regAddr;
-    uint32_t            isUnlocked = 0;
+    uint32_t            isUnlocked = 0, status = SystemP_FAILURE;
 
+    if(gPinmuxDrvObj.lock == NULL)
+    {
+        /* Mutex to restrict concurrent access*/
+        status = SemaphoreP_constructMutex(&gPinmuxDrvObj.lockObj);
+        DebugP_assertNoLog(status == SystemP_SUCCESS);
+
+        gPinmuxDrvObj.lock = &gPinmuxDrvObj.lockObj;
+    }
     if((NULL != pinmuxCfg) && (pinmuxCfg->offset != PINMUX_END))
     {
+        DebugP_assert(NULL_PTR != gPinmuxDrvObj.lock);
+        status = SemaphoreP_pend(&gPinmuxDrvObj.lockObj, SystemP_WAIT_FOREVER);
+        DebugP_assert(status == SystemP_SUCCESS);
+
         if(PINMUX_DOMAIN_ID_MAIN == domainId)
         {
             baseAddr = CSL_PADCFG_CTRL0_CFG0_BASE + PADCFG_PMUX_OFFSET;
@@ -119,6 +142,7 @@ void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId)
         {
             Pinmux_lockMMR(domainId);
         }
+        SemaphoreP_post(&gPinmuxDrvObj.lockObj);
     }
     return;
 }
