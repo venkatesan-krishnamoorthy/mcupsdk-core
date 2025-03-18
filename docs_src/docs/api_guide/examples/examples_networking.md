@@ -115,6 +115,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
 -# \subpage EXAMPLES_ENET_CPSW_TSN_LWIP_GPTP
 -# \subpage EXAMPLES_ENET_CPSW_TSN_EST
+-# \subpage EXAMPLES_ENET_CPSW_AVTP
 
 ### Ether-Ring Example on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_ETHERRING
@@ -132,6 +133,7 @@ This page lists all the examples related to Ethernet Communication.
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage EXAMPLES_CPSW_LWIP_HTTPS
+-# \subpage ENET_LWIP_CPSW_OPERATING_MODES
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
@@ -160,6 +162,7 @@ This page lists all the examples related to Ethernet Communication.
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage EXAMPLES_CPSW_LWIP_HTTPS
+-# \subpage ENET_LWIP_CPSW_OPERATING_MODES
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER

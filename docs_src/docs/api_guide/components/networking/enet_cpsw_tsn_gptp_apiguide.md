@@ -43,13 +43,13 @@ The TSN Stack library is composed of the following source modules:
  Uniconf      | `<mcu_plus_sdk>/source/networking/tsn/tsn_uniconf` | Universal configuration daemon for Yang, provides APIs for developing a client application which retreives/writes yang parameters from/to database
  gPTP         | `<mcu_plus_sdk>/source/networking/tsn/tsn_gptp`    | Implementation of the IEEE 802.1 AS gptp protocol
 
-## Stack Initialization
+## Stack Initialization {#ENET_CPSW_TSN_STACK_INITIALIZATION}
 
 A reference example of the TSN stack initialization can be found in ``<mcu_plus_sdk>/source/networking/enet/core/examples/tsn/tsninit.c``.
 Prior to any module calls, it is necessary to initialize the unibase library once.
 This can be achieved by invoking the ``EnetApp_initTsnByCfg()`` function.
 
-## Logging
+## Logging {#ENET_CPSW_TSN_LOGGING}
 
 By default, TSN logs are directed to STDOUT using the fwrite function:
 ``fwrite(str, 1, strlen(str), stdout);``
@@ -92,14 +92,14 @@ logs to be lost.
 The first '4' character in `"4,ubase...` represents the default log level applied
 to all modules.
 
-## Starting uniconf and gPTP
+## Starting uniconf and gPTP {#ENET_CPSW_TSN_UNICONF_INITIALIZATION}
 
 The gPTP functionality operates in a separate task, alongside the universal configuration daemon "uniconf".
 To start these tasks, use the ``EnetApp_startTsn()`` in tsninit.c as reference .
 
 This function will start the uniconf and gPTP tasks.
 
-## TSN Deinitialization
+## TSN Deinitialization  {#ENET_CPSW_TSN_STACK_DEINITIALIZATION}
 
 To deinitialize the TSN modules, you can invoke the ``EnetApp_stopTsn();`` and ``EnetApp_deInitTsn();`` functions.
 
@@ -136,7 +136,7 @@ Additionally, adjust the ``log-sync-interval`` in the standard yang config by re
 For example, to set the Sync interval to 31.25 milliseconds, set ``log-sync-interval`` to -5.
 
 # Integration
-## Source integration
+## Source integration {#ENET_CPSW_TSN_SOURCE_INTEGRATION}
 
 To integrate the TSN stack into your application, follow these steps:
 
@@ -195,7 +195,7 @@ In the above code, the Ethernet device name and MAC port are required to create
 - Start the gPTP task by calling ``EnetApp_startTsn()``. This will start the necessary threads for gPTP and uniconf.
   The uniconf, gPTP tasks are stored in ``EnetApp_ModuleCtx_t gModCtxTable`` task's table.
 
-## Uniconf configuration
+## Uniconf configuration {#ENET_CPSW_TSN_UNICONF_CONFIGURATION}
 
 Universal configuration daemon for Yang, provides APIs for developing a client application which retreives/writes yang parameters from/to database and ask the uniconf for configurating HW.
 
@@ -242,7 +242,7 @@ it means the uniconf will configure HW.
 If "NONE" is specified (hwmod="NONE"), the uniconf will not configure HW when client
 side writes the database and ask it for an update.
 
-## gPTP Yang Config Parameters
+## gPTP Yang Config Parameters {#ENET_CPSW_TSN_YANG_CONFIG_PARAMS}
 
 This section describes the standard Yang parameters utilized for gPTP.
 To access the list of these parameters along with their default values for gPTP, please refer to the file located at:
