@@ -40,6 +40,14 @@ extern "C"
 
 #include <drivers/hw_include/soc_config.h>
 
+#if defined (SOC_AM263PX)
+#include <drivers/soc/am263px/fss_otfa_define.h>
+#endif
+
+#if defined (SOC_AM261X)
+#include <drivers/soc/am261x/fss_otfa_define.h>
+#endif
+
 #if defined (DRV_VERSION_FSS_V0)
 #include <drivers/fss/v0/fss.h>
 #endif

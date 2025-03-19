@@ -48,9 +48,6 @@
 #define OSPI_DDR_DIS            1
 #define OSPI_DDR_EN             0
 
-#define ECC_REG_START_4KB(N)            N
-#define ECC_REG_SIZE_4KB(N)             N
-
 #define ECC_1B_ERR_CLR                  0x1
 #define ECC_2B_ERR_CLR                  0x1 << 1
 #define ECC_WR_NOALIGN_ERR_CLR          0x1 << 2
@@ -74,16 +71,8 @@
 #define MAC_ALLIGN_FOR_FSS      1
 #define MAC_ALLIGN_DEFAULT      0
 
-#define MAZ_SIZE_16B            3
-#define MAZ_SIZE_12B            2
-#define MAZ_SIZE_08B            1
-#define MAZ_SIZE_04B            0
-
 #define MAC_ERR_EN              1
 #define MAC_ERR_DIS             0
-
-#define KEY_SIZE_128B           0
-#define KEY_SIZE_256B           1
 
 #define OPTIMIZATION_DIS        0
 #define OPTIMIZATION_EN         1
@@ -99,30 +88,14 @@
 #define WR_PROTECT_EN           1
 #define WR_PROTECT_DIS          0
 
-#define MAC_MODE_DIS               0
-#define MAC_MODE_GMAC              1
-#define MAC_MODE_CBC_MAC           2
+#define MAC_MODE_DIS            0
+#define MAC_MODE_GMAC           1
+#define MAC_MODE_CBC_MAC        2
 
 
-#define ENC_MODE_DIS               0
-#define ENC_MODE_AES_CTR           1
-#define ENC_MODE_ECB_PLUS          2
+#define ENC_MODE_DIS            0
+#define ENC_MODE_AES_CTR        1
+#define ENC_MODE_ECB_PLUS       2
 
-#define MAC_REG_START_4KB(N)            N
-#define REG_START_4KB(N)            N
-#define MAC_REG_SIZE_4KB(N)             N-1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#define CRYPTO_MODE_GCM         2
+#define CRYPTO_MODE_CCM         4
