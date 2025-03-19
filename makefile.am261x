@@ -659,6 +659,12 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -1715,6 +1721,12 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_stc_am261x-som_system_nortos_nortos
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_pru_io_am261x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt
+BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt
 # Various Private System Example Targets
 
 
@@ -3374,6 +3386,24 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ empty_pru_io_am261x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/pru_io/empty/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ empty_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
+ empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru0_fw/ti-pru-cgt -f makefile all
+
+ empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
+
+ empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru1_fw/ti-pru-cgt -f makefile all
+
  edma_interrupt_transfer_am261x-som_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos -f makefile all
 
@@ -3971,6 +4001,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_am261x-som_system_nortos_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_pru_io_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt_clean
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
@@ -5627,6 +5663,24 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ empty_pru_io_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/pru_io/empty/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ empty_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
+ empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru0_fw/ti-pru-cgt -f makefile clean
+
+ empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
+
+ empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru1_fw/ti-pru-cgt -f makefile clean
+
  edma_interrupt_transfer_am261x-som_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos -f makefile clean
 
@@ -6224,6 +6278,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_am261x-som_system_nortos_nortos_scrub
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_pru_io_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub
+BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt_scrub
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
@@ -7879,6 +7939,24 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  cdc_echo_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/usb/device/cdc_echo/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ empty_pru_io_am261x-som_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/pru_io/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ empty_pru_io_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/pru_io/empty/am261x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ empty_am261x-lp_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
+ empty_am261x-som_icss_m0_pru0_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru0_fw/ti-pru-cgt -f makefile scrub
+
+ empty_am261x-lp_icss_m0_pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-lp/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
+
+ empty_am261x-som_icss_m0_pru1_fw_ti-pru-cgt_scrub:
+	$(MAKE) -C examples/pru_io/empty/firmware/am261x-som/icss_m0_pru1_fw/ti-pru-cgt -f makefile scrub
 
  edma_interrupt_transfer_am261x-som_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos -f makefile scrub

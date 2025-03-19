@@ -30,6 +30,17 @@ This example acts as a getting started point for PRU firmware development in ass
 
 \endcond
 
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ ICSSG          | ICSSM0 - PRU0, PRU1
+ Toolchain      | pru-cgt
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/pru_io/empty/
+
+\endcond
+
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project from the above mentioned Example folder path for R5F and PRU, After this `main.asm`, `linker.cmd` files gets copied to ccs workspace of PRU project. The `main.asm` contains sample code for accessing Local PRU memories available: DMEM0 (64kB), DMEM1 (64kB) and Shared Ram (64kB).

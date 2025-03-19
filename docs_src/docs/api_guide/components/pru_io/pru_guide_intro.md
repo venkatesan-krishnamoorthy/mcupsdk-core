@@ -33,9 +33,12 @@ Refer to latest AM64x TRM (Technical Reference Manual) for complete details. (Ca
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 ## PRU_ICSSM Subsystem
-
-The Programmable Real-Time Unit Subsystem and Industrial Communication Subsystem (PRU_ICSSM)
-consists of:
+\cond SOC_AM263X || SOC_AM263PX
+The Programmable Real-Time Unit Subsystem and Industrial Communication Subsystem (PRU_ICSSM) consists of:
+\endcond
+\cond SOC_AM261X
+The Programmable Real-Time Unit Subsystem and Industrial Communication Subsystem (PRU_ICSSM0 and PRU_ICSSM1) consists of:
+\endcond
 * Two 32-bit load/store RISC CPU cores — Programmable Real-Time Units (PRU0 and PRU1)
 * Data RAMs per PRU core
 * Instruction RAMs per PRU
@@ -54,7 +57,13 @@ instruction memory.
   \imageStyle{ICSSM_block_diagram.png,width:85%}
   \image html ICSSM_block_diagram.png "PRU-ICSSM Sub-System Block Diagram"
 
+\cond SOC_AM263X || SOC_AM263PX
 Refer to latest AM263x TRM (Technical Reference Manual) for complete details. (Can be found here: <https://www.ti.com/product/AM2634-Q1>)
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX
+Refer to latest AM261x TRM (Technical Reference Manual) for complete details. (Can be found here: <https://www.ti.com/product/AM2612>)
+\endcond
 
 \endcond
 
