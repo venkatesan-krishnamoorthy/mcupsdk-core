@@ -1,6 +1,6 @@
 
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -38,6 +38,8 @@
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <security/security_common/drivers/hsmclient/soc/am261x/hsmRtImg.h> /* hsmRt bin   header file */
+#include <drivers/ospi.h>
+#include <drivers/fss.h>
 #include <drivers/bootloader/bootloader_elf.h>
 
 /* Hardcoding flash sector size for ISSI flash */
@@ -61,7 +63,7 @@ typedef union bootinfo_sector_u_t
 extern char __TI_SBL_FLASH_BOOTINFO_SECTOR_START[];
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
-extern HsmClient_t gHSMClient ;
+extern HsmClient_t gHSMClient;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
@@ -177,7 +179,63 @@ int main(void)
                 FSS_selectRegionA((FSS_Handle)&fssConf);
             }
 #endif
+    
+            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
             status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
+            OSPI_enableDacMode(ospiHandle);
+            if(SystemP_SUCCESS == status)
+            {
+                Bootloader_OtfaConfig otfaConfig;
+                int32_t noteSectionExists = Bootloader_getOTFAConfigFromNoteSegment(bootHandle, ELF_NOTE_SEGMENT_MAX_SIZE, &otfaConfig);
+
+                if(SystemP_SUCCESS == noteSectionExists)
+                {
+                    /* OTFA configuration is in NOTE section. */
+                    if(TRUE == otfaConfig.isOTFAECCMEnabled)
+                    {
+                        int32_t otfaConfigStatus;
+                        OTFA_Config_t otfaConfigInfo;
+
+                        otfaConfigInfo.masterEnable = otfaConfig.isOTFAECCMEnabled;
+                        otfaConfigInfo.macSize = otfaConfig.macSize;
+                        otfaConfigInfo.keySize = otfaConfig.aesKeySize;
+                        otfaConfigInfo.numRegions = otfaConfig.regionLen;
+
+                        for(uint8_t i = 0; i < otfaConfig.regionLen; i++)
+                        {
+                            otfaConfigInfo.OTFA_Reg[i].regionSize = otfaConfig.region[i].size;
+                            otfaConfigInfo.OTFA_Reg[i].regionStAddr = otfaConfig.region[i].startAddress;
+                            otfaConfigInfo.OTFA_Reg[i].reservedArea = 0x0;
+                            switch(otfaConfig.region[i].cryptoMode)
+                            {
+                                case CRYPTO_MODE_CCM:
+                                    otfaConfigInfo.OTFA_Reg[i].authMode = MAC_MODE_CBC_MAC;
+                                    otfaConfigInfo.OTFA_Reg[i].encMode  = ENC_MODE_AES_CTR;
+                                    break;
+
+                                case CRYPTO_MODE_GCM:
+                                default:
+                                    otfaConfigInfo.OTFA_Reg[i].authMode = MAC_MODE_GMAC;
+                                    otfaConfigInfo.OTFA_Reg[i].encMode  = ENC_MODE_AES_CTR;
+                                    break;
+                            }
+                            otfaConfigInfo.OTFA_Reg[i].encrKeyFetchMode = otfaConfig.region[i].keyFetchMode;
+                            otfaConfigInfo.OTFA_Reg[i].authKeyID = otfaConfig.region[i].authKeyID;
+                            otfaConfigInfo.OTFA_Reg[i].encrKeyID = otfaConfig.region[i].encKeyID;
+                            memset(otfaConfigInfo.OTFA_Reg[i].authAesKey,0x0,otfaConfig.aesKeySize);
+                            memset(otfaConfigInfo.OTFA_Reg[i].encrAesKey,0x0,otfaConfig.aesKeySize);
+                            memcpy(otfaConfigInfo.OTFA_Reg[i].regionIV,otfaConfig.region[i].iv,16U);
+                        }
+
+                        otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                        if(otfaConfigStatus == SystemP_SUCCESS)
+                        {
+                            DebugP_log("\r\n configuration of OTFA successfully done.\n");
+                        }
+                    }
+                }
+            }
+
 #ifdef FOTA_IN_USE
             /*
                 Bootloader_parseAndLoadMultiCoreELF might have failed cuz of right image is
@@ -198,8 +256,6 @@ int main(void)
             }
 #endif
             Bootloader_profileAddProfilePoint("CPU load");
-            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
-
             if (status == SystemP_SUCCESS)
             {
                 /* enable Phy and Phy pipeline for XIP execution */
@@ -224,6 +280,7 @@ int main(void)
                 }
                 if(status == SystemP_SUCCESS)
                 {
+                    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
                     Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
                     Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
                     Bootloader_profileAddProfilePoint("SBL End");

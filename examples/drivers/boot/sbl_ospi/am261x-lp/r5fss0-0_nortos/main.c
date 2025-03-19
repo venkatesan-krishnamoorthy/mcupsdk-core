@@ -1,6 +1,6 @@
 
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -38,11 +38,13 @@
 #include <drivers/bootloader.h>
 #include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <security/security_common/drivers/hsmclient/soc/am261x/hsmRtImg.h> /* hsmRt bin   header file */
+#include <drivers/ospi.h>
+#include <drivers/fss.h>
 
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
-extern HsmClient_t gHSMClient ;
+extern HsmClient_t gHSMClient;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
@@ -136,6 +138,8 @@ int main(void)
         if (bootHandle != NULL)
         {
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+            OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
+
 
             /* Initialize CPUs and Load RPRC Image */
             if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
@@ -155,8 +159,6 @@ int main(void)
                 status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
             }
             Bootloader_profileAddProfilePoint("CPU load");
-            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
-
             if (status == SystemP_SUCCESS)
             {
                 /* enable Phy and Phy pipeline for XIP execution */
@@ -185,6 +187,7 @@ int main(void)
                 }
                 if(status == SystemP_SUCCESS)
                 {
+                    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
                     Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
                     Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
                     Bootloader_profileAddProfilePoint("SBL End");
