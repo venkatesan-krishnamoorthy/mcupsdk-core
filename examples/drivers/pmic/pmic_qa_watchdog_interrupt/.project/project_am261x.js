@@ -74,7 +74,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_PMIC_QA_WATCHDOG_interrupt";
+const readmeDoxygenPageTag = "EXAMPLES_PMIC_QA_WATCHDOG_INTERRUPT";
 
 const templates_nortos_r5f =
 [
