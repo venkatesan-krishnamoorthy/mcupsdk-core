@@ -174,14 +174,15 @@ typedef struct Bootloader_OtfaRegionConfig_s
 {
     uint32_t size;
     uint32_t startAddress;
-    uint32_t cryptoMode;
-    uint32_t eccEnable;
-    uint8_t authKey[32];
-    uint8_t encKey[32];
-    uint8_t iv[32];
+    uint8_t cryptoMode;
+    uint8_t eccEnable;
+    uint8_t authKeyID;
+    uint8_t encKeyID;
+    uint8_t keyFetchMode ;
+    uint8_t iv[16];
 }Bootloader_OtfaRegionConfig;
 
-typedef struct Bootloader_OfaConfig_s
+typedef struct Bootloader_OtfaConfig_s
 {
     uint8_t isOTFAECCMEnabled;
     uint8_t isMacAligned;
