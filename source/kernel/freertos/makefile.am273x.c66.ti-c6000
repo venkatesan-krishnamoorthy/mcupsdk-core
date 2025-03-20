@@ -26,7 +26,7 @@ FILES_common := \
     HwiP_c66.c \
     printf.c \
     QueueP_nortos.c \
-    TimerP_rti.c \
+    TimerP_rti_priv.c \
     ClockP_freertos.c \
     ClockP_freertos_c66.c \
     DebugP_freertos.c \
@@ -37,6 +37,7 @@ FILES_common := \
     TaskP_freertos.c \
     EventP_freertos.c \
     MailboxP_freertos.c \
+    TimerP_rti_freertos.c \
     event_groups.c \
     tasks.c \
     timers.c \

@@ -37,7 +37,8 @@ FILES_common := \
     QueueP_nortos.c \
     SemaphoreP_nortos.c \
     TaskP_nortos.c \
-    TimerP_rti.c \
+    TimerP_rti_priv.c
+TimerP_rti.c \
 
 ASMFILES_common := \
     boot_armv7r_asm.S \

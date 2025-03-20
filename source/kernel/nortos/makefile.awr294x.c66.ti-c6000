@@ -33,7 +33,8 @@ FILES_common := \
     QueueP_nortos.c \
     SemaphoreP_nortos.c \
     TaskP_nortos.c \
-    TimerP_rti.c \
+    TimerP_rti_priv.c
+TimerP_rti.c \
 
 ASMFILES_common := \
     HwiP_c66_asm.S \

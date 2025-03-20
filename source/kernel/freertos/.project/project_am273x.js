@@ -11,7 +11,7 @@ const files_r5f_common = {
         "DebugP_uartScanf.c",
         "DebugP_memTraceLogWriter.c",
         "DebugP_log.c",
-        "TimerP_rti.c",
+        "TimerP_rti_priv.c",
         "HwiP_armv7r_vim.c",
         "MpuP_armv7r.c",
         "CacheP_armv7r.c",
@@ -31,6 +31,7 @@ const files_r5f_common = {
         "TaskP_freertos.c",
         "EventP_freertos.c",
         "MailboxP_freertos.c",
+        "TimerP_rti_freertos.c",
         // picked from freertos "kernel"
         "event_groups.c",
         "tasks.c",
@@ -87,7 +88,7 @@ const files_c66 = {
         "HwiP_c66.c",
         "printf.c",
         "QueueP_nortos.c",
-        "TimerP_rti.c",
+        "TimerP_rti_priv.c",
         // picked from freertos DPL
         "ClockP_freertos.c",
         "ClockP_freertos_c66.c",
@@ -99,6 +100,7 @@ const files_c66 = {
         "TaskP_freertos.c",
         "EventP_freertos.c",
         "MailboxP_freertos.c",
+        "TimerP_rti_freertos.c",
         // picked from freertos "kernel"
         "event_groups.c",
         "tasks.c",

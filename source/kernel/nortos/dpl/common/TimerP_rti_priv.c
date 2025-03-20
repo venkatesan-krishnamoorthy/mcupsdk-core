@@ -30,7 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <kernel/dpl/TimerP.h>
+#include "TimerP_rti_priv.h"
 
 /* RTI timer implementation for clock tick */
 
@@ -45,7 +45,7 @@
 #define RTI_RTICLEARINT                                             (0x84U)
 #define RTI_RTIINTFLAG                                              (0x88U)
 
-void TimerP_Params_init(TimerP_Params *params)
+void TimerP_Params_initPriv(TimerP_Params *params)
 {
     params->inputPreScaler = 1; /* NOT USED */
     params->inputClkHz = 25*1000000;
@@ -56,7 +56,7 @@ void TimerP_Params_init(TimerP_Params *params)
     params->enableDmaTrigger = 0;
 }
 
-void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
+void TimerP_setupPriv(uint32_t baseAddr, TimerP_Params *params)
 {
     volatile uint32_t *addr;
     uint32_t reloadVal;
@@ -69,8 +69,8 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
     DebugP_assert( (params->periodInUsec != 0U) || (params->periodInNsec != 0U) );
 
     /* stop timer and clear pending interrupts */
-    TimerP_stop(baseAddr);
-    TimerP_clearOverflowInt(baseAddr);
+    TimerP_stopPriv(baseAddr);
+    TimerP_clearOverflowIntPriv(baseAddr);
 
     timeInNsec = (uint64_t)params->periodInNsec;
     if(timeInNsec == 0U)
@@ -139,7 +139,7 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
     }
 }
 
-void TimerP_start(uint32_t baseAddr)
+void TimerP_startPriv(uint32_t baseAddr)
 {
     volatile uint32_t *addr = (uint32_t *)(baseAddr + RTI_RTIGCTRL);
 
@@ -147,7 +147,7 @@ void TimerP_start(uint32_t baseAddr)
     *addr |= ((uint32_t)0x1 << 0U);
 }
 
-void TimerP_stop(uint32_t baseAddr)
+void TimerP_stopPriv(uint32_t baseAddr)
 {
     volatile uint32_t *addr = (volatile uint32_t *)(baseAddr + RTI_RTIGCTRL);
 
@@ -155,7 +155,7 @@ void TimerP_stop(uint32_t baseAddr)
     *addr &= ~((uint32_t)0x1 << 0U);
 }
 
-uint32_t TimerP_getCount(uint32_t baseAddr)
+uint32_t TimerP_getCountPriv(uint32_t baseAddr)
 {
     volatile uint32_t *uc_addr = (volatile uint32_t *)(baseAddr + RTI_RTIUC0);
     volatile uint32_t *frc_addr = (volatile uint32_t *)(baseAddr + RTI_RTIFRC0);
@@ -176,7 +176,7 @@ uint32_t TimerP_getCount(uint32_t baseAddr)
     return MAX_NUMBER_OF_COUNT - (*cpuc_addr - *uc_addr) - 1UL;
 }
 
-uint32_t TimerP_getReloadCount(uint32_t baseAddr)
+uint32_t TimerP_getReloadCountPriv(uint32_t baseAddr)
 {
     volatile uint32_t *cpuc_addr = (volatile uint32_t *)(baseAddr + RTI_RTICPUC0);
 
@@ -184,7 +184,7 @@ uint32_t TimerP_getReloadCount(uint32_t baseAddr)
     return MAX_NUMBER_OF_COUNT - (*cpuc_addr) - 1UL;
 }
 
-void TimerP_clearOverflowInt(uint32_t baseAddr)
+void TimerP_clearOverflowIntPriv(uint32_t baseAddr)
 {
     volatile uint32_t *addr;
 
@@ -194,7 +194,7 @@ void TimerP_clearOverflowInt(uint32_t baseAddr)
 
 }
 
-uint32_t TimerP_isOverflowed(uint32_t baseAddr)
+uint32_t TimerP_isOverflowedPriv(uint32_t baseAddr)
 {
     uint32_t val;
 

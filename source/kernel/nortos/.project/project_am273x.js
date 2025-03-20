@@ -27,7 +27,8 @@ const files_r5f = {
         "QueueP_nortos.c",
         "SemaphoreP_nortos.c",
         "TaskP_nortos.c",
-        "TimerP_rti.c",
+        "TimerP_rti_priv.c",
+        "TimerP_rti_nortos.c",
     ]
 };
 
@@ -87,7 +88,8 @@ const files_c66 = {
         "QueueP_nortos.c",
         "SemaphoreP_nortos.c",
         "TaskP_nortos.c",
-        "TimerP_rti.c",
+        "TimerP_rti_priv.c",
+        "TimerP_rti_nortos.c",
     ]
 };
 
