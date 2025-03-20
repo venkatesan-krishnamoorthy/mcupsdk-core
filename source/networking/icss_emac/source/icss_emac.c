@@ -325,6 +325,11 @@ ICSS_EMAC_Handle ICSS_EMAC_open(uint32_t idx, const ICSS_EMAC_Params *params)
         switch(icssEmacAttrs->emacMode)
         {
             case ICSS_EMAC_MODE_SWITCH:
+                if(params->enableHostQueueIsolation == 1)
+                {
+                    ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode = 1;
+                    ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portPrioritySelection = 1;
+                }
                 ICSS_EMAC_switchInit(icssEmacHandle, params->pruicssIntcInitData);
                 ICSS_EMAC_mdioIntrEnableSwitch(ICSS_EMAC_PORT_1, icssEmacHandle);
                 port = ICSS_EMAC_MODE_SWITCH;
@@ -815,6 +820,7 @@ int32_t ICSS_EMAC_rxPktGet(ICSS_EMAC_RxArgument *rxArg, void *userArg)
     ICSS_EMAC_PortParams        *sPort;
     PRUICSS_Handle              pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
     PRUICSS_HwAttrs const       *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
+    uint8_t                     numHostQueues;
 
     if(((((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject).customRxCallBack).callBack != NULL)
     {
@@ -841,7 +847,22 @@ int32_t ICSS_EMAC_rxPktGet(ICSS_EMAC_RxArgument *rxArg, void *userArg)
 
     if(emacMode == 0U)
     {   /*Switch Mode*/
-        temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber)) * ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+        if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+        {
+            numHostQueues = pDynamicMMap->numQueues * ICSS_EMAC_MAX_PORTS_PER_INSTANCE;        
+            if(queueNumber < (numHostQueues/ICSS_EMAC_MAX_PORTS_PER_INSTANCE)) {
+                temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+            }
+            else {
+                /* Queue descriptor offset Host receive from port 2 is allocated after Host receive form port 1, Port 1 Tx and Port 2 Tx */
+                /* Each Queue descriptor is 8 bytes and 4 Queues present for each port context.*/
+                temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + 96 + (((uint32_t)(queueNumber-4))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+            }
+        }
+        else 
+        {
+            temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+        }
         qDesc = (ICSS_EMAC_Queue *)(temp_addr);
     }
     else
@@ -1004,7 +1025,22 @@ int32_t ICSS_EMAC_rxPktGet(ICSS_EMAC_RxArgument *rxArg, void *userArg)
     {
         if(emacMode == 0U)
         { /*Switch Mode*/
-            temp_addr = (pruicssHwAttrs->pru1DramBase  + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber)) * ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+            temp_addr = (pruicssHwAttrs->pru1DramBase  + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+            if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+            {
+                if(queueNumber < (numHostQueues/ICSS_EMAC_MAX_PORTS_PER_INSTANCE)) {
+                    temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+                }
+                else {
+                    /* Queue descriptor offset Host receive from port 2 is allocated after Host receive form port 1, Port 1 Tx and Port 2 Tx */
+                    /* Each Queue descriptor is 8 bytes and 4 Queues present for each port context.*/
+                    temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + 96 + (((uint32_t)(queueNumber-4))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+                }
+            }
+            else 
+            {
+                temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+            }
             /* Write back to queue */
             HW_WR_REG16(temp_addr, update_rd_ptr);
             /* Check if Host needs to change the wr_ptr for collision queue as well */
@@ -1034,7 +1070,21 @@ int32_t ICSS_EMAC_rxPktGet(ICSS_EMAC_RxArgument *rxArg, void *userArg)
         rxArg->more = 0;
         if(emacMode == 0U)
         { /*Switch Mode*/
-            temp_addr = (pruicssHwAttrs->pru1DramBase  + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber)) * ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+            if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+            {
+                if(queueNumber < (numHostQueues/ICSS_EMAC_MAX_PORTS_PER_INSTANCE)) {
+                    temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+                }
+                else {
+                    /* Queue descriptor offset Host receive from port 2 is allocated after Host receive form port 1, Port 1 Tx and Port 2 Tx */
+                    /* Each Queue descriptor is 8 bytes and 4 Queues present for each port context.*/
+                    temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + 96 + (((uint32_t)(queueNumber-4))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+                }
+            }
+            else 
+            {
+                temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + (((uint32_t)(queueNumber))* ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+            }
             /* get new pointer data in case new packets received in meantime - experimental.. */
             qDesc = (ICSS_EMAC_Queue *)(temp_addr);
         }
@@ -1777,23 +1827,45 @@ int32_t ICSS_EMAC_rxPktInfo2(ICSS_EMAC_Handle   icssEmacHandle,
     uint8_t                     initPrioQueue = (uint8_t)ICSS_EMAC_QUEUE1;
     uint8_t                     finalPrioQueue = (uint8_t)(pDynamicMMap->numQueues-1U);
     uint8_t                     i = (uint8_t)ICSS_EMAC_QUEUE1;
+    uint8_t                     queueJump = 4;
+    uint8_t                     queueCheckCount = 0;
+    uint8_t                     numHostQueues = pDynamicMMap->numQueues;
 
     switch(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portMask)
     {
         case ICSS_EMAC_MODE_SWITCH:
             emacMode = 0;
-            initPrioQueue = (uint8_t)ICSS_EMAC_QUEUE1;
-            finalPrioQueue = (uint8_t)(pDynamicMMap->numQueues-1U);
+            if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+            {
+                numHostQueues = numHostQueues*ICSS_EMAC_MAX_PORTS_PER_INSTANCE;
+                /* Alternating port priority */
+                if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portPrioritySelection == 1) {
+                    initPrioQueue = (uint8_t)ICSS_EMAC_QUEUE1;
+                    ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portPrioritySelection = 2;
+                }
+                else {
+                    initPrioQueue = (uint8_t)ICSS_EMAC_QUEUE5;
+                    ((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portPrioritySelection = 1;
+                }
+            }
+            else 
+            {
+                initPrioQueue = (uint8_t)ICSS_EMAC_QUEUE1;
+                finalPrioQueue = (uint8_t)(pDynamicMMap->numQueues-1U);  
+                numHostQueues = finalPrioQueue - initPrioQueue + 1;
+            }
             break;
         case ICSS_EMAC_MODE_MAC1:
             emacMode = 1u;
             initPrioQueue = (uint8_t)ICSS_EMAC_QUEUE1;
             finalPrioQueue = (uint8_t)ICSS_EMAC_QUEUE2;
+            numHostQueues = finalPrioQueue - initPrioQueue + 1;
             break;
         case ICSS_EMAC_MODE_MAC2:
             emacMode = 1u;
             initPrioQueue = (uint8_t)ICSS_EMAC_QUEUE3;
             finalPrioQueue = (uint8_t)ICSS_EMAC_QUEUE4;
+            numHostQueues = finalPrioQueue - initPrioQueue + 1;
             break;
         default:
             break;
@@ -1801,11 +1873,25 @@ int32_t ICSS_EMAC_rxPktInfo2(ICSS_EMAC_Handle   icssEmacHandle,
 
     i = initPrioQueue;
 
-    while((packet_found == 0) && (i <= finalPrioQueue))
+    while((packet_found == 0) && (queueCheckCount != numHostQueues))
     {
         if(emacMode == 0U)
         {   /*Switch Mode*/
-            temp_var1 = ((uint32_t)(i)) * ICSS_EMAC_DEFAULT_FW_QD_SIZE;
+            if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+            {
+                if(i < (numHostQueues/ICSS_EMAC_MAX_PORTS_PER_INSTANCE)){
+                    temp_var1 = ((uint32_t)(i))* ICSS_EMAC_DEFAULT_FW_QD_SIZE;
+                }
+                else {
+                    /* Queue descriptor offset Host receive from port 2 is allocated after Host receive form port 1, Port 1 Tx and Port 2 Tx */
+                    /* Each Queue descriptor is 8 bytes and 4 Queues present for each port context.*/
+                    temp_var1 = 96 + ((uint32_t)(i-4)) * ICSS_EMAC_DEFAULT_FW_QD_SIZE;
+                }
+            }
+            else 
+            {
+                temp_var1 = ((uint32_t)(i))* ICSS_EMAC_DEFAULT_FW_QD_SIZE;
+            }
             temp_addr = (pruicssHwAttrs->pru1DramBase + pStaticMMap->p0QueueDescOffset + temp_var1);
             qDesc = (ICSS_EMAC_Queue *)(temp_addr);
         }
@@ -1878,7 +1964,36 @@ int32_t ICSS_EMAC_rxPktInfo2(ICSS_EMAC_Handle   icssEmacHandle,
         }
         else
         {
-            i++;
+            if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+            {
+                queueCheckCount++;
+                /* Queue check order in case Port 1 is given higher priority: 1 -> 5 -> 2 -> 6 -> 3 -> 7 -> 4 -> 8 */
+                /* Queue check order in case Port 2 is given higher priority: 5 -> 1 -> 6 -> 2 -> 7 -> 3 -> 8 -> 4 */
+                if(queueJump == 4) {
+                    if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->portPrioritySelection == 2)
+                    {
+                        i = i + queueJump;
+                        queueJump = 3; 
+                    }
+                    else 
+                    {
+                        i = i - queueJump;
+                        queueJump = 5;
+                    }
+                }
+                else if(queueJump == 5) {
+                    i = i + queueJump;
+                    queueJump = 4;
+                }
+                else if(queueJump == 3) {
+                    i = i - queueJump;
+                    queueJump = 4;
+                }
+            }
+            else
+            {
+                i++;
+            }
         }
     }
     /* Received IRQ but can't find the packet in any queue */

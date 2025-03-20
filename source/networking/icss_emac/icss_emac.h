@@ -634,6 +634,10 @@ typedef struct ICSS_EMAC_Attrs_s
     /**< TX Task Priority. Valid only if txInterruptEnable is set to 1 */
     uint32_t                    splitQueue;
     /**< Flag to be set for using split Queue i.e. seperate queue for each of ports*/
+    uint8_t                     hostQueueIsolationMode;
+    /**< New buffer design enable flag uses seperate host queue per prot*/
+    uint8_t                     portPrioritySelection;
+    /**< Flag to alter between port priority for host queue processing*/
 } ICSS_EMAC_Attrs;
 
 /**
@@ -740,6 +744,8 @@ typedef struct ICSS_EMAC_Params_s
      */
     uint8_t                             macId[6];
     /**< [MANDATORY] MacId to be used for the interface*/
+    uint8_t                             enableHostQueueIsolation;
+    /** Flag to enable new buffer design */
 } ICSS_EMAC_Params;
 
 /**

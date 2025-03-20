@@ -121,17 +121,26 @@ void ICSS_EMAC_calcPort0BufferOffset(ICSS_EMAC_Handle icssEmacHandle,
                                      uint32_t bdOffsets[ICSS_EMAC_NUMQUEUES])
 {
     uint32_t                qCount = 1U;
+    uint8_t                 numHostQueues;
     ICSS_EMAC_FwDynamicMmap *pDynamicMMap = (&((ICSS_EMAC_Object *)icssEmacHandle->object)->fwDynamicMMap);
 
     bufferOffsets[ICSS_EMAC_QUEUE1] = pDynamicMMap->p0Q1BufferOffset;
-    for (qCount = 1U; qCount < pDynamicMMap->numQueues; qCount++)
+    if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+    {
+        numHostQueues = pDynamicMMap->numQueues * ICSS_EMAC_MAX_PORTS_PER_INSTANCE;
+    }
+    else 
+    {
+        numHostQueues = pDynamicMMap->numQueues;
+    }
+    for (qCount = 1U; qCount < numHostQueues; qCount++)
     {
         bufferOffsets[qCount] = bufferOffsets[qCount-1U] + pDynamicMMap->rxHostQueueSize[qCount-1U] * ICSS_EMAC_DEFAULT_FW_BLOCK_SIZE;
     }
     bufferOffsets[ICSS_EMAC_COLQUEUE] = pDynamicMMap->p0ColBufferOffset;
 
     bdOffsets[ICSS_EMAC_QUEUE1] = pDynamicMMap->p0Q1BufferDescOffset;
-    for (qCount = 1U; qCount < pDynamicMMap->numQueues; qCount++)
+    for (qCount = 1U; qCount < numHostQueues; qCount++)
     {
         bdOffsets[qCount] = bdOffsets[qCount-1U] + pDynamicMMap->rxHostQueueSize[qCount - 1U] * ICSS_EMAC_DEFAULT_FW_BD_SIZE;
     }
@@ -328,19 +337,43 @@ int32_t ICSS_EMAC_portInit(ICSS_EMAC_Handle icssEmacHandle)
     ICSS_EMAC_PortParams    *sPort;
     uint32_t                bufferOffsets[ICSS_EMAC_NUMQUEUES];
     uint32_t                bdOffsets[ICSS_EMAC_NUMQUEUES];
+    uint8_t                 numHostQueues;
     ICSS_EMAC_FwDynamicMmap *pDynamicMMap = (&((ICSS_EMAC_Object *)icssEmacHandle->object)->fwDynamicMMap);
     ICSS_EMAC_FwStaticMmap  *pStaticMMap = (&((ICSS_EMAC_Object *)icssEmacHandle->object)->fwStaticMMap);
 
     /* Clear counters */
     ICSS_EMAC_clearStatistics(icssEmacHandle);
+    if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+    {
+        numHostQueues = pDynamicMMap->numQueues * ICSS_EMAC_MAX_PORTS_PER_INSTANCE;
+    }
+    else 
+    {
+        numHostQueues = pDynamicMMap->numQueues;
+    }
     /* Initialize port 0*/
     sPort = &(((ICSS_EMAC_Object *)icssEmacHandle->object)->switchPort[ICSS_EMAC_PORT_0]);
     ICSS_EMAC_calcPort0BufferOffset(icssEmacHandle, bufferOffsets, bdOffsets);
-    for (qCount = 0U; qCount < pDynamicMMap->numQueues; qCount++)
+    for (qCount = 0U; qCount < numHostQueues; qCount++)
     {
         sPort->queue[qCount].buffer_offset      = bufferOffsets[qCount];
         sPort->queue[qCount].buffer_desc_offset = bdOffsets[qCount];
-        sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+        if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+        {
+            if(qCount < (numHostQueues/ICSS_EMAC_MAX_PORTS_PER_INSTANCE))
+            {
+                sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+            }
+            else {
+                /* Queue descriptor offset Host receive from port 2 is allocated after Host receive form port 1, Port 1 Tx and Port 2 Tx */
+                /* Each Queue descriptor is 8 bytes and 4 Queues present for each port context.*/
+                sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + (96 + ((qCount-4) * ICSS_EMAC_DEFAULT_FW_QD_SIZE));
+            }
+        }
+        else
+        {
+            sPort->queue[qCount].queue_desc_offset  = pStaticMMap->p0QueueDescOffset + (qCount * ICSS_EMAC_DEFAULT_FW_QD_SIZE);
+        }
         sPort->queue[qCount].queue_size         = (uint16_t)(((uint16_t)pDynamicMMap->rxHostQueueSize[qCount])*(ICSS_EMAC_DEFAULT_FW_BD_SIZE)) + (uint16_t)bdOffsets[qCount];        /* really the end of Queue */
     }
 
@@ -605,6 +638,28 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
     *pTemp16 = (uint16_t)((pDynamicMMap->collisionQueueSize * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort2[ICSS_EMAC_COLQUEUE] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
     pTemp16++;
 
+    if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+    {
+        /********************** */
+        /* Rx Context Initialize data for Host Port from P2, (Q1,Q2,Q3,Q4,Qn) */
+        /********************** */
+        temp_addr = (temp + pDynamicMMap->p1Q1SwitchTxContextOffset + 212U);
+        pTemp16 = (uint16_t *)(temp_addr);
+       /* Host Port 1 Queue 1 - Queue N (numQueues)*/
+        for (qCount = 4U; qCount < (pDynamicMMap->numQueues)*ICSS_EMAC_MAX_PORTS_PER_INSTANCE; qCount ++)
+        {
+            *pTemp16 = (uint16_t)(bufferOffsetsPort0[qCount]);
+            pTemp16++;
+            /* Queue descriptor offset Host receive from port 2 is allocated after Host receive form port 1, Port 1 Tx and Port 2 Tx */
+            /* Each Queue descriptor is 8 bytes and 4 Queues present for each port context.*/
+            *pTemp16 = (uint16_t)(pStaticMMap->p0QueueDescOffset + (96 + ((qCount-4) * ICSS_EMAC_DEFAULT_FW_QD_SIZE))); /* Why this working?*/
+            pTemp16++;
+            *pTemp16 = (uint16_t)(bdOffsetsPort0[qCount]);
+            pTemp16++;
+            *pTemp16 = (uint16_t)((pDynamicMMap->rxHostQueueSize[qCount] * ICSS_EMAC_DEFAULT_FW_BD_SIZE) + bdOffsetsPort0[qCount] - ICSS_EMAC_DEFAULT_FW_BD_SIZE);
+            pTemp16++;
+        }
+    }
     /********************** */
     /* buffer offset table */
     /********************** */
@@ -737,7 +792,20 @@ uint8_t ICSS_EMAC_switchConfig(ICSS_EMAC_Handle icssEmacHandle)
         *pTemp16 = 0x0000;
         pTemp16++;
     }
-
+    if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+    {
+        for (qCount = 4U; qCount < (pDynamicMMap->numQueues)*ICSS_EMAC_MAX_PORTS_PER_INSTANCE; qCount ++)
+        {
+            *pTemp16 = (uint16_t)bdOffsetsPort0[qCount];
+            pTemp16++;
+            *pTemp16 = (uint16_t)bdOffsetsPort0[qCount];
+            pTemp16++;
+            *pTemp16 = 0x0000;
+            pTemp16++;
+            *pTemp16 = 0x0000;
+            pTemp16++;
+        }
+    }
     portVal = ICSS_EMAC_IOCTL_PORT_CTRL_DISABLE;
     ioctlParams.ioctlVal = &portVal;
     ICSS_EMAC_ioctl(icssEmacHandle, ICSS_EMAC_IOCTL_PORT_CTRL, (uint8_t)ICSS_EMAC_PORT_1, (void*)&ioctlParams);
