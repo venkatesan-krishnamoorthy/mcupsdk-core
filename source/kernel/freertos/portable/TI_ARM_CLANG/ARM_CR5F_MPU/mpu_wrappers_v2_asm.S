@@ -68,6 +68,7 @@
     #include "FreeRTOSConfig.h"
     #include "portmacro_asm.h"
     #include "mpu_syscall_numbers.h"
+    #include "sdk_mpu_syscall_numbers.h"
 #undef FREERTOS_ASSEMBLY
 
 /* ----------------------- Start of Port Specific System Calls ----------------------- */
@@ -878,6 +879,42 @@ MPU_xQueueSemaphoreTake:
 
 #endif /* if ( configUSE_TASK_NOTIFICATIONS == 1 ) */
 
-/* ------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------- */
+
+.extern TimerP_setupPriv
+.align 4
+.global MPU_TimerP_setup
+.type MPU_TimerP_setup, function
+MPU_TimerP_setup:
+    INVOKE_SYSTEM_CALL #SYSTEM_CALL_SDK_TimerP_setup, TimerP_setupPriv
+
+/* ----------------------------------------------------------------------------------- */
+
+.extern TimerP_startPriv
+.align 4
+.global MPU_TimerP_start
+.type MPU_TimerP_start, function
+MPU_TimerP_start:
+    INVOKE_SYSTEM_CALL #SYSTEM_CALL_SDK_TimerP_start, TimerP_startPriv
+
+/* ----------------------------------------------------------------------------------- */
+
+.extern TimerP_stopPriv
+.align 4
+.global MPU_TimerP_stop
+.type MPU_TimerP_stop, function
+MPU_TimerP_stop:
+    INVOKE_SYSTEM_CALL #SYSTEM_CALL_SDK_TimerP_stop, TimerP_stopPriv
+
+/* ----------------------------------------------------------------------------------- */
+
+.extern TimerP_clearOverflowIntPriv
+.align 4
+.global MPU_TimerP_clearOverflowInt
+.type MPU_TimerP_clearOverflowInt, function
+MPU_TimerP_clearOverflowInt:
+    INVOKE_SYSTEM_CALL #SYSTEM_CALL_SDK_TimerP_clearOverflowInt, TimerP_clearOverflowIntPriv
+
+/* ---------------------------------------------------------------------------------------- */
 
 .end

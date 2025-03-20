@@ -65,11 +65,13 @@
 #define FREERTOS_ASSEMBLY
     #include "portmacro_asm.h"
     #include "mpu_syscall_numbers.h"
+    #include "sdk_mpu_syscall_numbers.h"
 #undef FREERTOS_ASSEMBLY
 
     /* External FreeRTOS-Kernel variables. */
     .extern pxCurrentTCB
     .extern uxSystemCallImplementations
+    .extern uxSdkSystemCallImplementations
     .extern ulPortInterruptNesting
     .extern ulPortYieldRequired
     .extern ulCriticalNesting
@@ -222,8 +224,8 @@ HwiP_svc_handler:
 
     /* --------------------------------- SVC Routing --------------------------------- */
 
-    /* If SVC Number < #NUM_SYSTEM_CALLS, go to svcSystemCallEnter. */
-    CMP     R11, #NUM_SYSTEM_CALLS
+    /* If SVC Number < #TOTAL_NUM_SYSTEM_CALLS, go to svcSystemCallEnter. */
+    CMP     R11, #TOTAL_NUM_SYSTEM_CALLS
     BLT     svcSystemCallEnter
 
     /* If SVC Number == #portSVC_SYSTEM_CALL_EXIT, go to svcSystemCallExit. */
@@ -269,7 +271,12 @@ svcSystemCallExit:
     B   svcHandlerExit
 
 svcSystemCallEnter:
-    LDR     R12, =uxSystemCallImplementations /* R12 = uxSystemCallImplementations. */
+    CMP     R11, #NUM_SYSTEM_CALLS               /* Check if system call for kernel or SDK */
+    /* if (R11 < NUM_SYSTEM_CALLS) */
+    LDRLT   R12, =uxSystemCallImplementations    /* R12 = uxSystemCallImplementations */
+    /* if (R11 >= NUM_SYSTEM_CALLS) */
+    LDRGE   R12, =uxSdkSystemCallImplementations /* R12 = uxSdkSystemCallImplementations */
+    SUBGE   R11, R11, #NUM_SYSTEM_CALLS          /* R11 = R11 - NUM_SYSTEM_CALLS */
     /* R12 = uxSystemCallImplementations[ R12 + ( R11 << 2 ) ].
      * R12 now contains the address of the system call impl function. */
     LDR     R12, [R12, R11, lsl #2]

@@ -67,6 +67,7 @@ const files_r5f_mpu = {
         ...files_r5f_common.common,
         // picked from freertos "portable/TI_ARM_CLANG/ARM_CR5F_MPU"
         "port.c",
+        "sdk_mpu_wrappers.c",
         // picked from freertos "FreeRTOS-Kernel/portable/Common"
         "mpu_wrappers_v2.c"
     ]

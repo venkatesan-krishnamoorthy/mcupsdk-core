@@ -33,6 +33,12 @@
 #include <kernel/nortos/dpl/common/TimerP_rti_priv.h>
 #include <FreeRTOS.h>
 
+#if ( portUSING_MPU_WRAPPERS == 1 )
+/** Some APIs modifies RTI registers which is allowed only in privilege mode.
+ * Hence use MPU wrapper based implementation. */
+#include "sdk_mpu_prototypes.h"
+#endif
+
 /* RTI timer implementation for clock tick */
 
 void TimerP_Params_init(TimerP_Params *params)
@@ -42,17 +48,38 @@ void TimerP_Params_init(TimerP_Params *params)
 
 void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
 {
+    /** This API modifies RTI registers which is allowed only in privilege mode.
+     * Hence use MPU wrapper based implementation. */
+#if ( portUSING_MPU_WRAPPERS == 1 )
+    /* This will eventually end up in `TimerP_setupPriv` in privileged mode */
+    MPU_TimerP_setup(baseAddr, params);
+#else
     TimerP_setupPriv(baseAddr, params);
+#endif
 }
 
 void TimerP_start(uint32_t baseAddr)
 {
+    /** This API modifies RTI registers which is allowed only in privilege mode.
+     * Hence use MPU wrapper based implementation. */
+#if ( portUSING_MPU_WRAPPERS == 1 )
+    /* This will eventually end up in `TimerP_startPriv` in privileged mode */
+    MPU_TimerP_start(baseAddr);
+#else
     TimerP_startPriv(baseAddr);
+#endif
 }
 
 void TimerP_stop(uint32_t baseAddr)
 {
+    /** This API modifies RTI registers which is allowed only in privilege mode.
+     * Hence use MPU wrapper based implementation. */
+#if ( portUSING_MPU_WRAPPERS == 1 )
+    /* This will eventually end up in `TimerP_stopPriv` in privileged mode */
+    MPU_TimerP_stop(baseAddr);
+#else
     TimerP_stopPriv(baseAddr);
+#endif
 }
 
 uint32_t TimerP_getCount(uint32_t baseAddr)
@@ -67,7 +94,14 @@ uint32_t TimerP_getReloadCount(uint32_t baseAddr)
 
 void TimerP_clearOverflowInt(uint32_t baseAddr)
 {
+    /** This API modifies RTI registers which is allowed only in privilege mode.
+     * Hence use MPU wrapper based implementation. */
+#if ( portUSING_MPU_WRAPPERS == 1 )
+    /* This will eventually end up in `TimerP_clearOverflowIntPriv` in privileged mode */
+    MPU_TimerP_clearOverflowInt(baseAddr);
+#else
     TimerP_clearOverflowIntPriv(baseAddr);
+#endif
 }
 
 uint32_t TimerP_isOverflowed(uint32_t baseAddr)

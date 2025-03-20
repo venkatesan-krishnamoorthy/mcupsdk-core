@@ -59,6 +59,7 @@ FILES_common := \
     FreeRTOS_POSIX_utils.c \
     FreeRTOS_CLI.c \
     port.c \
+    sdk_mpu_wrappers.c \
     mpu_wrappers_v2.c \
 
 ASMFILES_common := \

@@ -110,7 +110,7 @@ extern "C" {
 
 /** SVC numbers for various scheduler operations.
  *
- * Note: These value must not be used in mpu_syscall_numbers.h.
+ * Note: These value must not be used in mpu_syscall_numbers.h or sdk_mpu_syscall_numbers.h.
  */
 #define portSVC_YIELD                 0x0100U
 #define portSVC_SYSTEM_CALL_EXIT      0x0104U
