@@ -3321,7 +3321,7 @@ void CSL_CPSW_setPortVlanReg (CSL_Xge_cpswRegs *hCpswRegs,
     }
     else
     {
-        if (portNum < CSL_ARRAYSIZE(hCpswRegs->ENETPORT))
+        if (portNum <= CSL_ARRAYSIZE(hCpswRegs->ENETPORT))
         {
             CSL_FINS (hCpswRegs->ENETPORT[portNum-1].PN_PORT_VLAN_REG, XGE_CPSW_PN_PORT_VLAN_REG_PORT_VID, portVID);
             CSL_FINS (hCpswRegs->ENETPORT[portNum-1].PN_PORT_VLAN_REG, XGE_CPSW_PN_PORT_VLAN_REG_PORT_CFI, portCFI);
