@@ -107,6 +107,7 @@ const example_file_list = [
 	"examples/drivers/ecap/ecap_edma/.project/project.js",
 	"examples/drivers/ecap/ecap_signal_monitoring/.project/project.js",
 	"examples/drivers/edma/edma_chain_transfer/.project/project.js",
+	"examples/drivers/edma/edma_error_interrupt/.project/project.js",
 	"examples/drivers/edma/edma_interrupt_transfer/.project/project.js",
 	"examples/drivers/edma/edma_link_transfer/.project/project.js",
 	"examples/drivers/edma/edma_multimem_transfer/.project/project.js",

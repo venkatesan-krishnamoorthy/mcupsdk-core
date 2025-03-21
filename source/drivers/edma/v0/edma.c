@@ -53,9 +53,14 @@
 static int32_t EDMA_initialize (uint32_t baseAddr, const EDMA_InitParams *initParam);
 static int32_t EDMA_deinitialize (uint32_t baseAddr, const EDMA_InitParams *initParam);
 static void    EDMA_transferCompletionMasterIsrFxn(void *args);
+static void    EDMA_errorIsrFxn(void *args);
 static int32_t Alloc_resource(const EDMA_Attrs *attrs, EDMA_Object *object, uint32_t *resId, uint32_t resType);
 static uint32_t EDMA_isDmaChannelAllocated(EDMA_Handle handle, const uint32_t *dmaCh);
 static uint32_t EDMA_isTccAllocated(EDMA_Handle handle, const uint32_t *tcc);
+static void EDMA_clearTcErrors(uint32_t baseAddr, EDMA_TcErrorInfo *tcErrorInfo);
+static void EDMA_getTcErrorInfo(uint32_t baseAddr, EDMA_TcErrorInfo *tcErrorInfo);
+static void EDMA_clearCcErrors(uint32_t baseAddr, uint32_t regionId, EDMA_CcErrorInfo *ccErrorInfo);
+static void EDMA_getCcErrorInfo(uint32_t baseAddr, EDMA_CcErrorInfo *ccErrorInfo);
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -1321,7 +1326,9 @@ EDMA_Handle EDMA_open(uint32_t index, const EDMA_Params *prms)
     EDMA_Handle         handle = NULL;
     EDMA_Config        *config = NULL;
     EDMA_Object        *object    = NULL;
-    HwiP_Params         hwiPrms;
+    const EDMA_Attrs   *attrs;
+    HwiP_Params         hwiPrms, errHwiPrms;
+    uint32_t            tc0BaseAddr, tc1BaseAddr;
 
     /* Check index */
     if(index >= gEdmaConfigNum)
@@ -1338,6 +1345,8 @@ EDMA_Handle EDMA_open(uint32_t index, const EDMA_Params *prms)
        if((NULL != config->object) && (NULL != config->attrs))
        {
             object = config->object;
+            attrs = config->attrs;
+
             if(TRUE == object->isOpen)
             {
                 /* Handle is already opened */
@@ -1362,20 +1371,53 @@ EDMA_Handle EDMA_open(uint32_t index, const EDMA_Params *prms)
             if (prms->intrEnable == TRUE)
             {
                 /* Register the master ISR. */
-                /* Enable the aggregated interrupt. */
-                HW_WR_REG32(config->attrs->intrAggEnableAddr, config->attrs->intrAggEnableMask);
-
-                /* Register interrupt */
                 HwiP_Params_init(&hwiPrms);
-                hwiPrms.intNum   = config->attrs->compIntrNumber;
-                hwiPrms.priority = config->attrs->intrPriority;
+                hwiPrms.intNum   = attrs->compIntrNumber;
+                hwiPrms.priority = attrs->intrPriority;
                 hwiPrms.callback = &EDMA_transferCompletionMasterIsrFxn;
                 hwiPrms.args     = object->handle;
                 hwiPrms.isPulse     = 1;
                 status = HwiP_construct(&object->hwiObj, &hwiPrms);
                 DebugP_assert(status == SystemP_SUCCESS);
                 object->hwiHandle = &object->hwiObj;
+
+                /* Clear any pending signals before enabling interrupt */
+                HW_WR_REG32(attrs->intrAggStatusAddr, attrs->intrAggClearMask);
+                /* Enable the aggregated interrupt. */
+                HW_WR_REG32(attrs->intrAggEnableAddr, attrs->intrAggEnableMask);
             }
+
+            if (prms->errIntrEnable == TRUE)
+            {
+                /* Register the error ISR. */
+                HwiP_Params_init(&errHwiPrms);
+                errHwiPrms.intNum   = attrs->errIntrNumber;
+                errHwiPrms.priority = attrs->errIntrPriority;
+                errHwiPrms.callback = &EDMA_errorIsrFxn;
+                errHwiPrms.args     = object->handle;
+                errHwiPrms.isPulse     = 1;
+                status = HwiP_construct(&object->errHwiObj, &errHwiPrms);
+                DebugP_assert(status == SystemP_SUCCESS);
+                object->errHwiHandle = &object->errHwiObj;
+
+                /* Clear any pending errors before enabling interrupt */
+                HW_WR_REG32(attrs->errIntrAggStatusAddr, attrs->errIntrAggEnableMask);
+                /* Enable the aggregated error interrupt. */
+                HW_WR_REG32(attrs->errIntrAggEnableAddr, attrs->errIntrAggEnableMask);
+
+                tc0BaseAddr = attrs->tcBaseAddr[EDMA_TPTC0];
+                tc1BaseAddr = attrs->tcBaseAddr[EDMA_TPTC1];
+
+                /* Enable TPTC0 Errors */
+                HW_WR_FIELD32(tc0BaseAddr, EDMA_TC_ERREN_BUSERR, EDMA_TPTC_ERROR_ENABLE);
+                HW_WR_FIELD32(tc0BaseAddr, EDMA_TC_ERREN_TRERR, EDMA_TPTC_ERROR_ENABLE);
+                HW_WR_FIELD32(tc0BaseAddr, EDMA_TC_ERREN_MMRAERR, EDMA_TPTC_ERROR_ENABLE);
+                /* Enable TPTC1 Errors */
+                HW_WR_FIELD32(tc1BaseAddr, EDMA_TC_ERREN_BUSERR, EDMA_TPTC_ERROR_ENABLE);
+                HW_WR_FIELD32(tc1BaseAddr, EDMA_TC_ERREN_TRERR, EDMA_TPTC_ERROR_ENABLE);
+                HW_WR_FIELD32(tc1BaseAddr, EDMA_TC_ERREN_MMRAERR, EDMA_TPTC_ERROR_ENABLE);
+            }
+
             object->firstIntr = NULL;
             object->isOpen = TRUE;
             handle = (EDMA_Handle) config;
@@ -1405,6 +1447,12 @@ void EDMA_close(EDMA_Handle handle)
         {
             HwiP_destruct(&object->hwiObj);
             object->hwiHandle = NULL;
+        }
+
+        if(NULL != object->errHwiHandle)
+        {
+            HwiP_destruct(&object->errHwiObj);
+            object->errHwiHandle = NULL;
         }
 
         object->isOpen = FALSE;
@@ -1581,6 +1629,76 @@ int32_t EDMA_unregisterIntr(EDMA_Handle handle, Edma_IntrObject *intrObj)
             }
         }
     }
+    return status;
+}
+
+int32_t EDMA_registerErrorCallback(EDMA_Handle handle, Edma_ErrorCallback errorCallback, void* args)
+{
+    int32_t             status = SystemP_SUCCESS;
+    EDMA_Config        *config;
+    EDMA_Object        *object;
+
+    if (handle != NULL)
+    {
+        config = (EDMA_Config *) handle;
+
+        if((config->object != NULL) &&
+           (config->object->isOpen != (uint32_t)FALSE) &&
+           (config->object->openPrms.errIntrEnable != FALSE) &&
+           (config->object->errCallback == NULL) &&
+           (errorCallback != NULL))
+        {
+            object = config->object;
+            DebugP_assert(NULL != object);
+
+            /* Register Error callback function and it's arguments */
+            object->errCallback = errorCallback;
+            object->errCallbackArgs = args;
+        }
+        else
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t EDMA_unregisterErrorCallback(EDMA_Handle handle)
+{
+    int32_t            status = SystemP_SUCCESS;
+    EDMA_Config        *config;
+    EDMA_Object        *object;
+
+    if (handle != NULL)
+    {
+        config = (EDMA_Config *) handle;
+
+        if((config->object != NULL) &&
+        (config->object->isOpen != (uint32_t)FALSE) &&
+        (config->object->openPrms.errIntrEnable != FALSE))
+        {
+            object = config->object;
+            DebugP_assert(NULL != object);
+
+            /* Unregister Error callback function and set arguments to NULL */
+            object->errCallback = NULL;
+            object->errCallbackArgs = NULL;
+        }
+        else
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+    
     return status;
 }
 
@@ -2103,4 +2221,163 @@ static void EDMA_transferCompletionMasterIsrFxn(void *args)
     HW_WR_REG32(attrs->intrAggStatusAddr, attrs->intrAggClearMask);
     /* re evaluate the edma interrupt. */
     HW_WR_FIELD32(baseAddr + EDMA_TPCC_IEVAL_RN(regionId), EDMA_TPCC_IEVAL_RN_EVAL, 1);
+}
+
+static void EDMA_getCcErrorInfo(uint32_t baseAddr, EDMA_CcErrorInfo *ccErrorInfo)
+{
+    if(ccErrorInfo != NULL)
+    {
+        /* Read TPCC errors and store in Error log */
+        ccErrorInfo->dmaEventMissStatusLow = EDMA_getErrIntrStatus(baseAddr);
+        ccErrorInfo->dmaEventMissStatusHigh = EDMA_errIntrHighStatusGet(baseAddr);
+        ccErrorInfo->qdmaEventMissStatus = EDMA_qdmaGetErrIntrStatus(baseAddr);
+        ccErrorInfo->isEventQueueThresholdExceeded = (EDMA_getCCErrStatus(baseAddr) & 
+                                                    (EDMACC_QTHRQ0_STAT | EDMACC_QTHRQ1_STAT));
+        ccErrorInfo->isTccLimitExceeded = (EDMA_getCCErrStatus(baseAddr) & EDMACC_TCCERR_STAT);
+    }
+}
+
+static void EDMA_clearCcErrors(uint32_t baseAddr, uint32_t regionId, EDMA_CcErrorInfo *ccErrorInfo)
+{
+    uint32_t channelNum, queueNum;
+    
+    if(ccErrorInfo != NULL)
+    {
+        /* Clear all TPCC errors*/
+        for(channelNum = 0U; channelNum < 32U; channelNum++)
+        {
+            if(ccErrorInfo->dmaEventMissStatusLow & ((uint32_t) 1U << channelNum))
+            {
+                EDMA_clrMissEvtRegion(baseAddr, regionId, channelNum);
+            }
+        }
+#if SOC_EDMA_NUM_DMACH > 32
+        for(channelNum = 32U; channelNum < SOC_EDMA_NUM_DMACH; channelNum++)
+        {
+            if(ccErrorInfo->dmaEventMissStatusHigh & ((uint32_t) 1U << (channelNum - 32U)))
+            {
+                EDMA_clrMissEvtRegion(baseAddr, regionId, channelNum);
+            }
+        }
+#endif
+        for(channelNum = 0U; channelNum < SOC_EDMA_NUM_QDMACH; channelNum++)
+        {
+            if(ccErrorInfo->qdmaEventMissStatus & ((uint32_t) 1U << (channelNum)))
+            {
+                EDMA_qdmaClrMissEvtRegion(baseAddr, regionId, channelNum);
+            }
+        }
+        for(queueNum = 0U; queueNum < SOC_EDMA_NUM_EVQUE; queueNum++)
+        {
+            if(ccErrorInfo->isEventQueueThresholdExceeded & ((uint32_t) 1U << (queueNum)))
+            {
+                EDMA_clrCCErr(baseAddr, ((uint32_t) 1U << (queueNum)));
+            }
+        }
+        if(ccErrorInfo->isTccLimitExceeded == TRUE)
+        {
+            EDMA_clrCCErr(baseAddr, EDMACC_CLR_TCCERR);
+        }
+    }
+}
+
+static void EDMA_getTcErrorInfo(uint32_t baseAddr, EDMA_TcErrorInfo *tcErrorInfo)
+{
+    uint32_t errStatRegVal, errDetRegVal;
+
+    errStatRegVal = HW_RD_REG32(baseAddr + EDMA_TC_ERRSTAT);
+    errDetRegVal = HW_RD_REG32(baseAddr + EDMA_TC_ERRDET);
+
+    if(tcErrorInfo != NULL)
+    {
+        /* Read TPTC errors and store in Error log */
+        tcErrorInfo->isTransferRequestError = HW_GET_FIELD(errStatRegVal, EDMA_TC_ERRSTAT_TRERR);
+        tcErrorInfo->isInvalidAccessError = HW_GET_FIELD(errStatRegVal, EDMA_TC_ERREN_MMRAERR);
+        tcErrorInfo->isBusError = HW_GET_FIELD(errStatRegVal, EDMA_TC_ERREN_BUSERR);
+        tcErrorInfo->errorCode = HW_GET_FIELD(errDetRegVal, EDMA_TC_ERRDET_STAT);
+        tcErrorInfo->transferCompletionCode = HW_GET_FIELD(errDetRegVal, EDMA_TC_ERRDET_TCC);
+        tcErrorInfo->isChainingEnabled = HW_GET_FIELD(errDetRegVal, EDMA_TC_ERRDET_TCCHEN);
+        tcErrorInfo->isTransferInterruptEnabled = HW_GET_FIELD(errDetRegVal, EDMA_TC_ERRDET_TCINTEN);
+    }
+}
+
+static void EDMA_clearTcErrors(uint32_t baseAddr, EDMA_TcErrorInfo *tcErrorInfo)
+{    
+    uint32_t errClrRegVal = 0;
+
+    if(tcErrorInfo != NULL)
+    {
+        /* Clear TPTC Errors */
+        HW_SET_FIELD32(errClrRegVal, EDMA_TC_ERRSTAT_TRERR, tcErrorInfo->isTransferRequestError);
+        HW_SET_FIELD32(errClrRegVal, EDMA_TC_ERRCLR_MMRAERR, tcErrorInfo->isInvalidAccessError);
+        HW_SET_FIELD32(errClrRegVal, EDMA_TC_ERRCLR_BUSERR, tcErrorInfo->isBusError);
+
+        HW_WR_REG32(baseAddr + EDMA_TC_ERRCLR, errClrRegVal);
+    }
+}
+
+static void EDMA_errorIsrFxn(void *args)
+{
+    EDMA_Handle        handle = (EDMA_Handle) args;
+    EDMA_Config        *config;
+    EDMA_Object        *object;
+    const EDMA_Attrs   *attrs;
+    EDMA_ErrorInfo     *errorInfo;
+    uint32_t           ccBaseAddr, tc0BaseAddr, tc1BaseAddr, errorStatus;
+
+    DebugP_assert(NULL != handle);
+    config = (EDMA_Config *) handle;
+
+    object = config->object;
+    attrs = config->attrs;
+    DebugP_assert(NULL != object);
+    DebugP_assert(NULL != attrs);
+
+    ccBaseAddr = attrs->baseAddr;
+    tc0BaseAddr = attrs->tcBaseAddr[EDMA_TPTC0];
+    tc1BaseAddr = attrs->tcBaseAddr[EDMA_TPTC1];
+    errorInfo = &object->errorInfo;
+
+    /* Clear the previous error log */
+    memset(errorInfo, 0, sizeof(EDMA_ErrorInfo));
+
+    /* Read EDMA Aggregated Error status register and store in error log */
+    errorStatus = HW_RD_REG32(attrs->errIntrAggStatusAddr);
+    errorInfo->errorStatus = errorStatus;
+    
+    /* Handle TPCC errors */
+    if((errorStatus & EDMA_TPCC_A_ERRINT) == EDMA_TPCC_A_ERRINT)
+    {
+        /* Read TPCC errors and store in error log */
+        EDMA_getCcErrorInfo(ccBaseAddr, &errorInfo->ccErrorInfo);
+        /* Clear TPCC Errors*/
+        EDMA_clearCcErrors(ccBaseAddr, attrs->initPrms.regionId, &errorInfo->ccErrorInfo);
+    }
+    /* Handle TPTC0 errors */
+    if((errorStatus & EDMA_TPTC_A0_ERR) == EDMA_TPTC_A0_ERR)
+    {
+        /* Read TPTC0 errors and store in error log */
+        EDMA_getTcErrorInfo(tc0BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC0]);
+        /* Clear TPTC0 Errors*/
+        EDMA_clearTcErrors(tc0BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC0]);
+    }
+    /* Handle TPTC1 errors */
+    if((errorStatus & EDMA_TPTC_A1_ERR) == EDMA_TPTC_A0_ERR)
+    {
+        /* Read TPTC1 errors and store in error log */
+        EDMA_getTcErrorInfo(tc1BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC1]);
+        /* Clear TPTC1 Errors*/
+        EDMA_clearTcErrors(tc1BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC1]);
+    }
+
+    /* Invoke application error callback function */
+    if(object->errCallback != NULL)
+    {
+        object->errCallback(errorInfo, object->errCallbackArgs);
+    }
+
+    /* Clear the aggregator error interrupt */
+    HW_WR_REG32(attrs->errIntrAggStatusAddr, errorStatus);
+    /* re evaluate the edma error interrupt. */
+    HW_WR_FIELD32(ccBaseAddr + EDMA_TPCC_EEVAL, EDMA_TPCC_EEVAL_EVAL, 1);
 }

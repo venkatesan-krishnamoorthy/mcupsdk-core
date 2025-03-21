@@ -286,6 +286,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \endcond
 -# EDMA
    -# \subpage EXAMPLES_DRIVERS_EDMA_CHAIN_TRANSFER
+   -# \subpage EXAMPLES_DRIVERS_EDMA_ERROR_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_EDMA_INTERRUPT_TRANSFER
    -# \subpage EXAMPLES_DRIVERS_EDMA_LINK_TRANSFER
    -# \subpage EXAMPLES_DRIVERS_EDMA_MULTIMEM_TRANSFER

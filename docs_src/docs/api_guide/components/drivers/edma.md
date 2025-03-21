@@ -11,6 +11,7 @@ EDMA driver provides API to perform DMA tranfers.
 - PaRAM Linking
 - Channel Chaining
 - Manual and Event triggered transfers
+- Error Handling
 
 ## SysConfig Features
 

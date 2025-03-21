@@ -162,6 +162,30 @@ extern "C" {
 /**< QDMA Event Miss */
 /** @} */
 
+/** \anchor EDMA_TPTC_NUM_DEFS
+*   \name EDMA TPTC Number definitions
+*  @{
+*/
+/** \brief Values that can be used to specify TPTC Number
+*/
+#define EDMA_TPTC0                   ((uint32_t) 0U)
+/**< EDMA Transfer Controller 0 */
+#define EDMA_TPTC1                   ((uint32_t) 1U)
+/**< EDMA Transfer Controller 1 */
+/** @} */
+
+/** \anchor EDMA_TPTC_ERROR_ENABLE_DEFS
+*   \name EDMA TPTC Error Enable/Disabel definitions
+*  @{
+*/
+/** \brief Values that can be used to enable/disable EDMA TPTC Errors
+*/
+#define EDMA_TPTC_ERROR_DISABLE       ((uint32_t) 0U)
+/**< Disable EDMA Transfer Controller Errors */
+#define EDMA_TPTC_ERROR_ENABLE        ((uint32_t) 1U)
+/**< Enable EDMA Transfer Controller Errors */
+/** @} */
+
 /** \anchor EDMA_TRANSFER_TYPE_DEFS
 *   \name EDMA transfer type definitions.
 *  @{
@@ -217,11 +241,25 @@ extern "C" {
 /** \brief Values that can be used to Clear any Channel controller Errors
 */
 #define EDMACC_CLR_TCCERR         ((uint32_t) EDMA_TPCC_CCERRCLR_TCERR_MASK)
-/**< Cleat TCC Error */
+/**< Clear TCC Error */
 #define EDMACC_CLR_QTHRQ0         ((uint32_t) EDMA_TPCC_CCERRCLR_QTHRXCD0_MASK)
-/**< Cleat Queue threshold 0 Error */
+/**< Clear Queue threshold 0 Error */
 #define EDMACC_CLR_QTHRQ1         ((uint32_t) EDMA_TPCC_CCERRCLR_QTHRXCD1_MASK)
-/**< Cleat Queue threshold 1 Error */
+/**< Clear Queue threshold 1 Error */
+/** @} */
+
+/** \anchor EDMA_CC_ERROR_STATUS_DEFS
+*   \name EDMA Channel controller Error status.
+*  @{
+*/
+/** \brief Values that can be used to read any Channel controller Error status
+*/
+#define EDMACC_TCCERR_STAT         ((uint32_t) EDMA_TPCC_CCERR_TCERR_MASK)
+/**< Clear TCC Error */
+#define EDMACC_QTHRQ0_STAT         ((uint32_t) EDMA_TPCC_CCERR_QTHRXCD0_MASK)
+/**< Clear Queue threshold 0 Error */
+#define EDMACC_QTHRQ1_STAT         ((uint32_t) EDMA_TPCC_CCERR_QTHRXCD1_MASK)
+/**< Clear Queue threshold 1 Error */
 /** @} */
 
 /** \anchor EDMA_PARAM_OPT_FIELD_DEFS
@@ -430,12 +468,65 @@ typedef struct {
 }EDMA_InitParams;
 
 /**
+ * \brief EDMA Error Info structure used storing TPCC Errors
+ *
+ */
+typedef struct {
+    uint32_t    dmaEventMissStatusLow;
+    /* \brief Each bit denotes Event miss status for DMA channels 0 - 31 */
+    uint32_t    dmaEventMissStatusHigh;
+    /* \brief Each bit denotes Event miss status for DMA channels 32 - 63 */
+    uint32_t    qdmaEventMissStatus;
+    /* \brief Each bit denotes Event miss status for QDMA Channels 0 to 7 */
+    uint32_t    isEventQueueThresholdExceeded;
+    /* \brief Each bit denotes if Threshold is exceeded for Queues */
+    uint32_t    isTccLimitExceeded;
+    /* \brief Set to TRUE if TCC limit exceeded for a transfer */
+}EDMA_CcErrorInfo;
+
+/**
+ * \brief EDMA Error Info structure used storing TPTC Errors
+ *
+ */
+typedef struct {
+    uint32_t    isTransferRequestError;
+    /* \brief Set to TRUE if a TR is detected that violates transfer rules */
+    uint32_t    isInvalidAccessError;
+    /* \brief Set to TRUE if an Invalid address write or read access is requested */
+    uint32_t    isBusError;
+    /* \brief Set to TRUE if a bus error event occurs. Error information is stored in Error code */
+    uint32_t    errorCode;
+    /* \brief Contains error code for the transaction that caused the error */
+    uint32_t    transferCompletionCode;
+    /* \brief Contains TCC value for the transaction that caused the error */
+    uint32_t    isChainingEnabled;
+    /* \brief Set to TRUE if TCCHEN is High in the transaction  that caused the error */
+    uint32_t    isTransferInterruptEnabled;
+    /* \brief Set to TRUE if TCINTEN is High in the transaction  that caused the error */
+}EDMA_TcErrorInfo;
+
+/**
+ * \brief EDMA Error Info structure used for Error Handling
+ *
+ */
+typedef struct {
+    uint32_t          errorStatus;
+    /* \brief EDMA Aggregated Error status value */
+    EDMA_CcErrorInfo  ccErrorInfo;
+    /* \brief TPCC Error information */
+    EDMA_TcErrorInfo  tcErrorInfo[SOC_EDMA_NUM_TPTC];
+    /* \brief TPCC Error information */
+}EDMA_ErrorInfo;
+
+/**
  * \brief EDMA open parameters passed to #EDMA_open() function.
  */
 typedef struct
 {
     uint32_t                intrEnable;
     /**< Enable interrupt mode */
+    uint32_t                errIntrEnable;
+    /**< Enable error interrupt */
 } EDMA_Params;
 
 /**
@@ -447,6 +538,12 @@ typedef struct Edma_IntrObject_t   *Edma_IntrHandle;
  * \brief EDMA interrupt callback function prototype
  */
 typedef void (*Edma_EventCallback)(Edma_IntrHandle intrHandle,
+                                   void *appData);
+
+/**
+ * \brief EDMA error interrupt callback function prototype
+ */
+typedef void (*Edma_ErrorCallback)(EDMA_ErrorInfo *errorInfo,
                                    void *appData);
 
 /**
@@ -499,6 +596,16 @@ typedef struct
     /**< Interrupt handle for master ISR */
     HwiP_Object             hwiObj;
     /**< Interrupt object */
+    void                   *errHwiHandle;
+    /**< Interrupt handle for error ISR */
+    HwiP_Object             errHwiObj;
+    /**< Error Interrupt object */
+    Edma_ErrorCallback      errCallback;
+    /**< Error Interrupt Callback */
+    void*                   errCallbackArgs;
+    /**< User arguments for Error Interrupt Callback */
+    EDMA_ErrorInfo          errorInfo;
+    /**< Error Information passed to application */
     Edma_IntrHandle  firstIntr;
 } EDMA_Object;
 
@@ -509,13 +616,19 @@ typedef struct
      * SOC configuration
      */
     uint32_t                baseAddr;
-    /**< Peripheral base address */
+    /**< TPCC base address */
+    uint32_t                tcBaseAddr[SOC_EDMA_NUM_TPTC];
+    /**< TPCC base address */
     EDMA_InitParams         initPrms;
     /**< Init params */
     uint32_t                compIntrNumber;
     /**< Completion interrupt number. */
-    uint8_t  intrPriority;
+    uint8_t                 intrPriority;
     /**< Interrupt priority. */
+    uint32_t                errIntrNumber;
+    /**< Error interrupt number. */
+    uint8_t                 errIntrPriority;
+    /**< Error Interrupt priority. */
     uint32_t                intrAggEnableAddr;
     /**< Interrupt Aggregator enable address */
     uint32_t                intrAggEnableMask;
@@ -524,6 +637,14 @@ typedef struct
     /**< Interrupt Aggregator enable address */
     uint32_t                intrAggClearMask;
     /**< Interrupt Aggregator clear mask */
+    uint32_t                errIntrAggEnableAddr;
+    /**< Error Interrupt Aggregator enable address */
+    uint32_t                errIntrAggEnableMask;
+    /**< Error Interrupt Aggregator enable mask */
+    uint32_t                errIntrAggStatusAddr;
+    /**< Error Interrupt Aggregator enable address */
+    uint32_t                errIntrAggClearMask;
+    /**< Error Interrupt Aggregator clear mask */
 } EDMA_Attrs;
 
 /** \brief EDMA Instance Configuration.
@@ -1883,6 +2004,34 @@ int32_t EDMA_freeTcc(EDMA_Handle handle, uint32_t *tcc);
  *  \sa     #EDMA_open()
  */
 int32_t EDMA_freeParam(EDMA_Handle handle, uint32_t *param);
+
+/**
+ *  \brief  Function to register error callback function
+ *
+ *  \pre    #EDMA_open() has to be called first
+ *
+ *  \param  handle         #EDMA_Handle returned from #EDMA_open()
+ *  \param  errorCallback  Application callback for EDMA errors
+ *  \param  args           Arguments passed from application to callback function
+ *
+ *  \return #SystemP_SUCCESS if registered successfully; else error on failure
+ *
+ *  \sa     #EDMA_open()
+ */
+int32_t EDMA_registerErrorCallback(EDMA_Handle handle, Edma_ErrorCallback errorCallback, void* args);
+
+/**
+ *  \brief  Function to unregister error callback
+ *
+ *  \pre    #EDMA_open() has to be called first
+ *
+ *  \param  handle         #EDMA_Handle returned from #EDMA_open()
+ *
+ *  \return #SystemP_SUCCESS if unregistered successfully; else error on failure
+ *
+ *  \sa     #EDMA_open()
+ */
+int32_t EDMA_unregisterErrorCallback(EDMA_Handle handle);
 
 #ifdef __cplusplus
 }
