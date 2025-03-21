@@ -155,6 +155,73 @@ static uint32_t TaskP_calcCpuLoad(uint64_t taskTime, uint64_t totalTime)
     return cpuLoad;
 }
 
+static void TaskP_updateLoad(TaskP_Struct *taskObj)
+{
+#ifndef SMP_FREERTOS
+#if (configGENERATE_RUN_TIME_STATS == 1)
+    uint32_t runTimeCounter = ulTaskGetRunTimeCounter(taskObj->taskHndl);
+
+    uint32_t delta = TaskP_calcCounterDiff(runTimeCounter, taskObj->lastRunTime);
+
+    taskObj->accRunTime += delta;
+    taskObj->lastRunTime = runTimeCounter;
+#endif
+#else
+    uint32_t delta;
+    TaskStatus_t taskStatus;
+
+    vTaskGetInfo(taskObj->taskHndl, &taskStatus, pdFALSE, eReady);
+
+    delta = TaskP_calcCounterDiff(taskStatus.ulRunTimeCounter, taskObj->lastRunTime);
+
+    taskObj->accRunTime += delta;
+    taskObj->lastRunTime = taskStatus.ulRunTimeCounter;
+#endif
+}
+
+static void TaskP_updateIdleTaskLoad()
+{
+#ifndef SMP_FREERTOS
+#if (configGENERATE_RUN_TIME_STATS == 1)
+    uint32_t runTimeCounter = ulTaskGetIdleRunTimeCounter();
+    
+    uint32_t delta = TaskP_calcCounterDiff(runTimeCounter, gTaskP_ctrl.idleTskLastRunTime);
+
+    gTaskP_ctrl.idleTskAccRunTime += delta;
+    gTaskP_ctrl.idleTskLastRunTime = runTimeCounter;
+#endif
+#else
+    uint32_t delta;
+    TaskStatus_t taskStatus;
+    TaskHandle_t* idleTskHndl = xTaskGetIdleTaskHandle();
+
+    if(idleTskHndl != NULL)
+    {
+        vTaskGetInfo(idleTskHndl[0], &taskStatus, pdFALSE, eReady);
+
+        delta = TaskP_calcCounterDiff(taskStatus.ulRunTimeCounter, gTaskP_ctrl.idleTsk1LastRunTime);
+
+        gTaskP_ctrl.idleTsk1AccRunTime += delta;
+        gTaskP_ctrl.idleTsk1LastRunTime = taskStatus.ulRunTimeCounter;
+
+        vTaskGetInfo(idleTskHndl[1], &taskStatus, pdFALSE, eReady);
+
+        delta += TaskP_calcCounterDiff(taskStatus.ulRunTimeCounter, gTaskP_ctrl.idleTsk2LastRunTime);
+
+        gTaskP_ctrl.idleTsk2AccRunTime += delta;
+        gTaskP_ctrl.idleTsk2LastRunTime = taskStatus.ulRunTimeCounter;
+    }
+#endif
+}
+
+static void TaskP_updateTotalRunTime()
+{
+    uint32_t curTotalTime = portGET_RUN_TIME_COUNTER_VALUE();
+    uint32_t delta = TaskP_calcCounterDiff(curTotalTime, gTaskP_ctrl.lastTotalTime);
+    
+    gTaskP_ctrl.accTotalTime += delta;
+    gTaskP_ctrl.lastTotalTime = curTotalTime;
+}
 
 void TaskP_Params_init(TaskP_Params *params)
 {
@@ -259,12 +326,13 @@ void TaskP_loadGet(TaskP_Object *obj, TaskP_Load *taskLoad)
 
     vTaskSuspendAll();
 
-    vTaskGetInfo(taskObj->taskHndl, &taskStatus, pdFALSE, eReady);
+    TaskP_updateLoad(taskObj);
+    TaskP_updateTotalRunTime();
 
     taskLoad->runTime = taskObj->accRunTime;
     taskLoad->totalTime  = gTaskP_ctrl.accTotalTime;
     taskLoad->cpuLoad = TaskP_calcCpuLoad(taskObj->accRunTime, gTaskP_ctrl.accTotalTime);
-    taskLoad->name = taskStatus.pcTaskName;
+    taskLoad->name = pcTaskGetName(taskObj->taskHndl);
 
     (void)xTaskResumeAll();
 }
@@ -273,10 +341,11 @@ uint32_t TaskP_loadGetTotalCpuLoad(void)
 {
     uint32_t cpuLoad;
 
-    /* This is need to get upto date IDLE task statistics, since the next update window could be some time away */
-    TaskP_loadUpdateAll();
-
     vTaskSuspendAll();
+
+    /* This is need to get upto date IDLE task statistics, since the next update window could be some time away */
+    TaskP_updateIdleTaskLoad();
+    TaskP_updateTotalRunTime();
 
     #ifdef SMP_FREERTOS
     cpuLoad = TaskP_LOAD_CPU_LOAD_SCALE - TaskP_calcCpuLoad(gTaskP_ctrl.idleTsk1AccRunTime + gTaskP_ctrl.idleTsk2AccRunTime, gTaskP_ctrl.accTotalTime);
@@ -321,67 +390,23 @@ void TaskP_loadResetAll(void)
 void TaskP_loadUpdateAll(void)
 {
     TaskP_Struct *taskObj;
-    TaskStatus_t taskStatus;
-    uint32_t i, delta, curTotalTime;
-#ifdef SMP_FREERTOS
-    TaskHandle_t* idleTskHndl;
-#else
-    TaskHandle_t idleTskHndl;
-#endif
+    uint32_t i;
 
     vTaskSuspendAll();
 
     for(i=0; i<TaskP_REGISTRY_MAX_ENTRIES; i++)
     {
-        if(gTaskP_ctrl.taskRegistry[i]!=NULL)
+        taskObj = gTaskP_ctrl.taskRegistry[i];
+
+        if(taskObj != NULL)
         {
-            taskObj = gTaskP_ctrl.taskRegistry[i];
-
-            vTaskGetInfo(taskObj->taskHndl, &taskStatus, pdFALSE, eReady);
-
-            delta = TaskP_calcCounterDiff(taskStatus.ulRunTimeCounter, taskObj->lastRunTime);
-
-            taskObj->accRunTime += delta;
-            taskObj->lastRunTime = taskStatus.ulRunTimeCounter;
+            TaskP_updateLoad(taskObj);
         }
     }
 
-    idleTskHndl = xTaskGetIdleTaskHandle();
-    if(idleTskHndl != NULL)
-    {
-#ifdef SMP_FREERTOS
-
-        vTaskGetInfo(idleTskHndl[0], &taskStatus, pdFALSE, eReady);
-
-        delta = TaskP_calcCounterDiff(taskStatus.ulRunTimeCounter, gTaskP_ctrl.idleTsk1LastRunTime);
-
-        gTaskP_ctrl.idleTsk1AccRunTime += delta;
-        gTaskP_ctrl.idleTsk1LastRunTime = taskStatus.ulRunTimeCounter;
-
-        vTaskGetInfo(idleTskHndl[1], &taskStatus, pdFALSE, eReady);
-
-        delta += TaskP_calcCounterDiff(taskStatus.ulRunTimeCounter, gTaskP_ctrl.idleTsk2LastRunTime);
-
-        gTaskP_ctrl.idleTsk2AccRunTime += delta;
-        gTaskP_ctrl.idleTsk2LastRunTime = taskStatus.ulRunTimeCounter;
-
-#else
-        vTaskGetInfo(idleTskHndl, &taskStatus, pdFALSE, eReady);
-
-        delta = TaskP_calcCounterDiff(taskStatus.ulRunTimeCounter, gTaskP_ctrl.idleTskLastRunTime);
-
-        gTaskP_ctrl.idleTskAccRunTime += delta;
-        gTaskP_ctrl.idleTskLastRunTime = taskStatus.ulRunTimeCounter;
-#endif
-    }
-
-    curTotalTime = portGET_RUN_TIME_COUNTER_VALUE();
-
-    delta = TaskP_calcCounterDiff(curTotalTime, gTaskP_ctrl.lastTotalTime);
-
-    gTaskP_ctrl.accTotalTime += delta;
-    gTaskP_ctrl.lastTotalTime = curTotalTime;
-
+    TaskP_updateIdleTaskLoad();
+    TaskP_updateTotalRunTime();
+    
     (void)xTaskResumeAll();
 }
 
