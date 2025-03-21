@@ -119,6 +119,29 @@ extern "C" {
  * This module contains APIs which are used by the Security drivers.
  */
 
+/**
+ * \defgroup TSN_UNIBASE_MODULE APIs for Unibase Binding
+ *
+ * This module contains APIs which are used by the Unibase Binding.
+ */
+
+/**
+ * \defgroup EnetLLD_network APIs for Enet LLD network
+ *
+ * This module contains APIs which are used by the Enet LLD network driver.
+ */
+
+/**
+ * \defgroup SDL_MODULE APIs for SDL Module
+ *
+ * This module contains APIs which are used by the SDL Module.
+ */
+
+ /**
+ * \defgroup SDL_IP_MODULE APIs for SDL IP Module
+ *
+ * This module contains APIs which are used by the SDL IP Module.
+ */
 
 /**
  * \endcond

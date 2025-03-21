@@ -35,6 +35,20 @@
  *
  */
 
+/**
+ *  @addtogroup SDL_ECC_MODULE APIs for SDL ECC
+ *  @{
+ */
+
+/**
+ * @file  sdl_ecc_soc.h
+ *
+ * @brief
+ *  Header file contains MemEntries, RamIdTables, aggrTables and aggrBaseAddressTable
+ *  declarations for SDL ECC interface.
+ *  ============================================================================
+ */
+
  #ifndef INCLUDE_SDL_ECC_SOC_H_
  #define INCLUDE_SDL_ECC_SOC_H_
 
@@ -1245,4 +1259,6 @@ static const SDL_EccAggrEntry_t SDL_ECC_aggrTable[SDL_ECC_MEMTYPE_MAX] =
     },
 
  };
+
+  /** @} */
  #endif /* INCLUDE_SDL_ECC_SOC_H_ */

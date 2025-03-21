@@ -36,6 +36,16 @@
  */
 
 /**
+ *  \defgroup SDL_ECC_MODULE APIs for SDL ECC
+ *  \ingroup SDL_MODULE
+ *
+ *  This Header file contains enumerations, structure definitions and function
+ *  declarations for SDL ECC interface.
+ *
+ *  @{
+ */
+
+/**
  * @file  sdl_ecc.h
  *
  * @brief
@@ -748,9 +758,10 @@ void SDL_ECC_clearTMUROMParityError(void);
 #endif
 
 /** @} */
+/** @} */
 
 #ifdef __cplusplus
 }
 #endif  /* extern "C" */
 
-#endif
+#endif /* SDL_ECC_H_ */

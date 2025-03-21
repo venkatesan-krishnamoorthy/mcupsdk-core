@@ -35,6 +35,19 @@
  *
  */
 
+ /**
+  *  @addtogroup SDL_ESM_MODULE APIs for SDL ESM
+  *  @{
+  */
+
+  /**
+   * @file  sdl_esm_soc.h
+   *
+   * @brief
+   *  Header file contains Enum, defines for SDL ESM interface.
+   *  ============================================================================
+   */
+
 #ifndef INCLUDE_SDL_ESM_SOC_AM263X_H_
 #define INCLUDE_SDL_ESM_SOC_AM263X_H_
 
@@ -65,4 +78,5 @@ typedef enum {
 }
 #endif  /* extern "C" */
 
+  /** @} */
 #endif /* INCLUDE_SDL_ESM_SOC_AM263X_H_ */
