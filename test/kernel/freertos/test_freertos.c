@@ -801,46 +801,65 @@ void test_atomics(void *args)
 
 void test_taskLoad(void *args)
 {
-    TaskP_Load taskLoad;
+    TaskP_Load pingTaskLoad, pongTaskLoad;
     uint32_t cpuLoad;
     uint32_t minExpectedCpuLoad = 3000;
+    uint64_t startTs, delayTs;
 
-    /* We expect CPU load to be > 10% atleast */
+    /* We expect CPU load to be > minExpectedCpuLoad/100 % atleast */
+    TaskP_loadGet(&gPingTaskObj, &pingTaskLoad);
+    TaskP_loadGet(&gPongTaskObj, &pongTaskLoad);
     cpuLoad = TaskP_loadGetTotalCpuLoad();
+
     DebugP_log(" LOAD: CPU  = %2d.%2d %%\r\n", cpuLoad/100, cpuLoad%100 );
+    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", pingTaskLoad.name, pingTaskLoad.cpuLoad/100, pingTaskLoad.cpuLoad%100 );
+    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", pongTaskLoad.name, pongTaskLoad.cpuLoad/100, pongTaskLoad.cpuLoad%100 );
 
     TEST_ASSERT_GREATER_THAN_UINT32(minExpectedCpuLoad*2, cpuLoad);
-
-    TaskP_loadGet(&gPingTaskObj, &taskLoad);
-    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", taskLoad.name, taskLoad.cpuLoad/100, taskLoad.cpuLoad%100 );
-
-    TEST_ASSERT_GREATER_THAN_UINT32(minExpectedCpuLoad, taskLoad.cpuLoad);
-
-    TaskP_loadGet(&gPongTaskObj, &taskLoad);
-    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", taskLoad.name, taskLoad.cpuLoad/100, taskLoad.cpuLoad%100 );
-
-    TEST_ASSERT_GREATER_THAN_UINT32(minExpectedCpuLoad, taskLoad.cpuLoad);
+    TEST_ASSERT_GREATER_THAN_UINT32(minExpectedCpuLoad, pingTaskLoad.cpuLoad);
+    TEST_ASSERT_GREATER_THAN_UINT32(minExpectedCpuLoad, pongTaskLoad.cpuLoad);
+    TEST_ASSERT_GREATER_THAN_UINT32((pingTaskLoad.cpuLoad + pongTaskLoad.cpuLoad), cpuLoad);
 
     /* Reset all load statistics, CPU load statistics should be < 1% now */
     DebugP_log(" LOAD: reset load statistics !!!\r\n");
     TaskP_loadResetAll();
 
+    startTs = ClockP_getTimeUsec(); 
     vTaskDelay(pdMS_TO_TICKS(1000));
+    delayTs = ClockP_getTimeUsec() - startTs; 
 
+    TaskP_loadGet(&gPongTaskObj, &pongTaskLoad);
+    TaskP_loadGet(&gPingTaskObj, &pingTaskLoad);
     cpuLoad = TaskP_loadGetTotalCpuLoad();
+
     DebugP_log(" LOAD: CPU  = %2d.%2d %%\r\n", cpuLoad/100, cpuLoad%100 );
+    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", pingTaskLoad.name, pingTaskLoad.cpuLoad/100, pingTaskLoad.cpuLoad%100 );
+    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", pongTaskLoad.name, pongTaskLoad.cpuLoad/100, pongTaskLoad.cpuLoad%100 );
 
-    TEST_ASSERT_UINT32_WITHIN( 100, 100, cpuLoad);
+    TEST_ASSERT_LESS_THAN_UINT32( 100, cpuLoad);
+    TEST_ASSERT_LESS_THAN_UINT32( 100, pingTaskLoad.cpuLoad);
+    TEST_ASSERT_LESS_THAN_UINT32( 100, pongTaskLoad.cpuLoad);
+    TEST_ASSERT_GREATER_THAN_UINT32((pingTaskLoad.cpuLoad + pongTaskLoad.cpuLoad), cpuLoad);
 
-    TaskP_loadGet(&gPingTaskObj, &taskLoad);
-    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", taskLoad.name, taskLoad.cpuLoad/100, taskLoad.cpuLoad%100 );
+    /** Loop in curent task for same time as delay (time spent in idle task),
+     * CPU load and Ping load should be ~50% now */
+    startTs = ClockP_getTimeUsec(); 
+    while ((ClockP_getTimeUsec() - startTs) < delayTs) {
+        asm volatile ("nop");
+    }
 
-    TEST_ASSERT_UINT32_WITHIN( 100, 100, taskLoad.cpuLoad);
+    TaskP_loadGet(&gPongTaskObj, &pongTaskLoad);
+    TaskP_loadGet(&gPingTaskObj, &pingTaskLoad);
+    cpuLoad = TaskP_loadGetTotalCpuLoad();
 
-    TaskP_loadGet(&gPongTaskObj, &taskLoad);
-    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", taskLoad.name, taskLoad.cpuLoad/100, taskLoad.cpuLoad%100 );
+    DebugP_log(" LOAD: CPU  = %2d.%2d %%\r\n", cpuLoad/100, cpuLoad%100 );
+    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", pingTaskLoad.name, pingTaskLoad.cpuLoad/100, pingTaskLoad.cpuLoad%100 );
+    DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", pongTaskLoad.name, pongTaskLoad.cpuLoad/100, pongTaskLoad.cpuLoad%100 );
 
-    TEST_ASSERT_UINT32_WITHIN( 100, 100, taskLoad.cpuLoad);
+    TEST_ASSERT_UINT32_WITHIN( 250, 5000, cpuLoad);
+    TEST_ASSERT_UINT32_WITHIN( 250, 5000, pingTaskLoad.cpuLoad);
+    TEST_ASSERT_LESS_THAN_UINT32( 100, pongTaskLoad.cpuLoad);
+    TEST_ASSERT_GREATER_THAN_UINT32((pingTaskLoad.cpuLoad + pongTaskLoad.cpuLoad), cpuLoad);
 }
 
 void ping_main(void *args)
@@ -872,8 +891,9 @@ void ping_main(void *args)
     /* atomics not tested with other architectures */
     RUN_TEST(test_atomics, 1371, NULL);
 #endif
+#if (configGENERATE_RUN_TIME_STATS == 1)
     RUN_TEST(test_taskLoad, 1372, NULL);
-
+#endif
 #if defined(__ARM_ARCH_7R__)
     #ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
     /** Interrupts inside critical section supported in R5F only. Not supported in am273x.
