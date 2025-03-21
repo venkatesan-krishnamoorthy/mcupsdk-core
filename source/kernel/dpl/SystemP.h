@@ -126,6 +126,18 @@ extern "C" {
  */
 
 /**
+ * \defgroup TSN_COMBASE_MODULE APIs for combase Binding
+ *
+ * This module contains APIs which are used by the combase Binding.
+ */
+
+/**
+ * \defgroup TSN_GPTP APIs for TSN GPTP
+ *
+ * This module contains APIs which are used by gptp module.
+ */
+
+/**
  * \defgroup EnetLLD_network APIs for Enet LLD network
  *
  * This module contains APIs which are used by the Enet LLD network driver.

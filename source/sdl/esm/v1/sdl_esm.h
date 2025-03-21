@@ -34,7 +34,6 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
 /**
  *  @addtogroup SDL_ESM_MODULE APIs for SDL ESM
  *  @{
