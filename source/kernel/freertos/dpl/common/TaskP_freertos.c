@@ -322,7 +322,12 @@ void TaskP_exit(void)
 void TaskP_loadGet(TaskP_Object *obj, TaskP_Load *taskLoad)
 {
     TaskP_Struct *taskObj = (TaskP_Struct *)obj;
-    TaskStatus_t taskStatus;
+
+    if(taskObj->taskHndl == xTaskGetCurrentTaskHandle())
+    {
+        /* Perform a force yield for the kernel to update the current task run time counter value. */
+        taskYIELD();
+    }
 
     vTaskSuspendAll();
 
@@ -362,6 +367,13 @@ void TaskP_loadResetAll(void)
 {
     TaskP_Struct *taskObj;
     uint32_t i;
+
+    /* Perform a force yield for the kernel to update the current task run time counter value. */
+    taskYIELD();
+    /** This is need to store upto date value in `taskObj->lastRunTime` and `gTaskP_ctrl.idleTskLastRunTime`,
+     *  since the next update window will use the difference b/w these values and latest counter value to 
+     *  increment the accumulated run time. */
+    TaskP_loadUpdateAll();
 
     vTaskSuspendAll();
 
