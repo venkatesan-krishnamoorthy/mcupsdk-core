@@ -126,7 +126,7 @@ mpu_armv75.baseAddr     = 0xCE000000;
 mpu_armv75.size         = 24;
 
 general1.$name          = "CONFIG_GENERAL0";
-general1.irq_stack_size = 4096;
+general1.irq_stack_size = 3840;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION";
