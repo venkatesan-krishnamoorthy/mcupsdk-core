@@ -45,8 +45,8 @@
  *  \brief This file contains the prototype of UART driver APIs
  */
 
-#ifndef UART_V0_H_
-#define UART_V0_H_
+#ifndef UART_H_
+#define UART_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -529,6 +529,6 @@ void UART_Params_init(UART_Params *prms);
 }
 #endif
 
-#endif  /* #ifndef UART_V0_H_ */
+#endif  /* #ifndef UART_H_ */
 
 /** @} */

@@ -767,7 +767,7 @@ int32_t UART_lld_writeDma(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
                           const UART_ExtendedParams *extendedParams);
 
 /**
- *  \brief  This API writes data to the UART instance in Polling mode.
+ *  \brief  This API reads data from the UART instance in Polling mode.
  *
  *  \param  hUart           Handle to the UART instance used
  *  \param  rxBuf           Pointer to read data buffer
@@ -782,7 +782,7 @@ int32_t UART_lld_read(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_
                       const UART_ExtendedParams *extendedParams);
 
 /**
- *  \brief  This API writes data to the UART instance in Polling mode.
+ *  \brief  This API reads data with counter.
  *
  *  \param  hUart           Handle to the UART instance used
  *  \param  rxBuf           Pointer to read data buffer
@@ -797,7 +797,7 @@ int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, void * rxBuf, uint32_t si
                       const UART_ExtendedParams *extendedParams);
 
 /**
- *  \brief  This API writes data to the UART instance in Interrupt mode.
+ *  \brief  This API reads data from the UART instance in Interrupt mode.
  *
  *  \param  hUart           Handle to the UART instance used
  *  \param  rxBuf           Pointer to read data buffer
@@ -811,7 +811,7 @@ int32_t UART_lld_readIntr(UARTLLD_Handle hUart, void * rxBuf, uint32_t size,
                          const UART_ExtendedParams *extendedParams);
 
 /**
- *  \brief  This API writes data to the UART instance in DMA mode.
+ *  \brief  This API reads data from the UART instance in DMA mode.
  *
  *  \param  hUart           Handle to the UART instance used
  *  \param  rxBuf           Pointer to read data buffer
@@ -865,7 +865,7 @@ int32_t UART_lld_flushTxFifo(UARTLLD_Handle hUart);
 int32_t UART_procLineStatusErr(UARTLLD_Handle hUart);
 
 /**
- *  \brief   Function to enable/disable UART RX.
+ *  \brief   Function to enable/disable UART RX State.
  *
  *  \param  hUart      Handle to the UART instance used
  *  \param  state      Enable/Disable UART interrupt
@@ -1116,6 +1116,6 @@ void UART_lld_Transaction_deInit(UART_Transaction *trans);
 }
 #endif
 
-#endif  /* #ifndef UART_V0_LLD_H_ */
+#endif  /* #ifndef UART_LLD_H_ */
 
 /** @} */

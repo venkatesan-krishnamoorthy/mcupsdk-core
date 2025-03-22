@@ -98,7 +98,7 @@ void write_transfer_nonblocking(void)
     /* Send entry string */
     gNumBytesWritten = 0U;
     transaction.buf   = &gUartBuffer[0U];
-    strncpy(transaction.buf,"This is uart echo test blocking mode\r\nReceives 8 characters then echo's back. Please input..\r\n", APP_UART_BUFSIZE);
+    strncpy(transaction.buf,"This is uart echo test non-blocking mode\r\nReceives 8 characters then echo's back. Please input..\r\n", APP_UART_BUFSIZE);
     transaction.count = strlen(transaction.buf);
     transferOK = UART_lld_writeIntr(gUartHandle0, transaction.buf, transaction.count, NULL);
 

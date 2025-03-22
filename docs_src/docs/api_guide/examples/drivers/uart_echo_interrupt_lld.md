@@ -74,7 +74,7 @@ All tests have passed!!
 
 UART Console:
 \code
-This is uart echo test blocking mode
+This is uart echo test non-blocking mode
 Receives 8 characters then echo's back. Please input..
 12345678
 All tests have passed!!

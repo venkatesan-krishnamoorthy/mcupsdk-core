@@ -102,7 +102,7 @@ void uart_echo_interrupt_lld(void *args)
     /* Send entry string */
     gNumBytesWritten = 0U;
     trans.buf   = &gUartBuffer[0U];
-    strncpy(trans.buf,"This is uart echo test blocking mode\r\nReceives 8 characters then echo's back. Please input..\r\n", APP_UART_BUFSIZE);
+    strncpy(trans.buf,"This is uart echo test non-blocking mode\r\nReceives 8 characters then echo's back. Please input..\r\n", APP_UART_BUFSIZE);
     trans.count = strlen(trans.buf);
     transferOK = UART_lld_writeIntr(gUartHandle0, trans.buf, trans.count, NULL);
 
