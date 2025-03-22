@@ -845,7 +845,7 @@ void test_taskLoad(void *args)
      * CPU load and Ping load should be ~50% now */
     startTs = ClockP_getTimeUsec(); 
     while ((ClockP_getTimeUsec() - startTs) < delayTs) {
-        asm volatile ("nop");
+        asm volatile (" nop");
     }
 
     TaskP_loadGet(&gPongTaskObj, &pongTaskLoad);
