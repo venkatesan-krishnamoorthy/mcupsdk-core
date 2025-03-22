@@ -67,8 +67,6 @@ extern "C"
 #define EPWM_XBAR_CMPSSA7_CTRIPH      (0x00008000)
 #define EPWM_XBAR_CMPSSA8_CTRIPL      (0x00010000)
 #define EPWM_XBAR_CMPSSA8_CTRIPH      (0x00020000)
-#define EPWM_XBAR_CMPSSA9_CTRIPL      (0x00040000)
-#define EPWM_XBAR_CMPSSA9_CTRIPH      (0x00080000)
 
 /******************* G1 *********************/
 #define EPWM_XBAR_SD0_FILT0_EVT1      (0x00000001)
@@ -95,6 +93,7 @@ extern "C"
 #define EPWM_XBAR_SD1_FILT3_EVT1      (0x00200000)
 #define EPWM_XBAR_SD1_FILT3_EVT2      (0x00400000)
 #define EPWM_XBAR_SD1_FILT3_CMPHZ     (0x00800000)
+
 /******************* G2 *********************/
 #define EPWM_XBAR_ADC0_EVT1           (0x00000001)
 #define EPWM_XBAR_ADC0_EVT2           (0x00000002)
@@ -104,10 +103,15 @@ extern "C"
 #define EPWM_XBAR_ADC1_EVT2           (0x00000020)
 #define EPWM_XBAR_ADC1_EVT3           (0x00000040)
 #define EPWM_XBAR_ADC1_EVT4           (0x00000080)
+#define EPWM_XBAR_ADC2_EVT1           (0x00000100)
+#define EPWM_XBAR_ADC2_EVT2           (0x00000200)
+#define EPWM_XBAR_ADC2_EVT3           (0x00000400)
+#define EPWM_XBAR_ADC2_EVT4           (0x00000800)
 #define EPWM_XBAR_EVENTAGG_CHECKEVT0  (0x10000000)
 #define EPWM_XBAR_EVENTAGG_CHECKEVT1  (0x20000000)
 #define EPWM_XBAR_EVENTAGG_CHECKEVT2  (0x40000000)
 #define EPWM_XBAR_EVENTAGG_CHECKEVT3  (0x80000000)
+
 /******************* G3 *********************/
 #define EPWM_XBAR_INPUT_XBAR0         (0x00000001)
 #define EPWM_XBAR_INPUT_XBAR1         (0x00000002)
@@ -141,6 +145,7 @@ extern "C"
 #define EPWM_XBAR_INPUT_XBAR29        (0x20000000)
 #define EPWM_XBAR_INPUT_XBAR30        (0x40000000)
 #define EPWM_XBAR_INPUT_XBAR31        (0x80000000)
+
 /******************* G4 *********************/
 #define EPWM_XBAR_EPWM0_TRIPOUT       (0x00000001)
 #define EPWM_XBAR_EPWM1_TRIPOUT       (0x00000002)
@@ -152,6 +157,7 @@ extern "C"
 #define EPWM_XBAR_EPWM7_TRIPOUT       (0x00000080)
 #define EPWM_XBAR_EPWM8_TRIPOUT       (0x00000100)
 #define EPWM_XBAR_EPWM9_TRIPOUT       (0x00000200)
+
 /******************* G5 *********************/
 #define EPWM_XBAR_DEL0_TRIP           (0x00000001)
 #define EPWM_XBAR_DEL1_TRIP           (0x00000002)
@@ -174,6 +180,7 @@ extern "C"
 #define EPWM_XBAR_DEL7_ACTIVE         (0x00000080)
 #define EPWM_XBAR_DEL8_ACTIVE         (0x00000100)
 #define EPWM_XBAR_DEL9_ACTIVE         (0x00000200)
+
 /******************* G7 *********************/
 #define EPWM_XBAR_EQEP0_ERR           (0x00000001)
 #define EPWM_XBAR_EQEP1_ERR           (0x00000002)
@@ -189,6 +196,7 @@ extern "C"
 #define EPWM_XBAR_ECAP5_TRIPOUT       (0x00200000)
 #define EPWM_XBAR_ECAP6_TRIPOUT       (0x00400000)
 #define EPWM_XBAR_ECAP7_TRIPOUT       (0x00800000)
+
 /******************* G8 *********************/
 #define EPWM_XBAR_SYNCOUTXBAR_Out0    (0x00000001)
 #define EPWM_XBAR_SYNCOUTXBAR_Out1    (0x00000002)

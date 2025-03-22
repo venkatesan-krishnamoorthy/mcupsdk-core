@@ -154,8 +154,6 @@ extern "C"
 #define OUTPUT_XBAR_CMPSSA7_CTRIPH    (0x00008000)
 #define OUTPUT_XBAR_CMPSSA8_CTRIPL    (0x00010000)
 #define OUTPUT_XBAR_CMPSSA8_CTRIPH    (0x00020000)
-#define OUTPUT_XBAR_CMPSSA9_CTRIPL    (0x00040000)
-#define OUTPUT_XBAR_CMPSSA9_CTRIPH    (0x00080000)
 
 /******************* G7 *********************/
 #define OUTPUT_XBAR_ADC0_EVT1    (0x00000001)
@@ -200,7 +198,7 @@ extern "C"
 #define OUTPUT_XBAR_INPUTXBAR_OUT31    (0x00080000)
 #define OUTPUT_XBAR_INTXBAR_OUT7       (0x01000000)
 #define OUTPUT_XBAR_INTXBAR_OUT15      (0x02000000)
-    
+
 
 
 /**************************************************************************
