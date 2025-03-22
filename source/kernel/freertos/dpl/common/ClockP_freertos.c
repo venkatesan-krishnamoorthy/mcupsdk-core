@@ -261,20 +261,37 @@ void ClockP_usleep(uint32_t usec)
 uint64_t ClockP_getTimeUsec(void)
 {
     uint64_t ts = 0U;
-    uint32_t timerCount;
-    uint64_t ticks1;
-    uint64_t ticks2;
+    uint32_t timerCount1, timerCount2;
+    uint64_t ticks1, ticks2;
+    uint32_t isOverflowed = 0U;
 
     do {
+        /* Read the current tick count and timer count */
         ticks1 = gClockCtrl.ticks;
-        timerCount = ClockP_getTimerCount(gClockCtrl.timerBaseAddr);
+        timerCount1 = ClockP_getTimerCount(gClockCtrl.timerBaseAddr);
+
+        /** Check if the timer has overflowed.
+         * This is to handle cases in which this function is invoked from say critical sections with
+         * interrupts disabled and hence `gClockCtrl.ticks` won't get increment even in case of
+         * overflow in timer count.
+         * When ISR increments `gClockCtrl.ticks` it will clear the overflow status */
+        isOverflowed = TimerP_isOverflowed(gClockCtrl.timerBaseAddr);
+
+        /* Read the timer count and tick count again for consistency */
+        timerCount2 = ClockP_getTimerCount(gClockCtrl.timerBaseAddr);
         ticks2 = gClockCtrl.ticks;
-    } while (ticks1 != ticks2);
+    } while ((ticks1 != ticks2) || (timerCount1 > timerCount2));
+
+    /* Handle the overflow case */
+    if(isOverflowed != 0U)
+    {
+        ticks2++;
+    }
 
     /* Get the current time in microseconds */
     ts = (ticks2 * (uint64_t)gClockCtrl.usecPerTick)
              + (uint64_t) ( /* convert timer count to usecs */
-                (uint64_t)(((timerCount - gClockCtrl.timerReloadCount)*gClockCtrl.usecPerTick)/(MAX_TIMER_COUNT_VALUE - gClockCtrl.timerReloadCount))
+                (uint64_t)(((timerCount2 - gClockCtrl.timerReloadCount)*gClockCtrl.usecPerTick)/(MAX_TIMER_COUNT_VALUE - gClockCtrl.timerReloadCount))
                 );
 
     return (ts);
