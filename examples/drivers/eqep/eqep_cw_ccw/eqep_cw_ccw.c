@@ -85,11 +85,36 @@
 /* Configuration Constants */
 #define APP_LOOP_CNT          (100U)     /* Number of interrupt cycles before completion */
 #define APP_INT_IS_PULSE      (1U)       /* Configure interrupt as pulse type */
-#define ENCODER_SLOTS         (1000U)    /* Encoder resolution (counts per revolution) */
-#define UNIT_PERIOD           (10000U)   /* Unit timeout period in microseconds (10ms) */
+#define APP_ENCODER_SLOTS     (1000U)    /* Encoder resolution (counts per revolution) */
+#define APP_UNIT_PERIOD       (10000U)   /* Unit timeout period in microseconds (10ms) */
+#define APP_PULSES_PER_GROUP  (50U)      /* Number of pulses in each direction group (CW/CCW) */
+#define APP_TOGGLES_PER_PULSE (2U)       /* Each pulse requires 2 toggles (high and low) */
 
-#define EXPECTED_FREQ_HZ      (2500)    /* Expected frequency in Hz */
-#define EXPECTED_RPM          (150U)    /* Expected RPM */
+/* 
+ * APP_EXPECTED_FREQ_HZ: Derived from the timer interrupt period of 200μs.
+ * Each toggle happens every 200μs, and a complete pulse (high-low) takes 2 toggles = 400μs.
+ * Frequency = 1/period = 1/0.0004s = 2500 Hz
+ */
+#define APP_EXPECTED_FREQ_HZ      (2500)    /* Expected frequency in Hz */
+
+/* 
+ * APP_EXPECTED_RPM: Derived from the frequency using the encoder resolution.
+ * RPM = (Frequency in Hz × 60 seconds/minute) / (Encoder resolution in counts/rev)
+ * RPM = (2500 counts/sec × 60 sec/min) / 1000 counts/rev = 150 RPM
+ */
+#define APP_EXPECTED_RPM          (150U)    /* Expected RPM */
+
+/* 
+ * Tolerance values for validation
+ * For precision control systems, typical frequency tolerances are ±2-5%
+ * and speed tolerances are ±3-5% of the expected value
+ */
+#define APP_FREQ_TOLERANCE_PERCENT  (5U)    /* Standard 5% tolerance for frequency measurement */
+#define APP_SPEED_TOLERANCE_PERCENT (5U)    /* Standard 5% tolerance for speed measurement */
+
+/* Calculate actual tolerance values from percentages */
+#define APP_FREQ_TOLERANCE_HZ    ((APP_EXPECTED_FREQ_HZ * APP_FREQ_TOLERANCE_PERCENT) / 100U)   /* 125 Hz */
+#define APP_SPEED_TOLERANCE_RPM  ((APP_EXPECTED_RPM * APP_SPEED_TOLERANCE_PERCENT) / 100U)      /* 7.5 RPM */
 
 /* Global Variables for Position and Speed Calculation */
 typedef struct {
@@ -99,22 +124,21 @@ typedef struct {
     int32_t freq;               /* Pulse frequency in Hz */
     float speed;                /* Motor speed in RPM */
     int32_t direction;          /* Current direction: 1 = CW, -1 = CCW */
-} EncoderState;
+} App_eqepEncoderState;
 
 /* Make encoder state globally accessible for debugging */
-volatile EncoderState gEncoderState = {0};
+App_eqepEncoderState gAppEqepEncoderState = {0};
 
 /* Global Variables */
-static uint32_t gEqepBaseAddr;
-static uint16_t gInterruptCount = 0;
-static HwiP_Object gEqepHwiObject;
-static SemaphoreP_Object gEqepSyncSem;
-static volatile bool gEqepTestComplete = false;
-static bool qmaValid = true;
+static uint32_t gAppEqepBaseAddr;
+static uint16_t gAppEqepInterruptCount = 0;
+static HwiP_Object gAppEqepHwiObject;
+static SemaphoreP_Object gAppEqepSyncSem;
+static bool gAppEqepQmaValid = true;
 
 /* Function Prototypes */
 static void App_eqepISR(void *args);
-static void App_calculateSpeed(void);
+static void App_eqepCalculateSpeed(void);
 static inline void App_gpioPinToggle(uint32_t baseAddr, uint32_t pinNum);
 
 /* Main Application Entry Point */
@@ -127,13 +151,16 @@ void eqep_cw_ccw_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    gEqepBaseAddr = CONFIG_EQEP0_BASE_ADDR;
+    gAppEqepBaseAddr = CONFIG_EQEP0_BASE_ADDR;
 
     /* Create synchronization semaphore */
-    status = SemaphoreP_constructBinary(&gEqepSyncSem, 0);
+    status = SemaphoreP_constructBinary(&gAppEqepSyncSem, 0);
     DebugP_assert(status == SystemP_SUCCESS);
 
     DebugP_log("EQEP Position Speed Test Started ...\r\n");
+    
+    /* Clear any pending interrupts */
+    EQEP_clearInterruptStatus(gAppEqepBaseAddr, EQEP_INT_UNIT_TIME_OUT|EQEP_INT_GLOBAL|EQEP_INT_QMA_ERROR);
     
     /* Configure and register EQEP interrupt handler */
     HwiP_Params_init(&hwiPrms);
@@ -141,35 +168,35 @@ void eqep_cw_ccw_main(void *args)
     hwiPrms.callback = &App_eqepISR;
     hwiPrms.isPulse = APP_INT_IS_PULSE;
     
-    status = HwiP_construct(&gEqepHwiObject, &hwiPrms);
+    status = HwiP_construct(&gAppEqepHwiObject, &hwiPrms);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    /* Clear any pending interrupts */
-    EQEP_clearInterruptStatus(gEqepBaseAddr, EQEP_INT_UNIT_TIME_OUT|EQEP_INT_GLOBAL);
-
-    /* Start the timer and wait for completion */
+    /* 
+    * Start the timer and wait for completion 
+    * Tick period is set to 200usec
+    */
     TimerP_start(gTimerBaseAddr[CONFIG_TIMER0]);
-    SemaphoreP_pend(&gEqepSyncSem, SystemP_WAIT_FOREVER);
+    SemaphoreP_pend(&gAppEqepSyncSem, SystemP_WAIT_FOREVER);
     TimerP_stop(gTimerBaseAddr[CONFIG_TIMER0]);
 
     /* Validate frequency and speed measurements */
-    bool freqValid = (gEncoderState.freq >= (EXPECTED_FREQ_HZ - 100) && 
-                     gEncoderState.freq <= (EXPECTED_FREQ_HZ + 100));
-    bool speedValid = (gEncoderState.speed >= (EXPECTED_RPM - 10) && 
-                      gEncoderState.speed <= (EXPECTED_RPM + 10));
+    bool freqValid = (gAppEqepEncoderState.freq >= (APP_EXPECTED_FREQ_HZ - APP_FREQ_TOLERANCE_HZ) && 
+                     gAppEqepEncoderState.freq <= (APP_EXPECTED_FREQ_HZ + APP_FREQ_TOLERANCE_HZ));
+    bool speedValid = (gAppEqepEncoderState.speed >= (APP_EXPECTED_RPM - APP_SPEED_TOLERANCE_RPM) && 
+                      gAppEqepEncoderState.speed <= (APP_EXPECTED_RPM + APP_SPEED_TOLERANCE_RPM));
     
-    if(!freqValid || !speedValid || !qmaValid) {
+    if(!freqValid || !speedValid || !gAppEqepQmaValid) {
         DebugP_log("EQEP Validation Failed!\r\n");
         DebugP_log("Results:\r\n");
-        DebugP_log("  Frequency: %d Hz (Expected: %d Hz ±100)\r\n", 
-                  gEncoderState.freq, EXPECTED_FREQ_HZ);
-        DebugP_log("  Speed: %.2f RPM (Expected: %d RPM ±10)\r\n",
-                  gEncoderState.speed, EXPECTED_RPM);
+        DebugP_log("  Frequency: %d Hz (Expected: %d Hz ±%d)\r\n", 
+                  gAppEqepEncoderState.freq, APP_EXPECTED_FREQ_HZ, APP_FREQ_TOLERANCE_HZ);
+        DebugP_log("  Speed: %.2f RPM (Expected: %d RPM ±%d)\r\n",
+                  gAppEqepEncoderState.speed, APP_EXPECTED_RPM, APP_SPEED_TOLERANCE_RPM);
         DebugP_log("  Direction: %s\r\n", 
-                  (gEncoderState.direction > 0) ? "Clockwise" : "Counter-clockwise");
+                  (gAppEqepEncoderState.direction > 0) ? "Clockwise" : "Counter-clockwise");
         
-        if(!qmaValid) {
-            DebugP_log("ERROR: QMA Error detected\r\n");
+        if(!gAppEqepQmaValid) {
+            DebugP_log("ERROR: QMA Error detectead\r\n");
         }
         if(!freqValid) {
             DebugP_log("ERROR: Frequency out of valid range\r\n");
@@ -183,16 +210,16 @@ void eqep_cw_ccw_main(void *args)
     else {
         DebugP_log("EQEP Validation Passed\r\n");
         DebugP_log("Results:\r\n");
-        DebugP_log("  Frequency: %d Hz\r\n", gEncoderState.freq);
-        DebugP_log("  Speed: %.2f RPM\r\n", gEncoderState.speed);
+        DebugP_log("  Frequency: %d Hz\r\n", gAppEqepEncoderState.freq);
+        DebugP_log("  Speed: %.2f RPM\r\n", gAppEqepEncoderState.speed);
         DebugP_log("  Direction: %s\r\n",
-                  (gEncoderState.direction > 0) ? "Clockwise" : "Counter-clockwise");
+                  (gAppEqepEncoderState.direction > 0) ? "Clockwise" : "Counter-clockwise");
         DebugP_log("All tests passed successfully!\r\n");
     }
 
     /* Cleanup resources */
-    HwiP_destruct(&gEqepHwiObject);
-    SemaphoreP_destruct(&gEqepSyncSem);
+    HwiP_destruct(&gAppEqepHwiObject);
+    SemaphoreP_destruct(&gAppEqepSyncSem);
 
     Board_driversClose();
     Drivers_close();
@@ -202,22 +229,23 @@ void eqep_cw_ccw_main(void *args)
 void timerISR(void) {
     static uint32_t toggleCount = 0;
     static uint32_t indexPulseCount = 0;
+    static uint32_t totalToggleCount = 0;
 
     toggleCount++;
+    totalToggleCount++;
 
     /* Generate CW and CCW test pulses */
-    if(toggleCount <= 100) {  // First 50 CW pulses
+    if(toggleCount <= (APP_PULSES_PER_GROUP * APP_TOGGLES_PER_PULSE)) {  // First 50 CW pulses (100 toggles)
         App_gpioPinToggle(GPIO_CW_PIN_BASE_ADDR, GPIO_CW_PIN_PIN);
     }
-    else if(toggleCount <= 200) {  // Next 50 CCW pulses
+    else if(toggleCount <= (APP_PULSES_PER_GROUP * APP_TOGGLES_PER_PULSE * 2)) {  // Next 50 CCW pulses (100 toggles)
         App_gpioPinToggle(GPIO_CCW_PIN_BASE_ADDR, GPIO_CCW_PIN_PIN);
-    }
-    else {  // Reset counter
-        toggleCount = 0;
+        if(toggleCount == 200)
+            toggleCount = 0;
     }
 
-    /* Generate index pulse every 1000 counts */
-    if(toggleCount % 1000 == 0) {
+    /* Generate index pulse every 1000 encoder counts (2000 toggles) */
+    if(totalToggleCount % (APP_ENCODER_SLOTS * APP_TOGGLES_PER_PULSE) == 0) {
         GPIO_pinWriteHigh(GPIO_INDEX_PIN_BASE_ADDR, GPIO_INDEX_PIN_PIN);
         indexPulseCount = 1;
     }
@@ -233,67 +261,101 @@ void timerISR(void) {
 /* EQEP Interrupt Service Routine */
 static void App_eqepISR(void *args)
 {
-    int32_t status = EQEP_getInterruptStatus(gEqepBaseAddr);
+    int32_t status = EQEP_getInterruptStatus(gAppEqepBaseAddr);
 
-    gInterruptCount++;
+    gAppEqepInterruptCount++;
 
     /* Handle QMA Error */
     if(status & EQEP_INT_QMA_ERROR) {
-        EQEP_clearInterruptStatus(gEqepBaseAddr, EQEP_INT_QMA_ERROR|EQEP_INT_GLOBAL);
-        qmaValid = false;
-        SemaphoreP_post(&gEqepSyncSem);
+        gAppEqepQmaValid = false;
+        EQEP_clearInterruptStatus(gAppEqepBaseAddr, EQEP_INT_QMA_ERROR|EQEP_INT_GLOBAL);
+        SemaphoreP_post(&gAppEqepSyncSem);
     }
     else {
         /* Update encoder state and calculate speed */
-        gEncoderState.currentEncoderPos = EQEP_getPosition(gEqepBaseAddr);
-        gEncoderState.direction = EQEP_getDirection(gEqepBaseAddr);
-        gEncoderState.newCount = EQEP_getPositionLatch(gEqepBaseAddr);
+        gAppEqepEncoderState.currentEncoderPos = EQEP_getPosition(gAppEqepBaseAddr);
+        gAppEqepEncoderState.direction = EQEP_getDirection(gAppEqepBaseAddr);
+        gAppEqepEncoderState.newCount = EQEP_getPositionLatch(gAppEqepBaseAddr);
 
-        App_calculateSpeed();
+        App_eqepCalculateSpeed();
         
-        EQEP_clearInterruptStatus(gEqepBaseAddr, EQEP_INT_UNIT_TIME_OUT|EQEP_INT_GLOBAL);
+        EQEP_clearInterruptStatus(gAppEqepBaseAddr, EQEP_INT_UNIT_TIME_OUT|EQEP_INT_GLOBAL);
     }
 
     /* Check for test completion */
-    if(gInterruptCount >= APP_LOOP_CNT) {
-        gEqepTestComplete = true;
-        SemaphoreP_post(&gEqepSyncSem);
+    if(gAppEqepInterruptCount >= APP_LOOP_CNT) {
+        SemaphoreP_post(&gAppEqepSyncSem);
     }
 }
 
 /* Calculate Speed and Update Encoder State */
-static void App_calculateSpeed(void)
+static void App_eqepCalculateSpeed(void)
 {
-    /* Calculate position change based on direction */
-    if (gEncoderState.direction > 0) {
-        if (gEncoderState.newCount >= gEncoderState.oldCount)
-            gEncoderState.newCount -= gEncoderState.oldCount;
+    /* 
+     * Calculate position change (delta counts) based on rotation direction
+     * 
+     * For clockwise rotation (direction > 0):
+     *   If newCount >= oldCount: Simple subtraction (no counter wraparound)
+     *   If newCount < oldCount: Counter wrapped around from max(APP_ENCODER_SLOTS - 1) to 0
+     *                           We need to add distance from oldCount to max value,
+     *                           plus distance from 0 to newCount
+     * 
+     * For counter-clockwise rotation (direction < 0):
+     *   If newCount <= oldCount: Simple subtraction (no counter wraparound)
+     *   If newCount > oldCount: Counter wrapped around from 0 to max(APP_ENCODER_SLOTS - 1)
+     *                           We need to add distance from newCount to max value,
+     *                           plus distance from 0 to oldCount
+     */
+    if (gAppEqepEncoderState.direction > 0) {
+        /* Clockwise rotation */
+        if (gAppEqepEncoderState.newCount >= gAppEqepEncoderState.oldCount)
+            gAppEqepEncoderState.newCount -= gAppEqepEncoderState.oldCount;
         else
-            gEncoderState.newCount = (ENCODER_SLOTS - gEncoderState.oldCount) + gEncoderState.newCount;
+            gAppEqepEncoderState.newCount = (APP_ENCODER_SLOTS - gAppEqepEncoderState.oldCount) + gAppEqepEncoderState.newCount;
     }
     else {
-        if (gEncoderState.newCount <= gEncoderState.oldCount)
-            gEncoderState.newCount = gEncoderState.oldCount - gEncoderState.newCount;
+        /* Counter-clockwise rotation */
+        if (gAppEqepEncoderState.newCount <= gAppEqepEncoderState.oldCount)
+            gAppEqepEncoderState.newCount = gAppEqepEncoderState.oldCount - gAppEqepEncoderState.newCount;
         else
-            gEncoderState.newCount = (ENCODER_SLOTS - gEncoderState.newCount) + gEncoderState.oldCount;
+            gAppEqepEncoderState.newCount = (APP_ENCODER_SLOTS - gAppEqepEncoderState.newCount) + gAppEqepEncoderState.oldCount;
     }
 
     /* Update old count for next calculation */
-    gEncoderState.oldCount = gEncoderState.currentEncoderPos;
+    gAppEqepEncoderState.oldCount = gAppEqepEncoderState.currentEncoderPos;
 
-    /* Calculate frequency and speed */
-    gEncoderState.freq = (gEncoderState.newCount * (uint32_t)1000000U) / ((uint32_t)UNIT_PERIOD);
-    gEncoderState.speed = (gEncoderState.freq * 60.0f) / ((float)(ENCODER_SLOTS));
+    /* 
+     * Calculate frequency in Hz:
+     * freq = (position_change * 1000000) / unit_period_in_microseconds
+     * 
+     * Where:
+     * - position_change = number of encoder counts in the time period
+     * - 1000000 = conversion factor for microseconds to seconds
+     * - APP_UNIT_PERIOD = time period in microseconds (10000μs = 10ms)
+     */
+    gAppEqepEncoderState.freq = (gAppEqepEncoderState.newCount * (uint32_t)1000000U) / ((uint32_t)APP_UNIT_PERIOD);
+    
+    /* 
+     * Calculate rotational speed in RPM:
+     * RPM = (frequency_in_Hz * 60) / encoder_counts_per_revolution
+     * 
+     * Where:
+     * - frequency_in_Hz = counts per second
+     * - 60 = seconds per minute
+     * - APP_ENCODER_SLOTS = encoder resolution (1000 counts per revolution)
+     */
+    gAppEqepEncoderState.speed = (gAppEqepEncoderState.freq * 60.0f) / ((float)(APP_ENCODER_SLOTS));
 }
 
 /* GPIO Pin Toggle Helper Function */
 static inline void App_gpioPinToggle(uint32_t baseAddr, uint32_t pinNum)
 {
-    uint32_t regIndex, regVal;
-    volatile CSL_GpioRegs* hGpio = (volatile CSL_GpioRegs*)((uintptr_t) baseAddr);
-
-    regIndex = GPIO_GET_REG_INDEX(pinNum);
-    regVal = GPIO_GET_BIT_MASK(pinNum);
-    CSL_REG32_WR(&hGpio->BANK_REGISTERS[regIndex].OUT_DATA, 
-                 CSL_REG32_RD(&hGpio->BANK_REGISTERS[regIndex].OUT_DATA) ^ regVal);
+    /* Read current pin output value */
+    if (GPIO_pinOutValueRead(baseAddr, pinNum) == 1U) {
+        /* If pin is high, set it low */
+        GPIO_pinWriteLow(baseAddr, pinNum);
+    } else {
+        /* If pin is low, set it high */
+        GPIO_pinWriteHigh(baseAddr, pinNum);
+    }
 }
