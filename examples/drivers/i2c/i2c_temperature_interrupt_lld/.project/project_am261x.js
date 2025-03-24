@@ -25,6 +25,7 @@ const libdirs = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
     ],
 };
 
@@ -33,6 +34,7 @@ const libs = {
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_blackbird.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
