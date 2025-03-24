@@ -297,15 +297,10 @@ Watchdog_Handle Watchdog_open(uint8_t index, Watchdog_Params* params)
             /* Bring watchdog out of reset */
             Watchdog_reset(handle);
 
-            /* if NMI interrupt mode is configured */
-            if (ptrWatchdogMCB->params.resetMode == Watchdog_RESET_OFF)
+            /* if reset mode is configured */
+            if (ptrWatchdogMCB->params.resetMode == Watchdog_RESET_ON)
             {
-                 /* Clear the status flags */
- //               HW_WR_REG32(ptrHwCfg->baseAddr + CSL_RTI_RTIWDSTATUS, WATCHDOG_CLEAR_STATUS);
-            }
-            else
-            {
-                /* Configure the SOC moule to trigger a warm reset upon watchdog reset */
+                /* Configure the SOC module to trigger a warm reset upon watchdog reset */
                 Watchdog_configureWarmReset(handle);
             }
         }
