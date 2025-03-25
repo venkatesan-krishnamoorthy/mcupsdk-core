@@ -105,7 +105,7 @@ For support on @VAR_BOARD_NAME_ADDON_AUTO, please refer \ref ETHERNET_ADDON_BOAR
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos, r5fss0-1_freertos
  Toolchain      | ti-arm-clang
- Boards         | @VAR_LP_BOARD_NAME_LOWER
+ Boards         | @VAR_LP_BOARD_NAME_LOWER, @VAR_BOARD_NAME_LOWER
  Example folder | source/networking/enet/core/examples/enet_layer2_cpsw/V1
  
  For support on @VAR_LP_BOARD_NAME_LOWER please refer \ref ETHERNET_ADDON_BOARDS_TOP
