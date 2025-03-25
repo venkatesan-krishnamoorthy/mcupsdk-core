@@ -40,13 +40,14 @@ Currently the out-of box support for both the PHYs is present in Ethernet add-on
 Please refer to the Table 2-16(Ethernet Routing) in User Guide for board modifications.
 <a href="https://www.ti.com/lit/ug/spruj86a/spruj86a.pdf">AM263Px Control Card Evaluation Module User's Guide (Rev. A)</a>
 
-In order to run Out-of-Box examples for Automotive Ethernet PHY(DP83TG720-EVM-AM2), make following changes in the syscfg tool:
- \imageStyle{eth_add_on_syscfg1.png,width:50%}
+In order to run Out-of-Box examples for Automotive Ethernet PHY(DP83TG720-EVM-AM2) and Industrial Ethernet PHY(DP83826-EVM-AM2), make following changes in the syscfg tool:
+ \imageStyle{eth_add_on_syscfg1.png,width:75%}
  \image html eth_add_on_syscfg1.png
- \imageStyle{eth_add_on_syscfg2.png,width:50%}
+ Syscfg tool to configure only for Ethernet Add-on board(Auto PHY):
+ \imageStyle{eth_add_on_syscfg2.png,width:25%}
  \image html eth_add_on_syscfg2.png  **Figure**: Syscfg tool to configure Ethernet Add-on board(Auto PHY)
  
  Make these below changes in the API EnetApp_initLinkArgs to change the speed and duplexity in order to support Automotive Ethernet PHY(DP83TG720-EVM-AM2) usecases.
- \imageStyle{speed_duplexity.png,width:50%}
+ \imageStyle{speed_duplexity.png,width:40%}
  \image html speed_duplexity.png  **Figure**: Change speed and duplexity
  \endcond
