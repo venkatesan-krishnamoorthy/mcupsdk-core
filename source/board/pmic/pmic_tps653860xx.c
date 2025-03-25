@@ -209,34 +209,24 @@ int32_t PMIC_tps653860xxConfigure(PMIC_Config *config)
 
         Pmic_setRegLockState(pmicCoreHandle, PMIC_LOCK_DISABLE);
 
-        uint8_t ldoNumber = 0U;
-        Pmic_ldoCfgReg_t ldoCfg_exp;
-
-        Pmic_ldoCtrlReg_t ldoCtrlConfig_exp =
-        {
-            PMIC_LDO_ENABLED_LDO_MODE, PMIC_LDO_ENABLED_LDO_MODE,
-            PMIC_LDO_ENABLED_LDO_MODE, PMIC_LDO_ENABLED_LDO_MODE
+        Pmic_PwrLdoCfg_t ldocfg_exp = {
+            .validParams = PMIC_PWR_CFG_LDO_MODE_VALID_SHIFT | PMIC_PWR_CFG_LDO_LVL_VALID_SHIFT |
+                           PMIC_PWR_CFG_LDO_ILIM_LVL_VALID_SHIFT | PMIC_PWR_CFG_LDO_RAMP_TIME_VALID_SHIFT,
+            .ldo = PMIC_PWR_LDO2,
+            .mode = PMIC_PWR_LDO_EN_AS_LDO_IN_OPER,
+            .lvl = PMIC_PWR_LDO_LVL_3P3V,
+            .ilimLvl = PMIC_PWR_LDO_ILIM_LVL_OPTION_0,
+            .rampTime = PMIC_PWR_RT_LONGER,
         };
+        pmicStatus += Pmic_pwrSetLdoCfg(pmicCoreHandle, &ldocfg_exp);
 
-        ldoNumber = PMIC_LDO2;
-        ldoCfg_exp.ldoRtCfg = PMIC_LDO_PLDO_LONG_RAMP_TIME;
-        ldoCfg_exp.ldoIlimLvlCfg = PMIC_LDO_PLDO_ILIM_LVL_CFG_OPT0;
-        ldoCfg_exp.ldoLvlCfg = PMIC_LDO_PLDO_LVL_CFG_VOLT_3_3V;
-        pmicStatus += Pmic_powerSetLdoConfigRegister(pmicCoreHandle, ldoNumber, &ldoCfg_exp);
+        ldocfg_exp.ldo = PMIC_PWR_LDO3;
+        ldocfg_exp.lvl = PMIC_PWR_LDO_LVL_5V;
+        pmicStatus += Pmic_pwrSetLdoCfg(pmicCoreHandle, &ldocfg_exp);
 
-        ldoNumber = PMIC_LDO3;
-        ldoCfg_exp.ldoRtCfg = PMIC_LDO_PLDO_LONG_RAMP_TIME;
-        ldoCfg_exp.ldoIlimLvlCfg = PMIC_LDO_PLDO_ILIM_LVL_CFG_OPT0;
-        ldoCfg_exp.ldoLvlCfg = PMIC_LDO_PLDO_LVL_CFG_VOLT_5V;
-        pmicStatus += Pmic_powerSetLdoConfigRegister(pmicCoreHandle, ldoNumber, &ldoCfg_exp);
-
-        ldoNumber = PMIC_LDO4;
-        ldoCfg_exp.ldoRtCfg = PMIC_LDO_PLDO_LONG_RAMP_TIME;
-        ldoCfg_exp.ldoIlimLvlCfg = PMIC_LDO_PLDO_ILIM_LVL_CFG_OPT0;
-        ldoCfg_exp.ldoLvlCfg = PMIC_LDO_PLDO_LVL_CFG_VOLT_1_8V;
-        pmicStatus += Pmic_powerSetLdoConfigRegister(pmicCoreHandle, ldoNumber, &ldoCfg_exp);
-
-        pmicStatus += Pmic_setLdoCtrl(pmicCoreHandle, &ldoCtrlConfig_exp);
+        ldocfg_exp.ldo = PMIC_PWR_LDO4;
+        ldocfg_exp.lvl = PMIC_PWR_LDO_LVL_1P8V;
+        pmicStatus += Pmic_pwrSetLdoCfg(pmicCoreHandle, &ldocfg_exp);
 
         if (PMIC_ST_SUCCESS != pmicStatus)
         {
