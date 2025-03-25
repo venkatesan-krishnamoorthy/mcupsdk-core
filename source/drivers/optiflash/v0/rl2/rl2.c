@@ -114,10 +114,10 @@ RL2_API_STS_t RL2_setInterrupt(RL2_Params * config, RL2_Interrupt intr)
         switch(intr)
         {
             case RL2_INTERRUPT_WRITE_HIT:
-                regs->IRQENABLE_SET |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_WR_HIT_MASK;
+                regs->IRQENABLE_SET = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_WR_HIT_MASK;
                 break;
             case RL2_INTERRUPT_WRITE_ERROR:
-                regs->IRQENABLE_SET |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_WRERR_MASK;
+                regs->IRQENABLE_SET = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_WRERR_MASK;
                 break;
             default:
                 retStatus = RL2_API_STS_UNKNOWN_INTERRUPT;
@@ -141,10 +141,10 @@ RL2_API_STS_t RL2_clearInterrupt(RL2_Params * config, RL2_Interrupt intr)
         switch(intr)
         {
             case RL2_INTERRUPT_WRITE_HIT:
-                regs->IRQENABLE_CLR |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_WR_HIT_MASK;
+                regs->IRQENABLE_CLR = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_WR_HIT_MASK;
                 break;
             case RL2_INTERRUPT_WRITE_ERROR:
-                regs->IRQENABLE_CLR |= CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_WRERR_MASK;
+                regs->IRQENABLE_CLR = CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_WRERR_MASK;
                 break;
             default:
                 retStatus = RL2_API_STS_UNKNOWN_INTERRUPT;
