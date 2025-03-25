@@ -116,6 +116,27 @@ Shown below is a sample output when the application is run,
 \code
 Starting PMIC user space register configuration example !!
 
+Setting PLDO1 config...
+Validating PLDO1 configurations...
+PLDO1 configurations have been successfully validated
+PLDO voltage, thermal and current limit status
+PLDO1 over voltage error status: cleared
+PLDO1 under voltage error status: cleared
+PLDO1 current limit error status: cleared
+PLDO1 Thermal shutdown warning status: cleared
+PLDO1 Thermal shutdown error status: cleared
+
+Setting LDO2 config...
+Validating LDO2 configurations...
+LDO2 configurations have been successfully validated
+LDO voltage, thermal and current limit status
+LDO2 over voltage error status: cleared
+LDO2 under voltage error status: cleared
+LDO2 current limit error status: cleared
+LDO2 Thermal shutdown warning status: cleared
+LDO2 Thermal shutdown error status: cleared
+PMIC PLDO and LDO configuration and status report complete
+
 Setting GPO1 output state as High...
 Getting actual GPIO configurations...
 GPIO configurations have been obtained...

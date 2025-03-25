@@ -33,7 +33,7 @@
 /**
 *  \file pmic_power_derby.c
 *
-*  \brief This is a PMIC User register config example will set gpio, IRQ, Timer configurations.
+*  \brief This is a PMIC User register config example will set gpio, IRQ, Timer, vmon and Power configurations.
           Set/Get/clear IRQ mask and flag. Use Pmic_io(Rx/Tx)Byte Api to direct access of register
 */
 
@@ -65,6 +65,7 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
+static void PMICApp_setPldoLdoCfg(Pmic_CoreHandle_t *coreHandle);
 static void PMICApp_setGpioConf(Pmic_CoreHandle_t *coreHandle);
 static void PMICAPP_irqSetGetMaskCfg_WD(Pmic_CoreHandle_t *coreHandle);
 static void PMICAPP_irqClrFlags(Pmic_CoreHandle_t *coreHandle);
@@ -103,6 +104,7 @@ void pmic_user_reg_cfg_main(void *args)
     DebugP_log("\r\n");
     DebugP_log("Starting PMIC user space register configuration example !!\r\n");
 
+    PMICApp_setPldoLdoCfg(handle);
     PMICApp_setGpioConf(handle);
     PMICAPP_irqSetGetMaskCfg_WD(handle);
     PMICAPP_irqClrFlags(handle);
@@ -114,6 +116,121 @@ void pmic_user_reg_cfg_main(void *args)
     Board_driversClose();
     Drivers_close();
     return;
+}
+
+static void PMICApp_setPldoLdoCfg(Pmic_CoreHandle_t *coreHandle)
+{
+    uint32_t status = PMIC_ST_SUCCESS;
+    /*Setting PLDO1 Configuration*/
+    Pmic_PwrPldoCfg_t expPldoCfg = {
+        .validParams = PMIC_PWR_CFG_PLDO_MODE_VALID_SHIFT | PMIC_PWR_CFG_PLDO_TRACKING_MODE_VALID_SHIFT |
+                       PMIC_PWR_CFG_PLDO_LVL_VALID_SHIFT | PMIC_PWR_CFG_PLDO_ILIM_LVL_VALID_SHIFT |
+                       PMIC_PWR_CFG_PLDO_ILIM_DGL_VALID_SHIFT | PMIC_PWR_CFG_PLDO_VMON_THR_VALID_SHIFT |
+                       PMIC_PWR_CFG_PLDO_VMON_DGL_VALID_SHIFT,
+        .pldo = PMIC_PWR_PLDO1,
+        .mode = PMIC_PWR_PLDO_EN_AS_LDO_IN_OPER,
+        .trackingMode = (bool)FALSE,
+        .lvl = PMIC_PWR_LDO_LVL_1P3V,
+        .ilimLvl = PMIC_PWR_LDO_ILIM_LVL_OPTION_0,
+        .ilimDgl = PMIC_PWR_LDO_ILIM_DEGLITCH_1_MS,
+        .vmonThr = PMIC_PWR_PLDO_VMON_THR_MAX,
+        .vmonDgl = PMIC_PWR_RSRC_VMON_DGL_MAX,
+    };
+
+    Pmic_PwrPldoCfg_t acpPldoCfg = {
+        .validParams = PMIC_PWR_CFG_PLDO_MODE_VALID_SHIFT | PMIC_PWR_CFG_PLDO_TRACKING_MODE_VALID_SHIFT |
+                       PMIC_PWR_CFG_PLDO_LVL_VALID_SHIFT | PMIC_PWR_CFG_PLDO_ILIM_LVL_VALID_SHIFT |
+                       PMIC_PWR_CFG_PLDO_ILIM_DGL_VALID_SHIFT | PMIC_PWR_CFG_PLDO_VMON_THR_VALID_SHIFT |
+                       PMIC_PWR_CFG_PLDO_VMON_DGL_VALID_SHIFT,
+        .pldo = PMIC_PWR_PLDO1,
+    };
+
+    Pmic_PwrRsrcStat_t PldoStatus = {
+        .validParams = PMIC_PWR_RSRC_STAT_OV_ERR_VALID | PMIC_PWR_RSRC_STAT_UV_ERR_VALID |
+                       PMIC_PWR_RSRC_STAT_ILIM_ERR_VALID | PMIC_PWR_RSRC_STAT_TSD_ERR_VALID |
+                       PMIC_PWR_RSRC_STAT_TSD_WARN_VALID,
+        .pwrRsrc = PMIC_PWR_PLDO1,
+    };
+
+    DebugP_log("\r\n");
+    DebugP_log("Setting PLDO1 config...\r\n");
+    status = Pmic_pwrSetPldoCfg(coreHandle, &expPldoCfg);
+    DebugP_assert(status == PMIC_ST_SUCCESS);
+
+    status = Pmic_pwrGetPldoCfg(coreHandle, &acpPldoCfg);
+    DebugP_assert(status == PMIC_ST_SUCCESS);
+    DebugP_log("Validating PLDO1 configurations...\r\n");
+    DebugP_assert(expPldoCfg.mode == acpPldoCfg.mode);
+    DebugP_assert(expPldoCfg.trackingMode == acpPldoCfg.trackingMode);
+    DebugP_assert(expPldoCfg.lvl == acpPldoCfg.lvl);
+    DebugP_assert(expPldoCfg.ilimLvl == acpPldoCfg.ilimLvl);
+    DebugP_assert(expPldoCfg.ilimDgl == acpPldoCfg.ilimDgl);
+    DebugP_assert(expPldoCfg.vmonThr == acpPldoCfg.vmonThr);
+    DebugP_assert(expPldoCfg.vmonDgl == acpPldoCfg.vmonDgl);
+    DebugP_log("PLDO1 configurations have been successfully validated\r\n");
+
+    status = Pmic_pwrGetRsrcStat(coreHandle, &PldoStatus);
+    DebugP_assert(status == PMIC_ST_SUCCESS);
+    DebugP_log("PLDO voltage, thermal and current limit status\r\n");
+    DebugP_log("PLDO1 over voltage error status: %s\r\n", ((PldoStatus.ovErr == (bool)true) ? "set" : "cleared"));
+    DebugP_log("PLDO1 under voltage error status: %s\r\n", ((PldoStatus.uvErr == (bool)true) ? "set" : "cleared"));
+    DebugP_log("PLDO1 current limit error status: %s\r\n", ((PldoStatus.ilimErr == (bool)true) ? "set" : "cleared"));
+    DebugP_log("PLDO1 Thermal shutdown warning status: %s\r\n", ((PldoStatus.tsdErr == (bool)true) ? "set" : "cleared"));
+    DebugP_log("PLDO1 Thermal shutdown error status: %s\r\n", ((PldoStatus.tsdWarn == (bool)true) ? "set" : "cleared"));
+
+    /*Setting LDO2 Configuration*/
+    Pmic_PwrLdoCfg_t expLdoCfg = {
+        .validParams = PMIC_PWR_CFG_LDO_MODE_VALID_SHIFT | PMIC_PWR_CFG_LDO_ILIM_LVL_VALID_SHIFT |
+                       PMIC_PWR_CFG_LDO_ILIM_DGL_VALID_SHIFT | PMIC_PWR_CFG_LDO_VMON_THR_VALID_SHIFT |
+                       PMIC_PWR_CFG_LDO_VMON_DGL_VALID_SHIFT,
+        .ldo = PMIC_PWR_LDO2,
+        .mode = PMIC_PWR_LDO_EN_AS_LDO_IN_OPER,
+        .ilimLvl = PMIC_PWR_LDO_ILIM_LVL_OPTION_0,
+        .ilimDgl = PMIC_PWR_LDO_ILIM_DEGLITCH_1_MS,
+        .vmonThr = PMIC_PWR_PLDO_VMON_THR_MAX,
+        .vmonDgl = PMIC_PWR_RSRC_VMON_DGL_MAX,
+    };
+
+    Pmic_PwrLdoCfg_t acpLdoCfg = {
+        .validParams = PMIC_PWR_CFG_LDO_MODE_VALID_SHIFT | PMIC_PWR_CFG_LDO_ILIM_LVL_VALID_SHIFT |
+                       PMIC_PWR_CFG_LDO_ILIM_DGL_VALID_SHIFT | PMIC_PWR_CFG_LDO_VMON_THR_VALID_SHIFT |
+                       PMIC_PWR_CFG_LDO_VMON_DGL_VALID_SHIFT,
+        .ldo = PMIC_PWR_LDO2,
+    };
+
+    Pmic_PwrRsrcStat_t ldoStatus = {
+        .validParams = PMIC_PWR_RSRC_STAT_OV_ERR_VALID_SHIFT | PMIC_PWR_RSRC_STAT_UV_ERR_VALID_SHIFT |
+                       PMIC_PWR_RSRC_STAT_ILIM_ERR_VALID_SHIFT | PMIC_PWR_RSRC_STAT_TSD_ERR_VALID_SHIFT | 
+                       PMIC_PWR_RSRC_STAT_TSD_WARN_VALID_SHIFT,
+        .pwrRsrc = PMIC_PWR_LDO2,
+    };
+
+    DebugP_log("\r\n");
+    DebugP_log("Setting LDO2 config...\r\n");
+    status = Pmic_pwrSetLdoCfg(coreHandle, &expLdoCfg);
+    DebugP_assert(status == PMIC_ST_SUCCESS);
+
+    status = Pmic_pwrGetLdoCfg(coreHandle, &acpLdoCfg);
+    DebugP_assert(status == PMIC_ST_SUCCESS);
+    DebugP_log("Validating LDO2 configurations...\r\n");
+    DebugP_assert(expLdoCfg.mode == acpLdoCfg.mode);
+    DebugP_assert(expLdoCfg.ilimLvl == acpLdoCfg.ilimLvl);
+    DebugP_assert(expLdoCfg.ilimDgl == acpLdoCfg.ilimDgl);
+    DebugP_assert(expLdoCfg.vmonThr == acpLdoCfg.vmonThr);
+    DebugP_assert(expLdoCfg.vmonDgl == acpLdoCfg.vmonDgl);
+    DebugP_log("LDO2 configurations have been successfully validated\r\n");
+
+    status = Pmic_pwrGetRsrcStat(coreHandle, &ldoStatus);
+    DebugP_assert(status == PMIC_ST_SUCCESS);
+    DebugP_log("LDO voltage, thermal and current limit status\r\n");
+    DebugP_log("LDO2 over voltage error status: %s\r\n", ((ldoStatus.ovErr == (bool)true) ? "set" : "cleared"));
+    DebugP_log("LDO2 under voltage error status: %s\r\n", ((ldoStatus.uvErr == (bool)true) ? "set" : "cleared"));
+    DebugP_log("LDO2 current limit error status: %s\r\n", ((ldoStatus.ilimErr == (bool)true) ? "set" : "cleared"));
+    DebugP_log("LDO2 Thermal shutdown warning status: %s\r\n", ((ldoStatus.tsdErr == (bool)true) ? "set" : "cleared"));
+    DebugP_log("LDO2 Thermal shutdown error status: %s\r\n", ((ldoStatus.tsdWarn == (bool)true) ? "set" : "cleared"));
+
+    /* Success */
+    DebugP_log("PMIC PLDO and LDO configuration and status report complete\r\n");
 }
 
 static void PMICApp_setGpioConf(Pmic_CoreHandle_t *coreHandle)
