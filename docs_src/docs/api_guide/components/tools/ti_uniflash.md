@@ -98,7 +98,11 @@ After setting up one of the above session launch type, Click the Start button to
     - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
     \imageStyle{load_jtag.png,width:70%}
     \image html load_jtag.png "Load Binary Image"
-    - Do not modify the address field for XIP file type. The field is used by the flash loader to recognize XIP files.
+    - For XIP file types, use the below table to configure the load addresses. This field is used by the flash loader to recognize type of XIP file.
+        | XIP File          | Load Address  |
+        |-------------------|---------------|
+        | *.appimage_xip    | 0xF0000000    |
+        | *.mcelf_xip       | 0xE0000000    |
 3.  Flash Address Table:
     - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
         | Program     | Start Address |
@@ -119,7 +123,12 @@ After setting up one of the above session launch type, Click the Start button to
     - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
     \imageStyle{load_jtag_2.png,width:80%}
     \image html load_jtag_2.png "Load Binary Image"
-    - Do not modify the address field for XIP file type. The field is used by the flash loader to recognize XIP files.
+    - For XIP file types, use the below table to configure the load addresses. This field is used by the flash loader to recognize type of XIP file.
+        | XIP File          | Load Address  |
+        |-------------------|---------------|
+        | *.appimage_xip    | 0xF0000000    |
+        | *.mcelf_xip       | 0xE0000000    |
+
 3.  Flash Address Table:
     - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
         \if SOC_AM261X
@@ -168,7 +177,11 @@ After setting up one of the above session launch type, Click the Start button to
     - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
     \imageStyle{load_jtag_1.png,width:70%}
     \image html load_jtag_1.png "Load Binary Image"
-    - Do not modify the address field for XIP file type. The field is used by the flash loader to recognize XIP files.
+    - For XIP file types, use the below table to configure the load addresses. This field is used by the flash loader to recognize type of XIP file.
+        | XIP File          | Load Address  |
+        |-------------------|---------------|
+        | *.appimage_xip    | 0xF0000000    |
+        | *.mcelf_xip       | 0xE0000000    |
 3.  Flash Address Table:
     - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
         | Program     | Start Address |
@@ -303,13 +316,18 @@ When saving memory to a file, UniFlash supports the following formats:
 
 ## Memory Browser and Memory Export{#MEMORY_BROWSER}
 
-The Memory View in UniFlash allows you to browse the target memory quickly. Please note that this view is read-only.
+- The Memory View in UniFlash allows you to browse the target memory quickly. Please note that this view is read-only.
 
-To export a range of memory, follow these steps:
+- To read the RAM memory without clearing the data on refresh, keep the "Remain Connected after operations" option ticked as shown.
 
--   Use the Memory View to select the desired memory range.
--   Click the "Export" button.
--   Choose either a binary (.BIN) file or a COFF (.out) file for export. The COFF format enables the export of multiple memory sections.
+    \imageStyle{core_connection.png,width:50%}
+    \image html core_connection.png "Keep core connected"
+
+- To export a range of memory, follow these steps:
+
+    - Use the Memory View to select the desired memory range.
+    - Click the "Export" button.
+    - Choose either a binary (.BIN) file or a COFF (.out) file for export. The COFF format enables the export of multiple memory sections.
 
 ## Additional Information
 
