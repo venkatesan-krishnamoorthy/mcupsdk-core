@@ -1993,6 +1993,7 @@ int32_t ICSS_EMAC_rxPktInfo2(ICSS_EMAC_Handle   icssEmacHandle,
             else
             {
                 i++;
+                queueCheckCount++;
             }
         }
     }
