@@ -60,7 +60,8 @@ extern "C" {
 #define CSL_CORE_ID_R5FSS0_0         (0U)
 #define CSL_CORE_ID_R5FSS0_1         (1U)
 #define CSL_CORE_ID_C66SS0           (2U)
-#define CSL_CORE_ID_MAX              (3U)
+#define CSL_CORE_ID_M4FSS0_1         (3U)
+#define CSL_CORE_ID_MAX              (4U)
 /** @} */
 /**
  * \anchor PrivID

@@ -277,6 +277,7 @@ function getProjectSpecCpu(cpu) {
         "r5fss0-0": "Cortex_R5_0",
         "r5fss0-1": "Cortex_R5_1",
         "c66ss0"  : "C66xx_DSP",
+        "m4fss0-1": "Cortex_M4_1",
     }
 
     return projectSpecCpu[cpu];

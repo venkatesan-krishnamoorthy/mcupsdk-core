@@ -72,8 +72,8 @@
         "/board/board",
         "/fs/fs",
         "/networking/networking",
-        "/memory_configurator/components",
         "/security/security",
+        "/memory_configurator/components",
 % }
 % if(args.device == "am62x") {
         "/kernel/dpl",
@@ -307,7 +307,10 @@
         }, {
             "name": "hsm0-0",
             "targetdbId": "hsm0-0"
-        }],
+        }, {
+            "name": "m4fss0-1",
+            "targetdbId": "m4fss0-1"
+        },],
 % }
 % if((args.device == "awr294x") || (isDevelopmentMode)) {
         "AWR294X": [{
