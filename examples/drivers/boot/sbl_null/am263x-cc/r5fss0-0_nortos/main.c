@@ -41,6 +41,7 @@ const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.h
     = HSMRT_IMG;
 
 extern HsmClient_t gHSMClient ;
+extern uint32_t gMcuLbistTestStatus;
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -77,15 +78,31 @@ int main(void)
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_socInitL2MailBoxMemory();
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    if(gMcuLbistTestStatus == 0U)
+    {
+        Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+        Bootloader_socInitL2MailBoxMemory();
+        Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
-    status = Keyring_init(&gHSMClient);
-    DebugP_assert(status == SystemP_SUCCESS);
+        status = Keyring_init(&gHSMClient);
+        DebugP_assert(status == SystemP_SUCCESS);
+    }
 
+    if(gMcuLbistTestStatus == 1U)
+    {
+        gMcuLbistTestStatus = 0U;
+    }
+    else
+    {
+        gMcuLbistTestStatus = 1U;
+    }
+    /* Perform LBIST test on CPU. Once the test is complete, CPU will reset and start over.*/
+    SDL_lbist_selftest();
+    if(gMcuLbistTestStatus == 0U)
+    {
+        DebugP_log("STC Test Complete ... \r\n");
+    }
     DebugP_log("Starting NULL Bootloader ... \r\n");
-
 
     Bootloader_Params bootParams;
     Bootloader_BootImageInfo bootImageInfo;

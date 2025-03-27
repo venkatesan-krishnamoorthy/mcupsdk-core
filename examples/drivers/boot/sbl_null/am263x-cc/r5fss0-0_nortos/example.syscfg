@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @cliArgs --device "AM263x_beta" --part "AM263x" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2631-Q1" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -12,11 +13,9 @@ const bootloader      = scripting.addModule("/drivers/bootloader/bootloader", {}
 const bootloader1     = bootloader.addInstance();
 const hsmclient       = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
 const hsmclient1      = hsmclient.addInstance();
-const mcu_pbist        = scripting.addModule("/drivers/mcu_pbist/mcu_pbist", {}, false);
-const mcu_pbist1       = mcu_pbist.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -47,8 +46,6 @@ bootloader1.R5FSS0operatingMode = "Standalone";
 bootloader1.R5FSS1operatingMode = "Standalone";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
-
-mcu_pbist1.$name = "CONFIG_MCU_PBIST0";
 
 debug_log.enableUartLog            = true;
 debug_log.enableCssLog             = false;
