@@ -153,13 +153,20 @@ This step is required if CCS logs are enabled. In production build, CCS logs sho
 
 ## Enabling secure XIP using OTFA
 
-- Applications stored in external flash are susceptible to physical and logical attacks. Ensuring the security and safety of the image executed in place is important to achieve advanced security for the device.
-- Signing and encrypting application image to be executed from flash enables this. AM261X and AM263PX are equipped with OTFA (On-The-Fly-Authentication and Decryption) hardware module to authenticate and decrypt an application running from flash.
-- OTFA can be configured to authenticate and decrypt up to four distinct regions in the flash, with different keys.
-- The application binary, converted to MCELF format is post-processed for safety and security using the __`genimage.py`__ tool [Refer \ref TOOLS_BOOT]
+\note This feature is only valid for HSSE device.
 
-To enable security in XIP image,
-  1. Enter the OTFA configuration settings in JSON format like below:
+- Applications stored in external flash are susceptible to physical and logical attacks. Ensuring the security and safety of the image executed in place is important to achieve advanced security for the device.
+\cond SOC_AM263PX
+- Signing and encrypting application image to be executed from flash enables this. AM263PX is equipped with OTFA (On-The-Fly-Authentication and Decryption) hardware module to authenticate and decrypt an application running from flash. 
+\endcond
+\cond SOC_AM261X
+- Signing and encrypting application image to be executed from flash enables this. AM261X is equipped with OTFA (On-The-Fly-Authentication and Decryption) hardware module to authenticate and decrypt an application running from flash. 
+\endcond
+- OTFA can be configured to authenticate and decrypt up to four distinct regions in the flash, with different keys. The key management for OTFA is expected to be done by HSM Run Time Firmware.
+- The application binary, converted to MCELF format is post-processed for safety and security using the __genimage.py__ tool [Refer \ref TOOLS_BOOT]
+
+### Steps enable security in XIP image,
+  1. Enter the OTFA configuration settings in JSON format as shown in the example json file below:
     \code
     {
     "mac_size": 4,
@@ -168,28 +175,140 @@ To enable security in XIP image,
             "start": "0x60000000",
             "size": "0x1000000",
             "authKeyID" : 1,
-            "authKey": "../../../../../../source/security/security_common/tools/boot/signing/mcu_custMek.key",
+            "authKey": Absolute path to key For example: "/home/user/ti/mcu_plus_sdk/source/security/security_common/tools/boot/signing/mcu_custMek.key",
             "encKeyID" : 1,
-            "encKey": "../../../../../../source/security/security_common/tools/boot/signing/mcu_custMek.key",
-            "kdSalt" : "../../../../../../source/security/security_common/tools/boot/signing/kd_salt.txt",
-            "keyFetchMode" : 1,
+            "encKey": Absolute path to key For example: "/home/user/ti/mcu_plus_sdk/source/security/security_common/tools/boot/signing/mcu_custMek.key",
+            "kdSalt" : Absolute path to salt For example: "/home/user/ti/mcu_plus_sdk/source/security/security_common/tools/boot/signing/kd_salt.txt",
+            "keyFetchMode" : 1,            
             "cryptoMode":"gcm",
             "eccEnable": false
         }
         ]
     }
     \endcode
-    * KeyIDs correspond to the indices of the keys in Keyring, which will be used by __HsmServer__ for authentication and decryption.
-        * If KeyID=1 [root key], HKDF derives a key from the input key file using the input salt. Derived keys will be used for signing and encryption.
-        * If KeyID >= 32, derivation is skipped. The plain key inputs are used for signing and encryption.
+    * KeyIDs correspond to the indices of the keys in Keyring which will be provided to the HSM Run Time Firmware via __HsmClient_Config__ for authentication and decryption and used by __HsmServer__ for authentication and decryption.
+        * If KeyID = 1/3 (SMEK or BMEK), the root key is used to encrypt the image in the flash. This is the same key which is used to encrypt the SBL as well as HSM Run Time firmware.
+        * If KeyID >= 32, auxilary key is used for encryption. This key is retrieved from the keyring which is managed by the HSM Run Time Firmware.
         * Example JSON Path : mcu_plus_sdk/tools/boot/otfa_eccm/otfaConf.json
+\cond SOC_AM263PX
   2. Build the application image with the above JSON file as a tool input
-      * Example : _`make -s DEVICE=am263px DEVICE_TYPE=HS oeconfig=mcu_plus_sdk/tools/boot/otfa_eccm/otfaConf.json all`_
-      * This generates
-          * a post-processed MCELF_XIP image, encrypted and authenticated with DSMEK
-          * a note-appended MCELF_RAM image, that contains the OTFA configuration parameters' details
-  3. Flash the image using uart_uniflash.py tool with any sbl_ospi bootloader. (example: sbl_ospi_multicore_elf)
-  4. If using auxiliary keys, generate a keyring certificate containing the same key material and import the certificate in SBL build
+      * Example : 
+        \code 
+        make -s DEVICE=am263px DEVICE_TYPE=HS oeconfig=mcu_plus_sdk/tools/boot/otfa_eccm/otfaConf.json all
+        \endcode
+      * This generates 
+          * a post-processed MCELF_XIP image, encrypted and authenticated with the same root key key which is used to encrypt the SBL as well as HSM Run Time firmware.
+          * a note-appended MCELF_RAM image, that contains the OTFA configuration parameters' details.
+  3. Build the uart_uniflash SBL
+      * Example : 
+        \code
+        make -s examples/drivers/boot/sbl_uart_uniflash/am263px/r5fss0-0_nortos/ti-arm-clang DEVICE=am263px DEVICE_TYPE=HS all
+        \endcode
+  4. Build the any sbl_ospi (ex. sbl_ospi_multicore_elf) SBL
+      * Example : 
+        \code
+        make -s examples/drivers/boot/sbl_ospi_multicore_elf/am263px/r5fss0-0_nortos/ti-arm-clang DEVICE=am263px DEVICE_TYPE=HS all
+        \endcode
+  5. In order to flash the image using uart_uniflash.py tool, we first need to configure the mcelf_sbl_ospi.cfg. Change the path of the images to the appropriate path.
+     \code
+      #-----------------------------------------------------------------------------#
+      #                                                                             #
+      #      DEFAULT CONFIGURATION FILE TO BE USED WITH THE FLASHWRITER SCRIPT      #
+      #                                                                             #
+      #-----------------------------------------------------------------------------#
+      #
+      # By default this config file,
+      # - points to pre-built flash writer, bootloader for this EVM
+      # - The application image points to relative path of the ipc echo application image for this EVM
+      #   - Make sure this application is built before running this script
+      # - You can customized this config file to point to your own bootloader and/or application images
+      # - You can use --operation=flashverify if you just want to verify the flash contents and not flash the file.
+      #
+
+      # First point to sbl_uart_uniflash binary, which function's as a server to flash one or more files
+      --flash-writer=(PATH TO)/sbl_uart_uniflash.release.hs.tiimage
+
+      # Program the OSPI PHY tuning attack vector
+      --operation=flash-phy-tuning-data
+
+      # When sending bootloader make sure to flash at offset 0x0. ROM expects bootloader at offset 0x0
+      --file=(PATH TO)/sbl_ospi_multicore_elf.release.hs.tiimage --operation=flash --flash-offset=0x0
+
+      # When sending application image, make sure to flash at offset 0x81000 (default) or to whatever offset your bootloader is configured for
+      --file= (PATH TO)release.mcelf.hs --operation=flash --flash-offset=0x81000
+
+      # send the XIP image for this application, no need to specify flash offset since flash offset is specified within the image itself
+      --file=(PATH TO)release.mcelf_xip --operation=flash-mcelf-xip
+     \endcode  
+  6. Change the boot mode to UART and flash the images using the following command. 
+      \code
+      cd ~/ti/mcu_plus_sdk/tools/boot/
+      python3 uart_uniflash.py -p /dev/ttyUSB<xx> --cfg=sbl_prebuilt/am263px-cc/default_sbl_ospi.cfg
+      \endcode
+      Once the images are flashed switch to OSPI boot mode and reset device to see the output. 
+\endcond
+
+\cond SOC_AM261X
+  2. Build the application image with the above JSON file as a tool input
+      * Example : 
+        \code
+        make -s DEVICE=am261x DEVICE_TYPE=HS oeconfig=mcu_plus_sdk/tools/boot/otfa_eccm/otfaConf.json all
+        \endcode
+      * This generates 
+          * a post-processed MCELF_XIP image, encrypted and authenticated with the same root key key which is used to encrypt the SBL as well as HSM Run Time firmware.
+          * a note-appended MCELF_RAM image, that contains the OTFA configuration parameters' details.
+  3. Build the uart_uniflash SBL
+      * Example : 
+        \code
+        make -s examples/drivers/boot/sbl_uart_uniflash/am261x/r5fss0-0_nortos/ti-arm-clang DEVICE=am261x DEVICE_TYPE=HS  all
+        \endcode
+  4. Build the any sbl_ospi (ex. sbl_ospi_multicore_elf) SBL
+      * Example : 
+        \code
+        make -s examples/drivers/boot/sbl_ospi_multicore_elf/am261x/r5fss0-0_nortos/ti-arm-clang DEVICE=am261x DEVICE_TYPE=HS  all
+        \endcode
+  5. In order to flash the image using uart_uniflash.py tool, we first need to configure the mcelf_sbl_ospi.cfg. Change the path of the images to the appropriate path.
+     \code
+      #-----------------------------------------------------------------------------#
+      #                                                                             #
+      #      DEFAULT CONFIGURATION FILE TO BE USED WITH THE FLASHWRITER SCRIPT      #
+      #                                                                             #
+      #-----------------------------------------------------------------------------#
+      #
+      # By default this config file,
+      # - points to pre-built flash writer, bootloader for this EVM
+      # - The application image points to relative path of the ipc echo application image for this EVM
+      #   - Make sure this application is built before running this script
+      # - You can customized this config file to point to your own bootloader and/or application images
+      # - You can use --operation=flashverify if you just want to verify the flash contents and not flash the file.
+      #
+
+      # First point to sbl_uart_uniflash binary, which function's as a server to flash one or more files
+      --flash-writer=(PATH TO)/sbl_uart_uniflash.release.hs.tiimage
+
+      # Program the OSPI PHY tuning attack vector
+      --operation=flash-phy-tuning-data
+
+      # When sending bootloader make sure to flash at offset 0x0. ROM expects bootloader at offset 0x0
+      --file= (PATH TO)/sbl_ospi_multicore_elf.release.hs.tiimage --operation=flash --flash-offset=0x0
+
+      # When sending application image, make sure to flash at offset 0x81000 (default) or to whatever offset your bootloader is configured for
+      --file=(PATH TO).release.mcelf.hs --operation=flash --flash-offset=0x81000
+
+      # send the XIP image for this application, no need to specify flash offset since flash offset is specified within the image itself
+      --file=(PATH TO).mcelf_xip --operation=flash-mcelf-xip
+     \endcode
+
+  6. Change the boot mode to UART and flash the images using the following command. 
+      \code
+      cd ~/ti/mcu_plus_sdk/tools/boot/
+      python3 uart_uniflash.py -p /dev/ttyUSB<xx> --cfg=sbl_prebuilt/am261x-lp/default_sbl_ospi.cfg
+      \endcode
+      Once the images are flashed switch to OSPI boot mode and reset device to see the output.      
+\endcond
+
+  \note In order to use auxilary keys for encryption, please check the TIFS documentation for auxilary key usage. For encryption using auxilary keys, a keyring certificate needs to be generated. This certificate contains the key and has to be imported in the SBL build.
+
 
 
 ## Debugging XIP applications
