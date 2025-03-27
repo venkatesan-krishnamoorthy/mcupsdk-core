@@ -18,8 +18,10 @@ LP-AM261 board provides the support for the following Ethernet add-on boards.
 
 \cond SOC_AM263PX
 The diagram below shoes the top view of AM263Px Control Card which shows the Ethernet add-on board connector.
-![Ethernet Add-on Board]
- (Ethernet_addon_board.png "Ethernet Add-on Board")
+
+ \imageStyle{am263px_with_addon.jpeg,width:25%}
+ \image html am263px_with_addon.jpeg  **Figure**: AM263px Control Card with DP83TG720 Ethernet Add-on Board
+ 
 \endcond
 
 \cond SOC_AM261X 
