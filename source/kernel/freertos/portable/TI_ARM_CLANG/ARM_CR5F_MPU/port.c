@@ -350,6 +350,7 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS * xMPUSettings,
                                 uint32_t ulStackDepth )
 {
     uint32_t ulIndex = 0x0;
+    uint32_t ulRegionIndex = 0x0;
     uint32_t ulRegionLength;
     uint32_t ulRegionLengthEncoded;
     uint32_t ulRegionLengthDecoded;
@@ -377,13 +378,13 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS * xMPUSettings,
             xMPUSettings->xRegion[ ulIndex ].ulRegionSize = ( ulRegionLengthEncoded |
                                                                 portMPU_REGION_ENABLE );
             xMPUSettings->xRegion[ ulIndex ].ulRegionAttribute = ( portMPU_REGION_PRIV_RW_USER_RW_NOEXEC |
-                                                                    portMPU_REGION_NORMAL_OIWTNOWA_SHARED );
+                                                                    portMPU_REGION_NORMAL_OIWBWA_NONSHARED );
             ulIndex++;
         }
 
         while( ulIndex < portTOTAL_NUM_REGIONS_IN_TCB)
         {
-            ulRegionLength = xRegions[ ulIndex ].ulLengthInBytes;
+            ulRegionLength = xRegions[ ulRegionIndex ].ulLengthInBytes;
             /* If a length has been provided, the region is in use. */
             if( ulRegionLength > 0UL )
             {
@@ -391,12 +392,12 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS * xMPUSettings,
 
                 /* MPU region base address must be aligned to the region size boundary. */
                 ulRegionLengthDecoded = prvGetMPURegionSizeDecode( ulRegionLengthEncoded );
-                configASSERT( ( ( ( uint32_t ) xRegions[ ulIndex ].pvBaseAddress ) % ( ulRegionLengthDecoded ) ) == 0UL );
+                configASSERT( ( ( ( uint32_t ) xRegions[ ulRegionIndex ].pvBaseAddress ) % ( ulRegionLengthDecoded ) ) == 0UL );
 
-                xMPUSettings->xRegion[ ulIndex ].ulRegionBaseAddress = ( uint32_t ) xRegions[ ulIndex ].pvBaseAddress;
+                xMPUSettings->xRegion[ ulIndex ].ulRegionBaseAddress = ( uint32_t ) xRegions[ ulRegionIndex ].pvBaseAddress;
                 xMPUSettings->xRegion[ ulIndex ].ulRegionSize = ( ulRegionLengthEncoded |
                                                                   portMPU_REGION_ENABLE );
-                xMPUSettings->xRegion[ ulIndex ].ulRegionAttribute = xRegions[ ulIndex ].ulParameters;
+                xMPUSettings->xRegion[ ulIndex ].ulRegionAttribute = xRegions[ ulRegionIndex ].ulParameters;
             }
             else
             {
@@ -406,6 +407,7 @@ void vPortStoreTaskMPUSettings( xMPU_SETTINGS * xMPUSettings,
             }
     
             ulIndex++;
+            ulRegionIndex++;
         }
     } 
     else 
