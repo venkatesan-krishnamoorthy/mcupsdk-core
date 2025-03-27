@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,8 +37,12 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include "stdbool.h"
 
-#define NUM_OF_ITERATIONS    (3U)
+#define NUM_OF_ITERATIONS               (3U)
+#define MILLISEC_PER_SEC                (1000U)
+#define EXP_TIME_DIVIDER                (2U)
+#define MILLISEC_TO_MICROSEC(msec)      ((msec)*1000U)
 
 /*
  * This example uses the WDT module in reset mode to trigger warm reset.
@@ -56,6 +60,7 @@ void watchdog_reset_mode_main(void *args)
     /* Watchdog timer expiry time in millisecond */
     uint32_t wdtExpiryTimeinMs = gWatchdogParams[CONFIG_WDT0].expirationTime;
     uint32_t index = 0;
+    uint32_t countdown = wdtExpiryTimeinMs/MILLISEC_PER_SEC;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
@@ -63,26 +68,32 @@ void watchdog_reset_mode_main(void *args)
 
     DebugP_log("Watchdog reset Mode Test Started ...\r\n");
 
-    DebugP_log("Servicing WDT for few iterations \r\n");
+    DebugP_log("Servicing WDT for %d iterations \r\n", NUM_OF_ITERATIONS);
 
     /* Service the WDT for more than expiry time */
     for(index = 0; index < NUM_OF_ITERATIONS; index++)
     {
         /* Need to service the WDT in open window */
         while(Watchdog_isClosedWindow(gWatchdogHandle[CONFIG_WDT0]) == true);
+        /* wait for (expiry time/2 ) time */
+        ClockP_usleep(MILLISEC_TO_MICROSEC(wdtExpiryTimeinMs)/EXP_TIME_DIVIDER);
+        DebugP_log("Servicing WDT !! \r\n");
         /* Clear Watchdog timer */
         Watchdog_clear(gWatchdogHandle[CONFIG_WDT0]);
-        /* wait for (expiry time/2 ) time */
-        ClockP_usleep((wdtExpiryTimeinMs*100)/2);
     }
 
-    DebugP_log("Watchdog triggers warm reset in %d (ms)\r\n", wdtExpiryTimeinMs);
+    DebugP_log("Watchdog triggers warm reset in %d (ms)\r\n",
+               wdtExpiryTimeinMs);
     DebugP_log("All tests have passed!!\r\n");
+    Watchdog_clear(gWatchdogHandle[CONFIG_WDT0]);
+
+    /* Wait for residual milli seconds */
+    ClockP_usleep(MILLISEC_TO_MICROSEC(wdtExpiryTimeinMs%1000U));
 
     /* Wait till WDT triggers the reset */
-    while(1)
+    while(true)
     {
-        DebugP_log("Prints will be stopped after reset \r\n");
+        DebugP_log("%d\r\n", countdown--);
+        ClockP_usleep((MILLISEC_TO_MICROSEC(MILLISEC_PER_SEC)));
     }
-
 }

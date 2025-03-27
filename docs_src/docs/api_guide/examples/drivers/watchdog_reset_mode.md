@@ -57,30 +57,28 @@ Please note that application prints in both CCS and UART console.
 CCS Console:
 \code
 [MAIN_Cortex_R5_0_0] Watchdog reset Mode Test Started ...
-Servicing WDT for few iterations
+Servicing WDT for 3 iterations
+Servicing WDT !!
+Servicing WDT !!
+Servicing WDT !!
 Watchdog triggers warm reset in 3000 (ms)
 All tests have passed!!
-Prints will be stopped after reset
-Prints will be stopped after reset
-Prints will be stopped after reset
-'' ''
-'' ''
-'' ''
-Prints will be stopped after reset
+3
+2
+1
 \endcode
 
 UART Console:
 \code
 Watchdog reset Mode Test Started ...
-Servicing WDT for few iterations
+Servicing WDT for 3 iterations
+Servicing WDT !!
+Servicing WDT !!
+Servicing WDT !!
 Watchdog triggers warm reset in 3000 (ms)
 All tests have passed!!
-Prints will be stopped after reset
-Prints will be stopped after reset
-Prints will be stopped after reset
-'' ''
-'' ''
-'' ''
-Prints will be stopped after reset
+3
+2
+1
 \endcode
 
