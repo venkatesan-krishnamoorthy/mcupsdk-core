@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -85,10 +85,10 @@ int main(void)
         status = Bootloader_xmodemReceive(CONFIG_UART0, gUniflashFileBuf, BOOTLOADER_UNIFLASH_MAX_FILE_SIZE, &fileSize);
 
         /*
-         * The `fileSize` wouldn't be the actual filesize, but (actual filesize + size of the header + padding bytes) added by xmodem.
+         * The fileSize wouldn't be the actual filesize, but (actual filesize + size of the header + padding bytes) added by xmodem.
          * This adds ~1KB. We can't know exactly how many bytes will be padded without checking the file header. But doing that
          * will unnecessary complicate the logic, so since the overhead is as small as ~1KB we could check for file size exceed
-         * by checking * this `fileSize` returned by xmodem as well.
+         * by checking * this fileSize returned by xmodem as well.
         */
 
         if(fileSize >= BOOTLOADER_UNIFLASH_MAX_FILE_SIZE)
@@ -109,8 +109,9 @@ int main(void)
             uniflashConfig.bufSize = 0; /* Actual fileSize will be parsed from the header */
             uniflashConfig.verifyBuf = gUniflashVerifyBuf;
             uniflashConfig.verifyBufSize = BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE;
-
             /* Process the flash commands and return a response */
+            
+
             Bootloader_UniflashFileHeader fileHeader;
             memcpy(&fileHeader, uniflashConfig.buf, sizeof(Bootloader_UniflashFileHeader));
 

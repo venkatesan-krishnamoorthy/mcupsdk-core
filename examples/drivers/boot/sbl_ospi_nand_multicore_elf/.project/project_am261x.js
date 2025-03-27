@@ -5,6 +5,7 @@ let device = "am261x";
 const files = {
     common: [
         "main.c",
+        "board.c",
     ],
 };
 
@@ -23,7 +24,8 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
-        "${MCU_PLUS_SDK_PATH}/source/middleware/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/pmic/lib",
+        "${MCU_PLUS_SDK_PATH}/source/security/lib",
     ],
 };
 
@@ -31,8 +33,9 @@ const libs_nortos_r5f = {
     common: [
         "nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "middleware.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "security.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "pmic_derby.am261x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -48,30 +51,33 @@ const includes = {
     ],
 };
 
-const templates_cc =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_uart_uniflash/main.c.xdt",
-        output: "../main.c",
-    },
-];
-
+const template_options_lp = {
+    bootformat: "MCELF",
+    supportFotaSwap: false,
+    enableFastBoot: false,
+    board: "am261x-lp"
+}
 
 const templates_lp =
 [
     {
-        input: ".project/templates/am261x/sbl/sbl_uart_uniflash/main.c.xdt",
+        input: ".project/templates/am261x/sbl/sbl_ospi/main.c.xdt",
         output: "../main.c",
+        options: template_options_lp
     },
+    {
+        input: ".project/templates/am261x/sbl/sbl_ospi/am261x-lp/board.c.xdt",
+        output: "../board.c",
+        options: template_options_lp
+    }
 ];
-
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART_UNIFLASH";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_OSPI";
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
+
 ];
 
 function getComponentProperty() {
@@ -79,7 +85,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_uart_uniflash";
+    property.name = "sbl_ospi_nand_multicore_elf";
     property.isInternal = false;
     property.isBootLoader = true;
     property.buildOptionCombos = buildOptionCombos;
@@ -95,20 +101,13 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    if(buildOption.board === "am261x-som")
-    {
-        build_property.templates = templates_cc;
-    }
-    else if(buildOption.board === "am261x-lp")
-    {
-        build_property.templates = templates_lp;
-    }
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-    build_property.includes = includes;
+    build_property.templates = templates_lp;
     
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_nortos_r5f;
     }
+    build_property.includes = includes;
 
     return build_property;
 }

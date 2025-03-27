@@ -18,6 +18,15 @@ After the file is processed, an acknowledgment is sent back to the host side pyt
 
 This example is more or less like a flashing server, and will never terminate until EVM is powered down or the core is reset.
 
+\cond SOC_AM261X
+# SBL UART Flash Writer For NAND Flash {#EXAMPLES_DRIVERS_SBL_UART_UNIFLASH_NAND}
+
+This flashwriter application is to be used when flashing to a **NAND type flash**.
+
+The steps to flash are same as the default sbl uart uniflash flashwriter.
+
+\endcond
+
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_UART_UNIFLASH_COMBOS}
 
 
@@ -43,7 +52,7 @@ This example is more or less like a flashing server, and will never terminate un
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

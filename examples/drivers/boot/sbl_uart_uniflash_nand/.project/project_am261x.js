@@ -48,15 +48,6 @@ const includes = {
     ],
 };
 
-const templates_cc =
-[
-    {
-        input: ".project/templates/am261x/sbl/sbl_uart_uniflash/main.c.xdt",
-        output: "../main.c",
-    },
-];
-
-
 const templates_lp =
 [
     {
@@ -70,7 +61,6 @@ const syscfgfile = "../example.syscfg";
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART_UNIFLASH";
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
 ];
 
@@ -79,7 +69,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sbl_uart_uniflash";
+    property.name = "sbl_uart_uniflash_nand";
     property.isInternal = false;
     property.isBootLoader = true;
     property.buildOptionCombos = buildOptionCombos;
@@ -95,14 +85,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    if(buildOption.board === "am261x-som")
-    {
-        build_property.templates = templates_cc;
-    }
-    else if(buildOption.board === "am261x-lp")
-    {
-        build_property.templates = templates_lp;
-    }
+    build_property.templates = templates_lp;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.includes = includes;
     

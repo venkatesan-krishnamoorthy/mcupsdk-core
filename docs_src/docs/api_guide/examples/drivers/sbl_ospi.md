@@ -51,6 +51,21 @@ This also has anti-rollback support. User Application needs to make sure that mi
 
 \endcond
 
+\cond SOC_AM261X
+# SBL OSPI NAND {#EXAMPLES_DRIVERS_SBL_OSPI_NAND}
+
+This SBL is used to run **appimage** type applications while using a **NAND type flash**. Steps to run the example is as mentioned below.
+
+Currently only 1s-1s-1s mode is supported.
+
+# SBL OSPI NAND MULTICORE ELF {#EXAMPLES_DRIVERS_SBL_OSPI_NAND_MCELF}
+
+This SBL is used to run **mcelf** type applications while using a **NAND type flash**. Steps to run the example is as mentioned below.
+
+Currently only 1s-1s-1s mode is supported.
+
+\endcond
+
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_OSPI_COMBOS}
 
 \cond SOC_AM64X
@@ -76,6 +91,17 @@ This also has anti-rollback support. User Application needs to make sure that mi
 \endcond
 
 \cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/boot/sbl_ospi
+
+\endcond
+
+\cond SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
