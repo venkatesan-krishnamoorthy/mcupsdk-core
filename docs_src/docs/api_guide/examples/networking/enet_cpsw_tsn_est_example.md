@@ -59,6 +59,9 @@ See also : \ref EXAMPLES_ENET_CPSW_EST, \ref ENET_CPSW_TSN_GPTP
 
 \endcond
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Constraints
 
 - This application only enables one MAC port which has the interface name *tilld0*.

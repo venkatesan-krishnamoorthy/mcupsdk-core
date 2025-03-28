@@ -106,6 +106,9 @@ Example folder | source/networking/enet/core/examples/enet_loopback/enet_cpsw_lo
 
 \endcond
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Steps to Run the Example
 
 ## Build the example

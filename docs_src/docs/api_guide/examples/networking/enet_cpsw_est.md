@@ -386,6 +386,9 @@ are shown in the following sequence diagram:
  Example folder | source/networking/enet/core/examples/enet_cpsw_est/V1
 \endcond
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Steps to Run the Example
 
 ## Build the example

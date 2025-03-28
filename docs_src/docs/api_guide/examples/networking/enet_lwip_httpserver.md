@@ -89,6 +89,9 @@ The example does below
 
 \endcond
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Configuring Syscfg
 
 - Select NoRTOS in 'TI Networking' -> 'CPSW' -> 'System Integration Config' -> 'RTOS Variant'

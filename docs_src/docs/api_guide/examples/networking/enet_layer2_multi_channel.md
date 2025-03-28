@@ -139,6 +139,10 @@ To override the channel mapping, we can use ALE classifier along with CPDMA_CONT
  Example folder | source/networking/enet/core/examples/enet_layer2_multi_channel/V1
 
 \endcond
+
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Steps to Run the Example
 
 ## Build the example

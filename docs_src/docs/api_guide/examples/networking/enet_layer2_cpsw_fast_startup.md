@@ -43,6 +43,9 @@ This example does:
 
 \endcond
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Modifications needed before running the example:
 
 \cond SOC_AM263X || SOC_AM263PX

@@ -94,6 +94,10 @@ See also :\ref ENET_CPSW_TSN_GPTP
  Example folder | source/networking/enet/core/examples/tsn/gptp_cpsw_app
 
 \endcond
+
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Steps to Run the Example
 
 ## Prerequisites

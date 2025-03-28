@@ -120,6 +120,10 @@ This example do below:
  For support on @VAR_LP_BOARD_NAME_LOWER please refer \ref ETHERNET_ADDON_BOARDS_TOP
 
 \endcond
+
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Steps to Run the Example
 
 ## Build the example

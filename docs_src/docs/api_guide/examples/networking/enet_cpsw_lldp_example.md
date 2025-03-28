@@ -67,6 +67,9 @@ See also :\ref ENET_CPSW_LLDP
 
 \endcond
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 ## Prerequisites
 - EVM Board
 - Cat6 ethernet cable

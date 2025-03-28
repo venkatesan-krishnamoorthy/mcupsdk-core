@@ -88,6 +88,9 @@ The supplied  demo TimeSync (PTP) does the task of
 \endcond
 
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Steps to Run the Demo
 
 ## Build the example

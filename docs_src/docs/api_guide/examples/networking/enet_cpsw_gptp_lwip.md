@@ -70,6 +70,9 @@ See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
 
 \endcond
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Steps to Run the Example
 
 ## Prerequisites

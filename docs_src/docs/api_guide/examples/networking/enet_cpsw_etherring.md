@@ -132,6 +132,9 @@ Enter the nodeId :
  Example folder | source/networking/enet/core/examples/ether_ring
  \endcond
 
+# Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 # Steps to Run the Example
 
 ## Build the example

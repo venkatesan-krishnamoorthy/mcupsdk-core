@@ -22,6 +22,9 @@ This example does the following:
  Boards         | am243x-lp
  Example folder | source/networking/enet/core/examples/enet_cli_app
 
+## Packet pool configuration
+To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL_CONFIG_TOP
+
 ## Steps to Run the Example
 
 ### Build the Example
