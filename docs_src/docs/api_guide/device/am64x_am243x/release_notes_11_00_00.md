@@ -1,12 +1,10 @@
-# Release Notes 10.01.00 {#RELEASE_NOTES_10_01_00_PAGE}
+# Release Notes 11.00.00 {#RELEASE_NOTES_11_00_00_PAGE}
 
 [TOC]
 
-\attention 1. There are known issues about increased build time for **networking examples** having Link Time Optimizations (LTO) enabled. See **Known Issues** below.
+\attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
-
-\attention 3. A53 support is applicable for AM64x only. It is NOT applicable for AM243x. \n
+\attention 2. A53 support is applicable for AM64x only. It is NOT applicable for AM243x. \n
 
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
@@ -22,27 +20,13 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-LLD drivers for OSPI, MMCSD and MCAN are added                                                  | Drivers
-SBL shows an example usage of DDR QoS support                                                   | Drivers
-Example to demonstrate root of trust switching                                                  | Examples
-FreeRTOS AMP support is adde for A53 cores                                                      | Kernel
-Secureboot support from OSPI                                                                    | Bootloader
-Enabling FreeRTOS based Ethernet MAC and switch driver                                          | Ethernet
-Support for LwIP stack and TSN stack to run on A53 core                                         | ^
-PRU-ICSS Ethernet firmware is updated to version REL.PRU-ICSS-ETHERNET-SWITCH_02.02.15.00       | ^
-PRU-ICSS Ethernet firmware - Local injection handle port block state (MRP requirement)          | ^
-A53 FreeRTOS AMP examples demonstrating usage of Ethernet                                       | ^
+LLD drivers for FSI                                                                             | Drivers
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-LLD drivers for OSPI, MMCSD and MCAN are added                                                  | Drivers
-SBL shows an example usage of DDR QoS support                                                   | Drivers
-Secureboot support from OSPI                                                                    | Bootloader
-Example to demonstrate root of trust switching                                                  | Examples
-PRU-ICSS Ethernet firmware is updated to version REL.PRU-ICSS-ETHERNET-SWITCH_02.02.15.00       | Ethernet
-Ethernet firmware - Local injection handle port block state (MRP requirement)                   | Ethernet
+LLD drivers for FSI                                                                             | Drivers
 \endcond
 
 ## Device and Validation Information
@@ -74,11 +58,11 @@ FreeRTOS SMP Kernel     | A53            | 202110.00-SMP
 Tiny USB                | R5F            | 0.14.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
 Mbed-TLS                | R5F            | mbedtls-2.13.1
-DMSC Firmware           | DMSC           | v10.01.08
+DMSC Firmware           | DMSC           | v11.00.06
 
 ## Key Features
 
-### Experimental Features {#EXPERIMENTAL_FEATURES_10_01_00}
+### Experimental Features {#EXPERIMENTAL_FEATURES}
 
 \attention Features listed below are early versions and should be considered as "experimental".
 \attention Users can evaluate the feature, however the feature is not fully tested at TI side.
@@ -291,215 +275,90 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Module
     <th> Applicable Releases
     <th> Applicable Devices
-    <th> Resolution/Comments
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-6, EXT_SITMPUSW-6}
-    <td> Incorrect naming of the macro MAILBOX_MAX_MSGS_IN_FIFO in IPC Notify
-    <td> IPC
-    <td> 07.03.00 onwards
-    <td> AM64x, AM243x
-    <td> Update the macro name
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-7, EXT_SITMPUSW-7}
-    <td> OSPI_phyReadAttackVector API leaves the DAC enabled
-    <td> OSPI
-    <td> 07.03.00 onwards
-    <td> AM64x, AM243x
-    <td> Disable DAC mode at the end of function
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-1, EXT_SITMPUSW-1} 
-    <td> CPU cache line size is wrongly documented
-    <td> DPL
-    <td> 07.03.00 onwards
-    <td> AM64x, AM243x
-    <td> Updated the documenation
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-8, EXT_SITMPUSW-8} 
-    <td> Remove "Auto generated makefile" comments in the makefiles
-    <td> Build
-    <td> 07.03.00 onwards
-    <td> AM64x, AM243x
-    <td> Remove the autogenerated comments
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-9, EXT_SITMPUSW-9}
-    <td> Calling the vTaskGetRunTimeStats，after some time, it will exceed 100% CPU usage
-    <td> Kernel
-    <td> 07.03.00 onwards
-    <td> AM64x, AM243x
-    <td> This issue is fixed on 11.1.0 FreeRTOS kernel
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-10, EXT_SITMPUSW-10}
-    <td> SBL_OSPI_LINUX changes the DEVSTAT register to SD card bootmode
-    <td> SBL
-    <td> 09.02.01
-    <td> AM64x, AM243x
-    <td> Remove updating DEVSTAT
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-11, EXT_SITMPUSW-11}
-    <td> MCAN loopback DMA example is broken
-    <td> MCAN
-    <td> 09.00.00
-    <td> AM64x, AM243x
-    <td> Resolve the issue along with LLD implementation
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-12, EXT_SITMPUSW-12}
-    <td> A wrong counter is used for Event 2 in PMU configuration
-    <td> PMU
-    <td> 08.06.00
-    <td> AM64x, AM243x
-    <td> Remove the wrong configuration
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-13, EXT_SITMPUSW-13}
-    <td> UART: Inconsistent data flush for Polling, Interrupt and DMA mode
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-61, EXT_SITMPUSW-61}
+    <td> UART DMA LLD SysConfig generates incorrect files
     <td> UART
-    <td> 09.01.00
+    <td> 10.01.00 onwards
     <td> AM64x, AM243x
-    <td> Fix the driver
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-14, EXT_SITMPUSW-14}
-    <td> JTAG Flasher does not enable DAC mode after flashing the image
-    <td> McSPI
-    <td> 09.01.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-62, EXT_SITMPUSW-62}
+    <td> SPI0_CS1 pin can't be added
+    <td> Pinmux
+    <td> 10.01.00 onwards
     <td> AM64x, AM243x
-    <td> Enable DAC mode
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-15, EXT_SITMPUSW-15}
-    <td> Wrong validation checks for Sysfw_boardcfg
-    <td> BoardConfig
-    <td> 09.02.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-63, EXT_SITMPUSW-63}
+    <td> Undeclared Identifier for MCU GPIO interrupt router
+    <td> GPIO
+    <td> 10.01.00 onwards
     <td> AM64x, AM243x
-    <td> Fixed
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-16, EXT_SITMPUSW-16}
-    <td> Not able to select 3pin/4pin mode when mcspi is configured as Single Peripheral
-    <td> MCSPI
-    <td> 10.00.00
-    <td> AM64x, AM243x
-    <td> Fixed
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-64, EXT_SITMPUSW-64}
+    <td> AM64x: a53 core: Unable to flash Examples >1.2MB size using UART boot mode
+    <td> Uniflash
+    <td> 10.01.00 onwards
+    <td> AM64x
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-17, EXT_SITMPUSW-17}
-    <td> Not able to open example.syscfg file for M4f project
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-65, EXT_SITMPUSW-65}
+    <td> At some random timing Pinmux registers (PADCFG) are not updated properly
+    <td> Pinmux
+    <td> 10.01.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-66, EXT_SITMPUSW-66}
+    <td> Dhrystone benchmark example has CPU clock hard code
+    <td> Benchmark
+    <td> 10.00.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-67, EXT_SITMPUSW-67}
+    <td> Comparing unsigned integer value with signed integer
     <td> Sysconfig
-    <td> 10.00.00
+    <td> 10.00.00 onwards
     <td> AM64x, AM243x
-    <td> Fixed
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-18, EXT_SITMPUSW-18}
-    <td> sciclient_ccs_init default binary failing to run on SOC
-    <td> Examples
-    <td> 10.00.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-68, EXT_SITMPUSW-68}
+    <td> Load from JSON button fails to load the JSON flash config file
+    <td> Flash
+    <td> 10.00.00 onwards
     <td> AM64x, AM243x
-    <td> Rebuild the binary
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-19, EXT_SITMPUSW-19}
-    <td> Not able to open drivers for MCU_I2C
-    <td> I2C
-    <td> 10.00.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-69, EXT_SITMPUSW-69}
+    <td> MMCSD_RAW_IO example does not boot with SBL_EMMC
+    <td> Flash
+    <td> 10.00.00 onwards
     <td> AM64x, AM243x
-    <td> Fixed
 </tr>
 <tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-20, EXT_SITMPUSW-20}
-    <td> No implementation for portASSERT_IF_IN_ISR
-    <td> docs
-    <td> 07.03.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-70, EXT_SITMPUSW-70}
+    <td> SBL_DFU booting but not initializing DFU interface to receive the application image
+    <td> USB DFU
+    <td> 10.00.00 onwards
     <td> AM64x, AM243x
-    <td> Added the implementation
 </tr>
 <tr>
-    <td> PINDSW-7087
-    <td> Ethernet: IET: Frame preemption MAC verify fails
-    <td> Ethernet (ICSSG)
-    <td> 09.00.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12290, EXT_EP-12290}
+    <td> SysConfig 1.21 creates incorrect MCSPI structs in ti_drivers_config.c
+    <td> Sysconfig
+    <td> 10.00.00 onwards
     <td> AM64x, AM243x
-    <td> None
 </tr>
 <tr>
-    <td> PINDSW-8229
-    <td> Ethernet: FDB: FDB entries missing with link up/down activity
-    <td> Ethernet (ICSSG)
-    <td> 10.00.00
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-72, EXT_SITMPUSW-72}
+    <td> Inline ECC init sequence not matching the steps mentioned in TRM for AM243/AM64x
+    <td> DDR
+    <td> 10.01.00 onwards
     <td> AM64x, AM243x
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-8187
-    <td> Ethernet: FDB: MC frame is not received when only specific port bit is set in FID_C2 (Applicable only for DUAL MAC mode)
-    <td> Ethernet (ICSSG)
-    <td> 10.00.00
-    <td> AM64x, AM243x
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-8086
-    <td> Ethernet: FDB: Port blocked/disabled usecase for special frame
-    <td> Ethernet (ICSSG)
-    <td> 10.00.00
-    <td> AM64x, AM243x
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-8022
-    <td> Ethernet: TAPRIO: Moved base time usage into the firmware
-    <td> Ethernet (ICSSG)
-    <td> 10.00.00
-    <td> AM64x, AM243x
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-7988
-    <td> Ethernet: CT: Cut-thru can not be verified (Missing PA statistics)
-    <td> Ethernet (ICSSG)
-    <td> 09.02.00
-    <td> AM64x, AM243x
-    <td> None
-</tr>
-<tr>
-    <td> PINDSW-8273
-    <td> Ethernet: 10M: Link Status Valid flag is not set in case of 100M/1G
-    <td> Ethernet (ICSSG)
-    <td> 10.00.00
-    <td> AM64x, AM243x
-    <td> None
-</tr>
-<tr>
-    <td> SYSFW-6426
-    <td> Ownership of a firewall region can be transferred to an invalid host
-    <td> DMSC
-    <td> 07.03.00
-    <td> AM64x, AM243x
-    <td> Fixed
-</tr>
-<tr>
-    <td> SYSFW-6432
-    <td> Set device API doesn't return Error when PD is in transition state
-    <td> DMSC
-    <td> 07.03.00
-    <td> AM64x, AM243x
-    <td> Fixed
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-54, EXT_SITMPUSW-54}
-    <td> MII mode via Sysconfig for Ethernet ICSSG is not functional 
-    <td> Ethernet
-    <td> 09.02.00
-    <td> AM64x, AM243x
-    <td> Fixed
 </tr>
 </table>
 
@@ -564,71 +423,12 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> SYSFW-6621
-    <td> No available region to configure for Firewall ID 24
-    <td> DMSC
-    <td> 7.3.0 onwards
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-73, EXT_SITMPUSW-73}
+    <td> OSPI_readDirect and OSPI_isPhyEnable do not correctly check if the PHY is enabled
+    <td> OSPI
+    <td> 10.1.0 onwards
     <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> SYSFW-7781
-    <td> Get device API does not return error when the LPSC is in transition state
-    <td> DMSC
-    <td> 7.3.0 onwards
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-53, EXT_SITMPUSW-53}
-    <td> Ethernet CPSW Layer-2 example overrides syscfg-GUI ALE configurations 
-    <td> Ethernet
-    <td> 09.01.00
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-55, EXT_SITMPUSW-55}
-    <td> AM64x: ENET : A53 : TCP Throughput drop in iperf application running on FreeRTOS A53 core 
-    <td> Ethernet
-    <td> 10.01.00
-    <td> AM64x
-    <td> Issue is seen only with 1Gbps Full Duplex link speed. Any other link speed such as 100 Mbps link speed shall work seemlessly 
-</tr>
-
-<tr>
-    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-56, EXT_SITMPUSW-56}
-    <td> AM64X: ENET: Data inconsitency with MAC loopback application with FreeRTOS running on A53 core 
-    <td> Ethernet
-    <td> 10.01.00
-    <td> AM64x
-    <td> Issue is seen in release mode. In debug mode it works fine. 
-</tr>
-<tr>
-    <td> PROC_SDL-8875
-    <td> ECC is not supported for an instance
-    SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR
-    <td> SDL
-    <td> 10.01.0 onwards
-    <td> AM243x
-    <td> -
-</tr>
-<tr>
-    <td> PROC_SDL-8861
-    <td> ECC is not supported for an instance due to firewall:
-    SDL_DMSC0_DMSC_LITE
-    <td> SDL
-    <td> 10.01.0 onwards
-    <td> AM64x/AM243x
-    <td> -
-</tr>
-<tr>
-    <td> PROC_SDL-8891
-    <td> POK Example is failing on M4F core
-    <td> DMSC
-    <td> 10.01.0 onwards
-    <td> AM243x
-    <td> Run on R5F core
+    <td> None.
 </tr>
 </table>
 
