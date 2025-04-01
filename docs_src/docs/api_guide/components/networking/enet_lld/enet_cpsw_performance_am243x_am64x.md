@@ -41,6 +41,7 @@ EVM Type              | AM243x-LP/AM243x-EVM   |
   \image html CPSW_latency_measurement_diagram.bmp Latency defination
 
 ## Configuration Details
+### For R5F
 Configuration                   | Value                    |
 --------------------------------|--------------------------|
 Processing Core                 | Main R5F0 Core 0         |
@@ -56,25 +57,6 @@ Host PC tool version            | nload                    |
 Rx packet length                | 200 B                    |
 Tx packet length                | 200 B                    |
 \n
-
-\cond SOC_AM64X
-Configuration                   | Value                    |
---------------------------------|--------------------------|
-Processing Core                 | Main A53S0 Core 0        |
-Core Frequency                  | 1 GHz                    |
-Ethernet Interface Type         | RGMII at 1 Gbps          |
-Packet buffer memory            | DDR (uncached)           |
-Scatter-gather TX               | Yes                      |
-Scatter-gather RX               | Yes                      |
-UDMA interrupt pacing           | NO   (UDMA is polled)    |
-RTOS                            | FreeRTOS                 |
-RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
-Host PC tool version            | nload                    |
-Rx packet length                | 200 B                    |
-Tx packet length                | 200 B                    |
-\n
-
-\endcond
 
 ### Layer 2 Latency
 <table>
@@ -98,7 +80,51 @@ Tx packet length                | 200 B                    |
     </tr>
 </table>
 
-### Layer-2 Hardware Switching Latency for CPSW
+\cond SOC_AM64X
+
+### For A53
+
+Configuration                   | Value                    |
+--------------------------------|--------------------------|
+Processing Core                 | Main A53S0 Core 0        |
+Core Frequency                  | 1 GHz                    |
+Ethernet Interface Type         | RGMII at 1 Gbps          |
+Packet buffer memory            | DDR (uncached)           |
+Scatter-gather TX               | Yes                      |
+Scatter-gather RX               | Yes                      |
+UDMA interrupt pacing           | NO   (UDMA is polled)    |
+RTOS                            | FreeRTOS                 |
+RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
+Host PC tool version            | nload                    |
+Rx packet length                | 200 B                    |
+Tx packet length                | 200 B                    |
+\n
+
+### Layer 2 Latency
+<table>
+    <tr>
+        <td style="text-align: center;"><b>Parameter</b></td>
+        <td style="text-align: center;"><b>CPU<->CPSW \n Latency Value (ns)</b></td>
+        <td style="text-align: center;"><b>PHY Latency\n (from datasheet) in ns</b></td>
+        <td style="text-align: center;"><b>Total Latency \n (ns)</b></td>
+    </tr>
+    <tr>
+        <td>RX Latency</td>
+        <td>16000</td>
+        <td>193</td>
+        <td>16193</td>
+    </tr>
+    <tr>
+        <td>TX Latency</td>
+        <td>8000</td>
+        <td>384</td>
+        <td>8384</td>
+    </tr>
+</table>
+
+\endcond
+
+# Layer-2 Hardware Switching Latency for CPSW
 
 Configuration                   | Value                    |
 --------------------------------|--------------------------|
@@ -111,12 +137,12 @@ Sample size                     | 10 Million Packets       |
 RTOS application                | Modified \ref EXAMPLES_ENET_LAYER2_CPSW_SWITCH \n example   |
 \n
 
-### Test Setup
+## Test Setup
 
 \imageStyle{CPSW_Latency_measurement.png,width:15==20%}
 \image html CPSW_Latency_measurement.png "Connections for Latency Measurement"
 
-### CPSW Latency for RGMII
+## CPSW Latency for RGMII
 <table>
     <tr>
         <td rowspan="2" style="text-align: left;"><b>Datagram Length</b></td>
@@ -328,7 +354,6 @@ Number of Tx packet buffers     | 16                       |
     </tr>
 </table>
 
-\cond SOC_AM64X
 <b>A53 core as host </b>
 <table>
     <tr>
@@ -365,6 +390,12 @@ Number of Tx packet buffers     | 16                       |
         <td>170</td><td>31</td><td>0.2</td>
     </tr>
     <tr>
+        <td>UDP RX (Max) \n With 128 Rx pkt bufs</td>
+        <td>94</td><td>91.5</td><td>0.29</td>
+        <td>199</td><td>97.4</td><td>0.6</td>
+        <td>557</td><td>99.9</td><td>2</td>
+    </tr>
+    <tr>
         <td>UDP TX (Max)</td>
         <td>114</td><td>100</td><td>0.0</td>
         <td>227</td><td>100</td><td>0.0</td>
@@ -372,7 +403,7 @@ Number of Tx packet buffers     | 16                       |
     </tr>
 </table>
 \endcond
-\endcond
+
 \cond SOC_AM243X
 
 <b>AM243-LP </b>
