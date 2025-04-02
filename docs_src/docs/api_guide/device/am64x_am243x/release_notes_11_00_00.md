@@ -60,7 +60,25 @@ FreeRTOS SMP Kernel     | A53            | 202110.00-SMP
 Tiny USB                | R5F            | 0.14.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
 Mbed-TLS                | R5F            | mbedtls-2.13.1
-DMSC Firmware           | DMSC           | v11.00.06
+
+## SDK Components
+
+### SYSFW / DMSC
+
+<table>
+    <tr>
+        <td>Version</td>
+        <td>11.00.07</td>
+    </tr>
+    <tr>
+        <td>Release Notes</td>
+        <td>[LINK](https://software-dl.ti.com/tisci/esd/11_00_07/release_notes/release_notes.html)</td>
+    </tr>
+    <tr>
+        <td>User Guide</td>
+        <td>[LINK](https://software-dl.ti.com/tisci/esd/11_00_07/1_intro/TISCI.html)</td>
+    </tr>
+</table>
 
 ## Key Features
 
