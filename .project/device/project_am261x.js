@@ -208,6 +208,8 @@ const example_file_list = [
     "examples/benchmarks/optiflash_benchmark/flash_xip_l2_cache_64k/.project/project.js",
     "examples/benchmarks/optiflash_benchmark/flash_xip_smart_placement/.project/project.js",
 	// "examples/drivers/ospi/ospi_nand_flash_io/.project/project.js",
+	"examples/drivers/pmic/pmic_esm_level_mode/.project/project.js",
+	"examples/drivers/pmic/pmic_esm_pwm_mode/.project/project.js",
 	"examples/drivers/pmic/pmic_qa_watchdog_reset/.project/project.js",
 	"examples/drivers/pmic/pmic_trigger_watchdog_reset/.project/project.js",
 	"examples/drivers/pmic/pmic_qa_watchdog_interrupt/.project/project.js",
