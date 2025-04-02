@@ -21,12 +21,14 @@
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 LLD drivers for FSI                                                                             | Drivers
+ECC example for R5F cache                                                                       | SDL
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 LLD drivers for FSI                                                                             | Drivers
+ECC example for R5F cache                                                                       | SDL
 \endcond
 
 ## Device and Validation Information
@@ -360,6 +362,34 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 10.01.00 onwards
     <td> AM64x, AM243x
 </tr>
+<tr>
+    <td> PROC_SDL-8683
+    <td> gSDL_pvt_poly_golden has to be used in SDL_vtmPrepLookupTable API instead of gSDL_pvt_poly
+    <td> SDL
+    <td> 11.00.00
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> PROC_SDL-8891
+    <td> AM243x: POK: Example is stuck on M4F core
+    <td> SDL
+    <td> 11.00.00
+    <td> AM243x
+</tr>
+<tr>
+    <td> PROC_SDL-8941
+    <td> ScrambleValue for the MCU PBIST instance has to updated for AM64x/AM243x
+    <td> SDL
+    <td> 11.00.00
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> PROC_SDL-8955
+    <td> SDL_ECC_aggrTransBaseAddressTable declared without extern keyword
+    <td> SDL
+    <td> 11.00.00
+    <td> AM64x, AM243x
+</tr>
 </table>
 
 ## Known Issues
@@ -429,6 +459,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 10.1.0 onwards
     <td> AM64x, AM243x
     <td> None.
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12271, EXT_EP-12271}
+    <td> AM64x: AM243x: ECC: SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR aggregator is failing
+    <td> SDL
+    <td> 10.1.0 onwards
+    <td> AM64x, AM243x
+    <td> No known workaround
 </tr>
 </table>
 
