@@ -31,8 +31,23 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ *  \defgroup DRV_FSS_MODULE APIs for FSS
+ *  \ingroup DRV_MODULE
+ *
+ * Contains API to configure Bootseg and ECCM IP.
+ *
+ *  @{
+ */
+
+
 #ifndef __FSS_H__
 #define __FSS_H__
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
@@ -40,25 +55,43 @@
 #include <drivers/hw_include/hw_types.h>
 #include <drivers/hw_include/csl_types.h>
 
+/**
+ * @brief Index for ECCM region 0
+ *
+ */
 #define Region_Index_0    ((uint32_t)(0))
+
+/**
+ * @brief Index for ECCM region 1
+ *
+ */
 #define Region_Index_1    ((uint32_t)(1))
+
+/**
+ * @brief Index for ECCM region 2
+ *
+ */
 #define Region_Index_2    ((uint32_t)(2))
+
+/**
+ * @brief Index for ECCM region 3
+ *
+ */
 #define Region_Index_3    ((uint32_t)(3))
 
 typedef void* FSS_Handle;
 
 typedef struct{
-
-    uint32_t size;
-    uint32_t startAddress;
-    uint32_t regionIndex;
+    uint32_t size; /**< Size of the region (in bytes, aligned to 4K) */
+    uint32_t startAddress; /**< starting address (offset in bytes, aligned to 4K) */
+    uint32_t regionIndex; /**< index for this region */
 }FSS_ECCRegionConfig;
 
 
 typedef struct fss_config_s_t
 {
-    uint32_t ipBaseAddress;
-    uint32_t extFlashSize;
+    uint32_t ipBaseAddress; /**< SOC Base address for this IP */
+    uint32_t extFlashSize; /**< size of the external flash */
 }
 FSS_Config;
 
@@ -82,7 +115,7 @@ int32_t FSS_addressBitMask(FSS_Handle handle, uint32_t bitMask, uint8_t segment)
 
 /**
  * @brief Disable remap
- * 
+ *
  * @param handle handle to FSS instance
  * @return SystemP_SUCCESS on successfull execution
  */
@@ -90,7 +123,7 @@ int32_t FSS_disableAddressRemap(FSS_Handle handle);
 
 /**
  * @brief Map region A of flash to initial position
- * 
+ *
  * @param handle handle to FSS instance
  * @return SystemP_SUCCESS on successfull execution
  */
@@ -98,55 +131,73 @@ int32_t FSS_selectRegionA(FSS_Handle handle);
 
 /**
  * @brief Map region N of flash to initial position
- * 
+ *
  * @param handle handle to FSS instance
  * @return SystemP_SUCCESS on successfull execution
  */
 int32_t FSS_selectRegionB(FSS_Handle handle);
 
+/**
+ * @brief Which boot region is been selected.
+ *
+ * @param handle handle to FSS instance.
+ * @return selected boot region.
+ */
 uint32_t FSS_getBootRegion(FSS_Handle handle);
 
 /**
- * @brief Enable ECC for Flash 
- * 
+ * @brief Enable ECC for Flash
+ *
  * This function enabled ECC for the data that is stored in flash.
- * For every 32 Bytes of data, 4 bytes of ECC is assumed. 
+ * For every 32 Bytes of data, 4 bytes of ECC is assumed.
  * Make sure the data is in flash is prepared at compile time.
  *
  */
 void FSS_enableECC(void);
 
 /**
- * @brief Disable ECC 
- * 
+ * @brief Disable ECC
+ *
  */
 void FSS_disableECC(void);
 
 /**
  * @brief Set size of an ECCM region
- * 
+ *
  * @param regionIndex region ID
- * @param size_in_bytes size of region in bytes 
+ * @param size_in_bytes size of region in bytes
  */
 void FSS_setECCRegionSize(uint32_t regionIndex, uint32_t size_in_bytes);
 
 /**
  * @brief Set start address of an ECCM region
- * 
+ *
  * @param regionIndex region ID
  * @param ecc_reg_start start address
  */
 void FSS_setECCRegionStart(uint32_t regionIndex, uint32_t ecc_reg_start);
 
+/**
+ * @brief Configure en ECCM Region.
+ *
+ * @param parameter parameters for the region
+ * @return int32_t
+ */
 int32_t FSS_configECCMRegion(FSS_ECCRegionConfig *parameter);
 
 /**
  * @brief Configure ECCM hardware
- * 
+ *
  * @param numRegion region ID
  * @param parameter region config data
  */
 int32_t FSS_ConfigEccm(uint32_t numRegion, FSS_ECCRegionConfig *parameter);
 
 
+#ifdef __cplusplus
+}
 #endif
+
+#endif
+
+/** @} */

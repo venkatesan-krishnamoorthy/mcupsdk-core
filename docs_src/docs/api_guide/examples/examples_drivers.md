@@ -437,6 +437,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_FLC
    -# \subpage EXAMPLES_RAT
    -# \subpage EXAMPLES_DRIVERS_SWAP_TO_B
+   -# \subpage EXAMPLES_DRIVERS_FOTA_AGENT
 \endcond
 \cond SOC_AM263PX || SOC_AM261X
 -# PMIC

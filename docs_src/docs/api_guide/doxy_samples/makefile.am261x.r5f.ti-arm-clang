@@ -28,6 +28,9 @@ FILES_common := \
     HeapP_sample.c \
     HwiP_sample.c \
     IpcNotify_sample.c \
+    Fota_agent_sample.c \
+    Flsopskd_sample.c \
+    Fss_sample.c \
     IpcRPMessage_sample.c \
     Mcspi_sample.c \
     Mcspi_lld_sample.c \

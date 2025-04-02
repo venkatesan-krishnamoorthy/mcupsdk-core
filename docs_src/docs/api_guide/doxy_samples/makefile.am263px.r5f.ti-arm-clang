@@ -27,6 +27,8 @@ FILES_common := \
     Ethphy_sample.c \
     EventP_sample.c \
     Fota_agent_sample.c \
+    Flsopskd_sample.c \
+    Fss_sample.c \
     HeapP_sample.c \
     HwiP_sample.c \
     IpcNotify_sample.c \

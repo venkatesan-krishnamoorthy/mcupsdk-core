@@ -37,7 +37,7 @@ See also these additional pages for more details and examples about XIP,
 - The application entry point, interrupt vectors and initial code upto `main()` should still execute from RAM.
   After `main()` the code can execute from flash.
 
-## Enable XIP for a application
+## Enable XIP for an application
 
 To enable XIP for a application, below changes need to be done,
 
@@ -111,6 +111,47 @@ To enable XIP for a application, below changes need to be done,
   - Add a MPU/MMU entry to mark the flash region as executable + cached
   - And update the linker command to mark the code/rodata sections as `FLASH` instead of RAM.
   - Rest of the steps remain exactly the same as non-XIP case.
+
+## Enabling secure XIP using OTFA
+
+- Applications stored in external flash are susceptible to physical and logical attacks. Ensuring the security and safety of the image executed in place is important to achieve advanced security for the device.
+- Signing and encrypting application image to be executed from flash enables this. AM261X and AM263PX are equipped with OTFA (On-The-Fly-Authentication and Decryption) hardware module to authenticate and decrypt an application running from flash.
+- OTFA can be configured to authenticate and decrypt up to four distinct regions in the flash, with different keys.
+- The application binary, converted to MCELF format is post-processed for safety and security using the __`genimage.py`__ tool [Refer \ref TOOLS_BOOT]
+
+To enable security in XIP image,
+  1. Enter the OTFA configuration settings in JSON format like below:
+    \code
+    {
+    "mac_size": 4,
+    "regions": [
+        {
+            "start": "0x60000000",
+            "size": "0x1000000",
+            "authKeyID" : 1,
+            "authKey": "../../../../../../source/security/security_common/tools/boot/signing/mcu_custMek.key",
+            "encKeyID" : 1,
+            "encKey": "../../../../../../source/security/security_common/tools/boot/signing/mcu_custMek.key",
+            "kdSalt" : "../../../../../../source/security/security_common/tools/boot/signing/kd_salt.txt",
+            "keyFetchMode" : 1,
+            "cryptoMode":"gcm",
+            "eccEnable": false
+        }
+        ]
+    }
+    \endcode
+    * KeyIDs correspond to the indices of the keys in Keyring, which will be used by __HsmServer__ for authentication and decryption.
+        * If KeyID=1 [root key], HKDF derives a key from the input key file using the input salt. Derived keys will be used for signing and encryption.
+        * If KeyID >= 32, derivation is skipped. The plain key inputs are used for signing and encryption.
+        * Example JSON Path : mcu_plus_sdk/tools/boot/otfa_eccm/otfaConf.json
+  2. Build the application image with the above JSON file as a tool input
+      * Example : _`make -s DEVICE=am263px DEVICE_TYPE=HS oeconfig=mcu_plus_sdk/tools/boot/otfa_eccm/otfaConf.json all`_
+      * This generates
+          * a post-processed MCELF_XIP image, encrypted and authenticated with DSMEK
+          * a note-appended MCELF_RAM image, that contains the OTFA configuration parameters' details
+  3. Flash the image using uart_uniflash.py tool with any sbl_ospi bootloader. (example: sbl_ospi_multicore_elf)
+  4. If using auxiliary keys, generate a keyring certificate containing the same key material and import the certificate in SBL build
+
 
 ## Debugging XIP applications
 

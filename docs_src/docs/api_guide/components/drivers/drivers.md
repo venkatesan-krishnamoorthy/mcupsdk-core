@@ -131,6 +131,8 @@ It consists of below sub-modules
 - \subpage DRIVERS_EPWM_PAGE
 - \subpage DRIVERS_EQEP_PAGE
 - \subpage DRIVERS_FOTA_AGENT_PAGE
+- \subpage DRIVERS_FLSOPSKD_PAGE
+- \subpage DRIVERS_FSS_PAGE
 - \subpage DRIVERS_FSI_PAGE
 - \subpage DRIVERS_GPIO_PAGE
 - \subpage DRIVERS_HSMCLIENT_PAGE
@@ -166,10 +168,13 @@ It consists of below sub-modules
 - \subpage DRIVERS_EDMA_PAGE
 - \subpage DRIVERS_EPWM_PAGE
 - \subpage DRIVERS_EQEP_PAGE
+- \subpage DRIVERS_FOTA_AGENT_PAGE
+- \subpage DRIVERS_FLSOPSKD_PAGE
+- \subpage DRIVERS_FSS_PAGE
 - \subpage DRIVERS_FSI_PAGE
 - \subpage DRIVERS_GPIO_PAGE
-- \subpage DRIVERS_GPMC_PAGE
 - \subpage DRIVERS_HSMCLIENT_PAGE
+- \subpage DRIVERS_GPMC_PAGE
 - \subpage DRIVERS_I2C_PAGE
 - \subpage DRIVERS_IPC_NOTIFY_PAGE
 - \subpage DRIVERS_IPC_RPMESSAGE_PAGE

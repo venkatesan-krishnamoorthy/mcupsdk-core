@@ -61,7 +61,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SWAP_TO_B";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_FOTA_AGENT";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},

@@ -30,9 +30,11 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __FLSOPSKD__H__
-#define __FLSOPSKD__H__
 /**
+ *  \defgroup DRV_FLSOPSKD_MODULE APIs for FLSOPSKD
+ *  \ingroup DRV_MODULE
+ *
+ * This module contains APIs for FLSOPSKD.
  * FLSOPSKD stands for **FL**ash **OP**erations Scheduler (SKD)
  *
  * FLSOPSKD is name given to 8051 controller that sits close to external
@@ -40,7 +42,17 @@
  * data bus. When there is no traffic on the OSPI data bus, 8051 will
  * place the flash command on the bus.
  *
+ *
+ *  @{
  */
+
+#ifndef __FLSOPSKD__H__
+#define __FLSOPSKD__H__
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -223,3 +235,9 @@ int32_t FLSOPSKD_perfGetPollCounts(FLSOPSKD_Handle *pHandle, uint32_t *memLoc);
 int32_t FLSOPSKD_deinit(FLSOPSKD_Handle *pHandle);
 
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
+/** @} */

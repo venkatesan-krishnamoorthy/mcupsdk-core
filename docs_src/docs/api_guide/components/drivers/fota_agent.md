@@ -2,13 +2,13 @@
 
 [TOC]
 
-The Fota Agent driver provides API to Update Firmware over The Air 
-by scheduling the writes in chunks of smaller size while the new image 
+The Fota Agent driver provides API to Update Firmware over The Air
+by scheduling the writes in chunks of smaller size while the new image
 is being recieved over a certain protocol(CAN for example).
 
 ## Features Supported
 
-- Supports Writes in 4KB chunks
+- Supports Writes in sector size.
 - Only ELF image format supported
 - Both XIP and Non-XIP files
 

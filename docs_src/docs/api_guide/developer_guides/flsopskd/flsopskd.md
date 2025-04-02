@@ -23,6 +23,8 @@ To synchronize all the read and write request on same 8bit data bus and to minim
 
 ### What is FLSOPSKD Hardware Engine?
 
+\note please refer to TRM and datasheet for details of this hardware.
+
 To achieve this sort of scheduling, with Optiflash, FLSOPSKD Hardware Engine has been added on top of Flash controller.
 
 The following image shows the same:
@@ -49,3 +51,6 @@ On the left hand side, any core which is trying to communicate to 8051 fiirmware
 
 Based on the above steps, MCU+ SDK drivers come with prebuit firmware of 8051 and its corresponding R5F drivers.
 
+## Using FLSOPSKD in Application
+
+Please refer to \ref DRIVERS_FLSOPSKD_PAGE
