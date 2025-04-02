@@ -85,7 +85,7 @@ int main(void)
 
     if(gMcuLbistTestStatus == 0U)
     {
-        //Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+        Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
         Bootloader_socInitL2MailBoxMemory();
         Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
