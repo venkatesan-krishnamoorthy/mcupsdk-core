@@ -438,13 +438,15 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_RAT
    -# \subpage EXAMPLES_DRIVERS_SWAP_TO_B
 \endcond
-\cond SOC_AM261X
+\cond SOC_AM263PX || SOC_AM261X
 -# PMIC
    -# \subpage EXAMPLES_PMIC_ESM_LEVEL_MODE
    -# \subpage EXAMPLES_PMIC_ESM_PWM_MODE
    -# \subpage EXAMPLES_PMIC_QA_WATCHDOG_INTERRUPT
    -# \subpage EXAMPLES_PMIC_QA_WATCHDOG_RESET
+\cond SOC_AM261X
    -# \subpage EXAMPLES_PMIC_TRIGGER_WATCHDOG_RESET
+\endcond
    -# \subpage EXAMPLES_PMIC_USER_REG_CFG
 \endcond
 -# PMU

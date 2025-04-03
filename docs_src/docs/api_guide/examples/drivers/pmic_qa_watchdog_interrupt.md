@@ -15,7 +15,7 @@ application to get the expected result.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_PMIC_QA_WATCHDOG_INTERRUPT_COMBOS}
 
-\cond SOC_AM261X
+\cond SOC_AM261X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

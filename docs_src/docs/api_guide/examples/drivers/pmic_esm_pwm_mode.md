@@ -10,7 +10,7 @@ to device transitions to RESET-MCU state, when the error is detected in PWM sign
 
 # Supported Combinations {#EXAMPLES_DRIVERS_PMIC_ESM_PWM_MODE_COMBOS}
 
-\cond SOC_AM261X
+\cond SOC_AM261X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

@@ -10,7 +10,7 @@ to device transitions to RESET-MCU state, when the ESM_IN pin of the PMIC is low
 
 # Supported Combinations {#EXAMPLES_DRIVERS_PMIC_ESM_LEVEL_MODE_COMBOS}
 
-\cond SOC_AM261X
+\cond SOC_AM261X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
