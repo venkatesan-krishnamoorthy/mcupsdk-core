@@ -432,6 +432,28 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x
     <td> Issue is seen in release mode. In debug mode it works fine.
 </tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12337, EXT_EP-12337}
+    <td> ICSSG: TAPRIO - Firmware can’t handle base-time which is not a multiple of cycle-time.
+    <td> Ethernet (ICSSG)
+    <td> 10.00.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12338, EXT_EP-12338}
+    <td> ICSSG: PA_STATS are not sequenced properly
+    <td> Ethernet (ICSSG)
+    <td> 09.02.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12339, EXT_EP-12339}
+    <td> Switch/MAC/HSR firmware does not drop corrupted packets
+    <td> Ethernet (ICSSG)
+    <td> 10.01.00 onwards
+    <td> AM64x, AM243x
+</tr>
+
 </table>
 
 ## Known Issues
@@ -546,6 +568,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12271, EXT_EP-12271}
     <td> AM64x: AM243x: ECC: SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR aggregator is failing
     <td> SDL
+    <td> 10.1.0 onwards
+    <td> AM64x, AM243x
+    <td> No known workaround
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12336, EXT_EP-12336}
+    <td> Last 1B of payload missing in forwarding scenario
+    <td> Ethernet (ICSSG)
     <td> 10.1.0 onwards
     <td> AM64x, AM243x
     <td> No known workaround
