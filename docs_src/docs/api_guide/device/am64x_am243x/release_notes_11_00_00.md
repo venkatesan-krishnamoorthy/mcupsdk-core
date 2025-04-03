@@ -388,8 +388,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
 </tr>
 <tr>
-    <td> PROC_SDL-8683
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12324, EXT_EP-12324}
     <td> gSDL_pvt_poly_golden has to be used in SDL_vtmPrepLookupTable API instead of gSDL_pvt_poly
+    <td> SDL
+    <td> 11.00.00
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12319, EXT_EP-12319}
+    <td> ScrambleValue for the MCU PBIST instance has to updated for AM64x/AM243x
+    <td> SDL
+    <td> 11.00.00
+    <td> AM64x, AM243x
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12318, EXT_EP-12318}
+    <td> SDL_ECC_aggrTransBaseAddressTable declared without extern keyword
     <td> SDL
     <td> 11.00.00
     <td> AM64x, AM243x
@@ -400,20 +414,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> SDL
     <td> 11.00.00
     <td> AM243x
-</tr>
-<tr>
-    <td> PROC_SDL-8941
-    <td> ScrambleValue for the MCU PBIST instance has to updated for AM64x/AM243x
-    <td> SDL
-    <td> 11.00.00
-    <td> AM64x, AM243x
-</tr>
-<tr>
-    <td> PROC_SDL-8955
-    <td> SDL_ECC_aggrTransBaseAddressTable declared without extern keyword
-    <td> SDL
-    <td> 11.00.00
-    <td> AM64x, AM243x
 </tr>
 </table>
 
