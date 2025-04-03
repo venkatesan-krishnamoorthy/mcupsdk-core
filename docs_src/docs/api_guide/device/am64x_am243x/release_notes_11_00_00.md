@@ -374,6 +374,13 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
 </tr>
 <tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-71, EXT_SITMPUSW-71}
+    <td> Not able to open drivers for MCU_I2C1
+    <td> I2C
+    <td> 10.01.00 onwards
+    <td> AM64x, AM243x
+</tr>
+<tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-72, EXT_SITMPUSW-72}
     <td> Inline ECC init sequence not matching the steps mentioned in TRM for AM243/AM64x
     <td> DDR
@@ -477,6 +484,46 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 10.1.0 onwards
     <td> AM64x, AM243x
     <td> None.
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-77, EXT_SITMPUSW-77}
+    <td> Modify Read capture delay logic for Tap Mode
+    <td> SDL
+    <td> 10.1.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-81, EXT_SITMPUSW-81}
+    <td> MCU+ SDK: EPWM_tbTimebaseClkCfg does not choose the optimal pre-scaler combination
+    <td> EPWM
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-82, EXT_SITMPUSW-82}
+    <td> AM64/AM243: M4F core getting hangs when doing IPC with Linux
+    <td> IPC
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-83, EXT_SITMPUSW-83}
+    <td> DPL - configure HwiP_MAX_INTERRUPTS based on SOC supported values
+    <td> DPL
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
+</tr>
+<tr>
+    <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_SITMPUSW-86, EXT_SITMPUSW-86}
+    <td> The configurations of GPIO interrupt routers are based on banks rather than individual pins.
+    <td> GPIO
+    <td> 7.3.0 onwards
+    <td> AM64x, AM243x
+    <td> None
 </tr>
 <tr>
     <td> \htmllink{https://sir.ext.ti.com/jira/browse/EXT_EP-12271, EXT_EP-12271}
