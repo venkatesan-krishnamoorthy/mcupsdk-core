@@ -39,6 +39,9 @@ extern "C" {
 
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
+#if defined(__ARM_ARCH_7R__)
+#include <kernel/dpl/MpuP_armv7.h>
+#endif
 
 /**
  * \defgroup KERNEL_DPL_TASK APIs for Task
@@ -114,11 +117,45 @@ typedef struct TaskP_Params_ {
     uint32_t      stackSize;    /**< Size of stack in units of bytes */
     uint8_t      *stack;        /**< Pointer to stack memory, MUST be aligned based on CPU architecture, typically atleast 32b on 32b systems */
     uint32_t      priority;     /**< Task priority, MUST be between \ref TaskP_PRIORITY_LOWEST and TaskP_PRIORITY_HIGHEST */
-    void         *args;         /**< User arguments that are passed back as parater to task main */
+    void         *args;         /**< User arguments that are passed back as parameter to task main */
     TaskP_FxnMain taskMain;     /**< Entry point function to the task */
     uintptr_t     coreAffinity; /**< Core affinity for the task (Applicable in case of SMP only)*/
 
 } TaskP_Params;
+
+#if defined(__ARM_ARCH_7R__)
+/**
+ * \brief Task specific MPU regions config
+ * 
+ * This is used with FreeRTOS MPU port only.
+ */
+typedef struct TaskP_MpuRegionConfig_ {
+    uint32_t baseAddr;      /**< Region start address, MUST aligned to region size */
+    uint32_t sizeBytes;     /**< Region size in bytes */
+    /** \brief Region attributes, see \ref MpuP_RegionAttrs
+     * 
+     *  \note Following params are not supported with the FreeRTOS MemoryRegion_t 
+     *        and hence won't take effect:-
+     *        1. isEnable              
+     *           - Will be enabled if valid \p sizeBytes is provided
+     *        2. subregionDisableMask 
+     *           - All sub-regions will be enabled
+     */
+    MpuP_RegionAttrs attrs; 
+} TaskP_MpuRegionConfig;
+
+/**
+ * \brief Parameters passed during \ref TaskP_constructRestricted
+ * 
+ * This is used with FreeRTOS MPU port only.
+ */
+typedef struct TaskP_ParamsRestricted_ {
+    TaskP_Params          params;           /**< Standard task parameters */
+    TaskP_MpuRegionConfig regionConfig[7U]; /**< MPU region configurations */
+    // TODO: Replace with below after TaskP refactor to include FreeRTOS headers and structs directly.
+    // TaskP_MpuRegionConfig regionConfig[portNUM_CONFIGURABLE_REGIONS]; /**< MPU region configurations */
+} TaskP_ParamsRestricted;
+#endif
 
 /**
  * \brief Set default values to TaskP_Params
@@ -131,13 +168,41 @@ void TaskP_Params_init(TaskP_Params *params);
 
 /**
  * \brief Create a task object
+ * 
+ * \note With FreeRTOS MPU port, only privileged tasks can be created with this API.
+ *       To create un-privileged tasks use \p TaskP_constructRestricted
  *
  * \param obj [out] Created object
  * \param params [in] Task create parameters
  *
  * \return \ref SystemP_SUCCESS on success, \ref SystemP_FAILURE on error
  */
-int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params);
+int32_t TaskP_construct(TaskP_Object *obj, const TaskP_Params *params);
+
+#if defined(__ARM_ARCH_7R__)
+/**
+ * \brief Set default values to TaskP_ParamsRestricted
+ * 
+ * \note This API is supported only with FreeRTOS MPU Port
+ *
+ * Strongly recommended to be called before setting values in TaskP_ParamsRestricted
+ *
+ * \param params [out] parameter structure to set to default
+ */
+void TaskP_ParamsRestricted_init(TaskP_ParamsRestricted *params);
+
+/**
+ * \brief Create a restricted task object (un-privileged task)
+ * 
+ * \note This API is supported only with FreeRTOS MPU Port
+ * 
+ * \param obj [out] Created object
+ * \param params [in] Task create parameters
+ *
+ * \return \ref SystemP_SUCCESS on success, \ref SystemP_FAILURE on error
+ */
+int32_t TaskP_constructRestricted(TaskP_Object *obj, const TaskP_ParamsRestricted *params);
+#endif
 
 /**
  * \brief Cleanup, delete, destruct a task object

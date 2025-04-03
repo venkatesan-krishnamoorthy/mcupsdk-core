@@ -30,6 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdbool.h>
 #include <kernel/dpl/TaskP.h>
 #include <kernel/dpl/ClockP.h>
 #include <FreeRTOS.h>
@@ -76,10 +77,47 @@ typedef struct {
 
 TaskP_Ctrl gTaskP_ctrl;
 
+static void TaskP_assertParams(TaskP_Object *obj, const TaskP_Params *params, bool isStackAlignToSize)
+{
+    DebugP_assert(sizeof(TaskP_Struct) <= sizeof(TaskP_Object));
+    DebugP_assert(params != NULL);
+    DebugP_assert(obj != NULL);
+
+    DebugP_assert(params->stackSize >= TaskP_STACK_SIZE_MIN);
+    DebugP_assert((params->stackSize & (sizeof(configSTACK_DEPTH_TYPE) - 1U)) == 0U);
+    DebugP_assert(params->stack != NULL);
+
+    if (isStackAlignToSize) 
+    {
+        /* Task stack should be aligned to task size to add as an MPU region. */
+        DebugP_assert(((uintptr_t)params->stack & (params->stackSize - 1U)) == 0U);
+    }
+    else
+    {
+        DebugP_assert(((uintptr_t)params->stack & (sizeof(configSTACK_DEPTH_TYPE) - 1U)) == 0U);
+    }
+
+    DebugP_assert(params->taskMain != NULL);
+}
+
+static uint32_t TaskP_adjustPriority(const TaskP_Params *params)
+{
+    uint32_t priority = params->priority;
+
+    /* if priority is out of range, adjust to bring it in range */
+    priority = (priority > TaskP_PRIORITY_HIGHEST) ? TaskP_PRIORITY_HIGHEST : priority;
+    priority = (priority <= TaskP_PRIORITY_LOWEST) ? TaskP_PRIORITY_LOWEST : priority;
+
+    return priority;
+}
+
 static void TaskP_addToRegistry(TaskP_Struct *task)
 {
     uint32_t i;
     BaseType_t schedularState;
+
+    task->lastRunTime = 0U;
+    task->accRunTime  = 0U;
 
     schedularState = xTaskGetSchedulerState();
     if(schedularState != taskSCHEDULER_NOT_STARTED)
@@ -236,34 +274,21 @@ void TaskP_Params_init(TaskP_Params *params)
 #endif
 }
 
-int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
+int32_t TaskP_construct(TaskP_Object *obj, const TaskP_Params *params)
 {
-    int32_t status = SystemP_SUCCESS;
+    int32_t      status   = SystemP_SUCCESS;
     TaskP_Struct *taskObj = (TaskP_Struct *)obj;
+    uint32_t     priority;
 
-    DebugP_assert(sizeof(TaskP_Struct) <= sizeof(TaskP_Object));
-    DebugP_assert(params != NULL);
-    DebugP_assert(taskObj != NULL);
+    TaskP_assertParams(obj, params, false);
 
-    DebugP_assert(params->stackSize >= TaskP_STACK_SIZE_MIN);
-    DebugP_assert( (params->stackSize & (sizeof(configSTACK_DEPTH_TYPE) - 1U)) == 0U);
-    DebugP_assert(params->stack != NULL);
-    DebugP_assert( ((uintptr_t)params->stack & (sizeof(configSTACK_DEPTH_TYPE) - 1U)) == 0U);
+    priority = TaskP_adjustPriority(params);
 
-    DebugP_assert(params->taskMain != NULL );
-
-    /* if prority is out of range, adjust to bring it in range */
-    if(params->priority > TaskP_PRIORITY_HIGHEST)
-    {
-        params->priority = TaskP_PRIORITY_HIGHEST;
-    }
-    if(params->priority <= TaskP_PRIORITY_LOWEST)
-    {
-        params->priority = TaskP_PRIORITY_LOWEST;
-    }
-
-    taskObj->lastRunTime = 0;
-    taskObj->accRunTime = 0;
+#if (portUSING_MPU_WRAPPERS == 1)
+    /* Create privileged tasks with TaskP_construct */
+    priority |= portPRIVILEGE_BIT; /* A privileged task is created by performing a bitwise OR of 
+                                    * portPRIVILEGE_BIT with the task priority */
+#endif
 
     TaskP_addToRegistry(taskObj);
 
@@ -271,7 +296,7 @@ int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
                                   params->name,              /* Text name for the task.  This is to facilitate debugging only. */
                                   params->stackSize/(sizeof(configSTACK_DEPTH_TYPE)),  /* Stack depth in units of StackType_t typically uint32_t on 32b CPUs */
                                   params->args,       /* task specific args */
-                                  params->priority,   /* task priority, 0 is lowest priority, configMAX_PRIORITIES-1 is highest */
+                                  priority,           /* task priority, 0 is lowest priority, configMAX_PRIORITIES-1 is highest */
                                   (StackType_t*)params->stack,      /* pointer to stack base */
                                   &taskObj->taskObj); /* pointer to statically allocated task object memory */
     if(taskObj->taskHndl == NULL)
@@ -286,6 +311,64 @@ int32_t TaskP_construct(TaskP_Object *obj, TaskP_Params *params)
 
     return status;
 }
+
+#if ( portUSING_MPU_WRAPPERS == 1 )
+#if defined(__ARM_ARCH_7R__) 
+void TaskP_ParamsRestricted_init(TaskP_ParamsRestricted *params)
+{
+    /* Initialize standard task parameters */
+    TaskP_Params_init(&params->params);
+
+    /* Initialize MPU region configurations */
+    for (uint32_t i = 0; i < portNUM_CONFIGURABLE_REGIONS; i++)
+    {
+        params->regionConfig[i].baseAddr  = 0U;
+        params->regionConfig[i].sizeBytes = 0U;
+        MpuP_RegionAttrs_init(&params->regionConfig[i].attrs);
+    }
+}
+
+int32_t TaskP_constructRestricted(TaskP_Object *obj, const TaskP_ParamsRestricted *params)
+{
+    BaseType_t         xResult;
+    int32_t            status      = SystemP_SUCCESS;
+    TaskP_Struct       *taskObj    = (TaskP_Struct *)obj;
+    const TaskP_Params *taskParams = &params->params;
+
+    TaskP_assertParams(obj, taskParams, true);
+
+    xTaskParameters xTaskParams = {
+        .pvTaskCode     = taskParams->taskMain,
+        .pcName         = taskParams->name,
+        .usStackDepth   = taskParams->stackSize / sizeof(configSTACK_DEPTH_TYPE),
+        .pvParameters   = taskParams->args,
+        .uxPriority     = TaskP_adjustPriority(taskParams),
+        .puxStackBuffer = (StackType_t *)taskParams->stack,
+        .pxTaskBuffer   = &taskObj->taskObj,
+    };
+
+    /* Convert TaskP_MpuRegionConfig to MemoryRegion_t */
+    for (uint32_t i = 0; i < portNUM_CONFIGURABLE_REGIONS; i++)
+    {
+        uint32_t MpuP_getAttrs(const MpuP_RegionAttrs *region);
+        
+        xTaskParams.xRegions[i].pvBaseAddress   = (void *)params->regionConfig[i].baseAddr;
+        xTaskParams.xRegions[i].ulLengthInBytes = params->regionConfig[i].sizeBytes;
+        xTaskParams.xRegions[i].ulParameters    = MpuP_getAttrs(&params->regionConfig[i].attrs);
+    }
+
+    TaskP_addToRegistry(taskObj);
+
+    xResult = xTaskCreateRestrictedStatic(&xTaskParams, &taskObj->taskHndl);
+    if ((xResult != pdPASS) || (taskObj->taskHndl == NULL))
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+#endif /* #if ( portUSING_MPU_WRAPPERS == 1 ) */
+#endif /* #if defined(__ARM_ARCH_7R__) */
 
 void TaskP_destruct(TaskP_Object *obj)
 {

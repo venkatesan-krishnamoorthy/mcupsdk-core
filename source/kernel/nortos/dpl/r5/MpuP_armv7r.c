@@ -60,8 +60,7 @@ void MpuP_setRegionAsm(uint32_t regionId, uint32_t regionBaseAddr,
 extern MpuP_Config gMpuConfig;
 extern MpuP_RegionConfig gMpuRegionConfig[4u];
 
-
-static uint32_t MPU_SECTION MpuP_getAttrs(MpuP_RegionAttrs *region)
+uint32_t MPU_SECTION MpuP_getAttrs(const MpuP_RegionAttrs *region)
 {
     uint32_t regionAttrs =
           ((uint32_t)(region->isExecuteNever & (uint32_t)0x1) << (uint32_t)12)

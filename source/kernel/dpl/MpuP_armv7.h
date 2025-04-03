@@ -131,7 +131,7 @@ typedef struct MpuP_RegionConfig_ {
 
     uint32_t baseAddr;  /**< region start address, MUST aligned to region size */
     uint32_t size; /**< region size, see \ref MpuP_RegionSize */
-    MpuP_RegionAttrs attrs; /** region attributes, see \ref MpuP_RegionAttrs */
+    MpuP_RegionAttrs attrs; /**< region attributes, see \ref MpuP_RegionAttrs */
 
 } MpuP_RegionConfig;
 
