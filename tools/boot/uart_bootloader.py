@@ -23,6 +23,10 @@ USAGE: python uart_bootloader.py [OPTIONS]
 -b, --bootloader=    Path to the UART Bootloader binary
 
 -f, --file=          Path to the appimage binary
+
+--cfg=               Path to the configuration file with the entries of the two flags given above, namely bootloader and file.
+                     This file can be used as an alternative to passing the two flags given above.
+                     Use either the --cfg flag or the --bootloader and --file flags.
 '''
 
 BOOTLOADER_UART_STATUS_LOAD_SUCCESS            = 0x53554343
