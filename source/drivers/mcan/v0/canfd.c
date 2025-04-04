@@ -237,7 +237,7 @@ static void CANFD_processFIFOElements(CANFD_Handle handle, MCAN_RxFIFONum fifoNu
 void CANFD_int0Isr (void * args)
 {
     uint32_t                baseAddr;
-    uint32_t                intrStatus = 0U;
+    uint32_t                intrStatus = 0U, errStatus = false;
     CANFD_Object           *ptrCanFdObj = NULL;
     CANFD_Handle            canFdHandle = NULL;
     CANFD_Config           *config = NULL;
@@ -288,9 +288,27 @@ void CANFD_int0Isr (void * args)
             /* Call the registered callback. */
             CANFD_errStatusCallBack(canFdHandle, CANFD_Reason_PROTOCOL_ERR_ARB_PHASE, NULL);
         }
+    
+        /* Process message lost interrupt */
+        if (((intrStatus & MCAN_INTR_SRC_RX_FIFO0_MSG_LOST) == MCAN_INTR_SRC_RX_FIFO0_MSG_LOST) ||
+            ((intrStatus & MCAN_INTR_SRC_RX_FIFO1_MSG_LOST) == MCAN_INTR_SRC_RX_FIFO1_MSG_LOST))
+        {
+            ptrCanFdObj->state = CANFD_DRIVER_STATE_STOPPED;
+            errStatus = true;
+            /* Call the registered error callback. */
+            if((intrStatus & MCAN_INTR_SRC_RX_FIFO0_MSG_LOST) == MCAN_INTR_SRC_RX_FIFO0_MSG_LOST)
+            {
+                CANFD_errStatusCallBack(canFdHandle, CANFD_Reason_SRC_RX_FIFO0_MSG_LOST, NULL);
+            }
+            else
+            {
+                CANFD_errStatusCallBack(canFdHandle, CANFD_Reason_SRC_RX_FIFO1_MSG_LOST, NULL);
+            }
+        }
 
         /* Process Transmit complete interrrupt */
-        if ((intrStatus & MCAN_INTR_SRC_TRANS_COMPLETE) == MCAN_INTR_SRC_TRANS_COMPLETE)
+        if (((intrStatus & MCAN_INTR_SRC_TRANS_COMPLETE) == MCAN_INTR_SRC_TRANS_COMPLETE) && 
+            ((errStatus != (uint32_t)true)))
         {
             CANFD_transCompleteInterrupt(canFdHandle);
         }
@@ -1487,6 +1505,7 @@ int32_t CANFD_deleteMsgObject(CANFD_MsgObjHandle handle)
     CANFD_Object*         ptrCanFdObj;
     int32_t               retVal = SystemP_SUCCESS;
     CANFD_Config         *config;
+    uint32_t              index = 0U;
 
     if(handle != NULL)
     {
@@ -1505,22 +1524,27 @@ int32_t CANFD_deleteMsgObject(CANFD_MsgObjHandle handle)
             if ((ptrCanMsgObj->direction == CANFD_Direction_TX) && 
                 (MCAN_MAX_TX_MSG_OBJECTS > ptrCanMsgObj->txElement))
             {
-                /* Clear the tx to message object handle mapping */
-                ptrCanFdObj->txMapping[ptrCanMsgObj->txElement] = NULL;
+                for (index = (uint32_t)0; index < MCAN_MAX_TX_MSG_OBJECTS; index++)
+                {
+                    /* Clear the tx to message object handle mapping */
+                    ptrCanFdObj->txMapping[index] = NULL;
+                }
 
                 if (config->attrs->operMode == CANFD_OPER_MODE_DMA)
                 {
                     /* De-Initialize DMA channels for the TX message object */
                     retVal = CANFD_deleteDmaTxMsgObject(ptrCanFdObj, ptrCanMsgObj);
                 }
-
             }
 
             if ((ptrCanMsgObj->direction == CANFD_Direction_RX) && 
                 (MCAN_MAX_RX_MSG_OBJECTS > ptrCanMsgObj->rxElement))
             {
-                /* Clear the rx to message object handle mapping */
-                ptrCanFdObj->rxMapping[ptrCanMsgObj->rxElement] = NULL;
+                for (index = (uint32_t)0; index < MCAN_MAX_RX_MSG_OBJECTS; index++)
+                {
+                    /* Clear the rx to message object handle mapping */
+                    ptrCanFdObj->rxMapping[index] = NULL;
+                }
 
                 if (config->attrs->operMode == CANFD_OPER_MODE_DMA)
                 {
@@ -2391,7 +2415,9 @@ void CANFD_errStatusCallBack(CANFD_Handle handle, CANFD_Reason reason,
         if ((reason == CANFD_Reason_ECC_ERROR) ||
             (reason == CANFD_Reason_BUSOFF) ||
             (reason == CANFD_Reason_PROTOCOL_ERR_DATA_PHASE) ||
-            (reason == CANFD_Reason_PROTOCOL_ERR_ARB_PHASE))
+            (reason == CANFD_Reason_PROTOCOL_ERR_ARB_PHASE) ||
+            (reason == CANFD_Reason_SRC_RX_FIFO0_MSG_LOST) ||
+            (reason == CANFD_Reason_SRC_RX_FIFO1_MSG_LOST))
         {
             if((ptrCanFdObj->openParams->transferMode) == CANFD_TRANSFER_MODE_CALLBACK)
             {
@@ -2697,17 +2723,17 @@ static int32_t CANFD_writePollProcessFIFO(CANFD_MsgObjHandle msgObjHandle,
                     }
                 }
 
-        MCAN_writeMsgRam(baseAddr, MCAN_MEM_TYPE_FIFO, 
-                         ptrCanMsgObj->txElement, 
-                         &txBuffElem);
-        /* Add request for transmission, This function will trigger transmission */
-        retVal += MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
-        bitPos = ((uint32_t)1U << ptrCanMsgObj->txElement);
-        /* Poll for Tx completion */
-        do
-        {
-            txStatus = MCAN_getTxBufTransmissionStatus(baseAddr);
-        }while((txStatus & bitPos) != bitPos);
+                MCAN_writeMsgRam(baseAddr, MCAN_MEM_TYPE_FIFO, 
+                                    ptrCanMsgObj->txElement, 
+                                    &txBuffElem);
+                /* Add request for transmission, This function will trigger transmission */
+                retVal += MCAN_txBufAddReq(baseAddr, ptrCanMsgObj->txElement);
+                bitPos = ((uint32_t)1U << ptrCanMsgObj->txElement);
+                /* Poll for Tx completion */
+                do
+                {
+                    txStatus = MCAN_getTxBufTransmissionStatus(baseAddr);
+                }while((txStatus & bitPos) != bitPos);
 
                 ptrCanFdObj->txStatus[ptrCanMsgObj->txElement] = (uint8_t)1;
 
@@ -2791,8 +2817,6 @@ static int32_t CANFD_writeIntr(CANFD_MsgObjHandle txMsgHandle,
         {
             retVal = CANFD_writeIntrProcessFIFO(ptrCanMsgObj, id, frameType, data);
         }
-
-       // retVal = CANFD_writeIntrProcess(txMsgHandle, id, frameType, data);
     }
     else
     {
@@ -3319,22 +3343,22 @@ void CANFD_getBitTime(CANFD_Handle canfdHandle)
         baseAddr    = ptrCanFdObj->regBaseAddress;
         bitTimingParams = &config->attrs->CANFDMcanBitTimingParams;
 
-        configParams.nomSynchJumpWidth = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_NBTP,
+        configParams.nomSynchJumpWidth = HW_RD_FIELD32(MCAN_calcCfgAddr(baseAddr) + MCAN_NBTP,
                                                     MCAN_NBTP_NSJW);
-        configParams.nomTimeSeg2 = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_NBTP,
+        configParams.nomTimeSeg2 = HW_RD_FIELD32(MCAN_calcCfgAddr(baseAddr) + MCAN_NBTP,
                                                 MCAN_NBTP_NTSEG2);
-        configParams.nomTimeSeg1 = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_NBTP,
+        configParams.nomTimeSeg1 = HW_RD_FIELD32(MCAN_calcCfgAddr(baseAddr) + MCAN_NBTP,
                                                 MCAN_NBTP_NTSEG1);
-        configParams.nomRatePrescalar = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_NBTP,
+        configParams.nomRatePrescalar = HW_RD_FIELD32(MCAN_calcCfgAddr(baseAddr) + MCAN_NBTP,
                                                     MCAN_NBTP_NBRP);
 
-        configParams.dataSynchJumpWidth = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_DBTP,
+        configParams.dataSynchJumpWidth = HW_RD_FIELD32(MCAN_calcCfgAddr(baseAddr) + MCAN_DBTP,
                                                         MCAN_DBTP_DSJW);
-        configParams.dataTimeSeg2 = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_DBTP,
+        configParams.dataTimeSeg2 = HW_RD_FIELD32(MCAN_calcCfgAddr(baseAddr) + MCAN_DBTP,
                                                 MCAN_DBTP_DTSEG2);
-        configParams.dataTimeSeg1 = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_DBTP,
+        configParams.dataTimeSeg1 = HW_RD_FIELD32(MCAN_calcCfgAddr(baseAddr) + MCAN_DBTP,
                                                 MCAN_DBTP_DTSEG1);
-        configParams.dataRatePrescalar = HW_RD_FIELD32(MCAN_CfgAddr(baseAddr) + MCAN_DBTP,
+        configParams.dataRatePrescalar = HW_RD_FIELD32(MCAN_calcCfgAddr(baseAddr) + MCAN_DBTP,
                                                     MCAN_DBTP_DBRP);
 
         if((configParams.nomTimeSeg1 % 2) == 0U)

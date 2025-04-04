@@ -38,6 +38,9 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
+const dma_trig_xbar   = scripting.addModule("/xbar/dma_trig_xbar/dma_trig_xbar", {}, false);
+const dma_trig_xbar1  = dma_trig_xbar.addInstance();
+const dma_trig_xbar2  = dma_trig_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -48,9 +51,13 @@ mcan1.MCAN.$assign    = "MCAN0";
 mcan1.MCAN.RX.$assign = "GPIO7";
 mcan1.MCAN.TX.$assign = "GPIO8";
 
-mcan2.$name        = "CONFIG_MCAN1";
-mcan2.sdkInfra     = "HLD";
-mcan2.MCAN.$assign = "MCAN1";
+mcan2.$name               = "CONFIG_MCAN1";
+mcan2.sdkInfra            = "HLD";
+mcan2.operMode            = "DMA";
+mcan2.transferMode        = "CALLBACK";
+mcan2.transferCallbackFxn = "App_CANFD_TransferCallback";
+mcan2.errorCallbackFxn    = "App_CANFD_ErrorCallback";
+mcan2.MCAN.$assign        = "MCAN1";
 
 const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                 = edma.addInstance({}, false);
@@ -283,6 +290,13 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
+
+dma_trig_xbar1.$name      = "CONFIG_DMA_TRIG_XBAR0";
+dma_trig_xbar1.xbarOutput = "DMA_TRIG_XBAR_MCANSS1_FE_0";
+
+dma_trig_xbar2.$name      = "CONFIG_DMA_TRIG_XBAR1";
+dma_trig_xbar2.xbarOutput = "DMA_TRIG_XBAR_MCANSS1_TX_DMA_0";
+dma_trig_xbar2.instance   = "DMA_TRIG_XBAR_EDMA_MODULE_1";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

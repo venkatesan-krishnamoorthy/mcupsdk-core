@@ -165,7 +165,7 @@ extern uint32_t             gCANFDConfigNum;
 /**
  *  @{
  * \brief The section has a list of all the data structures which are exposed
- *        to the application
+ *  to the application
  *
  */
 
@@ -222,6 +222,7 @@ extern uint32_t             gCANFDConfigNum;
                               (uint32_t)MCAN_INTR_SRC_DEDICATED_RX_BUFF_MSG |  \
                               (uint32_t)MCAN_INTR_SRC_PROTOCOL_ERR_ARB |  \
                               (uint32_t)MCAN_INTR_SRC_PROTOCOL_ERR_DATA |  \
+                              (uint32_t)MCAN_INTR_SRC_RX_FIFO1_MSG_LOST | \
                               (uint32_t)MCAN_INTR_SRC_BUS_OFF_STATUS)
 
 /*! \brief completion type for Tx in dma mode - Intermediate completion */
@@ -527,7 +528,17 @@ typedef enum CANFD_Reason_t
     /**
      * \brief  Protocol error in arbitration phase detected.
      */
-    CANFD_Reason_PROTOCOL_ERR_ARB_PHASE     = 0x7
+    CANFD_Reason_PROTOCOL_ERR_ARB_PHASE     = 0x7,
+    
+    /**
+     * \brief  Rx FIFO 0 Message Lost.
+     */
+    CANFD_Reason_SRC_RX_FIFO0_MSG_LOST     = 0x8,
+
+    /**
+     * \brief  Rx FIFO 1 Message Lost.
+     */
+    CANFD_Reason_SRC_RX_FIFO1_MSG_LOST     = 0x9
 }CANFD_Reason;
 
 /*!

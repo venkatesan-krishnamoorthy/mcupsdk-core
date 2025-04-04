@@ -2665,7 +2665,7 @@ int32_t MCAN_calcMsgRamParamsStartAddr(MCAN_MsgRAMConfigParams
  *
  * \return  status         Address calculation status.
  */
-uint32_t MCAN_CfgAddr(uint32_t baseAddr);
+uint32_t MCAN_calcCfgAddr(uint32_t baseAddr);
 
 #ifdef __cplusplus
 }
