@@ -37,6 +37,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include <stdint.h>
+#include "icss_timeSyncApi.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -108,6 +109,21 @@ void TimeSync_convEndianess(volatile void *src, volatile void *dst, uint8_t numB
 * \param dst pointer to destination byte stream
 */
 void TimeSync_convEnd6to8(volatile void *src, void *dst);
+
+/**
+* \brief Returns the IEP Count value based on the IEP Clock Frequency
+* 
+* \param timeSyncHandle Pointer to PTP Handle
+*/
+uint32_t TimeSync_getIEPCountValue(TimeSync_ParamsHandle_t timeSyncHandle);
+
+/**
+* \brief Returns a prepared command for the IEP Global CFG Register
+* 
+* \param timeSyncHandle Pointer to PTP Handle
+* \param compType       Compensation type required
+*/
+uint32_t TimeSync_prepareIEPCfgCommand(TimeSync_ParamsHandle_t timeSyncHandle, compensationType compType);
 
 /** @} */
 

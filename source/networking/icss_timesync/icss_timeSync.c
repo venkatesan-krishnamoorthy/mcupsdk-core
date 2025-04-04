@@ -2122,4 +2122,3 @@ uint64_t getIEPTimestamp(TimeSync_ParamsHandle_t timeSyncHandle)
 
     return iepCount;
 }
-

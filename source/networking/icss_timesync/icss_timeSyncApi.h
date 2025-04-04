@@ -228,6 +228,26 @@ typedef enum
 } timeSource;
 
 /**
+* \brief ICSS IEP Clock Frequencies
+*/
+typedef enum
+{
+    ICSS_IEP_CLK_FREQ_200MHZ = 200000000,
+    ICSS_IEP_CLK_FREQ_250MHZ = 250000000,
+    ICSS_IEP_CLK_FREQ_333MHZ = 333333333,
+} icssIepClkFreq;
+
+/**
+* \brief Compensation Type Required - depending on PTP timeTransmitter or timeReceiver
+*/
+typedef enum
+{
+    PTP_NO_COMPENSATION_REQUIRED = 0,
+    PTP_TIME_RECEIVER_FASTER,
+    PTP_TIME_TRANSMITTER_FASTER,
+} compensationType;
+
+/**
  * \brief 802.1AS-rev Timestamp structure
  */
 typedef struct
@@ -472,6 +492,9 @@ typedef struct
     /**Grand master parameters like priority 1, priority 2 etc. Populated in Announce frame*/
     TimeSync_master_params_t masterParams;
 
+    /**ICSS IEP clock frequency*/
+    uint32_t icssIepClkFreq;
+    
 } TimeSync_Config_t;
 
 /**

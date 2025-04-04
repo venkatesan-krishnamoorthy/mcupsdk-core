@@ -259,7 +259,7 @@ int32_t TimeSync_getRxTimestampFromFrame(TimeSync_ParamsHandle_t timeSyncParamsH
 int8_t TimeSync_adjTimeSlowComp(TimeSync_ParamsHandle_t timeSyncParamsHandle,
                                 int32_t adjOffset)
 {
-    uint32_t compensation_period;
+    uint32_t compensation_period, iepCfgCmd;
     uintptr_t iepBaseAddress = (((PRUICSS_HwAttrs const *)(timeSyncParamsHandle->pruicssHandle->hwAttrs))->iep0RegBase);
 
     if(timeSyncParamsHandle->emacHandle == NULL)
@@ -267,32 +267,42 @@ int8_t TimeSync_adjTimeSlowComp(TimeSync_ParamsHandle_t timeSyncParamsHandle,
         return ERROR_HANDLE_INVALID;
     }
 
-    /* set compensation interval = sync interval/drift.
-       Example: Sync interval=30ms, drift=300ns, compensation interval=30ms/300ns = 5*30000000/300 = 5*100000ns. */
-    compensation_period  = (uint32_t)((double)(
-                                          timeSyncParamsHandle->tsRunTimeVar->ltaSyncInterval) /
-                                      (double)(abs(adjOffset)));
-
-    if(adjOffset == 0) /*No compensation required*/
+    /* Calculate the compensation period */
+    if(adjOffset == 0)
     {
-        /* set compensation increment = 5ns (default val)*/
-        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG, 0x00000551);
-        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_SLOW_COMPEN_REG, 0);
+        /* If the adjOffset is 0, then no compensation is required. In this case, compensation_period = 0 */
+        compensation_period  = 0;
     }
-
-    else if(adjOffset < 0) /* slave is faster*/
+    else
     {
-        /* set compensation increment = 10ns (default val)*/
-        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG, 0x00000A51);
-        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_SLOW_COMPEN_REG, compensation_period);
+        /* set compensation interval = sync interval/drift.
+        Example: Sync interval=30ms, drift=300ns, compensation interval=30ms/300ns = 5*30000000/300 = 5*100000ns. */
+        compensation_period  = (uint32_t)((double)(timeSyncParamsHandle->tsRunTimeVar->ltaSyncInterval) /
+                                          (double)(abs(adjOffset)));
     }
-
-    else    /* master is faster*/
+    
+    if(adjOffset == 0) /*Since time receiver is perfectly in sync with the time transmitter, no compensation required*/
     {
-        /* set compensation increment = 0ns*/
-        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG, 0x00000051);
-        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_SLOW_COMPEN_REG, compensation_period);
+        /* Get the command for the IEP Global CFG Register */
+        iepCfgCmd = TimeSync_prepareIEPCfgCommand(timeSyncParamsHandle, PTP_NO_COMPENSATION_REQUIRED);
+        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG, iepCfgCmd);
     }
+    else if(adjOffset < 0) /* Since the time transmitter is faster, time receiver needs to run faster */
+    {
+        /* Get the command for the IEP Global CFG Register */
+        iepCfgCmd = TimeSync_prepareIEPCfgCommand(timeSyncParamsHandle, PTP_TIME_TRANSMITTER_FASTER);
+        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG, iepCfgCmd);
+    }
+    else    /* Since the time receiver is faster, it needs to slow down. */
+    {
+        /* Get the command for the IEP Global CFG Register */
+        iepCfgCmd = TimeSync_prepareIEPCfgCommand(timeSyncParamsHandle, PTP_TIME_RECEIVER_FASTER);
+        /* Write the command to the IEP Global CFG Register */
+        HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG, iepCfgCmd);
+    }
+    /* Write the compensation period to the IEP Slow Compensation Register */
+    HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_SLOW_COMPEN_REG, compensation_period);
+
     return TIMESYNC_OK;
 }
 

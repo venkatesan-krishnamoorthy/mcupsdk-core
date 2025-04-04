@@ -155,3 +155,66 @@ void TimeSync_convEnd6to8(volatile void *src, void *dst)
     dstPtr[5] = srcPtr[0];
 
 }
+
+uint32_t TimeSync_getIEPCountValue(TimeSync_ParamsHandle_t timeSyncHandle)
+{
+    uint32_t iepCountVal = 0;
+    
+    switch(timeSyncHandle->timeSyncConfig.icssIepClkFreq)
+    {
+        case ICSS_IEP_CLK_FREQ_200MHZ:
+            iepCountVal = 5; /* Since IEP is operating at 200 MHz, use counter increment value of 5 */
+            break;
+        case ICSS_IEP_CLK_FREQ_250MHZ:
+            iepCountVal = 4; /* Since IEP is operating at 250 MHz, use counter increment value of 4 */
+            break;
+        case ICSS_IEP_CLK_FREQ_333MHZ:
+            iepCountVal = 3; /* Since IEP is operating at 333 MHz, use counter increment value of 3 */
+            break;
+        default:
+            iepCountVal = 5; /* Use counter increment value of 5 by default */
+            break;
+    }
+
+    return iepCountVal;
+}
+
+uint32_t TimeSync_prepareIEPCfgCommand(TimeSync_ParamsHandle_t timeSyncHandle, compensationType compType)
+{
+    uint32_t iepCfgCmd = 0;
+    uint32_t cntEnable, defaultInc, cmpInc;
+
+    /* Enable the counter */
+    cntEnable = 1U;
+    /* Get the default counter increment value depending on the IEP Clock frequency */
+    defaultInc = TimeSync_getIEPCountValue(timeSyncHandle);
+    /* Get the counter increment value depending when the compensation is active */
+    switch(compType)
+    {
+        case PTP_NO_COMPENSATION_REQUIRED:
+            /* Since no compensation is required, compensation increment is set the same as default increment */
+            cmpInc = defaultInc; 
+            break;
+        case PTP_TIME_RECEIVER_FASTER:
+            /* Since the time receiver is faster, it needs to slow down. Therefore, set the compensation increment to 0 */
+            cmpInc = 0U;
+            break;
+        case PTP_TIME_TRANSMITTER_FASTER:
+            /* Since the time transmitter is faster, time receiver needs to run faster. Therefore, set the compensation increment to twice the value of the default increment */
+            cmpInc = defaultInc * 2U; 
+            break;
+        default:
+            cmpInc = defaultInc; 
+            break;
+    }
+
+    /* Prepare the command for the IEP ICSS_IEP_GLOBAL_CFG register */
+    /* Set CNT_ENABLE field in ICSS_IEP_GLOBAL_CFG register */
+    iepCfgCmd |= (cntEnable & CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CNT_ENABLE_MAX) << CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CNT_ENABLE_SHIFT;
+    /* Set DEFAULT_INC field in ICSS_IEP_GLOBAL_CFG register */
+    iepCfgCmd |= (defaultInc & CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_DEFAULT_INC_MAX) << CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_DEFAULT_INC_SHIFT;
+    /* Set CMP_INC field in ICSS_IEP_GLOBAL_CFG register */
+    iepCfgCmd |= (cmpInc & CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CMP_INC_MAX) << CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG_CMP_INC_SHIFT;
+
+    return iepCfgCmd;
+}

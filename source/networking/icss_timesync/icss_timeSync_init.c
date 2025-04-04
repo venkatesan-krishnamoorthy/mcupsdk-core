@@ -440,7 +440,7 @@ void TimeSync_drvDisable(TimeSync_ParamsHandle_t timeSyncHandle)
 
 void TimeSync_drvIEPConfig(TimeSync_ParamsHandle_t timeSyncHandle)
 {
-    uint32_t iep_reg_val = 0;
+    uint32_t iep_reg_val = 0, iep_cfg_cmd;
     uint8_t *bytePtr = NULL;
     uintptr_t iepBaseAddress = (((PRUICSS_HwAttrs const *)(timeSyncHandle->pruicssHandle->hwAttrs))->iep0RegBase);
 
@@ -477,8 +477,9 @@ void TimeSync_drvIEPConfig(TimeSync_ParamsHandle_t timeSyncHandle)
     iep_reg_val = HW_RD_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_CMP_CFG_REG);
     iep_reg_val = iep_reg_val | 0x4;
 
-    /*set default increment value and clear slow compensation reg*/
-    HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG, 0x00000551);
+    /* Get the command for the IEP Global CFG Register */
+    iep_cfg_cmd = TimeSync_prepareIEPCfgCommand(timeSyncHandle, PTP_NO_COMPENSATION_REQUIRED);
+    HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_GLOBAL_CFG_REG, iep_cfg_cmd);
     HW_WR_REG32(iepBaseAddress + CSL_ICSS_PR1_IEP0_SLV_SLOW_COMPEN_REG, 0);
 
     /*Reset IEP count to 0 before enabling compare config regs
