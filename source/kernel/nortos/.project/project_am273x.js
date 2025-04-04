@@ -113,9 +113,56 @@ const filedirs_c66 = {
     ],
 };
 
+const files_dss_m4f = {
+    common: [
+        "AddrTranslateP.c",
+        "boot_armv7m.c",
+        "CacheP_null.c",
+        "ClockP_nortos_m4.c",
+        "ClockP_nortos.c",
+        "CycleCounterP_m4.c",
+        "DebugP_log.c",
+        "DebugP_memTraceLogWriter.c",
+        "DebugP_nortos.c",
+        "DebugP_shmLogWriter.c",
+        "DebugP_uartLogWriter.c",
+        "DebugP_uartScanf.c",
+        "HeapP_internal.c",
+        "HeapP_nortos.c",
+        "HwiP_armv7m_handlers_nortos.c",
+        "HwiP_armv7m.c",
+        "MpuP_armv7m.c",
+        "printf.c",
+        "QueueP_nortos.c",
+        "SemaphoreP_nortos.c",
+        "SysTickTimerP.c",
+        "TaskP_nortos.c",
+        "TimerP.c",
+    ]
+};
+
+const cflags_dss_m4f = {
+    common: [
+        "-DCPU_DSS_CM4",
+    ]
+};
+
+const asmfiles_m4f = {
+    common: [
+    ],
+};
+
+const filedirs_dss_m4f = {
+    common: [
+        "dpl/common",
+        "dpl/m4",
+    ],
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "nortos"},
     { device: device, cpu: "c66", cgt: "ti-c6000",     os: "nortos"},
+    { device: device, cpu: "dss_m4f", cgt: "ti-arm-clang", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -146,7 +193,12 @@ function getComponentBuildProperty(buildOption) {
         build_property.filedirs = filedirs_c66;
         build_property.cflags = cflags_c66;
     }
-
+    if(buildOption.cpu.match("dss_m4f")) {
+        build_property.files = files_dss_m4f;
+        build_property.asmfiles = asmfiles_m4f;
+        build_property.filedirs = filedirs_dss_m4f;
+        build_property.cflags = cflags_dss_m4f;
+    }
     return build_property;
 }
 

@@ -757,6 +757,21 @@ SOC_WarmResetCause SOC_getWarmResetCause(void);
  */
 void SOC_clearWarmResetCause(void);
 
+/**
+ *  \brief Unhalt DSS_CM4 Core
+ */
+ void SOC_rcmCM4Unhalt(void);
+
+ /**
+  *  \brief Start memory initialization for DSS_CM4 RAM
+  */
+ void SOC_rcmStartMemInitM4Ram(void);
+ 
+ /**
+  *  \brief Wait memory initialization to complete for DSS_CM4 RAM
+  */
+ void SOC_rcmWaitMeminitM4Ram(void);
+ 
 /** @} */
 
 #ifdef __cplusplus

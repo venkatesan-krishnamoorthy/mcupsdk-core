@@ -107,6 +107,13 @@ const files_c66 = {
     ],
 };
 
+const files_dss_m4f = {
+    common: [
+        "soc.c",
+        "soc_rcm.c",
+    ],
+};
+
 const filedirs = {
     common: [
         "bootloader",
@@ -172,6 +179,12 @@ const cflags_r5f = {
     ],
 };
 
+const cflags_dss_m4f = {
+    common: [
+        "-DCPU_DSS_CM4",
+    ],
+};
+
 const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/security",
@@ -181,6 +194,7 @@ const includes = {
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
     { device: device, cpu: "c66", cgt: "ti-c6000"},
+    { device: device, cpu: "dss_m4f", cgt: "ti-arm-clang"},
 ];
 
 function getComponentProperty() {
@@ -204,6 +218,10 @@ function getComponentBuildProperty(buildOption) {
         build_property.cflags = cflags_r5f;
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
+    }
+    if(buildOption.cpu.match("dss_m4f")) {
+        build_property.cflags = cflags_dss_m4f;
+        build_property.files = files_dss_m4f;
     }
     if(buildOption.cpu.match(/c66*/)) {
         build_property.files = files_c66;

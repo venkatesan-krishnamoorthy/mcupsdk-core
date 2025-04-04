@@ -64,6 +64,7 @@ const char *SOC_getCoreName(uint16_t coreId)
         "r5f0-0",
         "r5f0-1",
         "c66ss0",
+        "m4fss0-1",
         "unknown"
     };
     const char *name;
@@ -174,6 +175,14 @@ void SOC_controlModuleLockMMR(uint32_t domainId, uint32_t partition)
         kickAddr = (volatile uint32_t *) (baseAddr + CSL_MSS_IOMUX_IOCFGKICK1);
         CSL_REG32_WR(kickAddr, KICK_LOCK_VAL);      /* KICK 1 */
     }
+    if(SOC_DOMAIN_ID_DSS_CM4_CTRL == domainId)
+    {
+        baseAddr = CSL_DSS_CM4_CTRL_U_BASE;
+        kickAddr = (volatile uint32_t *) (baseAddr + CSL_DSS_CM4_CTRL_LOCK0_KICK0);
+        CSL_REG32_WR(kickAddr, KICK_LOCK_VAL);      /* KICK 0 */
+        kickAddr = (volatile uint32_t *) (baseAddr + CSL_DSS_CM4_CTRL_LOCK0_KICK1);
+        CSL_REG32_WR(kickAddr, KICK_LOCK_VAL);      /* KICK 1 */
+    }
 
     return;
 }
@@ -253,6 +262,15 @@ void SOC_controlModuleUnlockMMR(uint32_t domainId, uint32_t partition)
         CSL_REG32_WR(kickAddr, IOMUX_KICK0_UNLOCK_VAL); /* KICK 0 */
         kickAddr = (volatile uint32_t *) (baseAddr + CSL_MSS_IOMUX_IOCFGKICK1);
         CSL_REG32_WR(kickAddr, IOMUX_KICK1_UNLOCK_VAL); /* KICK 1 */
+    }
+    
+    if(SOC_DOMAIN_ID_DSS_CM4_CTRL == domainId)
+    {
+        baseAddr = CSL_DSS_CM4_CTRL_U_BASE;
+        kickAddr = (volatile uint32_t *) (baseAddr + CSL_DSS_CM4_CTRL_LOCK0_KICK0);
+        CSL_REG32_WR(kickAddr, KICK0_UNLOCK_VAL); /* KICK 0 */
+        kickAddr = (volatile uint32_t *) (baseAddr + CSL_DSS_CM4_CTRL_LOCK0_KICK1);
+        CSL_REG32_WR(kickAddr, KICK1_UNLOCK_VAL); /* KICK 1 */
     }
 
     return;
@@ -401,7 +419,19 @@ uint64_t SOC_virtToPhy(void *virtAddr)
 #endif
 
 #if (__ARM_ARCH == 7) && (__ARM_ARCH_PROFILE == 'M')
-
+#if defined(CPU_DSS_CM4)
+    if ((temp >=  CSL_CM4_MSS_SPIA_RAM_U_BASE) &&
+    (temp < CSL_CM4_DSS_ESM_U_BASE))
+    {
+    phyAddr -= ARM_M4F_VIRT_TO_PHY_OFFSET;
+    }
+    else if ((temp >= CSL_CM4_HWA_M4_RAM_U_BASE) &&
+        (temp < (CSL_CM4_HWA_M4_RAM_U_BASE + CSL_DSS_CM4_RAM_U_SIZE)))
+    {
+    phyAddr -= CSL_CM4_HWA_M4_RAM_U_BASE;
+    phyAddr += CSL_DSS_CM4_RAM_U_BASE;
+    }
+#else 
     if ( ((temp >=  CSL_MSS_SPIA_RAM_U_BASE) &&
         (temp < CSL_MSS_MCANA_CFG_U_BASE)) ||
         ((temp >= CSL_MSS_TPCC_A_U_BASE) &&
@@ -415,10 +445,17 @@ uint64_t SOC_virtToPhy(void *virtAddr)
     {
         phyAddr += EDMA_M4F_VIRT_TO_PHY_OFFSET;
     }
-
+#endif
 #endif
 
     return (phyAddr);
+}
+
+uint8_t SOC_rcmGetEfusePGVer(void)
+{
+    CSL_top_ctrlRegs* ptrTopCtrlRegs = (CSL_top_ctrlRegs*)CSL_CM4_TOP_CTRL_U_BASE;
+
+    return (uint8_t)((ptrTopCtrlRegs->EFUSE1_ROW_14) & 0xFU);
 }
 
 void *SOC_phyToVirt(uint64_t phyAddr)

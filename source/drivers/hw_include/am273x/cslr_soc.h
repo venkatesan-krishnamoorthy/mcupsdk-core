@@ -44,6 +44,7 @@ extern "C"
 #include <drivers/hw_include/am273x/cslr_soc_baseaddress.h>
 #include <drivers/hw_include/am273x/cslr_soc_dsp_baseaddress.h>
 #include <drivers/hw_include/am273x/cslr_soc_r5_baseaddress.h>
+#include <drivers/hw_include/am273x/cslr_soc_m4_baseaddress.h>
 
 /* ECC aggr header files */
 #include <drivers/hw_include/am273x/cslr_mss_ecc_agg_mss.h>
@@ -54,6 +55,7 @@ extern "C"
 /* Interrupt map header files */
 #include <drivers/hw_include/am273x/cslr_intr_mss.h>
 #include <drivers/hw_include/am273x/cslr_intr_dss.h>
+#include <drivers/hw_include/am273x/cslr_intr_cm4.h>
 #include <drivers/hw_include/am273x/cslr_intr_esm_mss.h>
 #include <drivers/hw_include/am273x/cslr_intr_esm_dss.h>
 
@@ -79,6 +81,7 @@ extern "C"
 #include <drivers/hw_include/am273x/cslr_top_ctrl.h>
 #include <drivers/hw_include/am273x/cslr_mss_ctrl.h>
 #include <drivers/hw_include/am273x/cslr_dss_ctrl.h>
+#include <drivers/hw_include/am273x/cslr_dss_cm4_ctrl.h>
 #include <drivers/hw_include/am273x/cslr_rcss_ctrl.h>
 #include <drivers/hw_include/am273x/cslr_hsm_ctrl.h>
 #include <drivers/hw_include/am273x/cslr_hsm_soc_ctrl.h>

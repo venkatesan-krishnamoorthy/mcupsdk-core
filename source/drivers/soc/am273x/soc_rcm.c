@@ -897,6 +897,11 @@ static uint8_t SOC_rcmReadXtalFreqScale (const CSL_top_ctrlRegs* ptrTopCtrlRegs)
                           SOC_RCM_XTAL_FREQ_SCALE_START_BIT));
 }
 
+static inline CSL_dss_cm4_ctrlRegs* CSL_DSSCM4_getBaseAddress (void)
+{
+    return (CSL_dss_cm4_ctrlRegs*) CSL_DSS_CM4_CTRL_U_BASE;
+}
+
 static uint8_t SOC_rcmReadCoreADPLLTrimValidEfuse (const CSL_top_ctrlRegs* ptrTopCtrlRegs)
 {
     return (SOC_rcmExtract8 (ptrTopCtrlRegs->EFUSE1_ROW_41, \
@@ -3627,4 +3632,66 @@ void SOC_clearWarmResetCause(void)
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MSS_TOP_RCM, 0);
 
+}
+
+void SOC_rcmStartMemInitM4Ram(void)
+{
+    CSL_dss_cm4_ctrlRegs *ptrDssCm4CtrlReg = (CSL_dss_cm4_ctrlRegs *)CSL_DSS_CM4_CTRL_U_BASE;
+
+    /* Unlock DSS_CM4_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_DSS_CM4_CTRL, 0);
+
+    ptrDssCm4CtrlReg->HWA_CM4_B0_MEMINIT_START = 1U;
+    ptrDssCm4CtrlReg->HWA_CM4_B1_MEMINIT_START = 1U;
+    ptrDssCm4CtrlReg->HWA_CM4_B2_MEMINIT_START = 1U;
+
+    /* Lock DSS_CM4_CTRL registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_DSS_CM4_CTRL, 0);
+}
+
+void SOC_rcmWaitMeminitM4Ram(void)
+{
+    CSL_dss_cm4_ctrlRegs *ptrDssCm4CtrlReg = (CSL_dss_cm4_ctrlRegs *)CSL_DSS_CM4_CTRL_U_BASE;
+
+    /* Unlock DSS_CM4_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_DSS_CM4_CTRL, 0);
+
+    /* CM4 B0 Memory */
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B0_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B0_MEMINIT_DONE_HWA_CM4_B0_MEMINIT_DONE_HWA_CM4_B0_MEMINIT_DONE) != 1);
+    CSL_FINS(ptrDssCm4CtrlReg->HWA_CM4_B0_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B0_MEMINIT_DONE_HWA_CM4_B0_MEMINIT_DONE_HWA_CM4_B0_MEMINIT_DONE, 1);
+
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B0_MEMINIT_STATUS, DSS_CM4_CTRL_HWA_CM4_B0_MEMINIT_STATUS_HWA_CM4_B0_MEMINIT_STATUS_HWA_CM4_B0_MEMINIT_STATUS) != 0);
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B0_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B0_MEMINIT_DONE_HWA_CM4_B0_MEMINIT_DONE_HWA_CM4_B0_MEMINIT_DONE) != 0);
+
+    /* CM4 B1 Memory */
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B1_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B1_MEMINIT_DONE_HWA_CM4_B1_MEMINIT_DONE_HWA_CM4_B1_MEMINIT_DONE) != 1);
+    CSL_FINS(ptrDssCm4CtrlReg->HWA_CM4_B1_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B1_MEMINIT_DONE_HWA_CM4_B1_MEMINIT_DONE_HWA_CM4_B1_MEMINIT_DONE, 1);
+
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B1_MEMINIT_STATUS, DSS_CM4_CTRL_HWA_CM4_B1_MEMINIT_STATUS_HWA_CM4_B1_MEMINIT_STATUS_HWA_CM4_B1_MEMINIT_STATUS) != 0);
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B1_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B1_MEMINIT_DONE_HWA_CM4_B1_MEMINIT_DONE_HWA_CM4_B1_MEMINIT_DONE) != 0);
+
+    /* CM4 B2 Memory */
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B2_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B2_MEMINIT_DONE_HWA_CM4_B2_MEMINIT_DONE_HWA_CM4_B2_MEMINIT_DONE) != 1);
+    CSL_FINS(ptrDssCm4CtrlReg->HWA_CM4_B2_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B2_MEMINIT_DONE_HWA_CM4_B2_MEMINIT_DONE_HWA_CM4_B2_MEMINIT_DONE, 1);
+
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B2_MEMINIT_STATUS, DSS_CM4_CTRL_HWA_CM4_B2_MEMINIT_STATUS_HWA_CM4_B2_MEMINIT_STATUS_HWA_CM4_B2_MEMINIT_STATUS) != 0);
+    while (CSL_FEXT(ptrDssCm4CtrlReg->HWA_CM4_B2_MEMINIT_DONE, DSS_CM4_CTRL_HWA_CM4_B2_MEMINIT_DONE_HWA_CM4_B2_MEMINIT_DONE_HWA_CM4_B2_MEMINIT_DONE) != 0);
+
+    /* Lock DSS_CM4_CTRL registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_DSS_CM4_CTRL, 0);
+}
+
+void SOC_rcmCM4Unhalt(void)
+{
+    CSL_dss_cm4_ctrlRegs *ptrDssCm4CtrlRegs;
+
+    ptrDssCm4CtrlRegs = CSL_DSSCM4_getBaseAddress();
+
+    /* Unlock DSS_CM4_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_DSS_CM4_CTRL, 0);
+
+    ptrDssCm4CtrlRegs->HWA_CM4_CFG = 0x5U;
+
+    /* Lock DSS_CM4_CTRL registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_DSS_CM4_CTRL, 0);
 }

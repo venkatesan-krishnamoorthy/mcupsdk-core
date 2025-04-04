@@ -67,6 +67,7 @@ extern "C"
 #define SOC_DOMAIN_ID_DSS_CTRL          (5U)
 #define SOC_DOMAIN_ID_RCSS_CTRL         (6U)
 #define SOC_DOMAIN_ID_MSS_IOMUX         (7U)
+#define SOC_DOMAIN_ID_DSS_CM4_CTRL      (8U)
 /** @} */
 
 /** \brief Macro to check if the QSPI base address is valid */
@@ -172,6 +173,8 @@ void SOC_logAllClockHz(void);
  *  \return Data BaseAddress of the flash
  */
 uint32_t SOC_getFlashDataBaseAddr(void);
+
+uint8_t SOC_rcmGetEfusePGVer(void);
 
 /** @} */
 
