@@ -74,6 +74,8 @@ uint32_t gEventGetBitsFromISR;
 #define TEST_MBOX_MSG_SIZE               (10U)
 #define TEST_MBOX_BUFF_COUNT             (3U)
 
+#define RESTRICTED_ADDRESS      (0xE0000000U)
+
 struct test_mboxTaskTestParam
 {
     MailboxP_Handle hMboxClientRx;
@@ -1153,6 +1155,7 @@ void test_memRdWr(void *args)
     DebugP_log(" MSMC RD cycles = %d (value = %d)\r\n", msmcRdCycles/loop, msmcVal/loop);
 }
 
+#if defined(__ARM_ARCH_7R__)
 float floatLoadAndMultiply(float f1, float f2);
 float floatMultiply();
 
@@ -1240,6 +1243,112 @@ void test_mainToFiqWithFloatOperations(void *args)
     TEST_ASSERT_UINT32_WITHIN(1, (numInterrupts / 100), (uint32_t)f);
     TEST_ASSERT_UINT32_WITHIN(1, 10 + (numInterrupts / 10), (uint32_t)gFloat);
 }
+
+/* Global counters for exceptions */
+volatile uint32_t gDataAbortTracker;
+volatile uint32_t gPrefetchAbortTracker;
+volatile uint32_t gUndefinedInstructionTracker;
+
+/* Strong definition of user exception handleres */
+void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, volatile uint32_t lr, 
+                                    volatile uint32_t spsr);
+void HwiP_user_prefetch_abort_handler_c(IFSR ifsr, AIFSR aifsr, volatile uint32_t ifar, 
+                                        volatile uint32_t lr, volatile uint32_t spsr);
+void HwiP_user_undefined_handler_c(volatile uint32_t lr, volatile uint32_t spsr);
+
+/* User-defined Data Abort handler */
+void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, volatile uint32_t lr, 
+                                    volatile uint32_t spsr)
+{
+    if (gDataAbortTracker > 0U) 
+    {
+        /** This is only for test purpose. 
+         * Returning from a data abort exception may result in unexpected behaviour. */
+        gDataAbortTracker--;
+    }
+    else 
+    {
+        /* Unexpected fault - loop forever */
+        volatile uint32_t loop = 1U;
+        while (loop != 0U) { ; }
+    }
+
+    (void)dfsr;
+    (void)adfsr;
+    (void)dfar;
+    (void)lr;
+    (void)spsr;
+}
+
+/* User-defined Prefetch Abort handler */
+void HwiP_user_prefetch_abort_handler_c(IFSR ifsr, AIFSR aifsr, volatile uint32_t ifar, 
+                                        volatile uint32_t lr, volatile uint32_t spsr)
+{
+    if (gPrefetchAbortTracker > 0U) 
+    {
+        /** This is only for test purpose. 
+         * Returning from a prefetch abort exception may result in unexpected behaviour. */
+        gPrefetchAbortTracker--;
+    }
+    else 
+    {
+        /* Unexpected fault - loop forever */
+        volatile uint32_t loop = 1U;
+        while (loop != 0U) { ; }
+    }
+
+    (void)ifsr;
+    (void)aifsr;
+    (void)ifar;
+    (void)lr;
+    (void)spsr;
+}
+
+/* User-defined Undefined Instruction handler */
+void HwiP_user_undefined_handler_c(volatile uint32_t lr, volatile uint32_t spsr)
+{
+    if (gUndefinedInstructionTracker > 0U) 
+    {
+        /** This is only for test purpose. 
+         * Returning from an undefined exception may result in unexpected behaviour. */
+        gUndefinedInstructionTracker--;
+    }
+    else 
+    {
+        /* Unexpected fault - loop forever */
+        volatile uint32_t loop = 1U;
+        while (loop != 0U) { ; }
+    }
+
+    (void)lr;
+    (void)spsr;
+}
+
+void test_exceptionUserHandlers(void *args)
+{
+    /** Undefined Instruction exception */
+    gUndefinedInstructionTracker = 1U;                          /* Set tracker to mark as expected fault    */
+    DebugP_log("Triggering Undefined Instruction exception...\r\n");
+    /* MRC command to operate debug related register, causing an undef exception                            */
+    __asm__ __volatile__("MRC p14,#0,r0,c0,c2,#2");             /* This should cause undefined exception    */
+    TEST_ASSERT_EQUAL_UINT32(0U, gUndefinedInstructionTracker); /* Validate Undefined Instruction tracker   */
+
+    /** Prefetch Abort exception */
+    DebugP_log("Triggering Prefetch Abort exception...\r\n");
+    gPrefetchAbortTracker = 1U;                                 /* Set tracker to mark as expected fault    */                          
+    typedef void (*function_ptr)();
+    function_ptr trigger_prefetch_abort = (function_ptr)RESTRICTED_ADDRESS;
+    trigger_prefetch_abort();                                   /* This should cause prefetch abort         */
+    TEST_ASSERT_EQUAL_UINT32(0U, gPrefetchAbortTracker);        /* Validate Prefetch Abort tracker          */
+
+    /** Data Abort exception */
+    DebugP_log("Triggering Data Abort exception...\r\n");
+    gDataAbortTracker = 1U;                                     /* Set tracker to mark as expected fault    */
+    uint32_t *ptr = (uint32_t *)RESTRICTED_ADDRESS; 
+    *ptr = 0xFFFFFFFF;                                          /* This should cause data abort             */
+    TEST_ASSERT_EQUAL_UINT32(0U, gDataAbortTracker);            /* Validate Data Abort tracker              */
+}
+#endif /* #if defined(__ARM_ARCH_7R__) */
 
 void test_addrconversion(void *args)
 {
@@ -1446,6 +1555,8 @@ void test_main(void *args)
     */
     RUN_TEST(test_mainToFiqWithFloatOperations, 12213, NULL);
     #endif
+
+    RUN_TEST(test_exceptionUserHandlers, 14420, NULL);
     #endif
 
     /* disabled by default since otherwise the application wait for user input */

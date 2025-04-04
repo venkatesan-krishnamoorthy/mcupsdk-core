@@ -34,16 +34,31 @@
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 #include <drivers/hw_include/csl_types.h>
 #include <kernel/dpl/DebugP.h>
+
+#define TEXT_HWI    __attribute__((section(".text.hwi")))
+#define WEAK        __attribute__((weak))
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(void);
-void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_data_abort_handler_c(volatile uint32_t var);
-void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_prefetch_abort_handler_c(volatile uint32_t var);
-void __attribute__((interrupt("UNDEF"), section(".text.hwi"),weak)) HwiP_undefined_handler_c(volatile uint32_t var);
-void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t DFAR,volatile uint32_t ADDRESS,volatile uint32_t SPSR);
-void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_user_prefetch_abort_handler_c(IFSR ifsr,AIFSR aifsr,volatile uint32_t IFAR,volatile uint32_t ADDRESS,volatile uint32_t SPSR);
-void __attribute__((interrupt("UNDEF"), section(".text.hwi"),weak)) HwiP_user_undefined_handler_c(volatile uint32_t ADDRESS,volatile uint32_t SPSR);
+
+/* Following handlers are set directly in vector table, hence use interrupt attribute */
+void TEXT_HWI __attribute__((interrupt("UNDEF"))) HwiP_reserved_handler(void);
+void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void);
+void TEXT_HWI __attribute__((interrupt("SWI"))) HwiP_svc_handler(void);
+
+/** Following handlers starts in assembly and switch to C implementation. 
+ * Hence DON'T use interrupt attribute. Else it will result in re-entry */ 
+void TEXT_HWI HwiP_irq_handler_c(void);
+void TEXT_HWI HwiP_data_abort_handler_c(volatile uint32_t LR);
+void TEXT_HWI HwiP_prefetch_abort_handler_c(volatile uint32_t LR);
+void TEXT_HWI HwiP_undefined_handler_c(volatile uint32_t LR);
+/* Use weak attribute with user handler so that applications can override with its own implementation */
+void TEXT_HWI WEAK HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t DFAR, 
+                                                  volatile uint32_t LR,volatile uint32_t SPSR);
+void TEXT_HWI WEAK HwiP_user_prefetch_abort_handler_c(IFSR ifsr, AIFSR aifsr, volatile uint32_t IFAR, 
+                                                      volatile uint32_t LR,volatile uint32_t SPSR);
+void TEXT_HWI WEAK HwiP_user_undefined_handler_c(volatile uint32_t LR, volatile uint32_t SPSR);
 
 volatile uint32_t GET_DFSR(void);
 volatile uint32_t GET_ADFSR(void);
@@ -79,11 +94,11 @@ static inline  void Hwip_restore_fpu_context(void)
 
 
 /* IRQ handler starts execution in HwiP_irq_handler, defined in
-HwiP_armv7r_handlers_nortos_asm.S
+ * HwiP_armv7r_handlers_nortos_asm.S
  * After some initial assembly logic it then branches to this function.
  * After exiting this function it does some more assembly before exiting
  */
-void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
+void TEXT_HWI HwiP_irq_handler_c(void)
 {
     int32_t status;
     uint32_t intNum;
@@ -136,7 +151,7 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
     }
 }
 
-void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(void)
+void TEXT_HWI __attribute__((interrupt("FIQ"))) HwiP_fiq_handler(void)
 {
     int32_t status;
     uint32_t intNum;
@@ -196,7 +211,7 @@ void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(vo
     #endif
 }
 
-void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_handler(void)
+void TEXT_HWI __attribute__((interrupt("UNDEF"))) HwiP_reserved_handler(void)
 {
     volatile uint32_t loop = 1;
     while(loop!=0U)
@@ -205,26 +220,26 @@ void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_han
     }
 }
 
-void __attribute__((interrupt("UNDEF"), section(".text.hwi"),weak)) HwiP_user_undefined_handler_c(volatile uint32_t ADDRESS,volatile uint32_t SPSR){
-    volatile uint32_t loop = 1;
-    while(loop != 0U){ ; }
-}
-
-void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_handler_c(volatile uint32_t SP)
+/* Undefined handler starts execution in HwiP_undefined_handler, defined in
+ * HwiP_armv7r_handlers_nortos_asm.S
+ * After some initial assembly logic it then branches to this function.
+ * After exiting this function it does some more assembly before exiting
+ */
+void TEXT_HWI HwiP_undefined_handler_c(volatile uint32_t LR)
 {
 
     typedef struct {
         volatile uint32_t SPSR;
         /* DFSR register */
-        volatile uint32_t ADDRESS;
+        volatile uint32_t LR;
         /* Instruction causing the exception*/
     }UNDEF_REG;
 
     UNDEF_REG abort_regs;
     abort_regs.SPSR=GET_SPSR();
-    abort_regs.ADDRESS=*(&(SP)+10);
+    abort_regs.LR=LR;
 
-    HwiP_user_undefined_handler_c(abort_regs.ADDRESS,abort_regs.SPSR);
+    HwiP_user_undefined_handler_c(abort_regs.LR, abort_regs.SPSR);
 
 }
 
@@ -238,12 +253,12 @@ void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(vo
 
 }
 
-void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_user_prefetch_abort_handler_c(IFSR ifsr,AIFSR aifsr,volatile uint32_t IFAR,volatile uint32_t ADDRESS,volatile uint32_t SPSR){
-    volatile uint32_t loop = 1;
-    while(loop != 0U){ ; }
-}
-
-void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler_c(volatile uint32_t SP)
+/* Prefetch abort handler starts execution in HwiP_prefetch_abort_handler, defined in
+ * HwiP_armv7r_handlers_nortos_asm.S
+ * After some initial assembly logic it then branches to this function.
+ * After exiting this function it does some more assembly before exiting
+ */
+void TEXT_HWI HwiP_prefetch_abort_handler_c(volatile uint32_t LR)
 {
 
     typedef struct {
@@ -253,7 +268,7 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abo
         /* AIFSR register */
         volatile uint32_t IFAR;
         /* IFAR register */
-        volatile uint32_t ADDRESS;
+        volatile uint32_t LR;
         /* Instruction causing the exception*/
         volatile uint32_t SPSR;
         /* SPSR register*/
@@ -265,7 +280,7 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abo
     abort_regs.AIFSR=GET_AIFSR();
     abort_regs.IFAR=GET_IFAR();
     abort_regs.IFSR=GET_IFSR();
-    abort_regs.ADDRESS=*(&(SP)+14);
+    abort_regs.LR=LR;
     abort_regs.SPSR=GET_SPSR();
 
     /*Extract contents of IFSR register
@@ -289,16 +304,16 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abo
     aifsr.recoverable_error=(abort_regs.AIFSR>>21) & 0x1;
     aifsr.cacheway=(abort_regs.AIFSR>>24) & 0xF;
 
-    HwiP_user_prefetch_abort_handler_c(ifsr,aifsr,abort_regs.IFAR,abort_regs.ADDRESS,abort_regs.SPSR);
+    HwiP_user_prefetch_abort_handler_c(ifsr, aifsr, abort_regs.IFAR, abort_regs.LR, abort_regs.SPSR);
 
 }
 
-void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t DFAR,volatile uint32_t ADDRESS,volatile uint32_t SPSR){
-    volatile uint32_t loop = 1;
-    while(loop != 0U){ ; }
-}
-
-void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler_c(volatile uint32_t SP)
+/* Data abort handler starts execution in HwiP_data_abort_handler, defined in
+ * HwiP_armv7r_handlers_nortos_asm.S
+ * After some initial assembly logic it then branches to this function.
+ * After exiting this function it does some more assembly before exiting
+ */
+void TEXT_HWI HwiP_data_abort_handler_c(volatile uint32_t LR)
 {
 
     typedef struct {
@@ -308,7 +323,7 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_h
         /* ADFSR register */
         volatile uint32_t DFAR;
         /* DFAR register */
-        volatile uint32_t ADDRESS;
+        volatile uint32_t LR;
         /* Instruction causing the exception*/
         volatile uint32_t SPSR;
         /* SPSR register*/
@@ -319,7 +334,7 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_h
     abort_regs.ADFSR=GET_ADFSR();
     abort_regs.DFAR=GET_DFAR();
     abort_regs.DFSR=GET_DFSR();
-    abort_regs.ADDRESS=*(&(SP)+15);
+    abort_regs.LR=LR;
     abort_regs.SPSR=GET_SPSR();
 
     /*Extract contents of DFSR register
@@ -346,7 +361,26 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_h
     adfsr.recoverable_error=(abort_regs.ADFSR>>21) & 0x1;
     adfsr.cacheway=(abort_regs.ADFSR>>24) & 0xF;
 
-    HwiP_user_data_abort_handler_c(dfsr,adfsr,abort_regs.DFAR,abort_regs.ADDRESS,abort_regs.SPSR);
+    HwiP_user_data_abort_handler_c(dfsr, adfsr, abort_regs.DFAR, abort_regs.LR, abort_regs.SPSR);
 
 }
 
+void TEXT_HWI WEAK HwiP_user_undefined_handler_c(volatile uint32_t LR, volatile uint32_t SPSR)
+{
+    volatile uint32_t loop = 1U;
+    while(loop != 0U){ ; }
+}
+
+void TEXT_HWI WEAK HwiP_user_prefetch_abort_handler_c(IFSR ifsr, AIFSR aifsr, volatile uint32_t IFAR, 
+                                                      volatile uint32_t LR,volatile uint32_t SPSR)
+{
+    volatile uint32_t loop = 1U;
+    while(loop != 0U){ ; }
+}
+
+void TEXT_HWI WEAK HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t DFAR, 
+                                                  volatile uint32_t LR,volatile uint32_t SPSR)
+{
+    volatile uint32_t loop = 1U;
+    while(loop != 0U){ ; }
+}

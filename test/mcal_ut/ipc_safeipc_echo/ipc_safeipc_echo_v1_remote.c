@@ -92,10 +92,12 @@ RPMessage_Object gAckReplyMsgObject;
 /* RPMessage_Object MUST be global or static */
 static RPMessage_Object gRecvMsgObject;
 
-void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr)
+void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, volatile uint32_t lr,
+                                    volatile uint32_t spsr)
 {
     gDataAbortReceived++;
 }
+
 void ipc_safeipc_echo_remote_core_start(void)
 {
     int32_t status;

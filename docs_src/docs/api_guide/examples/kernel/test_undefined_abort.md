@@ -6,7 +6,7 @@
 This example shows the how custom data abort handler be implemented in the user application.
 
 Provides information about the undef exception
-1. `address`: Instruction causing the exception
+1. `lr`: Link Register when the exception occurred
 2. `spsr`: Saved Program Status Register
 
 \note Please refer to R5F TRM for more information

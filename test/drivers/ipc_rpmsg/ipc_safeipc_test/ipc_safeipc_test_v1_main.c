@@ -129,7 +129,8 @@ extern FirewallRegionReq_t gMpuFirewallRegionConfig_0[FIREWALL_ARRAY0_NUM_REGION
 #define APP_CLIENT_ID                  (0x02)
 
 /* Strong declaration of user defined data abort exception */
-extern void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr);
+extern void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, 
+                                           volatile uint32_t lr, volatile uint32_t spsr);
 
 void ipc_safeipc_test_main_core()
 {
@@ -236,7 +237,8 @@ void ipc_safeipc_test_main(void *args)
 }
 
 /* Strong definition of user defined data abort exception. This function will be called incase of any data abort */
-void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr)
+void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, volatile uint32_t lr,
+                                    volatile uint32_t spsr)
 {
     gDataAbortReceived = 1;
 }

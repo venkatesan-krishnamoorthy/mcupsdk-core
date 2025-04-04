@@ -124,7 +124,8 @@ uint32_t gDataAbortReceived = 0;
 RPMessage_Object gAckReplyMsgObject;
 
 /* Strong declaration of user defined data abort exception */
-extern void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr);
+extern void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, 
+                                           volatile uint32_t lr,volatile uint32_t spsr);
 
 /* RPMessage_Object MUST be global or static */
 static RPMessage_Object gRecvMsgObject;
@@ -217,7 +218,8 @@ void ipc_safeipc_test_main(void *args)
 }
 
 /* Strong definition of user defined data abort exception. This function will be called incase of any data abort */
-void HwiP_user_data_abort_handler_c(DFSR dfsr,ADFSR adfsr,volatile uint32_t dfar,volatile uint32_t address,volatile uint32_t spsr)
+void HwiP_user_data_abort_handler_c(DFSR dfsr, ADFSR adfsr, volatile uint32_t dfar, volatile uint32_t lr, 
+                                    volatile uint32_t spsr)
 {
     gDataAbortReceived = 1;
 }

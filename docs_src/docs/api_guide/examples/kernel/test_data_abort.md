@@ -18,8 +18,8 @@ Provides information about the prefetch abort exception
    4. `cacheway`: value returned in this field indicates the cache way or ways in which the error occurred
 
 3. `dfar` (Data Fault Address Register): Address of the data trying to be written or read. 
-4. `address`: Address of instruction which is trying to access dfar address
-5. `spsr`: Saved Program status registers to get the program status when the exception occured.
+4. `lr`: Link Register when the exception occurred.
+5. `spsr`: Saved Program status registers to get the program status when the exception occurred.
 
 \note Please refer to R5F TRM for more information
 

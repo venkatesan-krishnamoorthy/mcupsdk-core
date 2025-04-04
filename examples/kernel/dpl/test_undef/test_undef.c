@@ -45,14 +45,14 @@
  * @param address Instruction causing the exception
  * @param spsr Saved Program Status Register
  */
-void HwiP_user_undefined_handler_c(volatile uint32_t address,volatile uint32_t spsr)
+void HwiP_user_undefined_handler_c(volatile uint32_t lr, volatile uint32_t spsr)
 { 
     volatile uint32_t loop = 1;
     while(loop != 0U)
     { 
         ; 
     }
-    (void) address;
+    (void) lr;
     (void) spsr;
 }
 

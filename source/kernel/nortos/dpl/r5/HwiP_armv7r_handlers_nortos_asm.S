@@ -108,39 +108,42 @@ HwiP_irq_handler:
         .section ".text.hwi","ax",%progbits
         .align 2
 HwiP_data_abort_handler:
-        /* Return to the instruction following the interrupted.
-         * The instruction that caused the data abort is at R14_ABT – 8 which means
-         * that the pointer points two instructions beyond the instruction that caused
-         * the abort.
+        /** Return to the instruction following the interrupted.
+         * The instruction that caused the data abort is at `R14_ABT - 8` which means
+         * that the pointer points multiple instructions (2 in arm mode and 4 in thumb mode)
+         * beyond the instruction that caused the abort.
+         * For arm mode perform `LR - 4` (4 byte per instruction) and for thumb mode perform 
+         * `LR - 6` (2 byte per instruction) to return to the next instruction.
+         * Refer https://developer.arm.com/documentation/ddi0460/d/Programmers-Model/Exceptions/Exception-entry-and-exit-summary?lang=en
+         * for related information.
          */
 
         /*   Push used registers. */
-        PUSH	{r0-r4, r12}
+        PUSH    {r0-r4, r12}
+
+        /* Copy LR to R0 to pass to C handler */
+        MOV     r0, lr
 
         /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
-        MRS r0, SPSR
-        AND r1, r0, #0x20
-        CMP R1, #0
-
-        /* branches to label HwiP_data_abort_handler_ARM_STATE if the thumb state bit is not set */
-        BEQ HwiP_data_abort_handler_ARM_STATE
-        SUB lr, lr, #2
-        HwiP_data_abort_handler_ARM_STATE:
-        SUB lr, lr, #4
+        MRS     r2, SPSR
+        AND     r1, r2, #0x20
+        CMP     r1, #0
+        SUBNE   lr, lr, #6      /* thumb mode case */   
+        SUBEQ   lr, lr, #4      /* arm mode case */
 
         /*   Push the return address and SPSR. */
-        PUSH	{lr}
-        MRS	lr, SPSR
-        PUSH	{lr}
+        PUSH    {lr}
+        MRS     lr, SPSR
+        PUSH    {lr}
 
-        LDR r1, HwiP_data_abort_handler_const
-        BLX r1
+        LDR     r1, HwiP_data_abort_handler_const
+        BLX     r1
 
-        POP	{LR}
-        MSR	SPSR_cxsf, LR
-        POP	{LR}
-        POP	{r0-r4, r12}
-        MOVS	PC, LR
+        POP     {LR}
+        MSR     SPSR_cxsf, LR
+        POP     {LR}
+        POP     {r0-r4, r12}
+        MOVS    PC, LR
 
 /* FUNCTION DEF: void HwiP_prefetch_abort_handler(void) */
         .global HwiP_prefetch_abort_handler
@@ -148,31 +151,50 @@ HwiP_data_abort_handler:
         .section ".text.hwi","ax",%progbits
         .align 2
 HwiP_prefetch_abort_handler:
-        /* Return to the instruction following the interrupted.
-         * The instruction that caused the data abort is at R14_ABT – 4 which means
-         * that the pointer points one instruction beyond the instruction that caused
+        /* In case of abort from user/system mode, 
+         * Return to the instruction following the one which prefetched the invalid instruction.
+         * So use SPSR to determine the state of the processor and use R14_USER to return. 
+         * R14_USER register is shared for both user & system mode and can be loaded using `^` operator
+         * with STM instruction from abort mode.
+         * Else this handler returns to the instruction following that caused the abort.
+         * Hence the C implementation should make sure to not return if not intended.
+         * The instruction that caused the data abort is at `R14_ABT - 4` which means
+         * that the pointer already points one instruction beyond the instruction that caused
          * the abort.
+         * Refer https://developer.arm.com/documentation/ddi0460/d/Programmers-Model/Exceptions/Exception-entry-and-exit-summary?lang=en
+         * for related information.
          */
 
         /*   Push used registers. */
-        PUSH	{r0-r4, r12}
+        PUSH    {r0-r4, r12}
 
-        /*  Subtract LR to obtain address of instruction. */
-        SUB lr, lr, #4
+        /* Copy LR to R0 to pass to C handler */
+        MOV     r0, lr
 
-        /*   Push the return address and SPSR. */
-        PUSH	{lr}
-        MRS	lr, SPSR
-        PUSH	{lr}
+        /*   Push the LR and SPSR. */
+        PUSH    {lr}                                     
+        MRS     lr, SPSR
+        PUSH    {lr}
 
-        LDR r1, HwiP_prefetch_abort_handler_const
-        BLX r1
+        LDR     r1, HwiP_prefetch_abort_handler_const
+        BLX     r1
 
-        POP	{LR}
-        MSR	SPSR_cxsf, LR
-        POP	{LR}
-        POP	{r0-r4, r12}
-        MOVS	PC, LR
+        /*   Get the return address and SPSR. */
+        POP     {r0}              /* Pop SPSR to R0  */
+        AND     r1, r0, #0x1F     /* Get the mode bits in SPSR                              */
+        TEQ     r1, #0x10         /* Compare with user mode (0x10)                          */
+        TEQNE   r1, #0x1F         /* If not, Compare with system mode (0x1F)                */
+        STMEQ   SP, {r14}^        /* If in user/system mode, store R14_USER onto the stack  */
+        POP     {lr}              /* Pop return address (R14_USER/R14_ABT) to LR            */
+        ANDS    r1, lr, #1        /* Determine if return code was compiled in Thumb mode    */
+        CMP     r1, #1            /* If the LSB is 1, the code is in Thumb mode             */
+        ORREQ   r0, #0x20         /* If Thumb, Set the thumb bit (5) before return          */
+        MSR     SPSR_cxsf, r0
+
+        /*   Pop used registers. */
+        POP     {r0-r4, r12}
+
+        MOVS    PC, LR
 
 /* FUNCTION DEF: void HwiP_undefined_handler(void) */
         .global HwiP_undefined_handler
@@ -181,38 +203,30 @@ HwiP_prefetch_abort_handler:
         .align 2
 HwiP_undefined_handler:
         /* Return to the instruction following the interrupted.
-         * The instruction that caused the data abort is at R14_ABT – 4 (in arm mode) or R14_ABT - 2
-         * (in thumb mode) which means that the pointer points one instruction
+         * The instruction that caused the undefined exception is at `R14_ABT - 4` in arm mode
+         * or `R14_ABT - 2` in thumb mode. This means that the pointer already points to one instruction
          * beyond the instruction that caused the abort.
+         * Refer https://developer.arm.com/documentation/ddi0460/d/Programmers-Model/Exceptions/Exception-entry-and-exit-summary?lang=en
+         * for related information.
          */
-        PUSH	{r0-r4, r12}
+        PUSH    {r0-r4, r12}
 
-        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
-        MRS r0, SPSR
-        AND r1, r0, #0x20
-        CMP R1, #0
-
-        /* branches to label ARM_STATE if the thumb state bit is not set */
-        BEQ ARM_STATE
-        SUB lr, lr, #2
-        B END
-        ARM_STATE:
-        SUB lr, lr, #4
-        END:
-
+        /* Copy LR to R0 to pass to C handler */
+        MOV     r0, lr
+        
         /*   Push the return address and SPSR. */
-        PUSH	{lr}
-        MRS	lr, SPSR
-        PUSH	{lr}
+        PUSH    {lr}
+        MRS     lr, SPSR
+        PUSH    {lr}
 
-        LDR r1, HwiP_undefined_handler_const
-        BLX r1
+        LDR     r1, HwiP_undefined_handler_const
+        BLX     r1
 
-        POP	{LR}
-        MSR	SPSR_cxsf, LR
-        POP	{LR}
-        POP	{r0-r4, r12}
-        MOVS PC,LR
+        POP     {LR}
+        MSR     SPSR_cxsf, LR
+        POP     {LR}
+        POP     {r0-r4, r12}
+        MOVS    PC,LR
 
 /*==============================================================================
 *   Get Data Fault Status Register (DFSR) value

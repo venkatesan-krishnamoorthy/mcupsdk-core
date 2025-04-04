@@ -16,8 +16,8 @@ Provides information about the prefetch abort exception
    3. `recoverable_error`:  value returned in this field indicates if the error is recoverable (0=Unrecoverable error, 1=Recoverable Error)
    4. `cacheway`: value returned in this field indicates the cache way or ways in which the error occurred
 
-3. `address`: Instruction causing the exception
-4. `spsr`: Saved Program status registers to get the program status when the exception occured.
+3. `lr`: Link Register when the exception occurred.
+4. `spsr`: Saved Program status registers to get the program status when the exception occurred.
 
 \note Please refer to R5F TRM for more information
 
