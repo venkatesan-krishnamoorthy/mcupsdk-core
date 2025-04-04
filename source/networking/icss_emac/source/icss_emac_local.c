@@ -828,9 +828,6 @@ static void ICSS_EMAC_pruicssCfgInit(ICSS_EMAC_Handle icssEmacHandle)
     PRUICSS_setGpiMode(pruicssHandle, PRUICSS_PRU0, PRUICSS_GPI_MODE_MII_RT);
     PRUICSS_setGpiMode(pruicssHandle, PRUICSS_PRU1, PRUICSS_GPI_MODE_MII_RT);
 
-    /* Select ocp_clk for lower IEP Latency */
-    PRUICSS_setIepClkSrc(pruicssHandle, 1U);
-
     HW_WR_FIELD32((pruicssHwAttrs->cfgRegBase) + CSL_ICSS_PR1_CFG_SLV_MII_RT_REG, CSL_ICSS_PR1_CFG_SLV_MII_RT_REG_MII_RT_EVENT_EN, 1);
 
     HW_WR_FIELD32((pruicssHwAttrs->cfgRegBase) + CSL_ICSS_PR1_CFG_SLV_SPP_REG, CSL_ICSS_PR1_CFG_SLV_SPP_REG_XFR_SHIFT_EN, 1);
