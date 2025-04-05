@@ -35,7 +35,7 @@ Note :  PPBEVTINT is a logical OR for all the PPBxEVTINT, and is source for ISR
 
 # External Connections
 
-## AM263PX-CC E2 or AM263X-CC E2
+## AM263PX-CC E2 or AM263X-CC E2 or AM261X-SOM E1
 Loop DAC output back to ADC1 Channel 0
 - Connect HSEC Pin 9 to HSEC Pin 12
 ## AM263X-CC E1
@@ -53,7 +53,7 @@ Loop DAC output back to ADC1 Channel 0
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_LIMITS_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

@@ -1,9 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+161"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -15,6 +15,7 @@ const adc2            = adc.addInstance();
 const adc3            = adc.addInstance();
 const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
+const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -52,12 +53,12 @@ adc1.soc0Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
 adc1.soc1Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
 adc1.soc2Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
 adc1.soc3Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
-adc1.adcClockPrescaler  = "ADC_CLK_DIV_4_0";
 adc1.enableConverter    = true;
 adc1.ppb2SOCNumber      = "ADC_SOC_NUMBER1";
 adc1.ppb3SOCNumber      = "ADC_SOC_NUMBER2";
 adc1.ppb4SOCNumber      = "ADC_SOC_NUMBER3";
 adc1.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
+adc1.adcClockPrescaler  = "ADC_CLK_DIV_4_0";
 adc1.ADC.$assign        = "ADC0";
 
 adc2.$name               = "CONFIG_ADC1";
@@ -65,13 +66,13 @@ adc2.soc0Trigger         = "ADC_TRIGGER_EPWM0_SOCB";
 adc2.soc1Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
 adc2.soc2Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
 adc2.soc3Trigger         = "ADC_TRIGGER_EPWM0_SOCB";
-adc2.adcClockPrescaler   = "ADC_CLK_DIV_4_0";
 adc2.enableConverter     = true;
 adc2.ppb2SOCNumber       = "ADC_SOC_NUMBER1";
 adc2.ppb3SOCNumber       = "ADC_SOC_NUMBER2";
 adc2.ppb4SOCNumber       = "ADC_SOC_NUMBER3";
 adc2.interruptPulseMode  = "ADC_PULSE_END_OF_CONV";
 adc2.socHighPriorityMode = "ADC_PRI_THRU_SOC3_HIPRI";
+adc2.adcClockPrescaler   = "ADC_CLK_DIV_4_0";
 adc2.ADC.$assign         = "ADC1";
 
 adc3.$name                          = "CONFIG_ADC2";
@@ -79,7 +80,6 @@ adc3.soc0Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
 adc3.soc1Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
 adc3.soc2Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
 adc3.soc3Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
-adc3.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
 adc3.enableConverter                = true;
 adc3.ppb2SOCNumber                  = "ADC_SOC_NUMBER1";
 adc3.ppb3SOCNumber                  = "ADC_SOC_NUMBER2";
@@ -88,6 +88,7 @@ adc3.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
 adc3.enableInterrupt1               = true;
 adc3.enableInterrupt1ContinuousMode = true;
 adc3.interrupt1SOCSource            = "ADC_SOC_NUMBER2";
+adc3.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
 adc3.ADC.$assign                    = "ADC2";
 
 epwm1.$name                                                   = "CONFIG_EPWM0";
@@ -118,6 +119,11 @@ const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
 
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
+
 const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
 soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
@@ -128,6 +134,8 @@ const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/so
 const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
 soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
 soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
+
+clock.r5ClockFreq = "400MHz";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

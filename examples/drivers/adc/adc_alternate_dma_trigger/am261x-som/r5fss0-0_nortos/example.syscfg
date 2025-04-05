@@ -13,6 +13,7 @@ const adc1       = adc.addInstance();
 const adc2       = adc.addInstance();
 const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1      = edma.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -79,6 +80,35 @@ edma1.edmaChannel[1].xbarConfig.$name               = "CONFIG_DMA_TRIG_XBAR1";
 edma1.edmaChannel[1].xbarConfig.instance            = "DMA_TRIG_XBAR_EDMA_MODULE_1";
 edma1.edmaChannel[1].xbarConfig.xbarConfig.$name    = "CONFIG_DMA_XBAR1";
 edma1.edmaChannel[1].xbarConfig.xbarConfig.instance = "DMA_XBAR_DMA_TRIG_XBAR_1";
+
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+adc.adcReferences     = soc_ctrl_adc1;
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
+
+clock.r5ClockFreq = "400MHz";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

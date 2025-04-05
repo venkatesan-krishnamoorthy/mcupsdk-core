@@ -52,7 +52,7 @@ INT xbar0, INT xbar1 are set for ADC 1 INT 1 and ADC 1 INT 2 respectively.
     - Counter Mode will be set to Up-count mode in the example.
 
 # External Connections
-## AM263Px-CC E2 or AM263x-CC E2
+## AM263Px-CC E2 or AM263x-CC E2 or AM261x-SOM E1
 Feed analog inputs to channels
     - ADC1_AIN0 - HSEC Pin 12
     - ADC1_AIN1 - HSEC Pin 14
@@ -74,7 +74,7 @@ Feed analog inputs to channels
 - gAdc1soc1Delay[] - holds the delay values for ADC1_SOC1
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_DELAY_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------
@@ -104,7 +104,7 @@ Feed analog inputs to channels
 
 Shown below is a sample output when the application is run,
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 \code
 ADC PPB Delay Test Started
 Delays associated with

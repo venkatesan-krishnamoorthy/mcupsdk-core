@@ -48,7 +48,8 @@ adc1.enableConverter   = true;
 adc1.enableInterrupt1  = true;
 adc1.soc0Trigger       = "ADC_TRIGGER_EPWM0_SOCA";
 adc1.$name             = "CONFIG_ADC1";
-adc1.adcClockPrescaler = "ADC_CLK_DIV_3_0";
+adc1.adcClockPrescaler = "ADC_CLK_DIV_4_0";
+adc1.soc0SampleWindow  = 20;
 adc1.ADC.$assign       = "ADC1";
 
 epwm1.$name                                             = "CONFIG_EPWM0";

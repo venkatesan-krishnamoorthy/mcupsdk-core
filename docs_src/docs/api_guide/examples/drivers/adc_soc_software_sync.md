@@ -5,10 +5,7 @@
 # Introduction
 
 ## Example Description
-     This example shows synchronous operation on ADC1 and ADC2 trigger
-by a software forced by toggling a GPIO. The example uses a GPIO loopb
-into the INPUTBAR[5] as trigger for the SOC in the given ADC and uses
-software to toggle to the loopback GPIO trigger the conversions.
+     This example shows synchronous operation on ADC1 and ADC2 trigger by a software forced by toggling a GPIO. The example uses a GPIO into the INPUTBAR[5] as trigger for the SOC in the given ADC and uses software to toggle to the loopback GPIO trigger the conversions.
 
 \imageStyle{am263_adc_soc_software_sync.png,width:50%}
 \image html am263_adc_soc_software_sync.png "Example Block diagram"
@@ -28,7 +25,7 @@ software to toggle to the loopback GPIO trigger the conversions.
 - App_adcISR read the results stored by SOC0,1 in ADC1,2.
 # External Connections
 ## AM263Px-CC E2 or AM263x-CC E2
-     - Connect loopback on GPIO 24, GPIO 23, i.e., HSEC PINS 87, 85.
+     - Connect loopback on GPIO 24, GPIO 23, i.e., HSEC PINS 87, 85 
      - Feed Analog voltage on
          - ADC 1 Channel 0 : HSEC PIN 12
          - ADC 1 Channel 1 : HSEC PIN 14
@@ -49,13 +46,22 @@ software to toggle to the loopback GPIO trigger the conversions.
          - ADC 1 Channel 1 : J1/3 PIN 29
          - ADC 2 Channel 0 : J1/3 PIN 25
          - ADC 2 Channel 1 : J5/7 PIN 63
-## AM2631x-LP
+## AM261x-LP
      - Connect loopback on GPIO 24, GPIO 23, i.e., J5/7 PINS 49,50.
      - Feed Analog voltage on
          - ADC 1 Channel 0 : J1/3 PIN 24
          - ADC 1 Channel 1 : J5/7 PIN 42
          - ADC 2 Channel 0 : J1/3 PIN 25
          - ADC 2 Channel 4 : J1/3 PIN 28
+
+## AM261x-SOM E1
+     - Connect loopback on on GPIO 69 (configured as input) - HSEC connecter pin - 162 or connect it to GPIO 70 (Configured as output) - HSEC Connecter pin - 160
+     - feed analog input on 
+          - ADC 1 Channel 0 - HSEC PIN - 12
+          - ADC 1 Channel 1 - HSEC PIN - 14
+          - ADC 2 Channel 0 - HSEC PIN - 31
+          - ADC 2 Channel 1 - HSEC PIN - 33
+
 # Watch Variables
 - gAdc1Result0 : Digital representation of Voltages on ADC 1 Channel 0
 - gAdc1Result1 : Digital representation of Voltages on ADC 1 Channel 1
@@ -64,7 +70,7 @@ software to toggle to the loopback GPIO trigger the conversions.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE_SYNC_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

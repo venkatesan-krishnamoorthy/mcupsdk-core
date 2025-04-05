@@ -46,7 +46,7 @@ const int_xbar2       = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-adc1.adcClockPrescaler        = "ADC_CLK_DIV_3_0";
+adc1.adcClockPrescaler        = "ADC_CLK_DIV_4_0";
 adc1.$name                    = "CONFIG_ADC1";
 adc1.enableConverter          = true;
 adc1.enableInterrupt1         = true;

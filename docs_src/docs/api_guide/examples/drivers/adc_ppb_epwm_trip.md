@@ -49,14 +49,17 @@ When using AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 - Observe ADC EVT via Output Xbar on HSEC Pin 85
 
 
-## AM263X-CC E2 or AM263X-CC E1
+## AM263X-CC E2 or AM263X-CC E1 or AM261X-SOM E1
 
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 
 - Connect HSEC Pin 15 (ADC input) to HSEC Pin 9 (DAC out)
 - Capture and analyze waveforms at HSEC Pin 49, HSEC Pin 51, HSEC Pin 53, HSEC Pin 55, HSEC Pin 50, HSEC Pin 52
 - Observe ADC EVT via PWMXbar - DCEVT - Output Xbar on HSEC Pin 85
-
+\cond SOC_AM261X
+\note 
+the IO expander should be configured to get the DAC out on the HSEC pin 9
+\endcond
 
 ## AM263PX-LP 
 
@@ -84,7 +87,7 @@ When using AM261x-LP
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_EPWM_TRIP_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

@@ -241,7 +241,8 @@ void adc_high_priority_soc_main(void *args)
 }
 
 static void App_adcISR(void *args)
-{   EPWM_setTimeBaseCounterMode(gEpwm0BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
+{   
+    EPWM_setTimeBaseCounterMode(gEpwm0BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
     if(gAdc2Case == 1)
     {
         for(int iter = 0; iter < 4; iter++)

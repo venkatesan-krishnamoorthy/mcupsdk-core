@@ -13,21 +13,26 @@ App_dmach0ISR
 - ISR triggered at the end of the DMA transfers to stop ADC SOCs from getting further triggers.
 
 ## External Connections
-ADC0-SOC0 Samples on Channel 2, where as ADC1-SOC1 samples on Channel 0.
+ADC0-SOC0 Samples on Channel 2, where as ADC1-SOC0 samples on Channel 0.
  - on AM263Px CC E2, with HSEC Dock 
      - Feed Analog input to ADC0_AIN2 - HSEC PIN 15  
      - Feed Analog input to ADC1_AIN0 - HSEC PIN 12  
  - on AM263Px LP
+     - Feed Analog Input to the ADC0_AIN2 - J7 Pin 66
+     - Feed Analog Input to the ADC1_AIN0 - J3 Pin 24
+ - on AM261x LP
      - Feed Analog Input to the ADC0_AIN2 - J7 Pin 63
      - Feed Analog Input to the ADC1_AIN0 - J3 Pin 24
-
+ - on AM261x SOM with HSEC Dock
+     - Feed Analog input to ADC0_AIN2 - HSEC PIN 15  
+     - Feed Analog input to ADC1_AIN0 - HSEC PIN 12   
 ## Watch Variables 
  gAdc0DataBuffer[] - Buffer to store ADC0 SOC0 results, copied by DMA.
  gAdc1DataBuffer[] - Buffer to store ADC1 SOC0 results, copied by DMA.
  
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_ALTERNATE_DMA_TRIGGER_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

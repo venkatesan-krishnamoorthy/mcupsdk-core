@@ -36,7 +36,7 @@ The example demonstrates Burst mode of ADC periodically triggered by trigger fro
  - gAdc1result3[] : Digital representation of the voltage sampled on pin ADC0_AIN3
 
 # External Connections :
-## AM263Px-CC E2 or AM263x-CC E2
+## AM263Px-CC E2 or AM263x-CC E2 or AM261X-SOM
       Feed analog voltages on
       - ADC1_AIN0, i.e., HSEC PIN  12
       - ADC1_AIN1, i.e., HSEC PIN  14
@@ -63,10 +63,9 @@ The example demonstrates Burst mode of ADC periodically triggered by trigger fro
       - ADC1_AIN2,  J5 pin 64 | note this will require IO expander configurations. check schematics and syscfg for details.
       - ADC1_AIN3 - J5 pin 46
 
-
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_BURST_MODE_EPWM_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

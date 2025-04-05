@@ -32,7 +32,7 @@ App_apwmTrigAdcISR (or App_capTrigAdcISR)
 - Each ISR reads the respective SOC result, clears the ADC INT flags and Increments a counter for validation.
 
 # External Connections
-## AM263x-CC E2 or AM263Px-CC E2 :
+## AM263x-CC E2 or AM263Px-CC E2 or AM261x-SOM E1:
 Feed Analog voltages on ADC_APWM_TRIG (ADC0)
 - ADC0_AIN2, i.e., HSEC PIN  15
 Feed Analog voltages on ADC_CAP_TRIG (ADC1)
@@ -40,6 +40,11 @@ Feed Analog voltages on ADC_CAP_TRIG (ADC1)
 ## AM263x-LP :
 Feed Analog voltages on ADC_APWM_TRIG (ADC0)
 - ADC0_AIN2, i.e., J5/7 PIN  66
+Feed Analog voltages on ADC_CAP_TRIG (ADC1)
+- ADC1_AIN0, i.e., J1/3 PIN  24
+## AM261x-LP :
+Feed Analog voltages on ADC_APWM_TRIG (ADC0)
+- ADC0_AIN2, i.e., J5/7 PIN  63
 Feed Analog voltages on ADC_CAP_TRIG (ADC1)
 - ADC1_AIN0, i.e., J1/3 PIN  24
 

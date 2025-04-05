@@ -29,7 +29,7 @@
 
 # External Connections
 ADC1_AIN0 pin should be connected to signals to be converted.
- - on AM263Px CC E1, with HSEC Dock
+ - on AM263Px CC E1 or AM261x-SOM E1, with HSEC Dock
      - Feed Analog input to ADC1_AIN0 - HSEC PIN 12
  - on AM263Px LP / AM261x LP
      - Feed Analog input to ADC1_AIN0 - J1/3 Pin 24

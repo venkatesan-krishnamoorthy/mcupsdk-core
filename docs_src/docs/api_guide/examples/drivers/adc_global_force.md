@@ -11,10 +11,12 @@ This example demonstrates the Global SOC force feature. The ADCs that need to be
 # External Connections
 External connections are *arbitrary* for this feature demonstration. for instance, ADC0 SOC0 is configured for Channel 0. 
 Feed Analog voltages on ADC0_AIN2
-## AM263Px-CC E2
+## AM263Px-CC E2 or AM261x-SOM E1
 - ADC0_AIN2, i.e., HSEC PIN  15
-## AM263Px-LP
+## AM263Px-LP 
 - ADC0_AIN2, i.e., J5/7 PIN  66
+## AM261x-LP 
+- ADC0_AIN2, i.e., J5/7 PIN  63
 
 # Watch Variables
 The below watch variables can be used to view ADC conversion results.
@@ -26,7 +28,7 @@ The below watch variables can be used to view ADC conversion results.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_GLOBAL_FORCE_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

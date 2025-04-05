@@ -137,6 +137,9 @@ void adc_differential_mode_main(void *args)
     hwiPrms.callback    = &App_adcISR;
     status              = HwiP_construct(&gAdcHwiObject, &hwiPrms);
     DebugP_assert(status == SystemP_SUCCESS);
+    
+    ADC_clearInterruptOverflowStatus(gAdc1baseAddr, ADC_INT_NUMBER1);
+    ADC_clearInterruptStatus(gAdc1baseAddr, ADC_INT_NUMBER1);
 
     /* Setting the EPWM TB counter mode to up count mode*/
     EPWM_setTimeBaseCounterMode(CONFIG_EPWM0_BASE_ADDR, EPWM_COUNTER_MODE_UP);

@@ -23,7 +23,7 @@ This example compares the absolute value of the two ADC conversion results with 
 
 # External Connections
 ADC1_AIN0, ADC1_AIN1 pins should be connected to signals to be converted
- - on AM263Px CC E1, with HSEC Dock
+ - on AM263Px CC E1 or AM261x SOM E1, with HSEC Dock
      - Feed Analog input to ADC1_AIN0 - HSEC PIN 12
      - Feed Analog input to ADC1_AIN1 - HSEC PIN 14
  - on AM263Px LP
@@ -35,7 +35,7 @@ ADC1_AIN0, ADC1_AIN1 pins should be connected to signals to be converted
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SAFETY_CHECKER_COMBOS}
 
-\cond SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263PX || SOC_AM261X || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

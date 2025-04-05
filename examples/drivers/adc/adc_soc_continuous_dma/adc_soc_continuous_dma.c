@@ -203,7 +203,7 @@ void adc_soc_continuous_dma_main(void *args)
     while(loopCnt < RESULTS_BUFFER_SIZE)
     {
         DebugP_log("%d : %d\r\n", gAdc1DataBuffer[loopCnt], gAdc2DataBuffer[loopCnt]);
-        loopCnt += 100;
+        loopCnt += RESULTS_BUFFER_SIZE/15;
     }
 
     DebugP_log("ADC Continuous DMA transfer Test Passed\r\n");

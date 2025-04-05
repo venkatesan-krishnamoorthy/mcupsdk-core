@@ -19,10 +19,12 @@ Both ISR have a counter to increment on each call. these counters are compared f
 
 # External Connections
 Feed Analog voltages on ADC0_AIN2
-## AM263x-CC E2 or AM263Px-CC E2
+## AM263x-CC E2 or AM263Px-CC E2 or AM261X-SOM E1
 - ADC0_AIN2, i.e., HSEC PIN  15
 ## AM263x-LP or AM263Px-LP
 - ADC0_AIN2, i.e., J5/7 PIN  66
+## AM261x-LP 
+- ADC0_AIN2, i.e., J5/7 PIN  64, this needs IO Expander Configurations, Check Syscfg and/or schematics
 
 # Watch Variables
 The below watch variables can be used to view ADC conversion results.
@@ -32,7 +34,7 @@ The below watch variables can be used to view ADC conversion results.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_RTI_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

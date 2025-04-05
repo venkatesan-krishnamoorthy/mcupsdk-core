@@ -28,8 +28,8 @@ The example does the below
 # External Connections
 - ADC1_AIN0, ADC1_AIN1 pins should be connected to signals to be converted in differential mode.
 
-## AM263PX-CC E2 or AM263X-CC E2
-When using AM263Px-CC E2 or AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263PX-CC E2 or AM263X-CC E2 or AM261x-SOM E1
+When using AM261x-SOM E1, AM263Px-CC E2 or AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog inputs to
     - ADC1_AIN0 - HSEC Pin 12
     - ADC1_AIN1 - HSEC Pin 14
@@ -52,7 +52,7 @@ Feed Analog Inputs to the Boosterpack Headers at the following
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_DIFFERENTIAL_MODE_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

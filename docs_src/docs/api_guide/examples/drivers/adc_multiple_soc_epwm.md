@@ -23,7 +23,7 @@ The example does the below
 # External Connections
 - ADC2_AIN0, ADC2_AIN1, ADC2_AIN2 and ADC1_AIN0, ADC1_AIN1, ADC1_AIN2 pins should be connected to signals to be converted.
 
-## AM263PX-CC E2 or AM263X-CC E2
+## AM263PX-CC E2 or AM263X-CC E2 or AM261X-SOM E1
 When using AM263Px-CC E2 or AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog inputs to the following.
     - ADC2_AIN0 - HSEC 31
@@ -67,7 +67,7 @@ When using LP
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_MULTIPLE_SOC_EPWM_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

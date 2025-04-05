@@ -66,12 +66,12 @@ adc2.soc0Trigger       = "ADC_TRIGGER_INPUT_XBAR_OUT5";
 adc2.soc1Trigger       = "ADC_TRIGGER_INPUT_XBAR_OUT5";
 adc2.ADC.$assign       = "ADC2";
 
-gpio1.$name                = "GPIO_23_INPUT";
+gpio1.$name                = "GPIO_INPUT";
 gpio1.GPIO.$assign         = "GPIO0";
 gpio1.GPIO.gpioPin.$assign = "I2C1_SCL";
 
 gpio2.pinDir               = "OUTPUT";
-gpio2.$name                = "GPIO_24_OUTPUT";
+gpio2.$name                = "GPIO_OUTPUT";
 gpio2.GPIO.$assign         = "GPIO0";
 gpio2.GPIO.gpioPin.$assign = "I2C1_SDA";
 

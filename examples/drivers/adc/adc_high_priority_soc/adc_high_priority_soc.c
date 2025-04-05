@@ -60,6 +60,7 @@
  *          SOC 0-3 are in Round Robin (no high priority selected)
  *          all SOC are triggered by EPWM0SOCA signal.
  *          Conversion sequence : SOC 0 --> SOC 1 --> SOC 2 --> SOC 3
+
  *
  * ADC1 :   (done through Syscfg)
  *          SOC 0-3 are in Round Robin (no high priority selected)
@@ -271,7 +272,8 @@ void adc_high_priority_soc_main(void *args)
 }
 
 static void App_adcISR(void *args)
-{   EPWM_setTimeBaseCounterMode(gEpwm0BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
+{   
+    EPWM_setTimeBaseCounterMode(gEpwm0BaseAddr, EPWM_COUNTER_MODE_STOP_FREEZE);
     if(gAdc4Case == 1)
     {
         for(int iter = 0; iter < 4; iter++)

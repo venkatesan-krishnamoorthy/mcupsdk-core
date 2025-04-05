@@ -30,7 +30,7 @@ Watch  Variables
 
 # External Connections
 - ADC1_AIN0 and ADC2_AIN0 pin should be connected to the signals to be converted.
-## AM263PX-CC E2 or AM263X-CC E2
+## AM263PX-CC E2 or AM263X-CC E2 or AM261X-SOM E1
  - Feed the External Volatage to the following
      - ADC1_AIN0 :   HSEC-PIN 12
      - ADC2_AIN0 :   HSEC-PIN 31
@@ -38,14 +38,15 @@ Watch  Variables
  - Feed the External Volatage to the following
      - ADC1_AIN0 :   HSEC-PIN 18
      - ADC2_AIN0 :   HSEC-PIN 24
-## AM263PX-LP or AM263X-LP
+## AM263PX-LP or AM263X-LP or AM261x-LP
  - Feed the External Volatage to the following
      - ADC1_AIN0 :   J1/3 24
      - ADC2_AIN0 :   J1/3 25
 
+
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_CONTINUOUS_DMA_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

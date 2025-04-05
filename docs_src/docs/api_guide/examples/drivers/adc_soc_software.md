@@ -14,18 +14,18 @@ The example does the below
 # External Connections
 - ADC0_AIN2 pin should be connected to signals to be converted.
 
-## AM263PX-CC E2 or AM263X-CC E2 or AM263X-CC E1
+## AM263PX-CC E2 or AM263X-CC E2 or AM263X-CC E1 or AM261X-SOM E1 
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog input for the following
     - ADC0_AIN2 - HSEC 15
 
-## AM263PX-LP or AM263X-LP
+## AM263PX-LP or AM263X-LP or AM261X-LP E1
 When using AM263x-LP
-- Feed analog input (non-zero voltage) to boosterpack header J5/J7 Pin 66.
+- Feed analog input (non-zero voltage) to boosterpack header J5/J7 Pin 66 (J5/7 pin 63 in case of AM261x-LP).
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

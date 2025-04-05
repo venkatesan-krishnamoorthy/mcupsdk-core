@@ -71,13 +71,20 @@ completed so far in the conversion cycle and average them.
 - feed analog input on ADC 2 Channel 0 - J1/J3 Pin - 25
 - feed analog input on ADC 2 Channel 1 - J5/J7 Pin - 63
 
-
 ## AM261X-LP
 - input trigger pulse on GPIO 16 (configured as input) - J5/J7 pin - 47 or connect it to GPIO 15 (Configured as output) -  J6/J8 Jpin - 58
 - feed analog input on ADC 1 Channel 0 - J1/J3 Pin - 24
 - feed analog input on ADC 1 Channel 1 - J5/J7 Pin - 42
 - feed analog input on ADC 2 Channel 0 - J1/J3 Pin - 25
 - feed analog input on ADC 2 Channel 4 - J1/J3 Pin - 28
+
+## AM261x-SOM E1
+- input trigger pulse on GPIO 69 (configured as input) - HSEC connecter pin - 162 or connect it to GPIO 70 (Configured as output) - HSEC Connecter pin - 160
+- feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 12
+- feed analog input on ADC 1 Channel 1 - HSEC connecter pin - 14
+- feed analog input on ADC 2 Channel 0 - HSEC connecter pin - 31
+- feed analog input on ADC 2 Channel 1 - HSEC connecter pin - 33
+
 # Watch variables:
 - gAdc1Channel0Results - array of averaged Analog to Digital Converted samples on channel 0 of ADC 1
 - gAdc1Channel1Results - array of averaged Analog to Digital Converted samples on channel 1 of ADC 1

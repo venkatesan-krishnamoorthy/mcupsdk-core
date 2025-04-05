@@ -21,7 +21,7 @@
      - freezes EPWM counter if required conversions are complete.
 
 # External Connections
-## AM263Px-CC or AM263X-CC E2 
+## AM263Px-CC or AM263X-CC E2 or AM261X-SOM E1
      - Feed Analog Voltages on ADC 1 Channel 0 - HSEC PIN 12
      - Feed Analog Voltages on ADC 1 Channel 1 - HSEC PIN 14
      - Feed Analog Voltages on ADC 1 Channel 2 - HSEC PIN 18
@@ -36,6 +36,12 @@
      - Feed Analog Voltages on ADC 1 Channel 1 - J1/3 PIN 29
      - Feed Analog Voltages on ADC 1 Channel 2 - J5/7 PIN 67
 
+## AM261X-LP
+     - Feed Analog Voltages on ADC 1 Channel 0 - J1/3 PIN 24
+     - Feed Analog Voltages on ADC 1 Channel 1 - J5/7 PIN 42
+     - Feed Analog Voltages on ADC 1 Channel 2 - J5/7 PIN 64, this needs IO expander Configurations check Syscfg and Schematics
+
+
 # Watch Variables
      - gAdc1Channel0Result - array of digital represented voltages on ADC1 channel 0
      - gAdc1Channel1Result - array of digital represented voltages on ADC1 channel 1
@@ -43,7 +49,7 @@
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_OVERSAMPLING_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

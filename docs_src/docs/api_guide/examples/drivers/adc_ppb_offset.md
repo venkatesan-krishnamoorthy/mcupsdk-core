@@ -38,7 +38,7 @@ ADC SOC0 and SOC1 are set for Channel 0, with sample window 17 each and are trig
 - ADC1_INT1 is set to EOC/SOC1.
 
 ## External Connections
-### AM263PX-CC E2 or AM263X-CC E2
+### AM263PX-CC E2 or AM263X-CC E2 or AM261X-SOM E1
 - Feed Analog Input to ADC1_AIN0, HSEC Pin 12
 ### AM263X-CC E1
 - Feed Analog Input to ADC1_AIN0, HSEC Pin 18
@@ -54,7 +54,7 @@ ADC SOC0 and SOC1 are set for Channel 0, with sample window 17 each and are trig
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_OFFSET_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

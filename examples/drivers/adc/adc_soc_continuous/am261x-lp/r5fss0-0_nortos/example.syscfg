@@ -78,7 +78,7 @@ adc1.interrupt1SOCSource   = "ADC_SOC_NUMBER7";
 adc1.enableInterrupt2      = true;
 adc1.interrupt2SOCSource   = "ADC_SOC_NUMBER15";
 adc1.enableConverter       = true;
-adc1.adcClockPrescaler     = "ADC_CLK_DIV_3_0";
+adc1.adcClockPrescaler     = "ADC_CLK_DIV_4_0";
 adc1.ADC.$assign           = "ADC1";
 
 debug_log.enableUartLog            = true;

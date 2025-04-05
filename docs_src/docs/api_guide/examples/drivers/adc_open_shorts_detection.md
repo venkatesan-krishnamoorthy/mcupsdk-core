@@ -60,7 +60,7 @@ no pin fault.
 5. OSD circuit is enabeld for ADC0, Channel 2 (see below execution)
 ## External Connections
 ADC0-SOC0 Samples on Channel 2.
-- on AM263Px CC E2, with HSEC Dock
+- on AM263Px CC E2 or AM261x-SOM E1, with HSEC Dock 
     - Feed Analog input to ADC0_AIN2 - HSEC PIN 15
 - on AM263Px LP
     - Feed Analog Input to the ADC0_AIN2 - J7 Pin 66
