@@ -557,7 +557,15 @@ static bool EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         {
             parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
-            rxCh = atoi(parameter);
+            if (parameter == NULL)
+            {
+                snprintf(writeBuffer, writeBufferLen, "No DMA channel specified for forwarding\r\n");
+                status = ENET_EBADARGS;
+            }
+            else
+            {
+                rxCh = atoi(parameter);
+            }
         }
         else
         {
