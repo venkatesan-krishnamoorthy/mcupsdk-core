@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-24 Texas Instruments Incorporated
+ *  Copyright (C) 2020-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -131,6 +131,9 @@ extern "C" {
 
 /*! @brief  Maximum number of FSI Rx Dma buffers. */
 #define FSI_MAX_RX_DMA_BUFFERS              (2U)
+
+/*! @brief Whether FIFO is supported in MCSPI DMA MODE. */
+#define MCSPI_DMA_IS_FIFO_SUPPORTED          (1U)
 
 /**
  * \anchor CSL_CoreID

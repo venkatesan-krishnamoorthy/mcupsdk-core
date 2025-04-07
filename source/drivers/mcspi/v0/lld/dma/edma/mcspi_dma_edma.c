@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -62,8 +62,10 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args);
 static void MCSPI_edmaIsrRx(Edma_IntrHandle intrHandle, void *args);
 static void MCSPI_dmaStart(MCSPILLD_Handle hMcspi, MCSPI_ChObject *chObj,
                            uint32_t baseAddr);
-static void MCSPI_EdmaChConfig_init(MCSPI_EdmaChConfig *dmaChConfig);
-
+static void MCSPI_EdmaChConfig_init(MCSPI_EdmaChConfig *dmaChConfig); 
+static void MCSPI_edmaUpdateTransferParams(MCSPILLD_Handle hMcspi,
+                                   MCSPI_ChObject *chObj,
+                                   const MCSPI_Transaction *transaction);
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -392,122 +394,178 @@ int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi,
     MCSPI_EdmaChConfig *dmaChConfig;
     uint32_t            retVal = (uint32_t)FALSE;
 
-    dmaChConfig = (MCSPI_EdmaChConfig *)chObj->dmaChCfg;
-
-    /* Fetch the EDMA paramters for McSPI transfer */
-    baseAddr  = dmaChConfig->edmaBaseAddr;
-    regionId  = dmaChConfig->edmaRegionId;
-
-    if((MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode) || (MCSPI_TR_MODE_RX_ONLY == chObj->chCfg->trMode))
+    if ((hMcspi != NULL) && (transaction != NULL))
     {
-        /* Fetch the EDMA paramters for McSPI RX transfer */
-        dmaRxCh    = dmaChConfig->edmaRxChId;
-        tccRx      = dmaChConfig->edmaTccRx;
-        paramRx    = dmaChConfig->edmaRxParam;
+        dmaChConfig = (MCSPI_EdmaChConfig *)chObj->dmaChCfg;
+        /* Fetch the EDMA paramters for McSPI transfer */
+        baseAddr  = dmaChConfig->edmaBaseAddr;
+        regionId  = dmaChConfig->edmaRegionId;
 
-        /* Initialize RX Param Set */
-        EDMA_ccPaRAMEntry_init(&edmaRxParam);
-
-        /* Receive param set configuration */
-        edmaRxParam.srcAddr       = (uint32_t) SOC_virtToPhy((void *)(hMcspi->baseAddr +
-                                                              ((uint32_t)MCSPI_CHRX(chObj->chCfg->chNum))));
-        edmaRxParam.destAddr      = (uint32_t) SOC_virtToPhy((void*) chObj->curRxBufPtr);
-        edmaRxParam.aCnt          = (uint16_t) ((uint16_t)1U << chObj->bufWidthShift);
-        edmaRxParam.bCnt          = (uint16_t) (transaction->count);
-        edmaRxParam.cCnt          = (uint16_t) 1;
-        edmaRxParam.bCntReload    = (uint16_t) edmaRxParam.bCnt;
-        edmaRxParam.srcBIdx       = (int16_t) 0;
-        edmaRxParam.destBIdx      = (int16_t) edmaRxParam.aCnt;
-        edmaRxParam.srcCIdx       = (int16_t) 0;
-        edmaRxParam.destCIdx      = (int16_t) 0;
-        edmaRxParam.linkAddr      = 0xFFFFU;
-        edmaRxParam.opt           =
-            (EDMA_OPT_TCINTEN_MASK | ((tccRx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
-
-        /* Write Rx param set */
-        EDMA_setPaRAM(baseAddr, paramRx, &edmaRxParam);
-
-        /* Set event trigger to start McSPI RX transfer */
-        retVal = (int32_t)EDMA_enableTransferRegion(baseAddr, regionId, dmaRxCh,
-                                           EDMA_TRIG_MODE_EVENT);
-        if(retVal == TRUE)
+        if((MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode) || (MCSPI_TR_MODE_RX_ONLY == chObj->chCfg->trMode))
         {
-            edmaStatus = MCSPI_STATUS_SUCCESS;
-        }
-        else
-        {
-            edmaStatus = MCSPI_STATUS_FAILURE;
-        }
-    }
+            /* Fetch the EDMA paramters for McSPI RX transfer */
+            dmaRxCh    = dmaChConfig->edmaRxChId;
+            tccRx      = dmaChConfig->edmaTccRx;
+            paramRx    = dmaChConfig->edmaRxParam;
 
-    if((MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode) || (MCSPI_TR_MODE_TX_ONLY == chObj->chCfg->trMode))
-    {
-        /* Fetch the EDMA paramters for McSPI TX transfer */
-        dmaTxCh    = dmaChConfig->edmaTxChId;
-        tccTx      = dmaChConfig->edmaTccTx;
-        paramTx    = dmaChConfig->edmaTxParam;
-        paramDummy = dmaChConfig->edmaDummyParam;
+            /* Initialize RX Param Set */
+            EDMA_ccPaRAMEntry_init(&edmaRxParam);
 
-        /* Initialize TX Param Set */
-        EDMA_ccPaRAMEntry_init(&edmaTxParam);
+            /* Receive param set configuration */
+            edmaRxParam.srcAddr   = (uint32_t) SOC_virtToPhy((void *)(hMcspi->baseAddr +
+                                                    ((uint32_t)MCSPI_CHRX(chObj->chCfg->chNum))));
+            edmaRxParam.destAddr  = (uint32_t) SOC_virtToPhy((void*) chObj->curRxBufPtr);
+            edmaRxParam.aCnt      = (uint16_t) ((uint16_t)1U << chObj->bufWidthShift);
 
-        /* Transmit param set configuration */
-        edmaTxParam.srcAddr       = (uint32_t) SOC_virtToPhy((void *) chObj->curTxBufPtr);
-        edmaTxParam.destAddr      = (uint32_t) SOC_virtToPhy((void *)(hMcspi->baseAddr +
-                                                              MCSPI_CHTX(chObj->chCfg->chNum)));
-        edmaTxParam.aCnt          = (uint16_t) ((uint16_t)1U << chObj->bufWidthShift);
-        edmaTxParam.bCnt          = (uint16_t) (transaction->count);
-        edmaTxParam.cCnt          = (uint16_t) 1;
-        edmaTxParam.bCntReload    = (uint16_t) edmaTxParam.bCnt;
-        edmaTxParam.srcBIdx       = (int16_t) edmaTxParam.aCnt;
-        edmaTxParam.destBIdx      = (int16_t) 0;
-        edmaTxParam.srcCIdx       = (int16_t) 0;
-        edmaTxParam.destCIdx      = (int16_t) 0;
-        edmaTxParam.linkAddr      = 0xFFFFU;
-        edmaTxParam.opt           = 0;
-        edmaTxParam.opt          |=
-            (EDMA_OPT_TCINTEN_MASK | ((tccTx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+            if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+            {
+                if(chObj->curTxWords == 0U)
+                {
+                    edmaRxParam.bCnt  = (uint16_t) chObj->effRxFifoDepth;
+                    edmaRxParam.cCnt  = (uint16_t) ((transaction->count - (chObj->curRxWords)) / chObj->effRxFifoDepth);
+                }
+                else
+                {
+                    /* set params for remaining bytes */
+                    edmaRxParam.bCnt  = (uint16_t) (transaction->count - chObj->curRxWords);
+                    edmaRxParam.cCnt  = (uint16_t) 1;
+                }
+            }
+            else
+            {
+                edmaRxParam.bCnt  = (uint16_t) 1;
+                edmaRxParam.cCnt  = (uint16_t) transaction->count;
+            }
 
-        /* Write Tx param set */
-        EDMA_setPaRAM(baseAddr, paramTx, &edmaTxParam);
+            edmaRxParam.bCntReload  = (uint16_t) edmaRxParam.bCnt;
+            edmaRxParam.srcBIdx     = (int16_t) 0;
+            edmaRxParam.destBIdx    = (int16_t) edmaRxParam.aCnt;
+            edmaRxParam.srcCIdx     = (int16_t) 0;
+            edmaRxParam.destCIdx    = (int16_t) edmaRxParam.aCnt * edmaRxParam.bCnt;
+            edmaRxParam.linkAddr    = 0xFFFFU;
+            edmaRxParam.opt         =
+                    (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_SYNCDIM_MASK | ((tccRx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
-        /* Initialize TX Param Set */
-        EDMA_ccPaRAMEntry_init(&edmaDummyParam);
+            /* Write Rx param set */
+            EDMA_setPaRAM(baseAddr, paramRx, &edmaRxParam);
 
-        /* Dummy param set configuration */
-        edmaDummyParam.aCnt          = (uint16_t) 1;
-        edmaDummyParam.linkAddr      = 0xFFFFU;
-
-        /* Write Tx dummy param set */
-        EDMA_setPaRAM(baseAddr, paramDummy, &edmaDummyParam);
-
-        /* Link  dummy param ID */
-        EDMA_linkChannel(baseAddr, paramTx, paramDummy);
-
-        /* Set event trigger to start McSPI TX transfer */
-        retVal = (int32_t)EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
+            /* Set event trigger to start McSPI RX transfer */
+            retVal = (int32_t)EDMA_enableTransferRegion(baseAddr, regionId, dmaRxCh,
                                             EDMA_TRIG_MODE_EVENT);
-        if(retVal == TRUE)
+            if(retVal == TRUE)
+            {
+                edmaStatus = MCSPI_STATUS_SUCCESS;
+            }
+            else
+            {
+                edmaStatus = MCSPI_STATUS_FAILURE;
+            }
+        }
+
+        if((MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode) || (MCSPI_TR_MODE_TX_ONLY == chObj->chCfg->trMode))
         {
-            status = SystemP_SUCCESS;
+            /* Fetch the EDMA paramters for McSPI TX transfer */
+            dmaTxCh    = dmaChConfig->edmaTxChId;
+            tccTx      = dmaChConfig->edmaTccTx;
+            paramTx    = dmaChConfig->edmaTxParam;
+            paramDummy = dmaChConfig->edmaDummyParam;
+
+            /* Initialize TX Param Set */
+            EDMA_ccPaRAMEntry_init(&edmaTxParam);
+
+            /* Transmit param set configuration */
+            edmaTxParam.srcAddr  = (uint32_t) SOC_virtToPhy((void *) chObj->curTxBufPtr);
+            edmaTxParam.destAddr = (uint32_t) SOC_virtToPhy((void *)(hMcspi->baseAddr +
+                                                                MCSPI_CHTX(chObj->chCfg->chNum)));
+            edmaTxParam.aCnt     = (uint16_t) ((uint16_t)1U << chObj->bufWidthShift);
+            
+            if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+            {
+                if(chObj->curTxWords == 0U)
+                {
+                    edmaTxParam.bCnt  = (uint16_t) chObj->effTxFifoDepth;
+                    edmaTxParam.cCnt  = (uint16_t) ((transaction->count - (chObj->curTxWords)) / chObj->effTxFifoDepth);
+                }
+                else
+                {
+                    /* set params for remaining bytes */
+                    edmaTxParam.bCnt  = (uint16_t) (transaction->count - chObj->curTxWords);
+                    edmaTxParam.cCnt  = (uint16_t) 1;
+                }
+            }
+            else
+            {
+                edmaTxParam.bCnt  = (uint16_t) 1;
+                edmaTxParam.cCnt  = (uint16_t) transaction->count;
+            }
+
+            edmaTxParam.bCntReload  = (uint16_t) edmaTxParam.bCnt;
+            edmaTxParam.srcBIdx     = (int16_t) edmaTxParam.aCnt;
+            edmaTxParam.destBIdx    = (int16_t) 0;
+            edmaTxParam.srcCIdx     = (int16_t) edmaTxParam.aCnt * edmaTxParam.bCnt;
+            edmaTxParam.destCIdx    = (int16_t) 0;
+            edmaTxParam.linkAddr    = 0xFFFFU;
+            edmaTxParam.opt         = 0;
+            edmaTxParam.opt        |=
+                    (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_SYNCDIM_MASK | ((tccTx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+
+            /* Write Tx param set */
+            EDMA_setPaRAM(baseAddr, paramTx, &edmaTxParam);
+
+            /* Initialize TX Param Set */
+            EDMA_ccPaRAMEntry_init(&edmaDummyParam);
+
+            /* Dummy param set configuration */
+            edmaDummyParam.aCnt          = (uint16_t) 1;
+            edmaDummyParam.linkAddr      = 0xFFFFU;
+
+            /* Write Tx dummy param set */
+            EDMA_setPaRAM(baseAddr, paramDummy, &edmaDummyParam);
+
+            /* Link  dummy param ID */
+            EDMA_linkChannel(baseAddr, paramTx, paramDummy);
+
+            if(chObj->curTxWords == 0U)
+            {
+                /* Set event trigger to start McSPI TX transfer */
+                retVal = (int32_t)EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
+                                                            EDMA_TRIG_MODE_EVENT);
+            }
+            else
+            {
+                /*  For remaining bytes, manually trigger the EDMA.  
+                *  Set event trigger to start McSPI RX transfer 
+                */
+               retVal = (int32_t)EDMA_enableTransferRegion(baseAddr, regionId, dmaTxCh,
+                                                            EDMA_TRIG_MODE_MANUAL);
+            }
+
+            if(retVal == TRUE)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                status = SystemP_FAILURE;
+            }
+        }
+
+        if(edmaStatus == SystemP_SUCCESS)
+        {
+            status = MCSPI_STATUS_SUCCESS;
         }
         else
         {
-            status = SystemP_FAILURE;
+            status = MCSPI_STATUS_FAILURE;
         }
-    }
 
-    if(edmaStatus == SystemP_SUCCESS)
-    {
-        status = MCSPI_STATUS_SUCCESS;
+        /* Initiate Transfer */
+        MCSPI_dmaStart(hMcspi, chObj, hMcspi->baseAddr);
     }
     else
     {
-        status = MCSPI_STATUS_FAILURE;
+        status = SystemP_FAILURE;
     }
-
-    /* Initiate Transfer */
-    MCSPI_dmaStart(hMcspi, chObj, hMcspi->baseAddr);
 
     return status;
 }
@@ -638,10 +696,6 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
                     elapsedTicks = hMcspiInit->clockP_get() - startTicks;
             }while (((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0U) && (elapsedTicks < transaction->timeout));
 
-            /* Stop MCSPI Channel */
-            MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
-            hMcspi->state = MCSPI_STATE_READY;
-
             irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
             if (((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_TX0_UNDERFLOW_MASK << (4U * chNum))) != 0U) &&
                 (hMcspiInit->msMode == MCSPI_MS_MODE_PERIPHERAL))
@@ -657,7 +711,25 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
             }
             else
             {
-                hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+                if ((irqStatus & CSL_MCSPI_IRQSTATUS_EOW_MASK) == CSL_MCSPI_IRQSTATUS_EOW_MASK)
+                {
+                    hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+                    /* Stop MCSPI Channel */
+                    MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
+                    hMcspi->state = MCSPI_STATE_READY;
+                }
+                else
+                {
+                    if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+                    {
+                        /* update transaction */
+                        MCSPI_edmaUpdateTransferParams(hMcspi, chObj, transaction);
+                        /* reconfigure fifo and initite the last chunck */
+                        MCSPI_initiateLastChunkTransfer(hMcspi, chObj, transaction);
+                        /* DMA tranfser API */
+                        (void)MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
+                    }
+                }
             }
         }
     }
@@ -683,10 +755,6 @@ static void MCSPI_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
 
         if (MCSPI_TR_MODE_TX_ONLY != chObj->chCfg->trMode)
         {
-            /* Stop MCSPI Channel */
-            MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
-            hMcspi->state = MCSPI_STATE_READY;
-
             irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
             if ((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_RX0_OVERFLOW_MASK)) != 0U)
             {
@@ -700,16 +768,69 @@ static void MCSPI_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
                 status = MCSPI_TRANSFER_CANCELLED;
                 hMcspi->errorFlag |= MCSPI_ERROR_TX_UNDERFLOW;
             }
-
             if(hMcspi->errorFlag != 0U)
             {
                 hMcspi->hMcspiInit->errorCallbackFxn(hMcspi, status);
             }
             else
             {
-                hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+                if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+                {
+                    if ((irqStatus & CSL_MCSPI_IRQSTATUS_EOW_MASK) == CSL_MCSPI_IRQSTATUS_EOW_MASK)
+                    {
+                        hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+                        /* Stop MCSPI Channel */
+                        MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
+                        hMcspi->state = MCSPI_STATE_READY;
+                    }
+                    else
+                    {      
+                        /* update transaction */
+                        MCSPI_edmaUpdateTransferParams(hMcspi, chObj, transaction);
+                        /* reconfigure fifo and initite the last chunck */
+                        MCSPI_initiateLastChunkTransfer(hMcspi, chObj, transaction);
+                        /* DMA tranfser API */
+                        (void)MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
+                    }
+                }
+                else
+                {
+                    hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+                    /* Stop MCSPI Channel */
+                    MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
+                    hMcspi->state = MCSPI_STATE_READY;
+                }
             }
         }
     }
     return;
+}
+
+static void MCSPI_edmaUpdateTransferParams(MCSPILLD_Handle hMcspi,
+                                            MCSPI_ChObject *chObj,
+                                            const MCSPI_Transaction *transaction)
+{
+    uint32_t reminder;
+
+    if((hMcspi != NULL) && (chObj != NULL) && (transaction != NULL))
+    {
+        reminder = (transaction->count % chObj->effTxFifoDepth);
+        if (MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode)
+        {
+            chObj->curTxWords = transaction->count - reminder;
+            chObj->curRxWords = transaction->count - reminder;
+            chObj->curTxBufPtr += chObj->curTxWords * (1U << chObj->bufWidthShift);
+            chObj->curRxBufPtr += chObj->curRxWords * (1U << chObj->bufWidthShift);
+        }
+        else if (MCSPI_TR_MODE_TX_ONLY == chObj->chCfg->trMode)
+        {
+            chObj->curTxWords = transaction->count - reminder;
+            chObj->curTxBufPtr += chObj->curTxWords * (1U << chObj->bufWidthShift);
+        }
+        else 
+        {
+            chObj->curRxWords = transaction->count - reminder;
+            chObj->curRxBufPtr += chObj->curRxWords * (1U << chObj->bufWidthShift);
+        }
+    }
 }

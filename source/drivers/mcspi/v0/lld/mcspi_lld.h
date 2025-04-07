@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023-24 Texas Instruments Incorporated
+ *  Copyright (C) 2023-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1099,6 +1099,20 @@ uint32_t MCSPI_lld_getBaseAddr(MCSPILLD_Handle handle);
 int32_t MCSPI_lld_reConfigFifo(MCSPILLD_Handle handle,
                                uint32_t chNum,
                                uint32_t numWordsRxTx);
+
+/**
+ * \brief  This API will initiate the last chuncks when FIFO is enabled.
+ *          The byte thats are non-multiple of FIFO trigger level.
+ *
+ * \param  hMcspi          #MCSPILLD_Handle returned from #MCSPI_open()
+ * \param  chObj           Pointer to the McSPI Channel Object.
+ * \param  transaction     Pointer to structure that contains the transfer data.
+ *   
+ *
+ **/
+void MCSPI_initiateLastChunkTransfer(MCSPILLD_Handle hMcspi,
+                                     MCSPI_ChObject *chObj,
+                                     const MCSPI_Transaction *transaction);
 
 /**
  * \brief  This API will return the buffer width in bytes based on dataSize.

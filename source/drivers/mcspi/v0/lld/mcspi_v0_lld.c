@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023-24 Texas Instruments Incorporated
+ *  Copyright (C) 2023-25 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -60,10 +60,6 @@
 /* ========================================================================== */
 
 /* Driver internal functions */
-static void MCSPI_initiateLastChunkTransfer(MCSPILLD_Handle hMcspi,
-                                            MCSPI_ChObject *chObj,
-                                            const MCSPI_Transaction *transaction);
-
 static inline void MCSPI_fifoWrite(uint32_t baseAddr,
                                    MCSPI_ChObject *chObj,
                                    uint32_t transferLength);
@@ -179,6 +175,8 @@ static void MCSPI_setFifoConfig(MCSPILLD_Handle hMcspi,
 static void MCSPI_setPeripheralFifoConfig(MCSPI_ChObject *chObj,
                                           uint32_t baseAddr,
                                           uint32_t numWordsTxRx);
+
+static uint32_t MCSPI_getFifoTrigLvl(uint32_t numWords, uint32_t fifoDepth);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -685,6 +683,11 @@ int32_t MCSPI_lld_writeDma(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count, 
         /* Initialize channel dataSize */
         MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
                             transaction->csDisable);
+        if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+        {
+            /* Enable FIFO*/
+            MCSPI_setFifoConfig(hMcspi, chObj, baseAddr, transaction->count);
+        }
 
         status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
     }
@@ -965,7 +968,12 @@ int32_t MCSPI_lld_readDma(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
         /* Initialize channel dataSize */
         MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
                             transaction->csDisable);
-
+                
+        if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+        {
+            /* Enable FIFO*/
+            MCSPI_setFifoConfig(hMcspi, chObj, baseAddr, transaction->count);
+        }
         status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
     }
 
@@ -1252,7 +1260,12 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
         /* Initialize channel dataSize */
         MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
                             transaction->csDisable);
-
+                
+        if((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U)
+        {
+            /* Enable FIFO*/
+            MCSPI_setFifoConfig(hMcspi, chObj, baseAddr, transaction->count);
+        }
         status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
     }
 
@@ -1500,7 +1513,7 @@ static int32_t MCSPI_lld_chConfig(MCSPILLD_Handle hMcspi,
     return (status);
 }
 
-static void MCSPI_initiateLastChunkTransfer(MCSPILLD_Handle hMcspi,
+void MCSPI_initiateLastChunkTransfer(MCSPILLD_Handle hMcspi,
                                             MCSPI_ChObject *chObj,
                                             const MCSPI_Transaction *transaction)
 {
@@ -2229,7 +2242,14 @@ static void MCSPI_configInstance(MCSPILLD_Handle hMcspi)
             regVal |= (hMcspiInit->initDelay << CSL_MCSPI_MODULCTRL_INITDLY_SHIFT);
         }
     }
-    CSL_REG32_WR(baseAddr + CSL_MCSPI_MODULCTRL, regVal);
+    if (((uint32_t)MCSPI_DMA_IS_FIFO_SUPPORTED == 1U) &&
+        (MCSPI_OPER_MODE_DMA == hMcspi->hMcspiInit->operMode))
+    {
+        /* Enable FIFO in DMA Mode */
+        regVal |= CSL_MCSPI_MODULCTRL_FDAA_MASK;
+    }
+
+    CSL_REG32_WR(baseAddr + CSL_MCSPI_MODULCTRL, regVal);   
 
     return;
 }

@@ -117,6 +117,9 @@ extern "C" {
 /*! @brief  Maximum number of Tx Dma buffers. */
 #define MCAN_MAX_TX_DMA_BUFFERS             (3U)
 
+/*! @brief Whether FIFO is supported in MCSPI DMA MODE. */
+#define MCSPI_DMA_IS_FIFO_SUPPORTED          (0U)
+
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
