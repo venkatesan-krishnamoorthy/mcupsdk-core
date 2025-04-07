@@ -26,9 +26,9 @@ CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ..
 CORES = \
     $(CORE_0) \
 
-CORE_0_IMG=../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).out
-
 CORE_IMG_ARGS :=
+
+CORE_0_IMG=../r5fss0-0_nortos/ti-arm-clang/stc_func_test.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
 
 COREXMLS = \

@@ -26,18 +26,17 @@ CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ..
 CORES = \
     $(CORE_0) \
 
-CORE_0_IMG=../r5fss0-0_nortos/ti-arm-clang/sdl_stc.$(PROFILE).out
-
 CORE_IMG_ARGS :=
+
+CORE_0_IMG=../r5fss0-0_nortos/ti-arm-clang/sdl_stc.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+
 MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE:=$(SYSTEM_PROJECT_NAME).$(PROFILE).optishare.mcelf
 
-CORE_0_OPTISHARE_IMG=../r5fss0-0_nortos/ti-arm-clang/sdl_stc.$(PROFILE).optishare.out
-
-
 CORE_IMG_OPTISHARE_ARGS :=
-CORE_IMG_OPTISHARE_ARGS +=--core-img=0:$(CORE_0_OPTISHARE_IMG)
 
+CORE_0_OPTISHARE_IMG=../r5fss0-0_nortos/ti-arm-clang/sdl_stc.$(PROFILE).optishare.out
+CORE_IMG_OPTISHARE_ARGS +=--core-img=0:$(CORE_0_OPTISHARE_IMG)
 
 COREXMLS = \
 	../r5fss0-0_nortos/ti-arm-clang/sdl_stc.$(PROFILE).lnkxml\

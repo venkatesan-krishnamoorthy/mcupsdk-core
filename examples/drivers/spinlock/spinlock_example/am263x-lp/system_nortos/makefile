@@ -28,11 +28,12 @@ CORES = \
     $(CORE_1) \
     $(CORE_0) \
 
-CORE_0_IMG=../r5fss0-0_nortos/ti-arm-clang/spinlock_example.$(PROFILE).out
-CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/spinlock_example.$(PROFILE).out
-
 CORE_IMG_ARGS :=
+
+CORE_0_IMG=../r5fss0-0_nortos/ti-arm-clang/spinlock_example.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+
+CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/spinlock_example.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
 
 COREXMLS = \

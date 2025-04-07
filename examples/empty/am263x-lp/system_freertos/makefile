@@ -32,15 +32,18 @@ CORES = \
     $(CORE_1) \
     $(CORE_0) \
 
-CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).out
-CORE_1_IMG=../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).out
-CORE_2_IMG=../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).out
-CORE_3_IMG=../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).out
-
 CORE_IMG_ARGS :=
+
+CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/empty.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+
+CORE_1_IMG=../r5fss0-1_freertos/ti-arm-clang/empty.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
+
+CORE_2_IMG=../r5fss1-0_freertos/ti-arm-clang/empty.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=2:$(CORE_2_IMG)
+
+CORE_3_IMG=../r5fss1-1_freertos/ti-arm-clang/empty.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=3:$(CORE_3_IMG)
 
 COREXMLS = \

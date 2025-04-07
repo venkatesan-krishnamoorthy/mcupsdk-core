@@ -28,22 +28,23 @@ CORES = \
     $(CORE_1) \
     $(CORE_0) \
 
-CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).out
-CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).out
-
 CORE_IMG_ARGS :=
+
+CORE_0_IMG=../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=0:$(CORE_0_IMG)
+
+CORE_1_IMG=../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).out
 CORE_IMG_ARGS +=--core-img=1:$(CORE_1_IMG)
+
 MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE:=$(SYSTEM_PROJECT_NAME).$(PROFILE).optishare.mcelf
 
-CORE_0_OPTISHARE_IMG=../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).optishare.out
-CORE_1_OPTISHARE_IMG=../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).optishare.out
-
-
 CORE_IMG_OPTISHARE_ARGS :=
-CORE_IMG_OPTISHARE_ARGS +=--core-img=0:$(CORE_0_OPTISHARE_IMG)
-CORE_IMG_OPTISHARE_ARGS +=--core-img=1:$(CORE_1_OPTISHARE_IMG)
 
+CORE_0_OPTISHARE_IMG=../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).optishare.out
+CORE_IMG_OPTISHARE_ARGS +=--core-img=0:$(CORE_0_OPTISHARE_IMG)
+
+CORE_1_OPTISHARE_IMG=../r5fss0-1_nortos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).optishare.out
+CORE_IMG_OPTISHARE_ARGS +=--core-img=1:$(CORE_1_OPTISHARE_IMG)
 
 COREXMLS = \
 	../r5fss0-0_freertos/ti-arm-clang/test_mcspi_controller_peripheral_dma.$(PROFILE).lnkxml\
