@@ -43,36 +43,40 @@ CORES = \
 % for (let i = numProjects-1; i>=0; i--) {
     $(CORE_`i`) \
 % }
+
+% function getCoreId(cpu) {
+% 	if (cpu == "r5fss0-0") return 0;
+% 	else if (cpu == "r5fss0-1") return 1;
+% 	else if (cpu == "r5fss1-0") return 2;
+% 	else if (cpu == "r5fss1-1") return 3;
+% 	else return -1;
+% }
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
-% numProjects = 0;
-
-% for (let project of args.project.projects) {
-CORE_`numProjects`_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).out
-    % numProjects = numProjects + 1;
-% }
-
 CORE_IMG_ARGS :=
-% for (let i = 0; i<numProjects; i++) {
-CORE_IMG_ARGS +=--core-img=`i`:$(CORE_`i`_IMG)
+
+	% for (let project of args.project.projects) {
+		% let coreId = getCoreId(project.cpu);
+% if(-1 != coreId) {
+CORE_`coreId`_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).out
+CORE_IMG_ARGS +=--core-img=`coreId`:$(CORE_`coreId`_IMG)
+
 % }
+	% }
 %}
 % if ((args.project.device == "am263px") || (args.project.device == "am261x")) {
 MULTI_CORE_BOOTIMAGE_NAME_MCELF_OPTISHARE:=$(SYSTEM_PROJECT_NAME).$(PROFILE).optishare.mcelf
-% numProjects = 0;
-
-% for (let project of args.project.projects) {
-CORE_`numProjects`_OPTISHARE_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).optishare.out
-    % numProjects = numProjects + 1;
-% }
-
 
 CORE_IMG_OPTISHARE_ARGS :=
-% for (let i = 0; i<numProjects; i++) {
-CORE_IMG_OPTISHARE_ARGS +=--core-img=`i`:$(CORE_`i`_OPTISHARE_IMG)
-% }
+
+	% for (let project of args.project.projects) {
+		% let coreId = getCoreId(project.cpu);
+% if(-1 != coreId) {
+CORE_`coreId`_OPTISHARE_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).optishare.out
+CORE_IMG_OPTISHARE_ARGS +=--core-img=`coreId`:$(CORE_`coreId`_OPTISHARE_IMG)
 
 % }
-
+	% }
+% }
 COREXMLS = \
 % for (let project of args.project.projects) {
 	../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).lnkxml\
