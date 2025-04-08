@@ -15,11 +15,11 @@ The example does the below
 # External Connections
 - DAC output pin can be connected to an oscilloscope to view the ramp wave output.
 
-## AM263X-CC or AM263PX-CC
-Note: To use the reference voltage generated on ControlCard, make sure that the System VREF source select switch SW8 on ControlCard is set to position 1-2
+## AM263X-CC or AM263PX-CC or AM261X-SOM E1
+Note: To use the reference voltage generated on ControlCard, make sure that the System VREF source select switch on ControlCard is set to position 1-2
 
-When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
-- Capture waveform on HSEC Pin 9
+When using with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+- Capture waveform on HSEC Pin 9 (in case of AM261x and AM263Px please take care of IO expander)
 
 ## AM263X-LP or AM263PX-LP
 Note: To use the reference voltage generated on LaunchPad, make sure that the DAC_VREF source select switch S1 on LaunchPad is set to position 1-2
