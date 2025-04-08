@@ -1109,6 +1109,10 @@ void test_freertos_main(void *args)
 #if ( portUSING_MPU_WRAPPERS == 1 )
     DebugP_log("\r\nRunning FreeRTOS unit tests with user mode ping and pong tasks...\r\n");
     test_freertos_run_user_mode();
+
+    /* run freertos mpu specific tests */
+    void test_freertos_mpu_run();
+    test_freertos_mpu_run();
 #endif
 
     UNITY_END();
