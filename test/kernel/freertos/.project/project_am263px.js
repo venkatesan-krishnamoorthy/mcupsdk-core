@@ -2,14 +2,27 @@ let path = require('path');
 
 let device = "am263px";
 
-const files_r5f = {
+const files_r5f_common = {
     common: [
         "test_freertos.c",
         "main.c",
     ],
 };
 
-const asmfiles_r5f = {
+const files_r5f = {
+    common: [
+        ...files_r5f_common.common,
+    ],
+};
+
+const files_r5f_mpu = {
+    common: [
+        ...files_r5f_common.common,
+        "test_freertos_mpu.c",
+    ],
+};
+
+const asmfiles_r5f_common = {
     common: [
         "float_ops_r5f_asm.S",
     ],
@@ -33,20 +46,47 @@ const libdirs = {
     ],
 };
 
-const includes_r5f = {
+const includes_r5f_common = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/test/unity/",
+    ],
+};
+
+const includes_r5f = {
+    common: [
+        ...includes_r5f_common.common,
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f",
-        "${MCU_PLUS_SDK_PATH}/test/unity/",
+    ],
+};
+
+const includes_r5f_mpu = {
+    common: [
+        ...includes_r5f_common.common,
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F_MPU",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f_mpu",
+    ],
+};
+
+const libs_r5f_common = {
+    common: [
+        "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
 const libs_r5f = {
     common: [
+        ...libs_r5f_common.common,
         "freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_r5f_mpu = {
+    common: [
+        ...libs_r5f_common.common,
+        "freertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -54,6 +94,12 @@ const lnkfiles = {
     common: [
         "linker.cmd",
     ]
+};
+
+const defines_r5f_mpu = {
+    common: [
+        "MPU_FREERTOS"
+    ],
 };
 
 const syscfgfile = "../example.syscfg";
@@ -69,9 +115,21 @@ const templates_r5f =
     }
 ];
 
+const templates_r5f_mpu =
+[
+    {
+        input: ".project/templates/am263px/freertos/main_freertos_mpu.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_freertos_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos_mpu"},
 ];
 
 function getComponentProperty() {
@@ -97,13 +155,22 @@ function getComponentBuildProperty(buildOption) {
 
     if(buildOption.cpu.match(/r5f*/)) {
 
-        build_property.files = files_r5f;
-        build_property.asmfiles = asmfiles_r5f;
-        build_property.includes = includes_r5f;
-        build_property.libs = libs_r5f;
-        build_property.templates = templates_r5f;
+        if(buildOption.os.match(/mpu/)) {
+            build_property.files = files_r5f_mpu;
+            build_property.includes = includes_r5f_mpu;
+            build_property.libs = libs_r5f_mpu;
+            build_property.defines = defines_r5f_mpu;
+            build_property.templates = templates_r5f_mpu;
+    } else {
+            build_property.files = files_r5f;
+            build_property.includes = includes_r5f;
+            build_property.libs = libs_r5f;
+            build_property.templates = templates_r5f;
+        }
+
+        build_property.asmfiles = asmfiles_r5f_common;
     }
-    
+
     return build_property;
 }
 

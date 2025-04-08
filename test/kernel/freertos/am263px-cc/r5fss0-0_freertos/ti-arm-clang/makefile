@@ -66,9 +66,9 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
+	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
-	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-Igenerated \
 
 DEFINES_common := \
@@ -114,9 +114,9 @@ LIBS_PATH_common = \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lunity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -128,9 +128,9 @@ LFLAGS_common = \
 
 
 LIBS_NAME = \
-	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

@@ -46,6 +46,7 @@ endif
 FILES_common := \
 	test_freertos.c \
 	main.c \
+	test_freertos_mpu.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -67,12 +68,13 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F_MPU \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f_mpu \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM263PX \
+	-DMPU_FREERTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -116,7 +118,7 @@ LIBS_PATH_common = \
 LIBS_common = \
 	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lunity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lfreertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -130,7 +132,7 @@ LFLAGS_common = \
 LIBS_NAME = \
 	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	freertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -167,11 +169,11 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am263px:r5fss0-0:freertos:ti-arm-clang $(OUTNAME): $<
+	@echo  Compiling: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $(OUTNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am263px:r5fss0-0:freertos:ti-arm-clang $(LIBNAME): $<
+	@echo  Compiling: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)/$@ $<
 
 all: $(TARGETS)
@@ -193,21 +195,21 @@ endif
 
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Linking: am263px:r5fss0-0:freertos:ti-arm-clang $@ ...
+	@echo  Linking: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml
-	@echo  Linking: am263px:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $@ Done !!!
 	@echo  .
 
 coreout: $(COREOUTNAME)
 $(COREOUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Relinking Linking: am263px:r5fss0-0:freertos:ti-arm-clang $@ with OptiShare SSO..
+	@echo  Relinking Linking: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $@ with OptiShare SSO..
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES) -Wl,--xml_link_info=$(basename $@).lnkxml -Wl,--import_sso=$(SSO_PATH)
 	@echo  Relinking with optishare: am263px:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am263px:r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -219,7 +221,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:freertos:ti-arm-clang test_freertos ...
+	@echo  Scrubing: am263px:r5fss0-0:freertos_mpu:ti-arm-clang test_freertos ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -314,7 +316,7 @@ MULTI_CORE_IMAGE_PARAMS_XIP = \
 	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
@@ -326,7 +328,7 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot image: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  Boot MulticoreELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
 	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH) --max_segment_size=$(MCELF_MAX_SEGMENT_SIZE) --otfaConfigFile=$(oeconfig)
 	@echo  Boot MulticoreELF ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
@@ -360,8 +362,8 @@ else
 	$(RM) $(BOOTIMAGE_NAME_MCELF)-enc
 endif
 endif
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
+	@echo  Boot image: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: am263px:r5fss0-0:freertos_mpu:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF_HS) Done !!!
 	@echo  .
 endif
 
