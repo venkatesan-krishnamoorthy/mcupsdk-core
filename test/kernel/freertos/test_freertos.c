@@ -91,13 +91,16 @@
 #define PONG_INT_PRIORITY   (4u)
 
 #define PING_TASK_SIZE (1024*4u)
-uint8_t gPingTaskStack[PING_TASK_SIZE] __attribute__((aligned(32)));
+uint8_t gPingTaskStack[PING_TASK_SIZE] __attribute__((aligned(PING_TASK_SIZE)));
 
 #define PONG_TASK_SIZE (1024*4u)
-uint8_t gPongTaskStack[PONG_TASK_SIZE] __attribute__((aligned(32)));
+uint8_t gPongTaskStack[PONG_TASK_SIZE] __attribute__((aligned(PONG_TASK_SIZE)));
 
 StaticEventGroup_t gEventObj;
 EventGroupHandle_t gEvent;
+
+StaticSemaphore_t gSyncSemObj;
+SemaphoreHandle_t gSyncSem;
 
 TaskP_Object gPingTaskObj;
 StaticSemaphore_t gPingSemObj;
@@ -842,7 +845,7 @@ void test_taskLoad(void *args)
     TEST_ASSERT_GREATER_THAN_UINT32((pingTaskLoad.cpuLoad + pongTaskLoad.cpuLoad), cpuLoad);
 
     /** Loop in curent task for same time as delay (time spent in idle task),
-     * CPU load and Ping load should be ~50% now */
+     * CPU load should be ~50% now */
     startTs = ClockP_getTimeUsec(); 
     while ((ClockP_getTimeUsec() - startTs) < delayTs) {
         asm volatile (" nop");
@@ -857,7 +860,7 @@ void test_taskLoad(void *args)
     DebugP_log(" LOAD: %s = %2d.%2d %%\r\n", pongTaskLoad.name, pongTaskLoad.cpuLoad/100, pongTaskLoad.cpuLoad%100 );
 
     TEST_ASSERT_UINT32_WITHIN( 250, 5000, cpuLoad);
-    TEST_ASSERT_UINT32_WITHIN( 250, 5000, pingTaskLoad.cpuLoad);
+    TEST_ASSERT_LESS_THAN_UINT32( 100, pingTaskLoad.cpuLoad);
     TEST_ASSERT_LESS_THAN_UINT32( 100, pongTaskLoad.cpuLoad);
     TEST_ASSERT_GREATER_THAN_UINT32((pingTaskLoad.cpuLoad + pongTaskLoad.cpuLoad), cpuLoad);
 }
@@ -868,8 +871,6 @@ void ping_main(void *args)
         * before any floating point instructions are executed.
         */
     portTASK_USES_FLOATING_POINT();
-
-    UNITY_BEGIN();
 
     RUN_TEST(test_taskSwitchWithSemaphore, 272, NULL);
     RUN_TEST(test_taskSwitchWithTaskNotify, 273, NULL);
@@ -888,13 +889,6 @@ void ping_main(void *args)
     RUN_TEST(test_taskDelay, 280, NULL);
     RUN_TEST(test_timer, 281, NULL);
 #if defined(__ARM_ARCH_7R__)
-    /* atomics not tested with other architectures */
-    RUN_TEST(test_atomics, 1371, NULL);
-#endif
-#if (configGENERATE_RUN_TIME_STATS == 1)
-    RUN_TEST(test_taskLoad, 1372, NULL);
-#endif
-#if defined(__ARM_ARCH_7R__)
     #ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
     /** Interrupts inside critical section supported in R5F only. Not supported in am273x.
      *  EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION  defined in source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F/portmacro.h
@@ -910,10 +904,13 @@ void ping_main(void *args)
     RUN_TEST(test_taskToFiqIsrWithFloatOperations, 12213, NULL);
     #endif
 #endif
-    UNITY_END();
 
-    /* One MUST not return out of a FreeRTOS task instead one MUST call vTaskDelete */
-    vTaskDelete(NULL);
+    /* Signal test completion to main task */
+    xSemaphoreGive(gSyncSem); 
+
+    /** User mode tasks can't use `vTaskDelete`.
+     * Instead privileged task should delete the user mode tasks. */
+    vTaskSuspend(NULL); /* Move to blocked state */
 }
 
 void pong_main(void *args)
@@ -992,8 +989,9 @@ void pong_main(void *args)
         }
     }
 
-    /* One MUST not return out of a FreeRTOS task instead one MUST call vTaskDelete */
-    vTaskSuspend(NULL);
+    /** User mode tasks can't use `vTaskDelete`.
+     * Instead privileged task should delete the user mode tasks. */
+    vTaskSuspend(NULL); /* Move to blocked state */
 }
 
 void setUp(void)
@@ -1004,15 +1002,96 @@ void tearDown(void)
 {
 }
 
-void test_freertos_main(void *args)
+void test_freertos_pong_task_params_init(TaskP_Params* taskParams)
+{
+    TaskP_Params_init(taskParams);
+    taskParams->name      = "pong";
+    taskParams->stackSize = PONG_TASK_SIZE;
+    taskParams->stack     = gPongTaskStack;
+    taskParams->priority  = PONG_TASK_PRI;
+    taskParams->args      = NULL;
+    taskParams->taskMain  = pong_main;
+}
+
+void test_freertos_ping_task_params_init(TaskP_Params* taskParams)
+{
+    TaskP_Params_init(taskParams);
+    taskParams->name      = "ping";
+    taskParams->stackSize = PING_TASK_SIZE;
+    taskParams->stack     = gPingTaskStack;
+    taskParams->priority  = PING_TASK_PRI;
+    taskParams->args      = NULL;
+    taskParams->taskMain  = ping_main;
+}
+
+void test_freertos_run()
 {
     int32_t status;
     TaskP_Params taskParams;
 
+    /* create the tasks, order of pong/ping task creation does not matter for this example */
+    test_freertos_pong_task_params_init(&taskParams);
+    status = TaskP_construct(&gPongTaskObj, &taskParams);
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    test_freertos_ping_task_params_init(&taskParams);
+    status = TaskP_construct(&gPingTaskObj, &taskParams);
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    /* Wait for ping & pong tasks to complete its tests */
+    xSemaphoreTake(gSyncSem, portMAX_DELAY);
+
+#if defined(__ARM_ARCH_7R__)
+    /** Run atomics test for R5F 
+     * Creating multiple tasks and semaphore for atomics test can be done only from privileged task */
+    RUN_TEST(test_atomics, 1371, NULL);
+#endif
+#if (configGENERATE_RUN_TIME_STATS == 1)
+    /** Run Load Test
+     * TaskP_load APIs can be used only from privileged task. */
+    RUN_TEST(test_taskLoad, 1372, NULL);
+#endif
+
+    /* Destruct ping & pong tasks */
+    TaskP_destruct(&gPingTaskObj);
+    TaskP_destruct(&gPongTaskObj);
+}
+
+#if ( portUSING_MPU_WRAPPERS == 1 )
+void test_freertos_run_user_mode()
+{
+    int32_t status;
+    TaskP_ParamsRestricted taskParams;
+
+    /* create the tasks, order of pong/ping task creation does not matter for this example */
+    TaskP_ParamsRestricted_init(&taskParams);
+    test_freertos_pong_task_params_init(&taskParams.params);
+    status = TaskP_constructRestricted(&gPongTaskObj, &taskParams);
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    TaskP_ParamsRestricted_init(&taskParams);
+    test_freertos_ping_task_params_init(&taskParams.params);
+    status = TaskP_constructRestricted(&gPingTaskObj, &taskParams);
+    DebugP_assert(status==SystemP_SUCCESS);
+
+    /* Wait for ping & pong tasks to complete its tests */
+    xSemaphoreTake(gSyncSem, portMAX_DELAY);
+
+    /* Destruct ping & pong tasks */
+    TaskP_destruct(&gPingTaskObj);
+    TaskP_destruct(&gPongTaskObj);
+}
+#endif
+
+void test_freertos_main(void *args)
+{
     /* Open drivers to open the UART driver for console */
     Drivers_open();
 
     /* first create the semaphores */
+    gSyncSem = xSemaphoreCreateBinaryStatic(&gSyncSemObj);
+    configASSERT(gSyncSem != NULL);
+
     gPingSem = xSemaphoreCreateBinaryStatic(&gPingSemObj);
     configASSERT(gPingSem != NULL);
 
@@ -1022,28 +1101,19 @@ void test_freertos_main(void *args)
     gEvent = xEventGroupCreateStatic(&gEventObj);
     configASSERT(gEvent != NULL);
 
-    /* then create the tasks, order of task creation does not matter for this example */
+    UNITY_BEGIN();
 
-    TaskP_Params_init(&taskParams);
-    taskParams.name = "pong";
-    taskParams.stackSize = PONG_TASK_SIZE;
-    taskParams.stack = gPongTaskStack;
-    taskParams.priority = PONG_TASK_PRI;
-    taskParams.args = NULL;
-    taskParams.taskMain = pong_main;
-    status = TaskP_construct(&gPongTaskObj, &taskParams);
-    DebugP_assert(status==SystemP_SUCCESS);
+    DebugP_log("\r\nRunning FreeRTOS unit tests with system mode ping and pong tasks...\r\n");
+    test_freertos_run();
 
-    TaskP_Params_init(&taskParams);
-    taskParams.name = "ping";
-    taskParams.stackSize = PING_TASK_SIZE;
-    taskParams.stack = gPingTaskStack;
-    taskParams.priority = PING_TASK_PRI;
-    taskParams.args = NULL;
-    taskParams.taskMain = ping_main;
-    status = TaskP_construct(&gPingTaskObj, &taskParams);
-    DebugP_assert(status==SystemP_SUCCESS);
+#if ( portUSING_MPU_WRAPPERS == 1 )
+    DebugP_log("\r\nRunning FreeRTOS unit tests with user mode ping and pong tasks...\r\n");
+    test_freertos_run_user_mode();
+#endif
+
+    UNITY_END();
 
     /* Dont close drivers to keep the UART driver open for console */
     /* Drivers_close(); */
 }
+
