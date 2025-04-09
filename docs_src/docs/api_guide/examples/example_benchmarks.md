@@ -22,13 +22,10 @@ This page lists all the examples related to benchmarks of SOC and board peripher
    -# \subpage EXAMPLES_OPTIFLASH_XIP_64K_BENCHMARK
    -# \subpage EXAMPLES_OPTIFLASH_XIP_BENCHMARK
    -# \subpage EXAMPLES_OPTIFLASH_XIP_SP_BENCHMARK
+   -# \subpage EXAMPLES_SRAM_OVERLAY
 \endcond
 
 \cond  SOC_AM263X || SOC_AM263PX || SOC_AM64X || SOC_AM243X || SOC_AM273X || SOC_AM261X
    -# \subpage EXAMPLES_COREMARK
    -# \subpage EXAMPLES_DHRYSTONE
-\endcond
-
-\cond SOC_AM263PX
-   -# \subpage EXAMPLES_SRAM_OVERLAY
 \endcond

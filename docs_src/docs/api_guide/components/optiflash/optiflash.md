@@ -37,9 +37,7 @@ Read more on this at \ref OPTIFLASH_OPTISHARE
 
 Although this is not a tool as such, however, this is a technique to bring code from external memory to internal memory at runtime.
 
-\cond SOC_AM263PX
 Please refer to \ref EXAMPLES_SRAM_OVERLAY to see how to implement this.
-\endcond
 
 ## SDK Drivers
 
