@@ -45,7 +45,7 @@ No external connection is required.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ECAP_SIGNAL_MONITORING_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

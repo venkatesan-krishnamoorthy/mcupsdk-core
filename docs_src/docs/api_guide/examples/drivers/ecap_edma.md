@@ -40,15 +40,15 @@
 
 # External Connections
 
-## AM263X-CC
+## AM263X-CC or AM263Px-CC or AM261X-SOM
 No external connection is required.
 
-## AM263X-LP
+## AM263X-LP or AM263Px-LP or AM261X-SOM
 No external connection is required.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ECAP_EDMA_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

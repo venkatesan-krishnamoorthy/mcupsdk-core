@@ -38,7 +38,7 @@ The example does the below
 
 # External Connections
 
-## AM263X-CC or AM263PX-CC
+## AM263X-CC or AM263PX-CC or AM261X-SOM
 No external connection is required.
 
 ## AM263X-LP or AM263PX-LP
@@ -46,7 +46,7 @@ No external connection is required.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ECAP_CAPTURE_PWM_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

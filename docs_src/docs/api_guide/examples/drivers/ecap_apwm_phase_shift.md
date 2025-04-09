@@ -23,6 +23,7 @@ Observe ECAP outputs on the Outputxbar instances
 - LP, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on J5.49, J5.50
 ## AM261x
 - LP, outputxbar 1,4, showcase ecap 0,1 apwm outs respectively on J4.17, J4.12
+- SOM E1, outputxbar 5,6 showcase ecap0,1 apwm outs respectively on HSEC pins 76 and 78
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ECAP_APWM_PHASE_SHIFT_COMBOS}
