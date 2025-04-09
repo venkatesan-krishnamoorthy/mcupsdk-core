@@ -96,7 +96,7 @@ const templates_lp =
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_OSPI_SWAP";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_OSPI";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
