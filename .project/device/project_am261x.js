@@ -48,6 +48,7 @@ const device_defines = {
 };
 
 const example_file_list = [
+	"examples/benchmarks/sram_overlay_benchmark/.project/project.js",
 	"examples/drivers/adc/adc_alternate_dma_trigger/.project/project.js",
 	"examples/drivers/adc/adc_burst_mode_epwm/.project/project.js",
 	"examples/drivers/adc/adc_burst_mode_oversampling/.project/project.js",
