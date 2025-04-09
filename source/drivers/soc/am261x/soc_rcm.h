@@ -503,6 +503,10 @@ typedef enum SOC_RcmPllFoutFreqId_e
      * \brief   Value specifying PLL output frequency 960MHz
      */
     RCM_PLL_FOUT_FREQID_CLK_960MHZ,
+        /**
+     * \brief   Value specifying PLL output frequency 1000MHz
+     */
+    RCM_PLL_FOUT_FREQID_CLK_1000MHZ,
     /**
      * \brief   Value specifying PLL output frequency 2000MHz
      */

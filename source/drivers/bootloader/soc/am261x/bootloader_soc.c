@@ -395,7 +395,7 @@ void Bootloader_socConfigurePll(void)
                                 RCM_PLL_HSDIV_OUTPUT_ENABLE_3);
         hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(192U);
         hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(160U);
-        hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(120U);
+        hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(120U);
         SOC_rcmPerApllConfig(RCM_PLL_FOUT_FREQID_CLK_960MHZ, &hsDivCfg);
     }
     else
@@ -405,7 +405,7 @@ void Bootloader_socConfigurePll(void)
         hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(500U);
         hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(500U);
         hsDivCfg.hsDivOutFreqHz[3] = SOC_RCM_FREQ_MHZ2HZ(166U);
-        SOC_rcmCoreApllConfig(RCM_PLL_FOUT_FREQID_CLK_500MHZ, &hsDivCfg);
+        SOC_rcmCoreApllConfig(RCM_PLL_FOUT_FREQID_CLK_1000MHZ, &hsDivCfg);
 
         hsDivCfg.hsdivOutEnMask = RCM_PLL_HSDIV_OUTPUT_ENABLE_0;
         hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(450U);
