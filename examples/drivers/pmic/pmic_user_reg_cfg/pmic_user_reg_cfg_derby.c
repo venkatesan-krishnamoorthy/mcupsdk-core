@@ -101,11 +101,12 @@ void pmic_user_reg_cfg_main(void *args)
     PMICApp_setVmonConf(handle);
     PMICApp_setThermalConf(handle);
     PMICApp_setGpioConf(handle);
-    PMICAPP_irqSetGetMask_esm(handle);
     PMICAPP_irqClrFlags(handle);
+    PMICAPP_irqSetGetMask_esm(handle);
     PMICApp_ioWriteRead(handle);
 
     DebugP_log("PMIC user space register configuration example is successful !!\r\n");
+    DebugP_log("All tests have passed!!\r\n");
 
     Board_driversClose();
     Drivers_close();

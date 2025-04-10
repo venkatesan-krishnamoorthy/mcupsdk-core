@@ -112,6 +112,7 @@ void pmic_user_reg_cfg_main(void *args)
     PMICApp_ioWriteRead(handle);
     
     DebugP_log("PMIC user space register configuration example is successful !!\r\n");
+    DebugP_log("All tests have passed!!\r\n");
 
     Board_driversClose();
     Drivers_close();
