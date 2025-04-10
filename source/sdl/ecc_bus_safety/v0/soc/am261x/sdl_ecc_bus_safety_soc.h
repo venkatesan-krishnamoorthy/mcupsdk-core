@@ -180,8 +180,8 @@ extern "C" {
 
 #define SDL_GPMC0_CFG_U_BASE_END                   (SDL_GPMC0_CFG_U_BASE+0X3FCU-DWORD)
 
-#define SDL_OSPI0_U_BASE                           (SDL_MPU_OSPI0_U_BASE)
-#define SDL_OSPI0_U_BASE_END                       (SDL_MPU_OSPI0_U_BASE + (0x000001FFU-8U))
+#define SDL_OSPI0_U_BASE                           SDL_FLASH_CONFIG_REG6_U_BASE
+#define SDL_OSPI0_U_BASE_END                       (SDL_FLASH_CONFIG_REG6_U_BASE+0x00001FFU)
 
 #define SDL_USB_RD_U_BASE                          (SDL_USB_RAM0_U_BASE)
 #define SDL_USB_RD_U_BASE_END                      (SDL_USB_RAM0_U_BASE + 0x00007FFCU)
