@@ -472,6 +472,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am261x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_dmaread/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_context_save/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_context_save/am261x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_operations/am261x-som/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1523,6 +1527,10 @@ BUILD_COMBO_EXAMPLE_ALL += rti_led_blink_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_cpuread_single_channel_am261x-som_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_dmaread_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tmu_context_save_am261x-som_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tmu_context_save_am261x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tmu_operations_am261x-som_r5fss0-0_nortos_ti-arm-clang
@@ -2854,6 +2862,18 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdfm_filter_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdfm_filter_sync_cpuread_single_channel_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdfm_filter_sync_dmaread_am261x-som_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_dmaread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  tmu_context_save_am261x-som_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -3866,6 +3886,10 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_led_blink_am261x-lp_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_cpuread_single_channel_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_dmaread_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_context_save_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_context_save_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_operations_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -5192,6 +5216,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdfm_filter_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdfm_filter_sync_cpuread_single_channel_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdfm_filter_sync_dmaread_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_dmaread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  tmu_context_save_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -6204,6 +6240,10 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_led_blink_am261x-lp_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += rti_led_blink_am261x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_ecap_loop_back_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_cpuread_single_channel_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_dmaread_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_context_save_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_context_save_am261x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_operations_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -7529,6 +7569,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sdfm_ecap_loop_back_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdfm_epwm_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdfm_filter_sync_cpuread_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdfm_filter_sync_cpuread_single_channel_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdfm_filter_sync_dmaread_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_dmaread/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  tmu_context_save_am261x-som_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

@@ -106,7 +106,6 @@ void sdfm_filter_sync_cpuread(void *args)
     Board_driversOpen();
 
     DebugP_log("SDFM filter sync CPU read Test Started ...\r\n");
-
     uint16_t  hlt, llt;
 
     /* Register & enable interrupt */

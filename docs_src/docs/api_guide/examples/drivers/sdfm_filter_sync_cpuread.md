@@ -41,8 +41,8 @@ Watch  Variables
 # External Connections
 -  Connect Sigma-Delta streams to SDFM0_CLK0, SDFM0_D0, SDFM0_CLK1, SDFM0_D1, SDFM0_CLK2, SDFM0_D2, SDFM0_CLK3, SDFM0_D3
 
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263Px-CC or AM261x-SOM E1
+When using with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 -  Connect Sigma-Delta streams to HSEC Pin 91, HSEC Pin 72, HSEC Pin 99, HSEC Pin 101, HSEC Pin 103, HSEC Pin 105, HSEC Pin 107, HSEC Pin 109
 
 If required, use PWM waveforms as data and clock
@@ -54,7 +54,7 @@ This example is not supported on AM263X-LP
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

@@ -475,7 +475,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_TMU_OPERATIONS
    -# \subpage EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
    -# \subpage EXAMPLES_DRIVERS_TMU_CONTEXTSAVE
-   -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_SINGLE_CHANNEL
    -# \subpage EXAMPLES_DRIVERS_TMU_PARK_TRANSFORM_SUPPORT
 \endcond
 -# UART

@@ -58,6 +58,17 @@ SDFM configuration is shown below:
 - Provide Data Streams on SDFM0_D2 at HSEC 103  or, alternately, use EPWM0_A output for data stream input from HSEC 49
 ## AM263PX-LP (E2) with 180 pin HSEC Dock
 Not Supported
+## AM261X-SOM (E1) with 180 pin HSEC Dock
+- SDFM1_CLK0 can be probed at HSEC Pin 100 for Clock
+- OutputXbar5 can be probed at HSEC Pin 76 for Clock
+- Provide Data Streams on SDFM1_D1 at HSEC 106   or, alternately, use EPWM0_A output for data stream input from HSEC 49
+- Provide Data Streams on SDFM1_D2 at HSEC 153  or, alternately, use EPWM0_A output for data stream input from HSEC 49
+
+## AM261X-LP (E1) with 180 pin HSEC Dock
+- SDFM1_CLK0 can be probed at J6/8 pin 55
+- OutputXbar5 can be probed at J5/7 48
+- Provide Data Streams on SDFM1_D1 at J6/8 59   or, alternately, use EPWM2_A output for data stream input from J2/4 40
+- Provide Data Streams on SDFM1_D2 at J6/8 54   or, alternately, use EPWM2_A output for data stream input from J2/4 40
 
 ## Watch  Variables
  -   filter2Result - Output of filter 2
@@ -66,6 +77,17 @@ Not Supported
 # Supported Combinations {#EXAMPLES_DRIVERS_SDFM_ECAP_LOOP_BACK_COMBOS}
 
 \cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/sdfm/sdfm_ecap_loop_back/
+
+\endcond
+
+\cond SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

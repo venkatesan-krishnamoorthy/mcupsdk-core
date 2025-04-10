@@ -31,8 +31,8 @@ SDFM configuration is shown below:
 ## Watch Variables
 -   filter1Result - Output of filter 1
 
-## AM263X-CC or AM263PX-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC or AM261x-SOM
+When using with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 -  Connect Sigma-Delta streams to HSEC Pin 91, HSEC Pin 72
 
 If required, use PWM waveforms as data and clock
@@ -44,7 +44,7 @@ This example is not supported on AM263X-LP
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_DMAREAD_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

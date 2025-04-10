@@ -38,8 +38,8 @@ Watch  Variables
 # External Connections
   -  Connect Sigma-Delta streams to SDFM0_CLK1, SDFM0_D1
 
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263Px-CC or AM261x-SOM
+When using with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 -  Connect Sigma-Delta streams to HSEC Pin 99, HSEC Pin 101
 
 If required, use PWM waveforms as SDFM data and clock
@@ -62,6 +62,17 @@ If required, use PWM waveforms as data and clock
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel.c/
+
+\endcond
+
+\cond SOC_AM261X 
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel.c/
 
 \endcond
