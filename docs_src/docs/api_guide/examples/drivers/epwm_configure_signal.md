@@ -3,7 +3,7 @@
 [TOC]
 
 # Example Description
- This example configures EPWM0, EPWM1, epEPWM2 to produce signal of desired
+ This example configures EPWM0, EPWM1, EPWM2 to produce signal of desired
 frequency and duty. It also configures phase between the configured
 modules.
 
@@ -16,7 +16,7 @@ EPWM4 in case of AM261x-LP) outputs on an oscilloscope.
 
 # External Connections
 
-## On AM263x CC/ AM263Px CC with HSEC Dock
+## On AM263x CC/ AM263Px CC/ AM261x SOM with HSEC Dock
 Probe the following on the HSEC pins
  - EPWM 0A/0B : 49 / 51
  - EPWM 1A/1B : 53 / 55

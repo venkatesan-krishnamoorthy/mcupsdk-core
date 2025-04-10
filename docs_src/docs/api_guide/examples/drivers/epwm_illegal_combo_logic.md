@@ -155,8 +155,8 @@ X                  | 1                 | 1                     | 0 (both cannot 
 - EPWM5_A/B, pin can be connected to an oscilloscope to view the waveform.
 - EPWM6_A/B, pin can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC or AM263Px-CC
-When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263Px-CC or AM261x-SOM
+When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC pin 49, 51 to scope for EPWM0A(B)
 - Connect HSEC pin 53 to scope for EPWM1A
 - Connect HSEC pin 52 to scope for EPWM2B

@@ -59,6 +59,13 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Connect HSEC Pin 51 (ePWM0B) to HSEC Pin 100 (eQEP0B)
 - Connect HSEC Pin 52 (GPIO48) to HSEC Pin 106 (eQEP0I)
 
+## AM261X-SOM
+
+When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+- Connect HSEC Pin 49 (ePWM0A) to HSEC Pin 100 (eQEP0A)
+- Connect HSEC Pin 51 (ePWM0B) to HSEC Pin 102 (eQEP0B)
+- Connect HSEC Pin 52 (GPIO48) to HSEC Pin 106 (eQEP0I)
+
 ## AM263X-LP or AM263PX-LP
 - Connect J2 Pin 11 (ePWM0A) to J25 Pin 1 (eQEP2A)
 - Connect J6 Pin 59 (ePWM0B) to J25 Pin 2 (eQEP2B)
@@ -67,7 +74,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EQEP_POSITION_SPEED_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

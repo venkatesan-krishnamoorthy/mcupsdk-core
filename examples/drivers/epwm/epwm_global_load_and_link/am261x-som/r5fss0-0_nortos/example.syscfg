@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -57,7 +58,9 @@ epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_LOW";
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_LOW";
-epwm1.EPWM.$assign                                             = "EPWM2";
+epwm1.EPWM.$assign                                             = "EPWM0";
+epwm1.EPWM.A.$assign                                           = "GPIO43";
+epwm1.EPWM.B.$assign                                           = "GPIO44";
 
 epwm2.epwmTimebase_emulationMode                               = "EPWM_EMULATION_FREE_RUN";
 epwm2.epwmTimebase_period                                      = 19999;
@@ -80,7 +83,9 @@ epwm2.epwmGlobalLoad_gldMode                                   = "EPWM_GL_LOAD_P
 epwm2.epwmGlobalLoad_enableOneShot                             = true;
 epwm2.epwmGlobalLoad_oneShotMode                               = true;
 epwm2.epwmGlobalLoad_oneShotForce                              = true;
-epwm2.EPWM.$assign                                             = "EPWM3";
+epwm2.EPWM.$assign                                             = "EPWM1";
+epwm2.EPWM.A.$assign                                           = "GPIO45";
+epwm2.EPWM.B.$assign                                           = "GPIO46";
 
 epwm3.epwmTimebase_emulationMode                               = "EPWM_EMULATION_FREE_RUN";
 epwm3.epwmTimebase_period                                      = 19999;
@@ -102,11 +107,13 @@ epwm3.epwmGlobalLoad_gldMode                                   = "EPWM_GL_LOAD_P
 epwm3.epwmGlobalLoad_enableOneShot                             = true;
 epwm3.epwmGlobalLoad_oneShotMode                               = true;
 epwm3.$name                                                    = "CONFIG_EPWM2_GLD_LINK_SELF";
+epwm3.epwmGlobalLoad_globalePWMLoadLink                        = "EPWM_LINK_WITH_EPWM_2";
+epwm3.epwmCounterCompare_cmpALink                              = "EPWM_LINK_WITH_EPWM_2";
+epwm3.epwmCounterCompare_cmpBLink                              = "EPWM_LINK_WITH_EPWM_2";
 epwm3.epwmGlobalLoad_oneShotForce                              = true;
-epwm3.epwmGlobalLoad_globalePWMLoadLink                        = "EPWM_LINK_WITH_EPWM_4";
-epwm3.epwmCounterCompare_cmpBLink                              = "EPWM_LINK_WITH_EPWM_4";
-epwm3.epwmCounterCompare_cmpALink                              = "EPWM_LINK_WITH_EPWM_4";
-epwm3.EPWM.$assign                                             = "EPWM4";
+epwm3.EPWM.$assign                                             = "EPWM2";
+epwm3.EPWM.A.$assign                                           = "GPIO47";
+epwm3.EPWM.B.$assign                                           = "GPIO48";
 
 epwm4.epwmTimebase_emulationMode                               = "EPWM_EMULATION_FREE_RUN";
 epwm4.epwmTimebase_period                                      = 19999;
@@ -127,16 +134,18 @@ epwm4.epwmGlobalLoad_gld                                       = true;
 epwm4.epwmGlobalLoad_gldMode                                   = "EPWM_GL_LOAD_PULSE_CNTR_PERIOD";
 epwm4.epwmGlobalLoad_enableOneShot                             = true;
 epwm4.epwmGlobalLoad_oneShotMode                               = true;
+epwm4.epwmGlobalLoad_globalePWMLoadLink                        = "EPWM_LINK_WITH_EPWM_2";
+epwm4.epwmCounterCompare_cmpALink                              = "EPWM_LINK_WITH_EPWM_2";
+epwm4.epwmCounterCompare_cmpBLink                              = "EPWM_LINK_WITH_EPWM_2";
 epwm4.$name                                                    = "CONFIG_EPWM3_GLD_LINK_EPWM2";
 epwm4.epwmGlobalLoad_oneShotForce                              = true;
-epwm4.epwmCounterCompare_cmpBLink                              = "EPWM_LINK_WITH_EPWM_4";
-epwm4.epwmCounterCompare_cmpALink                              = "EPWM_LINK_WITH_EPWM_4";
-epwm4.epwmGlobalLoad_globalePWMLoadLink                        = "EPWM_LINK_WITH_EPWM_4";
-epwm4.EPWM.$assign                                             = "EPWM5";
+epwm4.EPWM.$assign                                             = "EPWM3";
+epwm4.EPWM.A.$assign                                           = "GPIO49";
+epwm4.EPWM.B.$assign                                           = "GPIO50";
 
 gpio1.pinDir         = "OUTPUT";
 gpio1.$name          = "STATUS";
-gpio1.GPIO_n.$assign = "GPIO55";
+gpio1.GPIO_n.$assign = "GPIO51";
 
 const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
 const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
@@ -148,6 +157,11 @@ const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/s
 const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
 
 const soc_ctrl_epwm              = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1             = soc_ctrl_epwm.addInstance({}, false);
@@ -392,17 +406,3 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-epwm1.EPWM.A.$suggestSolution = "GPIO47";
-epwm1.EPWM.B.$suggestSolution = "GPIO48";
-epwm2.EPWM.A.$suggestSolution = "GPIO49";
-epwm2.EPWM.B.$suggestSolution = "GPIO50";
-epwm3.EPWM.A.$suggestSolution = "GPIO51";
-epwm3.EPWM.B.$suggestSolution = "GPIO46";
-epwm4.EPWM.A.$suggestSolution = "GPIO53";
-epwm4.EPWM.B.$suggestSolution = "GPIO54";

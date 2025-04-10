@@ -1,4 +1,4 @@
-# EQEP Speed Direction {#EXAMPLES_DRIVERS_EQEP_FREQ_CAL_INTERRUPT}
+# EQEP Frequency Calculation {#EXAMPLES_DRIVERS_EQEP_FREQ_CAL_INTERRUPT}
 
 [TOC]
 
@@ -7,7 +7,7 @@
 Frequency Measurement Using eQEP
 
 This example is used to measure the frequency of an input signal using the eQEP module. ePWM1A is configured to generate this input signal with a frequency of 5KHz. eQEP unit timeout is set which will generate an interrupt evey UNIT_PERIOD microsecond for frequency measurement.
-The PWM signal is passed internally via input XBAR to PWMXBAR to EQEPA/B
+The PWM signal is passed internally via input XBAR to PWMXBAR to EQEPA/B.
 
 Signal path:
 GPIO45/46 -> INPUTXBAR0/1 -> PWMXBAR0/1 -> EQEPA/B
@@ -21,7 +21,7 @@ The configuration for this example is as follows
 
  - freq : Simulated signal frequency measured by counting the external input pulses for UNIT_PERIOD (unit timer set to 10 ms).
 
-The example does the below
+The example does the below:
 
 Configures EPWM to generate a signal and EQEP to measure frequency of this generated signal (a loopback connection is done internally).
 The application runs for the specified time and the frequency calculation is done using the EQEP ISR.

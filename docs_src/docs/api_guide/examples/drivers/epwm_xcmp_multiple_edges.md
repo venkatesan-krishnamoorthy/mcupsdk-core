@@ -17,7 +17,7 @@ This example uses the ePWM module to generate multiple edges in a pwm cycle.
 
 # External Connections
 
-- For AM263PX-CC
+- For AM263PX-CC or AM261X-SOM
     - EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
@@ -32,7 +32,7 @@ This example uses the ePWM module to generate multiple edges in a pwm cycle.
     - EPWM3_A and EPWM3_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM4_A and EPWM4_B pin can be connected to an oscilloscope to view the waveform.
 
-## AM263PX-CC
+## AM263PX-CC or AM261X-SOM
 When using AM263PX-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Capture waveform on HSEC Pin 49 for epwm0_A
 - Capture waveform on HSEC Pin 51 for epwm0_B

@@ -10,19 +10,22 @@ This example showcases the Diode Emulation features using CMPSS where the trip i
 EPWM0, EPWM1 and EPWM2 are configured to generate a 25KHz signal with 50% duty cycle.
 
 # DAC Configuration
-DAC0 is used as positive input to CMPSSA1 High and Low: (CMPSSA0 in case of LP)
-Reference voltage source = external
+DAC0 is used as positive input to CMPSSA1 High and Low: (CMPSSA0 in case of LP).
+
+Reference voltage source = external.
 
 # CMPSS Configuration
 CMPSSA1 (CMPSSA0 in case of LP) configuration for TRIPH/TRIPL signal inputs to enter DE mode:
   - Positive input = DAC_OUT for both CMPSSA1 High and Low. A ramp wave is generated in the example for showcasing.
-  - Negative input = 1.65v from internal DAC for CMPSSA1 High (CMPSSA0 in case of LP)
-                     3.3v from internal DAC for CMPSSA1 Low (CMPSSA0 in case of LP)
+  - Negative input = 1.65v from internal DAC for CMPSSA1 High (CMPSSA0 in case of LP).
+
+                     3.3v from internal DAC for CMPSSA1 Low (CMPSSA0 in case of LP).
+
 This means only CMPSSTRIPH1 is triggered when DAC_OUT > 1.65v and CMPSSTRIPL1 is always low
 
 Diode Emulation Configuration:
-  - For EPWM0 and EPWM1, TripH = CMPSSTRIPH1 and TRIPL = CMPSSTRIPL1
-    Since a TRIPH_OR_TRIPL triggers DE entry, only TripH is used for demo
+  - For EPWM0 and EPWM1, TripH = CMPSSTRIPH1 and TRIPL = CMPSSTRIPL1.
+    Since a TRIPH_OR_TRIPL triggers DE entry, only TripH is used for demo.
   - EPWM0_A is set to active high and EPWM0_B set to low during DE
   - EPWM1_A is configured same as EPWM0 with re-entry delay
     - Re-entry delay = 10 EPWMSYNCPER cycles
@@ -33,7 +36,7 @@ Diode Emulation Configuration:
 \image html am263px_basic_diode_emulation_config.png "Basic diode emulation configuration with trip inputs from CMPSS"
 
 OutputXbar 13 and 14 is used to route the CTRIPOUTH and CTRIPOUTL signal.
-OutputXbar 7 and 8 is used to route DEActive0 from EPWM0 and DEActive1 from EPWM1.
+OutputXbar 7 and 8 (5 and 6 in case of AM261x-SOM) is used to route DEActive0 from EPWM0 and DEActive1 from EPWM1.
 
 # Various DE configuration
 
@@ -75,6 +78,18 @@ When using AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
   - CTRIPH    : 68
   - CTRIPL    : 70
 
+## AM261X-SOM
+When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+- Connect HSEC Pin 9 (DAC_OUT) to HSEC Pin 15 and 17 (CMPSSA1H/L)
+- Probe the following on the HSEC Pin
+  - EPWM0A    : 49
+  - EPWM1A    : 53
+  - EPWM2A    : 50
+  - DEActive0 : 76
+  - DEActive1 : 78
+  - CTRIPH    : 68
+  - CTRIPL    : 70
+
 ## AM263PX-LP
 - Connect J1/J3 Pin 30 (DAC_OUT) to J1/3 Pin 23 and J1/3 28 (CMPSSA0H/L)
 - Probe the following on boosterpack
@@ -100,7 +115,7 @@ When using AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_DIODE_EMULATION_COMBOS}
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

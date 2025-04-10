@@ -1,4 +1,4 @@
-# EPWM UPDOWN-COUNT ACTION QUALIFIER {#EXAMPLES_DRIVERS_EPWM_UPDOWN_AQ}
+# EPWM UPDOWN-Count Action Qualifier {#EXAMPLES_DRIVERS_EPWM_UPDOWN_AQ}
 
 [TOC]
 
@@ -20,7 +20,7 @@ The compare values CMPA and CMPB are modified within the ePWM's ISR.
 
 # External Connections
 
-- For AM263X-CC or AM263PX-CC
+- For AM263X-CC or AM263PX-CC or AM261x-SOM
     - EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
@@ -30,8 +30,8 @@ The compare values CMPA and CMPB are modified within the ePWM's ISR.
     - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform. (Note this will require IO exapander configurations for AM261X-LP, please refer schematics and syscfg for details)
     - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform. (Note this will require IO exapander configurations for AM261X-LP, please refer schematics and syscfg for details)
 
-## AM263X-CC or AM263PX-CC
-When using AM263X-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC or AM261X-SOM
+When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Capture waveform on HSEC Pin 49 for epwm0_A
 - Capture waveform on HSEC Pin 51 for epwm0_B
 - Capture waveform on HSEC Pin 53 for epwm1_A

@@ -221,39 +221,48 @@ Execution time - from detection of input fault signal to generation of trip outp
 # External Connections
 
 
-## AM263X-CC or AM263PX-CC
-Connect AM263x or AM263Px ControlCard to TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC or AM261X-SOM
+Connect AM263x-CC or AM263Px-CC or AM261x-SOM to TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 
 
 \imageStyle{am263_epwm_protection_pru_fig4a.png,width:91%}
  \image html am263_epwm_protection_pru_fig4a.png "Figure 4a. External connections required"
 
+Connect IGBT, OCP, OVP and Speed Signals as below:
+ - Provide 'IGBT Fault signal' input to GPIO51
 
-- Provide 'IGBT Fault signal' input to GPIO51
+  - 3.3v -> 1 (Low side IGBT has issue)
+  - 0v -> 0 (no issue)
 
- - 3.3v -> 1 (Low side IGBT has issue)
- - 0v -> 0 (no issue)
-
-- Provide 'OCP Signal' input to GPIO52
- - 3.3v -> 1 (Over current)
- - 0v -> 0 (current normal)
-
-
-- Provide 'OVP Signal' input to GPIO53
- - 3.3v -> 1 (Over voltage)
- - 0v -> 0 (voltage normal)
+ - Provide 'OCP Signal' input to GPIO52
+  - 3.3v -> 1 (Over current)
+  - 0v -> 0 (current normal)
 
 
-- (not supported) Provide 'Speed Signal' input to pin (TBD)
+ - Provide 'OVP Signal' input to GPIO53
+  - 3.3v -> 1 (Over voltage)
+  - 0v -> 0 (voltage normal)
 
- - PWM signal, PWM frequency corresponding to motor Speed. CPLD need to calculate the motor speed based on this PWM frequency and judge the speed > Threshold or not.
+
+ - (not supported) Provide 'Speed Signal' input to pin (TBD)
+
+  - PWM signal, PWM frequency corresponding to motor Speed. CPLD need to calculate the motor speed based on this PWM frequency and judge the speed > Threshold or not.
 
 
-- Provide 'Speed Level' input to GPIO54
+ - Provide 'Speed Level' input to GPIO54
 
- - 3.3v -> 1 (Speed > high Threshold)
- - 0v -> 0 (Speed < high Threshold)
+  - 3.3v -> 1 (Speed > high Threshold)
+  - 0v -> 0 (Speed < high Threshold)
 
+or connect IGBT, OCP, OVP and Speed Signals from HSEC as below:
+- IGBT_FAULT_IN (GPIO51) Signal with IGBT_FAULT_OUT (GPIO55) Signal
+  - Connect HSEC Pin 57 to 58
+- OCP_IN (GPIO52) Signal with OCP_OUT (GPIO56) Signal
+  - Connect HSEC Pin 59 to 60
+- OVP_IN (GPIO53) Signal with OVP_OUT (GPIO57) Signal
+  - Connect HSEC Pin 61 to 62
+- SPEED_LEVEL_IN (GPIO54) Signal with SPEED_LEVEL_OUT (GPIO58) Signal
+  - Connect HSEC Pin 63 to 64
 
 - Capture EPWM0_A waveform at HSEC Pin 49
 - Capture EPWM0_B waveform at HSEC Pin 51
@@ -264,12 +273,11 @@ Connect AM263x or AM263Px ControlCard to TMDSHSECDOCK (HSEC180 controlCARD Baseb
 
 
 ## AM263X-LP or AM263PX-LP
-This example is not supported on AM263X-LP or AM263PX-LP
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_PROTECTION_PRU_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

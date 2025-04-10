@@ -36,7 +36,7 @@
 
 void epwm_xcmp_dma_main(void *args);
 
-EPWM_CurrentLink App_linkPwm = EPWM_LINK_WITH_EPWM_5; 
+EPWM_CurrentLink App_linkPwm = EPWM_LINK_WITH_EPWM_0; 
 
 int main(void)
 {

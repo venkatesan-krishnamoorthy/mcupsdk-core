@@ -70,7 +70,7 @@ function getComponentProperty(device) {
     property.type = "executable";
     property.name = "eqep_position_speed";
     property.isInternal = false;
-    property.description = "An EQEP Positon speed example. This example provides position and speed measurement using capture unit and speed measurement using unit time out."
+    property.description = "An EQEP Position speed example. This example provides position and speed measurement using capture unit and speed measurement using unit time out."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

@@ -15,20 +15,33 @@ This example modifies the MEP control registers to show edge displacement for hi
 
 - Pin can be connected to high resolution oscilloscope (1 GHz) to observe the edge displacement.
 
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC or AM261X-SOM
+When using with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Capture waveform on HSEC Pin 49, 51 for epwm0
 - Capture waveform on HSEC Pin 53, 55 for epwm1
 - Capture waveform on HSEC Pin 50, 52 for epwm2
 - Capture waveform on HSEC Pin 54, 56 for epwm3
 - Capture waveform on HSEC Pin 57, 59 for epwm4
 
-## AM263X-LP
-This example is not supported on AM263X-LP
+## AM263X-LP or AM263PX-LP
+When using AM263X-LP or AM263PX-LP
+- Capture waveform on J2.11 / J6.59 for epwm0
+- Capture waveform on J4.37 / J4.38 for epwm1
+- Capture waveform on J4.39 / J4.40 for epwm2
+- Capture waveform on J8.77 / J8.78 for epwm3
+- Capture waveform on J8.75 / J8.76 for epwm9
+
+## AM261X-LP
+When using AM261X-LP
+- Capture waveform on J7.70 / J8.57 for epwm0
+- Capture waveform on J7.69 / J7.63 for epwm1
+- Capture waveform on J2.40 / J2.39 for epwm2
+- Capture waveform on J2.38 / J2.37 for epwm3
+- Capture waveform on J2.36 / J2.35 for epwm4
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_HR_UPDOWN_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

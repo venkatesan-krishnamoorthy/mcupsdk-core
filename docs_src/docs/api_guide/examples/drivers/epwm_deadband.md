@@ -51,7 +51,26 @@ Probe the following
 - CONFIG_EPWM6 output on HSEC PIN 57  (EPWM4_A)
 - CONFIG_EPWM6 output on HSEC PIN 59  (EPWM4_B)
 Early Access:AM263Px-CC E1 EPWM 15_A/15_B doesn't have a pinout so insted used EPWM 5_A/5_B ie: CONFIG_EPWM5 output on HSEC PIN 61 (EPWM5_A) and CONFIG_EPWM5 output on HSEC PIN 63 (EPWM5_B)
-## AM263X-LP or AM263PX-CC
+
+## AM261X-SOM
+When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+Probe the following
+- CONFIG_EPWM0 output on HSEC PIN 49  (EPWM0_A)
+- CONFIG_EPWM0 output on HSEC PIN 51  (EPWM0_B)
+- CONFIG_EPWM1 output on HSEC PIN 53  (EPWM1_A)
+- CONFIG_EPWM1 output on HSEC PIN 55  (EPWM1_B)
+- CONFIG_EPWM2 output on HSEC PIN 50  (EPWM2_A)
+- CONFIG_EPWM2 output on HSEC PIN 52  (EPWM2_B)
+- CONFIG_EPWM3 output on HSEC PIN 54  (EPWM3_A)
+- CONFIG_EPWM3 output on HSEC PIN 56  (EPWM3_B)
+- CONFIG_EPWM4 output on HSEC PIN 57  (EPWM4_A)
+- CONFIG_EPWM4 output on HSEC PIN 59  (EPWM4_B)
+- CONFIG_EPWM5 output on HSEC PIN 61  (EPWM5_A)
+- CONFIG_EPWM5 output on HSEC PIN 63  (EPWM5_B)
+- CONFIG_EPWM6 output on HSEC PIN 58  (EPWM6_A)
+- CONFIG_EPWM6 output on HSEC PIN 60  (EPWM6_B)
+
+## AM263X-LP or AM263PX-LP
 Probe the following
 - CONFIG_EPWM0 output on  PIN J2/4 11  (EPWM0_A)
 - CONFIG_EPWM0 output on  PIN J6/8 59  (EPWM0_B)

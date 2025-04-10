@@ -26,7 +26,7 @@ Shadow sets 2,3 are set to repeat 5 times each.
 
 connect the following EPWM outputs to an oscilloscope to view the waveform.
 
-## AM263Px-CC E1
+## AM263Px-CC E1 or AM2631x-SOM
     - EPWM0_A and EPWM0_B pin ie, HSEC 49, HSEC 51.
     - EPWM1_A and EPWM1_B pin ie, HSEC 53, HSEC 55.
     - EPWM2_A and EPWM2_B pin ie, HSEC 50, HSEC 52.
@@ -34,11 +34,11 @@ connect the following EPWM outputs to an oscilloscope to view the waveform.
     - EPWM4_A and EPWM4_B pin ie, HSEC 57, HSEC 59.
 
 ## AM263Px-LP
-    - EPWM0_A and EPWM0_B pin ie, HSEC 49, HSEC 51.
-    - EPWM1_A and EPWM1_B pin ie, HSEC 53, HSEC 55.
-    - EPWM2_A and EPWM2_B pin ie, HSEC 50, HSEC 52.
-    - EPWM3_A and EPWM3_B pin ie, HSEC 54, HSEC 56.
-    - EPWM4_A and EPWM4_B pin ie, HSEC 57, HSEC 59.
+    - EPWM0_A and EPWM0_B pin ie, J4 11 / J8 59.
+    - EPWM1_A and EPWM1_B pin ie, J2 37 / J2 38.
+    - EPWM2_A and EPWM2_B pin ie, J2 39 / J2 40.
+    - EPWM3_A and EPWM3_B pin ie, J8 77 / J8 78.
+    - EPWM9_A and EPWM9_B pin ie, J8.75 / J8.76.
 
 ## AM261x-LP
     - EPWM5_A/B pin ie, J6 80/ J6 79.

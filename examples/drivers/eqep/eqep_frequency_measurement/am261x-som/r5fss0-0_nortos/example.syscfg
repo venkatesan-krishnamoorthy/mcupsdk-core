@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.999+157"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -59,6 +60,8 @@ epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER
 epwm1.epwmDeadband_enableRED                                     = true;
 epwm1.epwmDeadband_enableFED                                     = true;
 epwm1.EPWM.$assign                                               = "EPWM0";
+epwm1.EPWM.A.$assign                                             = "GPIO43";
+epwm1.EPWM.B.$assign                                             = "GPIO44";
 
 eqep1.$name                = "CONFIG_EQEP0";
 eqep1.eqepOperationMode    = "EQEP_CONFIG_UP_COUNT";
@@ -73,6 +76,11 @@ eqep1.evntPrescale         = "EQEP_UNIT_POS_EVNT_DIV_8";
 eqep1.capPrescale          = "EQEP_CAPTURE_CLK_DIV_128";
 eqep1.enableCapture        = true;
 eqep1.captureConfig        = true;
+eqep1.EQEP.$assign         = "EQEP0";
+eqep1.EQEP.A.$assign       = "GPIO130";
+eqep1.EQEP.B.$assign       = "GPIO131";
+eqep1.EQEP.STROBE.$assign  = "GPIO132";
+eqep1.EQEP.INDEX.$assign   = "GPIO133";
 
 const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
 const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
@@ -84,6 +92,11 @@ const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/s
 const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
 
 const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
@@ -153,13 +166,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
@@ -319,11 +332,4 @@ int_xbar1.xbarOutput = ["EPWM0_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "GPIO43";
-epwm1.EPWM.B.$suggestSolution           = "GPIO44";
-eqep1.EQEP.$suggestSolution             = "EQEP0";
-eqep1.EQEP.A.$suggestSolution           = "GPIO130";
-eqep1.EQEP.B.$suggestSolution           = "GPIO131";
-eqep1.EQEP.STROBE.$suggestSolution      = "GPIO132";
-eqep1.EQEP.INDEX.$suggestSolution       = "GPIO133";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

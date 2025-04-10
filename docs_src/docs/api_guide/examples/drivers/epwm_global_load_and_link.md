@@ -50,14 +50,13 @@ Probe the EPWM outputs for the above EPWMs and Status pin.
 - CONFIG_EPWM3_GLD_LINK_EPWM2 : EPWM 3A/3B on BoosterPack J8 77 / J8 78
 - Status Pin                  : GPIO on                   J8 52
 
-\cond SOC_AM261X
 ## AM261x Launch Pad
 - CONFIG_EPWM_NO_GLD          : EPWM 2A/2B on BoosterPack J2 40 / J2 39 
 - CONFIG_EPWM1_GLD            : EPWM 3A/3B on BoosterPack J2 38 / J2 37 
 - CONFIG_EPWM2_GLD_LINK_SELF  : EPWM 4A/4B on BoosterPack J2 36 / J2 35 
 - CONFIG_EPWM3_GLD_LINK_EPWM2 : EPWM 5A/5B on BoosterPack J6 80 / J6 79
 - Status Pin                  : GPIO on HSEC pin 50       J6 78
-\endcond
+
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_GLOBAL_LOAD_AND_LINK_COMBOS}
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM261X

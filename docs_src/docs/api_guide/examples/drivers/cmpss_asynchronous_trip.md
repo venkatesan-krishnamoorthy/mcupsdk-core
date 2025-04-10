@@ -32,8 +32,8 @@ When a high input(higher than VDD/2) is provided to CMPIN1P,
  - Give input on CMPIN1P
  - Outputs can be observed on XBAROUT0(XBAROUT8 in case of AM263PX) and EPWM0B using an oscilloscope
 
-## AM263PX-CC E2 or AM263X-CC E2
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263PX-CC E2 or AM263X-CC E2 or AM261X-SOM
+When using AM263x-CC or AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog input on HSEC Pin 15
 - Capture and analyze waveforms on USER_LED1 and HSEC pin 51
 
@@ -42,13 +42,11 @@ When using AM263x-LP
 - Feed analog input on J5/J6 Pin 66
 - Capture and analyze waveforms on DS2 LED and boosterpack header J6/J8 pin 59
 
-\cond SOC_AM261X
 ## AM261x-LP
 When using AM261x-LP 
 - Feed the Analog input on J7 Pin 63
 - Capture the Trip out on OUTXBAR OUT 0 ON GPIO1 or J8 Pin 51
 - Capture the EPWM output on J7 Pin 70
-\endcond 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP_COMBOS}
 

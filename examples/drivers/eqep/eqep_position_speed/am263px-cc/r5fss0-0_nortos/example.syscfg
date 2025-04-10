@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -19,7 +20,7 @@ const gpio1           = gpio.addInstance();
 const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
 const mcspi1          = mcspi.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const dpl_cfg         = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
@@ -88,14 +89,16 @@ eqep1.selectSourceIndex    = "EQEP_SOURCE_DEVICE_PIN";
 eqep1.EQEP.$assign         = "EQEP0";
 eqep1.EQEP.A.$assign       = "EQEP0_A";
 
-gpio1.$name                = "CONFIG_GPIO0";
-gpio1.pinDir               = "OUTPUT";
-gpio1.GPIO.gpioPin.$assign = "EPWM2_B";
+gpio1.$name          = "CONFIG_GPIO0";
+gpio1.pinDir         = "OUTPUT";
+gpio1.rx             = true;
+gpio1.GPIO_n.$assign = "EPWM2_B";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
 mcspi1.SPI.$assign           = "SPI1";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
 
 const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                 = edma.addInstance({}, false);
@@ -106,11 +109,39 @@ edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
+const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
+const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
+soc_ctrl_adc1.$name   = "soc_ctrl_adc0";
+const soc_ctrl        = scripting.addModule("/drivers/soc_ctrl/soc_ctrl", {}, false);
+soc_ctrl.soc_ctrl_adc = soc_ctrl_adc1;
+
+const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_cmpss", {}, false);
+const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
+soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
+soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
+
+const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
+const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
+soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
+epwm.epwmTbClkSync     = soc_ctrl_epwm1;
+soc_ctrl.soc_ctrl_epwm = soc_ctrl_epwm1;
+
+const soc_ctrl_sdfm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_sdfm", {}, false);
+const soc_ctrl_sdfm1   = soc_ctrl_sdfm.addInstance({}, false);
+soc_ctrl_sdfm1.$name   = "soc_ctrl_sdfm0";
+soc_ctrl.soc_ctrl_sdfm = soc_ctrl_sdfm1;
+
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -334,7 +365,6 @@ epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
 eqep1.EQEP.B.$suggestSolution               = "EQEP0_B";
 eqep1.EQEP.STROBE.$suggestSolution          = "EQEP0_STROBE";
 eqep1.EQEP.INDEX.$suggestSolution           = "EQEP0_INDEX";
-gpio1.GPIO.$suggestSolution                 = "GPIO";
 mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
 mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
 mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";

@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -102,6 +102,11 @@ const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 cmpss.cmpssSettings     = soc_ctrl_cmpss1;
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
 
 const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
@@ -347,8 +352,8 @@ section12.output_section[0].alignment = 0;
 
 output_xbar1.$name                      = "CONFIG_OUTPUT_XBAR0";
 output_xbar1.xbarOutput                 = ["CMPSSA1_CTRIPH"];
-output_xbar1.OUTPUTXBAR.$assign         = "OUTPUTXBAR5";
-output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO19";
+output_xbar1.OUTPUTXBAR.$assign         = "OUTPUTXBAR8";
+output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO24";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

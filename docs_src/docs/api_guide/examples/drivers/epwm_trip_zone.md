@@ -54,6 +54,9 @@ For CBC as observed at the end, after exiting the loop, it recovers from trip st
     - EPWM9_A and EPWM1_A pin can be connected to an oscilloscope to view the waveform.
 \endcond
 \cond SOC_AM261X
+- For AM261x-SOM:
+    - GPIO48 is connected to GPIO122
+    - EPWM2_A and EPWM3_A pin can be connected to an oscilloscope to view the waveform.
 - For AM261x-LP:
     - GPIO3 is connected to GPIO4
     - EPWM2_A and EPWM3_A pin can be connected to an oscilloscope to view the waveform.
@@ -80,6 +83,12 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 \endcond
 
 \cond SOC_AM261X
+## AM261X-SOM
+When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+- Connect HSEC Pin 52 to HSEC Pin 72
+- Connect HSEC Pin 50 to scope for epwm2_A
+- Connect HSEC Pin 54 to scope for epwm3_A
+
 ## AM261X-LP
 - Connect boosterpack header J1/J3 pin 8 to J2/J4 pin 18
 - Connect J2/J4 pin 40 and 38 to scope

@@ -17,13 +17,13 @@ EPMW0_A to detect the trip within a MINMAX window and trip its EPWMxA output
 EPMW1_A waveform is used as a trip input. 
 
 # Configurations 
-1. EPWM0 (EPWM2 in case of AM261x-LP)
+1. EPWM0
   - DCCAP is enabled, trip inputs are configured for Trip1. 
   - waveform A/B are configured (in the example) to match the min-max window for observing.
   - IN Trip zone, CAPEVT is configured for CBC source and Trip action on output A to low Action when trip occured.
   - XCMP is enbaled for this feature usage.
 
-2. EPWM1 (EPWM3 in case of AM261x-LP)
+2. EPWM1
   - XCMP is enabled (not a necessary requirement)
   - generates a waveform, that goes high on counter = 100, goes low on counter = 1000, for a period of 2000 
 
@@ -36,11 +36,25 @@ The EPWM1A is routed internally via GPIO. if wish to use a different/external tr
      3. connect external trip input to GPIO45   
 
 # External Connections
-1. AM263Px-cc with HSEC dock connected
-     - EPWM0A can be observed on HSEC PIN 49
-     - EPWM0B can be observed on HSEC PIN 51
-     - EPWM1A (Trip Input) can be observed on HSEC PIN 53.
+EPWM0_A/B and EPWM1_A pin can be connected to an oscilloscope to view the waveform.
 
+## AM263Px-CC or AM261x-SOM
+When using AM263Px-CC or AM261x-SOM with MDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+- EPWM0A can be observed on HSEC PIN 49
+- EPWM0B can be observed on HSEC PIN 51
+- EPWM1A (Trip Input) can be observed on HSEC PIN 53.
+
+## AM263Px-LP
+Probe the following on boosterpack
+- EPWM0A can be observed on J2/J4 pin 11
+- EPWM0B can be observed on J6/J8 pin 59
+- EPWM1A (Trip Input) can be observed on J2/J4 pin 37
+
+## AM261x-LP
+Probe the following on boosterpack
+- EPWM0A can be observed on J5/J7 pin 70
+- EPWM0B can be observed on J6/J8 pin 57
+- EPWM1A (Trip Input) can be observed on J5/J7 pin 69
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DCCAP_COMBOS}
 

@@ -23,12 +23,12 @@ This example configures an ePWM instance and DMA as follows:
 - For AM263x-CC or AM263Px-CC: EPWM0_A/B pin can be connected to an oscilloscope to view the waveform.
 - For AM263x-LP or AM263Px-LP: EPWM1_A/B pin can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC or AM263PX-CC
+## AM263X-CC or AM263PX-CC or AM261X-SOM
 When using AM263x-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Capture waveform on HSEC Pin 49 for epwm0_A
 - Capture waveform on HSEC Pin 51 for epwm0_B
 
-## AM263X-LP or AM263PX-LP
+## AM263X-LP or AM263PX-LP or AM261X-LP
 When using AM263x-LP or AM263PX-LP
 - Capture waveform on boosterpack header J2/J4 Pin 37 for epwm1_A
 - Capture waveform on boosterpack header J2/J4 Pin 38 for epwm1_B

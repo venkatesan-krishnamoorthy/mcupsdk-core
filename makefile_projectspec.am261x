@@ -156,6 +156,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_protection_pru_am261x-som_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_protection_pru_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_synchronization_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_synchronization_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_up_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_up_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_updown_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_updown_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_trip_zone_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
@@ -176,6 +178,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_frequency_measurement_am261x-s
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_frequency_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_cw_ccw_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_cw_ccw_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_position_speed_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_position_speed_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_speed_direction_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_speed_direction_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_freq_cal_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang_build
@@ -1061,6 +1065,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  epwm_synchronization_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/epwm/epwm_synchronization/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ epwm_up_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_up_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_up_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_up_aq/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  epwm_updown_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/epwm/epwm_updown_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1120,6 +1130,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  eqep_cw_ccw_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/eqep/eqep_cw_ccw/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ eqep_position_speed_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ eqep_position_speed_am261x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  eqep_speed_direction_am261x-som_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/eqep/eqep_speed_direction/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -2510,6 +2526,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_protection_pru_am261x-som_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_protection_pru_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_synchronization_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_synchronization_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_up_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_up_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_updown_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_updown_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_trip_zone_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2530,6 +2548,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_frequency_measurement_am261x-s
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_frequency_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_cw_ccw_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_cw_ccw_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_position_speed_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_position_speed_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_speed_direction_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_speed_direction_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_freq_cal_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3415,6 +3435,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  epwm_synchronization_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_synchronization/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ epwm_up_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_up_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_up_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_up_aq/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  epwm_updown_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_updown_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3474,6 +3500,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  eqep_cw_ccw_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/eqep/eqep_cw_ccw/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ eqep_position_speed_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ eqep_position_speed_am261x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  eqep_speed_direction_am261x-som_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/eqep/eqep_speed_direction/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4864,6 +4896,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_protection_pru_am261x-som_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_protection_pru_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_synchronization_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_synchronization_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_up_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_up_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_updown_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_updown_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_trip_zone_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
@@ -4884,6 +4918,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_frequency_measurement_am261x-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_frequency_measurement_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_cw_ccw_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_cw_ccw_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_position_speed_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_position_speed_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_speed_direction_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_speed_direction_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_freq_cal_interrupt_am261x-som_r5fss0-0_nortos_ti-arm-clang_export
@@ -5769,6 +5805,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  epwm_synchronization_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/epwm/epwm_synchronization/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ epwm_up_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_up_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_up_aq_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_up_aq/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  epwm_updown_aq_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/epwm/epwm_updown_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -5828,6 +5870,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  eqep_cw_ccw_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/eqep/eqep_cw_ccw/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ eqep_position_speed_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ eqep_position_speed_am261x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/eqep/eqep_position_speed/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  eqep_speed_direction_am261x-som_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/eqep/eqep_speed_direction/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -7234,6 +7282,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_protection_pru/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_synchronization/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_synchronization/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_up_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_up_aq/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_updown_aq/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_updown_aq/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_trip_zone/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -7254,6 +7304,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_frequency_measurement/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_cw_ccw/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_cw_ccw/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_position_speed/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_position_speed/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_speed_direction/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_speed_direction/am261x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_freq_cal_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

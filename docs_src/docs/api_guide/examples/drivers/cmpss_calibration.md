@@ -13,24 +13,21 @@ Output will be the measured voltages at which CMPSS latch is set when compared w
 # External Connections
  - Connect DAC output to CMPIN1P
 
-## AM263PX-CC or AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263PX-CC or AM263X-CC or AM261X-SOM
+When using with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC Pin 9 to HSEC Pin 15
 
 ## AM263PX-LP or AM263X-LP
 When using AM263x-LP
 - Connect J1/J3 Pin 30 to J1/3 Pin 66
 
-\cond SOC_AM261X
 ## AM261x-LP
 When using AM261x-LP 
 - Connect J1/J3 Pin 30 to J1/3 Pin 63
 
-\endcond 
-
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_CALIBRATION_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_m261x
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

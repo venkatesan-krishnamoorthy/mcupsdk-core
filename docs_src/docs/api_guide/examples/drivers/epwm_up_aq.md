@@ -1,4 +1,4 @@
-# EPWM UP-COUNT ACTION QUALIFIER {#EXAMPLES_DRIVERS_EPWM_UP_AQ}
+# EPWM UP-Count Action Qualifier {#EXAMPLES_DRIVERS_EPWM_UP_AQ}
 
 [TOC]
 
@@ -19,19 +19,12 @@ The compare values CMPA and CMPB are modified within the ePWM's ISR.
 \image html am263_epwm_up_aq.png "EPWM Asymetric Waveform with Independent Modulation using UP-Count mode"
 
 # External Connections
+- EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
+- EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
+- EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
 
-- For AM263X-CC or AM263PX-CC
-    - EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
-    - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
-    - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
-
-- For AM263X-LP or AM263PX-LP
-    - EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
-    - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
-    - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
-
-## AM263X-CC or AM263PX-CC
-When using AM263X-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC or AM261X-SOM
+When using AM263X-CC, AM263PX-CC or AM261X-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Capture waveform on HSEC Pin 49 for epwm0_A
 - Capture waveform on HSEC Pin 51 for epwm0_B
 - Capture waveform on HSEC Pin 53 for epwm1_A
@@ -47,9 +40,17 @@ When using AM263X-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Basebo
 - Capture waveform on boosterpack header J2/J4 Pin 39 for epwm2_A
 - Capture waveform on boosterpack header J2/J4 Pin 40 for epwm2_B
 
+## AM261X-LP
+- Capture waveform on boosterpack header J6/J8 Pin 70 for epwm0_A
+- Capture waveform on boosterpack header J6/J8 Pin 57 for epwm0_B
+- Capture waveform on boosterpack header J2/J4 Pin 69 for epwm1_A
+- Capture waveform on boosterpack header J2/J4 Pin 63 for epwm1_B
+- Capture waveform on boosterpack header J2/J4 Pin 40 for epwm2_A
+- Capture waveform on boosterpack header J2/J4 Pin 39 for epwm2_B
+
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_UP_AQ_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

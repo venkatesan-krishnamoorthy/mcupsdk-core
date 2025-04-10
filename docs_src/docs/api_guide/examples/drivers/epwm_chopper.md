@@ -42,7 +42,7 @@ Configurations
 ## External Connections
 1. Probe EPWM 0A (EPWM 2A in case of AM261x-LP) for Reference waveform 
 2. Probe EPWM 1A,2A,3A,3B (EPWM 3A,4A,6A,6B in case of AM261x-LP) for the Chopper enabled waveforms.
-### On AM263x CC/ AM263Px CC with HSEC Dock, 
+### On AM263x CC/ AM263Px CC/ AM261x SOM with HSEC Dock, 
 Probe HSEC pins 49,53,50,54,56 respectively for EPWM 0A, 1A, 2A, 3A and 3B
 ### On AM263x LP/ AM263Px LP,
 Probe J4 11, J2 37, J2 39, J6 77, J6 78 respectively for EPWM 0A, 1A, 2A, 3A and 3B

@@ -25,7 +25,7 @@ This example configures ePWMx as follows
 
 # External Connections
 
-- For AM263x-CC or AM263Px-CC
+- For AM263x-CC or AM263Px-CC or AM261x-SOM
     - GPIO48 is connected to GPIO122.
     - EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
 - For AM263x-LP or AM263Px-LP
@@ -35,8 +35,8 @@ This example configures ePWMx as follows
     - GPIO16 is connected to GPIO17.
     - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC or AM263PX-CC
-When using AM263x-CC or or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC or AM261X-SOM
+When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC Pin 52 to HSEC Pin 72
 - Capture waveform on HSEC Pin 49 for epwm0_A
 - Capture waveform on HSEC Pin 51 for epwm0_B
@@ -51,6 +51,7 @@ When using AM263x-CC or or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Bas
 - Connect boosterpack header J2/J4 pin 19 to J1/J3 pin 7
 - Capture waveform on boosterpack header J5/J7 Pin 69 for epwm1_A
 - Capture waveform on boosterpack header J5/J7 Pin 63 for epwm1_B
+
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_VALLEY_SWITCHING_COMBOS}
 
 \cond SOC_AM263X || SOC_AM263PX

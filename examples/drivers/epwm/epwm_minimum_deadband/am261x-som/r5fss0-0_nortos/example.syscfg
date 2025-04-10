@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZCZ" --package "ZCZ" --part "AM2611" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.20.999+157"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -166,6 +167,11 @@ const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
 
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
+
 const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
 soc_ctrl_epwm1.$name   = "soc_ctrl_epwm0";
@@ -234,13 +240,13 @@ region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
 region1.memory_region[6].auto                = false;
-region1.memory_region[6].manualStartAddress  = 0x70150000; 
+region1.memory_region[6].manualStartAddress  = 0x70150000;
 region1.memory_region[6].size                = 0x4000;
 region1.memory_region[6].isShared            = true;
 region1.memory_region[6].shared_cores        = ["r5fss0-1"];
 region1.memory_region[7].$name               = "LOG_SHM_MEM";
 region1.memory_region[7].auto                = false;
-region1.memory_region[7].manualStartAddress  = 0x70154000; 
+region1.memory_region[7].manualStartAddress  = 0x70154000;
 region1.memory_region[7].size                = 0x4000;
 region1.memory_region[7].isShared            = true;
 region1.memory_region[7].shared_cores        = ["r5fss0-1"];
