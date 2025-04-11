@@ -61,24 +61,23 @@
 \cond SOC_AM261X
 ## Enabling AM261x Device Support in Code Composer Studio (CCS)
 
-1. Add the CCS - CSP (Chip Support Package):
-   - Download the CSP from the TI Drive. Contact your TI representative to get the CSP package.
-   - Copy the CSP inside the CCS installation directory at `C:\ti\<ccs_version>\ccs\ccs_base/ccs_base`.
-   - Follow the instructions in the documentation provided with the CSP data for more details.
-2. Update the timestamp:
-   - To update the device list in CCS, close CCS and navigate to `C:\ti\<ccs_version>\ccs\ccs_base\common\targetdb`.
-   - Open a command line and run the following:
-     - Windows: `copy /b timestamp ,,+`
-     - Linux: `touch timestamp`
-   - Open CCS, and check if the AM261x is present in the device list of the new project.
-3. Import the project:
-   - Go to `File -> Import`.
-   - Select `CCS projects`.
-   - Select the search-directory and browse to `SDK_PATH/examples/hello_world/am261x-lp/r5fss0-0_nortos/ti-arm-clang/`.
-   - Click `Import`.
-   - If the SDK product was not correctly recognized in CCS, preventing the SDK project from being imported, go to the CCS menu -> `windows -> code composer studio -> products`, and refresh the products to solve the issue.
+- Launch CCS. Go to Help ---> Check for Updates
 
-\note After importing the application, go to the project settings and select the correct SysConfig that includes the AM261 device data.
+    \imageStyle{ccs_update_check.png,width:30%}
+    \image html ccs_update_check.png "Check for Updates Menu"
+
+- The window will list the available updates. Select "Sitara device support" and click next.
+
+    \imageStyle{ccs_update_avail.png,width:40%}
+    \image html ccs_update_avail.png "List of available updates"
+
+- The window will show the update details for confirmation. Click next.
+
+    \imageStyle{ccs_update_details.png,width:40%}
+    \image html ccs_update_details.png "Update details"
+
+- Accept the license agreement and click Finish.
+- Restart CCS when prompted.
 
 \endcond
 
