@@ -12,7 +12,8 @@ const files_freertos_rf5 = {
 const files_nortos_rf5 = {
     common: [
         "test_mcspi_controller.c",
-        "main.c",
+        "board.c",
+        "main.c",        
     ],
 };
 
@@ -22,6 +23,7 @@ const files_nortos_rf5 = {
 const filedirs = {
     common: [
         "..",       /* core_os_combo base */
+        "../..",
         "../../..", /* Example base */
     ],
 };
@@ -30,6 +32,7 @@ const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/test/unity/lib",
     ],
 };
@@ -38,6 +41,7 @@ const libdirs_freertos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/test/unity/lib",
     ],
 };
@@ -46,6 +50,7 @@ const libs_nortos_r5f = {
     common: [
         "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
@@ -54,6 +59,7 @@ const libs_freertos_r5f = {
     common: [
         "freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };

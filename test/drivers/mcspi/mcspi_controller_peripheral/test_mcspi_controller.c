@@ -49,7 +49,13 @@
  *  MCU_SPI0_CLK(Pin 7)    ------------->   MCU_SPI1_CLK(Pin 47)
  *  MCU_SPI0_D0(Pin 55)    ------------->   MCU_SPI1_D1(Pin 14)
  *  MCU_SPI0_D1(Pin 54)    ------------->   MCU_SPI1_D0(Pin 15)
- *  
+ * 
+ *  Please connect pins as described below on AM263px CC.
+ *  MCU_SPI0_CS0 (C11) (HSEC Pin 73)   ------------->   MCU_SPI1_CS0 (C9)  (HSEC Pin 81)
+ *  MCU_SPI0_CLK (A11) (HSEC Pin 71)   ------------->   MCU_SPI1_CLK (A10) (HSEC Pin 79)
+ *  MCU_SPI0_D0  (C10) (HSEC Pin 67)   ------------->   MCU_SPI1_D0 (B10)  (HSEC Pin 75) 
+ *  MCU_SPI0_D1  (B11) (HSEC Pin 69)   ------------->   MCU_SPI1_D1 (D9)   (HSEC Pin 77) 
+ * 
  *  Please connect pins as described below on AM263px LP.
  *  MCU_SPI0_CS0(Pin 8) (C11)   ------------->   MCU_SPI1_CS0(Pin 58) (C9)
  *  MCU_SPI0_CLK(Pin 7) (A11)   ------------->   MCU_SPI1_CLK(Pin 47) (A10)
@@ -125,6 +131,8 @@ extern MCSPI_Handle     gMcspiHandle[];
 extern MCSPI_Config     gMcspiConfig[];
 extern MCSPI_ChConfig  *gConfigMcspiChCfg[];
 
+extern int32_t mcspi_io_expander_open(void);
+
 /* Semaphore to indicate Tx/Rx completion used in callback api's */
 static SemaphoreP_Object gMcspiTransferDoneSem;
 
@@ -149,6 +157,9 @@ void test_mcspi_controller_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
+#ifdef SOC_AM263PX
+    (void)mcspi_io_expander_open();
+#endif
 
     UNITY_BEGIN();
 
