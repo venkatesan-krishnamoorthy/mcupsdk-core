@@ -30,6 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdbool.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/ClockP.h>
@@ -51,7 +52,6 @@
  *  
  * 
  *  The configuration for this example is as follows
- *  - 50 CW pulses followed by 50 CCW pulses
  *  - Encoder resolution is configured to 1000 counts/revolution
  *  - GPIO's are routed through PWMXBAR to eQEP module
  *  - GPIO's (simulating CW/CCW encoder signals) are configured for a 2.5kHz frequency
@@ -83,7 +83,7 @@
  */ 
 
 /* Configuration Constants */
-#define APP_LOOP_CNT          (100U)     /* Number of interrupt cycles before completion */
+#define APP_LOOP_CNT          (1000U)     /* Number of interrupt cycles before completion */
 #define APP_INT_IS_PULSE      (1U)       /* Configure interrupt as pulse type */
 #define APP_ENCODER_SLOTS     (1000U)    /* Encoder resolution (counts per revolution) */
 #define APP_UNIT_PERIOD       (10000U)   /* Unit timeout period in microseconds (10ms) */
@@ -135,6 +135,8 @@ static uint16_t gAppEqepInterruptCount = 0;
 static HwiP_Object gAppEqepHwiObject;
 static SemaphoreP_Object gAppEqepSyncSem;
 static bool gAppEqepQmaValid = true;
+
+static volatile int32_t gCurrentPulseDirection = 1;
 
 /* Function Prototypes */
 static void App_eqepISR(void *args);
@@ -227,33 +229,61 @@ void eqep_cw_ccw_main(void *args)
 
 /* Timer ISR for Generating Test Signals */
 void timerISR(void) {
-    static uint32_t toggleCount = 0;
-    static uint32_t indexPulseCount = 0;
-    static uint32_t totalToggleCount = 0;
+    static int32_t previousPulseDirection = 1; /* Initialize to starting direction */
+    static uint32_t indexPulseCount = 0; /* Counter to manage index pulse width */
+    /* Software counter to simulate the eQEP position */
+    static uint32_t simulatedPosition = 0; /* Start simulation at position 0 */
 
-    toggleCount++;
-    totalToggleCount++;
+    /* Read the current direction (might have been changed by App_eqepISR) */
+    int32_t currentDirection = gCurrentPulseDirection;
 
-    /* Generate CW and CCW test pulses */
-    if(toggleCount <= (APP_PULSES_PER_GROUP * APP_TOGGLES_PER_PULSE)) {  // First 50 CW pulses (100 toggles)
+    /* Check if the direction has changed since the last timer tick */
+    if (currentDirection != previousPulseDirection) {
+        /* Direction changed: Ensure the pin for the *previous* direction is LOW. (IMPT) */
+        if (previousPulseDirection > 0) { /* If previous direction was CW */
+            GPIO_pinWriteLow(GPIO_CW_PIN_BASE_ADDR, GPIO_CW_PIN_PIN);
+        } else { /* If previous direction was CCW */
+            GPIO_pinWriteLow(GPIO_CCW_PIN_BASE_ADDR, GPIO_CCW_PIN_PIN);
+        }
+        /* Update the previous direction state for the next check */
+        previousPulseDirection = currentDirection;
+    }
+
+    /* Generate CW or CCW test pulses based on the *current* direction flag */
+    if (currentDirection > 0) { /* Generate CW pulse */
         App_gpioPinToggle(GPIO_CW_PIN_BASE_ADDR, GPIO_CW_PIN_PIN);
-    }
-    else if(toggleCount <= (APP_PULSES_PER_GROUP * APP_TOGGLES_PER_PULSE * 2)) {  // Next 50 CCW pulses (100 toggles)
+        /* Update simulated position for CW movement */
+        simulatedPosition++;
+        /* Handle wrap-around if using a specific max count other than U32_MAX */
+        if (simulatedPosition > ((APP_ENCODER_SLOTS-1)) * 2) {
+            simulatedPosition = 0;
+        }
+    } else { /* Generate CCW pulse */
         App_gpioPinToggle(GPIO_CCW_PIN_BASE_ADDR, GPIO_CCW_PIN_PIN);
-        if(toggleCount == 200)
-            toggleCount = 0;
+        /* Update simulated position for CCW movement */
+        if (simulatedPosition == 0) {
+            /* Wrap around based on the effective max count */
+            simulatedPosition = ((APP_ENCODER_SLOTS-1)) * 2; 
+        } else {
+            simulatedPosition--;
+        }
     }
 
-    /* Generate index pulse every 1000 encoder counts (2000 toggles) */
-    if(totalToggleCount % (APP_ENCODER_SLOTS * APP_TOGGLES_PER_PULSE) == 0) {
+    /* 
+    * Generate index pulse based on the simulated position counter 
+    * Check if the simulated position counter is at 0 and we are not already generating an index pulse 
+    */
+    if (simulatedPosition == 0 && indexPulseCount == 0) {
         GPIO_pinWriteHigh(GPIO_INDEX_PIN_BASE_ADDR, GPIO_INDEX_PIN_PIN);
-        indexPulseCount = 1;
+        indexPulseCount = 1; /* Start the index pulse duration counter */
     }
+    /* Manage the duration of the index pulse (keep it high for a few timer ticks) */
     else if(indexPulseCount > 0) {
         indexPulseCount++;
+        /* Keep the pulse high for approximately 3 * 200us = 600us - to ensure eQEP hardware reliably detects index pulse */
         if(indexPulseCount >= 4) {
             GPIO_pinWriteLow(GPIO_INDEX_PIN_BASE_ADDR, GPIO_INDEX_PIN_PIN);
-            indexPulseCount = 0;
+            indexPulseCount = 0; /* Reset index pulse counter */
         }
     }
 }
@@ -265,26 +295,30 @@ static void App_eqepISR(void *args)
 
     gAppEqepInterruptCount++;
 
-    /* Handle QMA Error */
-    if(status & EQEP_INT_QMA_ERROR) {
-        gAppEqepQmaValid = false;
-        EQEP_clearInterruptStatus(gAppEqepBaseAddr, EQEP_INT_QMA_ERROR|EQEP_INT_GLOBAL);
-        SemaphoreP_post(&gAppEqepSyncSem);
-    }
-    else {
-        /* Update encoder state and calculate speed */
-        gAppEqepEncoderState.currentEncoderPos = EQEP_getPosition(gAppEqepBaseAddr);
-        gAppEqepEncoderState.direction = EQEP_getDirection(gAppEqepBaseAddr);
-        gAppEqepEncoderState.newCount = EQEP_getPositionLatch(gAppEqepBaseAddr);
-
-        App_eqepCalculateSpeed();
-        
-        EQEP_clearInterruptStatus(gAppEqepBaseAddr, EQEP_INT_UNIT_TIME_OUT|EQEP_INT_GLOBAL);
-    }
-
     /* Check for test completion */
     if(gAppEqepInterruptCount >= APP_LOOP_CNT) {
         SemaphoreP_post(&gAppEqepSyncSem);
+    }
+    else{
+        /* Handle QMA Error */
+        if(status & EQEP_INT_QMA_ERROR) {
+            gAppEqepQmaValid = false;
+            EQEP_clearInterruptStatus(gAppEqepBaseAddr, EQEP_INT_QMA_ERROR|EQEP_INT_GLOBAL);
+            SemaphoreP_post(&gAppEqepSyncSem);
+        }
+        else {
+            /* Update encoder state and calculate speed */
+            gAppEqepEncoderState.currentEncoderPos = EQEP_getPosition(gAppEqepBaseAddr);
+            gAppEqepEncoderState.direction = EQEP_getDirection(gAppEqepBaseAddr);
+            gAppEqepEncoderState.newCount = EQEP_getPositionLatch(gAppEqepBaseAddr);
+
+            App_eqepCalculateSpeed();
+
+            /* Switch the pulse direction for the timerISR on the next cycle */
+            gCurrentPulseDirection *= -1;
+            
+            EQEP_clearInterruptStatus(gAppEqepBaseAddr, EQEP_INT_UNIT_TIME_OUT|EQEP_INT_GLOBAL);
+        }
     }
 }
 

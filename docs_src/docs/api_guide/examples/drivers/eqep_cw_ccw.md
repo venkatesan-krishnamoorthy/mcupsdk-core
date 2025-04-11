@@ -7,7 +7,7 @@
 This example demonstrates the use of eQEP (Enhanced Quadrature Encoder Pulse) module to measure position, direction, frequency and speed from CW/CCW input pulses. The example emulates encoder signals using GPIO outputs and timer-based interrupts.
 
 \imageStyle{am26x_eqep_cw_ccw_input.png, width:60%}
-    \image html am26x_eqep_cw_ccw_input.png "EQEP CW/CCW Input pulses"
+    \image html am26x_eqep_cw_ccw_input.png "EQEP CW/CCW Input pulses, Index Pulse visible at count 0"
 
 ## Example Description
 
@@ -28,9 +28,9 @@ The example demonstrates:
 ## Configuration Details
 
 - Encoder resolution: 1000 counts/revolution
-- Pulse pattern: 50 CW pulses followed by 50 CCW pulses
+- Pulse pattern: Direction changes everytime eqep ISR is triggered
 - Pulse frequency: 2.5kHz (150 RPM)
-- Index pulse generated every 1000 pulses
+- Index pulse generated using simulated count at pos=0
 - Unit timeout period: 10ms
 
 # External Connections

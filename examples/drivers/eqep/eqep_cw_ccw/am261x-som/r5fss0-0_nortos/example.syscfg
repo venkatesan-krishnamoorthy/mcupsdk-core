@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+180"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -48,6 +48,8 @@ const epwm_xbar       = scripting.addModule("/xbar/epwm_xbar/epwm_xbar", {}, fal
 const epwm_xbar1      = epwm_xbar.addInstance();
 const epwm_xbar2      = epwm_xbar.addInstance();
 const epwm_xbar3      = epwm_xbar.addInstance();
+const int_xbar        = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1       = int_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -56,7 +58,6 @@ eqep1.$name                = "CONFIG_EQEP0";
 eqep1.eqepResolution       = "EQEP_CONFIG_1X_RESOLUTION";
 eqep1.emulationMode        = "EQEP_EMULATIONMODE_RUNFREE";
 eqep1.enableUnitTimer      = true;
-eqep1.unitTimerPeriod      = 2000000;
 eqep1.latchPositionCounter = "EQEP_LATCH_UNIT_TIME_OUT";
 eqep1.capPrescale          = "EQEP_CAPTURE_CLK_DIV_64";
 eqep1.evntPrescale         = "EQEP_UNIT_POS_EVNT_DIV_32";
@@ -70,6 +71,7 @@ eqep1.enableInterrupt      = true;
 eqep1.selectSourceA        = "EQEP_SOURCE_PWMXBAROUT1";
 eqep1.selectSourceB        = "EQEP_SOURCE_PWMXBAROUT2";
 eqep1.selectSourceIndex    = "EQEP_SOURCE_PWMXBAROUT0";
+eqep1.unitTimerPeriod      = 2500000;
 eqep1.EQEP.$assign         = "EQEP0";
 eqep1.EQEP.B.$assign       = "GPIO131";
 
@@ -325,6 +327,9 @@ epwm_xbar3.xbarOutput               = ["GPIO50"];
 epwm_xbar3.instance                 = "EPWM_XBAR_2";
 epwm_xbar3["xbarConfig-0"].$name    = "CONFIG_INPUT_XBAR2";
 epwm_xbar3["xbarConfig-0"].instance = "INPUT_XBAR_2";
+
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["EQEP0_INT"];
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
