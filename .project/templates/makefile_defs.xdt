@@ -1,8 +1,13 @@
 GEN_FILES__QUOTED += \
 *.appimage* \
 *.appimage_xip \
-*.rprc \
-*.rprc_xip
+*.rprc* \
+*.rprc_xip \
+*.tiimage* \
+*.bin \
+*.lnkxml \
+*.map \
+*.ossr
 
 % if (args.project.device == "am263x" || args.project.device == "am263px" || args.project.device == "am261x") {
 GEN_FILES__QUOTED += \

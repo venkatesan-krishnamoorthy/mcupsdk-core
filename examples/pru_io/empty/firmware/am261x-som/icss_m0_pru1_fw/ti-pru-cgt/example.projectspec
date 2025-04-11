@@ -72,5 +72,7 @@
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am261x/EXAMPLES_PRU_EMPTY.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
+        <file path="makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
     </project>
 </projectSpec>

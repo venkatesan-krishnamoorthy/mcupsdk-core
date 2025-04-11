@@ -81,5 +81,7 @@
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
+        <file path="makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
     </project>
 </projectSpec>

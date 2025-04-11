@@ -117,5 +117,7 @@
         </file>
         <file path="../../../../../source/pru.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
+        <file path="makefile.defs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
     </project>
 </projectSpec>
