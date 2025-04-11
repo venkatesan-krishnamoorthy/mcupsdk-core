@@ -360,7 +360,7 @@ static void PMICApp_esmPwmMode(Pmic_CoreHandle_t* pmicHandle)
         if(status == PMIC_ST_SUCCESS)
         {
             DebugP_log("Error generated from MCU..\r\n");
-            DebugP_log("All test Passed. MCU will reset once reset ocuurs from PMIC\r\n");
+            DebugP_log("All tests have Passed!! MCU will reset once reset ocuurs from PMIC\r\n");
         }
         while (TRUE)
         {

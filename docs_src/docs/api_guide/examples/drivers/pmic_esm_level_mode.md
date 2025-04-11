@@ -46,6 +46,6 @@ Cleared PMIC ESM error states and ESM error from MCU
 Reset: Setting ESM Delay2 error config to device transitions to RESET-MCU state
 Generating error from MCU to PMIC
 Error generated from MCU..
-All test Passed. MCU will reset once reset ocuurs from PMIC
+All tests have Passed!! MCU will reset once reset ocuurs from PMIC
 \endcode
 
