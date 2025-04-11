@@ -46,7 +46,7 @@ uint8_t gOspiRxBuf[APP_OSPI_DATA_SIZE] __attribute__((aligned(128U)));
 void ospi_flash_xip_fill_buffers(void);
 int32_t ospi_flash_xip_compare_buffers(void);
 
-static const uint16_t crc16tab[256]  __attribute__((aligned(128), section(".rodata.crc"))) =
+static const uint16_t crc16tab[256]  __attribute__((aligned(128), section(".rodata.crc")))=
 {
 	0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,
 	0x8108,0x9129,0xa14a,0xb16b,0xc18c,0xd1ad,0xe1ce,0xf1ef,
@@ -84,15 +84,15 @@ static const uint16_t crc16tab[256]  __attribute__((aligned(128), section(".roda
 
 uint16_t crc16_ccitt(const void *buf, int len)
 {
-	int32_t counter;
-	uint16_t crc = 0;
-	for( counter = 0; counter < len; counter++)
+    int32_t counter;
+    uint16_t crc = 0;
+    for( counter = 0; counter < len; counter++)
     {
         crc = (crc<<8) ^ crc16tab[((crc>>8) ^ *(char *)buf)&0x00FF];
         buf = (char *)buf + 1;
     }
 
-	return crc;
+    return crc;
 }
 
 void ospi_flash_xip_crc_test(void)
@@ -117,6 +117,12 @@ void ospi_flash_xip_main(void *args)
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
 
+    /* Flash write operations are INDAC operations. For such operations the DAC mode is disabled. 
+       The system was not enabling DAC mode after the INDAC operations becuase of this flag being false.
+       Inorder to enable the DAC mode after INDAC operations, this change has been made. 
+    */
+    gOspiConfig[CONFIG_OSPI0].object->isDacEnable = true;
+
     /* Test if the XIP still works after flash open */
     ospi_flash_xip_crc_test();
 
@@ -128,6 +134,7 @@ void ospi_flash_xip_main(void *args)
 
     offset = APP_OSPI_FLASH_OFFSET_BASE;
     ospi_flash_xip_fill_buffers();
+
     Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
     status = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
     if(status != SystemP_SUCCESS)

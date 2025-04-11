@@ -208,6 +208,7 @@ const example_file_list = [
     "examples/drivers/ospi/ospi_flash_diag_lld/.project/project.js",
     "examples/drivers/ospi/ospi_flash_interrupt_lld/.project/project.js",
     "examples/drivers/ospi/ospi_flash_dma_lld/.project/project.js",
+    "examples/drivers/ospi/ospi_flash_xip/.project/project_am263px.js",
     "examples/drivers/pmic/pmic_esm_level_mode/.project/project.js",
     "examples/drivers/pmic/pmic_esm_pwm_mode/.project/project.js",
     "examples/drivers/pmic/pmic_qa_watchdog_interrupt/.project/project.js",

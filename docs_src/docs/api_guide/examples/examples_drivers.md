@@ -442,6 +442,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG_LLD
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA_LLD
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_INTERRUPT_LLD
+\cond SOC_AM263PX
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_XIP
+\endcond
    -# \subpage EXAMPLES_RL2
    -# \subpage EXAMPLES_FLC
    -# \subpage EXAMPLES_RAT
