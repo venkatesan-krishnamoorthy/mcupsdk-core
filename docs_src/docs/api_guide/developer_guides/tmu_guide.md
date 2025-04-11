@@ -5,6 +5,10 @@
 ## Introduction
 MCU PLUS SDK integrates a software library to use the TMU (Trigonometric Math Unit) hardware in AM263Px. This TMU library provides efficient (assembly level functions) and MATHLIB compatible API interface for performing trigonometric calculations, a critical component in many real-time applications such as Motor Control and Digital Power. TMU is used to efficiently execute commonly used Trigonometric and Arithmetic Operations by accelerating these math functions, and providing a performance boost to the user application.
 
+\cond SOC_AM263PX
+\ref TMU_TCMA_ERRATA
+\endcond
+
 TMU library supported by SDK has the following features:
 
 - TMU supports 6 critical trigonometric operations that are widely used in control applications
@@ -152,6 +156,9 @@ In SDK we have integrated TMU support using register independent inline assembly
 
 - **SINCOS** - The TMU source file supports API **ti_tmu_sincos** which takes in three inputs, the input value is radiant form, address of a variable that stores result of sin operation and address of a variable that will store result of cos operation. This function will first convert the input value from radians to per unit by multiplying with 1/2PI. This value is written into sin's first operand1 register(0x60040) and then cos's second operand1 register(0x60080), so the sin result will get generated in R0 result register and cos result will get generated in R1 result register. A delay of 4 NOP's is added to ensure the computation is complete before result is read, post this the value present in R0 result register is assigned to sin result variable and the value present in the R1 result register is assigned to cos result variable. User's can make a direct call to this API in their application code to initiate a SINCOS back-to-back operation using TMU. To generate the result in other result registers, user's can add API calls in the TMU source file that takes in the input value and does the write to another sin or cos Operand 1 register which will generate the result to a different result register supported by TMU.
 
+## See Also
 
-See also the TMU examples code and documentation for more information on how TMU can be used
+See also the TMU examples code and documentation for more information on how TMU can be used.
 
+- \ref TMU_LIBRARY
+- \ref DRV_TMU_MODULE

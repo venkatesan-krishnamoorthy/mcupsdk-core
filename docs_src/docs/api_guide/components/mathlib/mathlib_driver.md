@@ -1,12 +1,14 @@
 # MATHLIB {#MATHLIB_DRIVER}
 
+## MATHLIB
+
 [TOC]
 
-## Introduction
+### Introduction
 
 Trigonometric functions are commonly used in real-time control applications, particularly within the inner loops of control algorithms, where speed and accuracy is essential. The performance of trigonometric functions is a key careabout for designers of these systems as it can have a significant impact on the overall performance of the system. Until recently, trignometric functions based on lookup tables were considered faster than the polynomial-based methods; however, with the inclusion of floating-point units (FPUs) and faster clock speeds, polynomial-based approximations have gained favor. TI has developed C functions of the most commonly used trigonometric functions using these polynomial-based methods and has optimized them for TI's Arm®-based microcontrollers (MCUs) and microprocessors (MPUs).
 
-## Features Supported
+### Features Supported
 
 Supports Below trignometric functions (ti_arm_trig):
 
@@ -18,15 +20,15 @@ Supports Below trignometric functions (ti_arm_trig):
 - Arctangent
 - Arctangent2
 
-## Features Not Supported
+### Features Not Supported
 
 NA
 
-## Additional References {#MATHLIB_ADDITIONAL_REFERENCES}
+### Additional References {#MATHLIB_ADDITIONAL_REFERENCES}
 
 <a href="https://www.ti.com/lit/pdf/sprad27">App Note: Optimized Trigonometric Functions on TI Arm Cores</a>
 
-## API
+### API
 
 \ref DRV_MATHLIB_MODULE
 
@@ -36,7 +38,7 @@ NA
 
 Addintionally, TI also offers a traditional Look-up Table based trigonometric functions for users needing the most optimized operation with the trade-off of increase data size (3344Bytes of LUT stored in .trigData). It also bypasses some limitations of the aforementioned TI Arm Trig libary such as the limited input range of 0 - 2PI for sine/cosine functions. Furthermore, the Fast Run-Time-Support (FastRTS) library also offers an optimized math operation of logs and exponents.
 
-## Features Supported
+### Features Supported
 
 Supports Below trignometric and math functions (fastrts):
 
@@ -50,11 +52,11 @@ Supports Below trignometric and math functions (fastrts):
 - Log (base of e)
 - Exponent (base of e)
 
-## Features Not Supported
+### Features Not Supported
 
 NA
 
-## API
+### API
 
 \ref DRV_FASTRTS_MODULE
 
@@ -66,7 +68,7 @@ NA
 
 Addintionally, TI also offers a traditional Look-up Table based trigonometric functions for users needing the most optimized operation with the trade-off of increase data size (3344Bytes of LUT stored in .trigData). It also bypasses some limitations of the aforementioned TI Arm Trig libary such as the limited input range of 0 - 2PI for sine/cosine functions. Furthermore, the Fast Run-Time-Support (FastRTS) library also offers an optimized math operation of logs and exponents.
 
-## Features Supported
+### Features Supported
 
 Supports Below trignometric and math functions (fastrts):
 
@@ -80,11 +82,11 @@ Supports Below trignometric and math functions (fastrts):
 - Log (base of e)
 - Exponent (base of e)
 
-## Features Not Supported
+### Features Not Supported
 
 NA
 
-## API
+### API
 
 \ref DRV_FASTRTS_MODULE
 
@@ -96,7 +98,7 @@ NA
 
 Addintionally, TI also offers a traditional Look-up Table based trigonometric functions for users needing the most optimized operation with the trade-off of increase data size (3344Bytes of LUT stored in .trigData). It also bypasses some limitations of the aforementioned TI Arm Trig libary such as the limited input range of 0 - 2PI for sine/cosine functions. Furthermore, the Fast Run-Time-Support (FastRTS) library also offers an optimized math operation of logs and exponents.
 
-## Features Supported
+### Features Supported
 
 Supports Below trignometric and math functions (fastrts):
 
@@ -110,11 +112,11 @@ Supports Below trignometric and math functions (fastrts):
 - Log (base of e)
 - Exponent (base of e)
 
-## Features Not Supported
+### Features Not Supported
 
 NA
 
-## API
+### API
 
 \ref DRV_FASTRTS_MODULE
 
@@ -122,7 +124,7 @@ NA
 
 \cond SOC_AM263PX
 
-## TMU library
+## TMU library {#TMU_LIBRARY}
 
 MCU PLUS SDK integrates a software library to use the TMU (Trigonometric Math Unit) hardware in AM263Px. This TMU library provides efficient (assembly level functions) and MATHLIB compatible API interface for performing trigonometric calculations, a critical component in many real-time applications such as Motor Control and Digital Power.
 
@@ -156,8 +158,16 @@ Here, x is the address of the TMU specific operation registers and y is the addr
 - div, sqrt and quad operations
 - Underflow and Overflow interrupts to show mathematical operation errors
 
+\cond SOC_AM263PX
+\ref TMU_TCMA_ERRATA
+\endcond
+
 ### API
 
 \ref DRV_TMU_MODULE
+
+### See Also
+- \ref TMU_GUIDE
+- \ref DRV_TMU_MODULE
 
 \endcond

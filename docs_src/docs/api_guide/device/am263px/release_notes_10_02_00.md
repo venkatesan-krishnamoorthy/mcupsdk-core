@@ -579,6 +579,12 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Crossbar
     <td> Open
 </tr>
+<tr>
+    <td> MCUSDK-13530
+    <td> AM263PX: TMU: TCMA memory corruption with CORE1
+    <td> TMU
+    <td> Implemented <br> Updating the TCM section in each of the Core 1 of each cluster to start after the TCM Overlap region. <br> \ref EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
+</tr>
 </table>
 
 ## Limitations

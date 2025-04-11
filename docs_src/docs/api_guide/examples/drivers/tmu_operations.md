@@ -240,3 +240,8 @@ Avg cycles: 116.989998
 All tests have passed!!
 \endcode
 
+
+# See Also
+- \ref TMU_LIBRARY
+- \ref TMU_GUIDE
+- \ref DRV_TMU_MODULE
