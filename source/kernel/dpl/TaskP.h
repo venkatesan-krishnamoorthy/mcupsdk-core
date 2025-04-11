@@ -232,6 +232,9 @@ void TaskP_yield(void);
  * In FreeRTOS, task cannot simply return from a function. It needs to call vTaskDelete(NULL) instead.
  * To keep the task exit portable, call this function when a task wants to terminate itself.
  *
+ * \note With FreeRTOS MPU port, an unprivileged task can't delete itself. 
+ *       Instead a privileged task should delete the same using \ref TaskP_destruct.
+ *       Hence this API will suspend the current task.
  */
 void TaskP_exit(void);
 

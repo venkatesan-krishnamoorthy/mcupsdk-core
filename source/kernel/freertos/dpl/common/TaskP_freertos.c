@@ -399,7 +399,19 @@ void TaskP_yield(void)
 
 void TaskP_exit(void)
 {
-    vTaskDelete(NULL);
+#if ( portUSING_MPU_WRAPPERS == 1 )
+    if (xPortIsPrivileged() == pdFALSE)
+    {
+        /** Un-privileged tasks can't delete itself. 
+         * Instead a privileged task should delete the same.
+         * Hence move to blocked state. */
+        vTaskSuspend(NULL);
+    }
+    else 
+#endif
+    {
+        vTaskDelete(NULL);
+    }
 }
 
 void TaskP_loadGet(TaskP_Object *obj, TaskP_Load *taskLoad)
