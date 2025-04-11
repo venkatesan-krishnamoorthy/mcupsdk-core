@@ -15723,7 +15723,7 @@
         "name": "enet_l2_cpsw",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw/am261x-som-dp83869/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM261"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -15834,7 +15834,7 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../source/networking/enet/core/examples/enet_layer2_cpsw_switch/am261x-som-dp83869/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM261"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -15949,7 +15949,7 @@
         "name": "enet_cpsw_loopback_mac_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_mac_end/am261x-som-dp83869/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM261"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -16066,7 +16066,7 @@
         "name": "enet_cpsw_loopback_phy_end",
         "location": "../../source/networking/enet/core/examples/enet_loopback/enet_cpsw_loopback/loopback_phy_end/am261x-som-dp83869/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM261"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"
@@ -16787,7 +16787,7 @@
         "name": "enet_lwip_cpsw",
         "location": "../../source/networking/enet/core/examples/lwip/enet_lwip_cpsw/am261x-som-dp83869/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM261"
+            "AM261-SOM-EVM"
         ],
         "kernel": [
             "freertos"

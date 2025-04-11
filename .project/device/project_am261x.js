@@ -460,16 +460,17 @@ function getComponentList() {
 function getExampleList() {
     return example_file_list;
 }
-
 function getSysCfgDevice(board) {
     switch (board) {
         case "am261x-lp":
             return "AM261x_ZFG";
-        case "am261x-lp (dp83826 phy)":
+        case "am261x-lp-dp83tg720/am261x-lp":
             return "AM261x_ZFG";
-        case "am261x-lp (dp83tg720 phy)":
+        case "am261x-lp-dp83826/am261x-lp":
             return "AM261x_ZFG";
         case "am261x-som":
+            return "AM261x_ZCZ";
+        case "am261x-som-dp83869/am261x-som":
             return "AM261x_ZCZ";
 	default:
             return "AM261x_ZCZ";
@@ -482,11 +483,13 @@ function getProjectSpecDevice(board) {
             return "AM261x";
 		case "am261x-lp":
 			return "AM261x";
-        case "am261x-lp (dp83826 phy)":
+        case "am261x-lp-dp83tg720/am261x-lp":
             return "AM261x";
-        case "am261x-lp (dp83tg720 phy)":
+        case "am261x-lp-dp83826/am261x-lp":
             return "AM261x";
         case "am261x-som":
+            return "AM261x";
+        case "am261x-som-dp83869/am261x-som":
             return "AM261x";
         default:
             return "AM261x";
@@ -498,14 +501,17 @@ function getSysCfgCpu(cpu) {
 }
 
 function getSysCfgPkg(board) {
+    
     switch (board) {
         case "am261x-lp":
             return "ZFG";
-        case "am261x-lp (dp83826 phy)":
+        case "am261x-lp-dp83tg720/am261x-lp":
             return "ZFG";
-        case "am261x-lp (dp83tg720 phy)":
+        case "am261x-lp-dp83826/am261x-lp":
             return "ZFG";
         case "am261x-som":
+            return "ZCZ";
+        case "am261x-som-dp83869/am261x-som":
             return "ZCZ";
         default:
             return "ZCZ";
@@ -516,11 +522,13 @@ function getSysCfgPart(board) {
     switch (board) {
         case "am261x-lp":
             return "AM2612";
-        case "am261x-lp (dp83826 phy)":
+        case "am261x-lp-dp83tg720/am261x-lp":
             return "AM2612";
-        case "am261x-lp (dp83tg720 phy)":
+        case "am261x-lp-dp83826/am261x-lp":
             return "AM2612";
         case "am261x-som":
+            return "AM2611";
+        case "am261x-som-dp83869/am261x-som":
             return "AM2611";
         default:
             return "AM2611";
@@ -531,11 +539,13 @@ function getDevToolTirex(board) {
 	switch (board) {
 		case "am261x-lp":
 			return "LP-AM261";
-		case "am261x-lp (dp83826 phy)":
+		case "am261x-lp-dp83tg720/am261x-lp":
 			return "LP-AM261";
-		case "am261x-lp (dp83tg720 phy)":
+		case "am261x-lp-dp83826/am261x-lp":
 			return "LP-AM261";
 		case "am261x-som":
+			return "AM261-SOM-EVM";
+        case "am261x-som-dp83869/am261x-som":
 			return "AM261-SOM-EVM";
 		default:
 			return "LP-AM261";
