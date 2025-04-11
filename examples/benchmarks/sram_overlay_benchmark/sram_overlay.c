@@ -36,7 +36,11 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#if SOC_AM263PX
 #include <drivers/hw_include/am263px/cslr_rl2_of_r5fss0_core0.h>
+#elif SOC_AM261X
+#include <drivers/hw_include/am261x/cslr_rl2_of_r5fss0_core0.h>
+#endif
 #include "csl_arm_r5_pmu.h"
 #include "appprofile.h"
 #include "load.h"
