@@ -50,16 +50,16 @@
  *  MCU_SPI0_D1(Pin 54)    ------------->   MCU_SPI1_D0(Pin 15)
  *
  *  Please connect pins as described below on AM261x LP.
- *  MCU_SPI0_CS0(Pin 19) (B13)  ------------>  MCU_SPI2_CS1(Pin 59) A18  
- *  MCU_SPI0_CLK(Pin 7) (A13)   ------------>  MCU_SPI2_CLK(Pin 47) D17 
- *  MCU_SPI0_D0(Pin 15) (B12)   ------------>  MCU_SPI2_D1(Pin 54)  B18
- *  MCU_SPI0_D1(Pin 14) (C12)   ------------>  MCU_SPI2_D0(Pin 55)  A16
+ *  MCU_SPI0_CS0 (J2/J4 Pin 19) (B13)  ------------>  MCU_SPI2_CS1  (J5/J7 Pin 58)  M1  
+ *  MCU_SPI0_CLK (J6/J8 Pin 51) (T2)   ------------>  MCU_SPI2_CLK  (J6/J8 Pin 47)  D17 
+ *  MCU_SPI0_D0  (J6/J8 Pin 52) (T1)   ------------>  MCU_SPI2_D1   (J6/J8 Pin 54)  B18
+ *  MCU_SPI0_D1  (J6/J8 Pin 53) (U1)   ------------>  MCU_SPI2_D0   (J6/J8 Pin 55)  A16
  * 
  *  Please connect pins as described below on AM261x SOM on HSEC Board.
- *  MCU_SPI0_CS0 (C11) -> HSEC_SPI1_CS0(J20-16)  ------------>  MCU_SPI3_CS0 (D7) -> HSEC_SPI1_CS0(J20-12)
- *  MCU_SPI0_CLK (A11) -> HSEC_SPI1_CLK(J20-15)  ------------>  MCU_SPI3_CLK (C8) -> HSEC_SPI1_CLK(J20-11)
- *  MCU_SPI0_D0  (C10) -> HSEC_SPI1_CS0(J20-14)  ------------>  MCU_SPI3_D0 (C7) -> HSEC_SPI1_CS0(J20-10)
- *  MCU_SPI0_D1  (B11) -> HSEC_SPI1_CS0(J20-13)  ------------>  MCU_SPI3_D1 (B7) -> HSEC_SPI1_CS0(J20-9)
+ *  MCU_SPI0_CS0 (C11) -> HSEC_SPI1_CS0 (J20-16)  ------------>  MCU_SPI3_CS0 (D7) -> HSEC_SPI1_CS0 (J20-12)
+ *  MCU_SPI0_CLK (A11) -> HSEC_SPI1_CLK (J20-15)  ------------>  MCU_SPI3_CLK (C8) -> HSEC_SPI1_CLK (J20-11)
+ *  MCU_SPI0_D0  (C10) -> HSEC_SPI1_CS0 (J20-14)  ------------>  MCU_SPI3_D0 (C7) -> HSEC_SPI1_CS0  (J20-10)
+ *  MCU_SPI0_D1  (B11) -> HSEC_SPI1_CS0 (J20-13)  ------------>  MCU_SPI3_D1 (B7) -> HSEC_SPI1_CS0  (J20-9)
  * 
  */
 
