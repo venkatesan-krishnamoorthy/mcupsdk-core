@@ -42,7 +42,6 @@
         "/security/security",
         "/xbar/xbar",
         "/memory_configurator/components",
-        "/sdl/sdl",
 % }
 % if((args.device == "am263px")){
         "/kernel/dpl",
@@ -53,8 +52,7 @@
         "/security/security",
         "/xbar/xbar",
         "/memory_configurator/components",
-        "/optiflash/optiflash",
-        "/sdl/sdl"
+        "/optiflash/optiflash"
 % }
 % if((args.device == "am261x")){
         "/kernel/dpl",
@@ -66,8 +64,7 @@
         "/usb/usb",
         "/xbar/xbar",
         "/memory_configurator/components",
-        "/optiflash/optiflash",
-        "/sdl/sdl"
+        "/optiflash/optiflash"
 % }
 % if((args.device == "am273x") || (args.device == "awr294x")) {
         "/kernel/dpl",

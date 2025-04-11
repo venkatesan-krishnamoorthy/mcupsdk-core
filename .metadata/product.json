@@ -15,7 +15,6 @@
         "/networking/networking",
         "/security/security",
         "/memory_configurator/components",
-        "/sdl/sdl",
     ],
     "devices": [
         "AM64x",
