@@ -86,7 +86,7 @@ general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(5);
+region1.memory_region.create(6);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -108,6 +108,11 @@ region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x60280000;
 region1.memory_region[4].size               = 0x80000;
 region1.memory_region[4].$name              = "FLASH";
+region1.memory_region[5].type               = "TCMA";
+region1.memory_region[5].size               = 0x364;
+region1.memory_region[5].$name              = "TMU_TCMA_OVERLAP_BLOCKED";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x40;
 
 section1.load_memory                  = "R5F_VECS";
 section1.group                        = false;

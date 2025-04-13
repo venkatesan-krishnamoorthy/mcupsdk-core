@@ -31,16 +31,12 @@ To implement the trigonometric function calls, TMU specific operations have been
 trigonometric function calls. This example can be run parallely on all four cores supported by the chip, due to it's multi-core functionality
 
 \cond SOC_AM263PX
-# Errata : TMU Writes Curropts TCMA region from 0x40 to 0x3A0 {#TMU_TCMA_ERRATA}
+# Errata : TCM Memory Corruption on R5SS0_CORE1 and R5SS1_CORE1 when writing to TMU Registers {#TMU_TCMA_ERRATA}
 
-In AM263Px, the writes to TMU (TMU instance of core 1, in each cluster) curropt the TCMA of the respective cores. That is, the writes TMU registers offset from 0x40 to 0x3A0 of TMU, will be reflected on the TCMA register offsets 0x40 to 0x3A0. 
+In AM263Px, the writes to TMU (TMU instance of core 1, in each cluster) corrupt the TCMA of the respective cores. That is, the writes TMU registers offset from 0x40 to 0x3A0 of TMU, will be reflected on the TCMA offsets 0x40 to 0x3A0. 
 
-The code / data present in the TCMA of these cores will be curropted upon using these TMUs. Hence the following workarounds are proposed.
-1. If the TMUs of Cores 1 are being used, their respective TCMAs should be blocked for the initial register offsets from 0x40 to 0x3A0.
- - this workaround is implemented in the example \ref EXAMPLES_DRIVERS_TMU_CORES_SUPPORT, by considering the TCM start address to be 0x3A4, please refer its example.syscfg file under the Memory sections.
-
-2. If the TMU of Core 0 (in same cluster) is not used, the Core 1, can use the TMU of Core 0, using its global address instead of 0x60040.
- - This workaround introduces some latency over the usage of self TMU.
+The code / data present in the TCMA of these cores will be corrupted upon using these TMUs. Hence the following workaround is proposed: 
+If the TMUs of Cores 1 are being used, their respective TCMAs should be blocked from 0x40 to 0x3A0. This workaround is implemented in the example \ref EXAMPLES_DRIVERS_TMU_CORES_SUPPORT. Please refer Memory sections of the example's syscfg.
 
 \endcond
 

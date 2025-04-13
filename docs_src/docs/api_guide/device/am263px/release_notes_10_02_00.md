@@ -581,9 +581,9 @@ Empty           | PRU               | YES                | Bare Metal        | E
 </tr>
 <tr>
     <td> MCUSDK-13530
-    <td> AM263PX: TMU: TCMA memory corruption with CORE1
+    <td> AM263PX: TMU: TCM Memory Corruption on R5SS0_CORE1 and R5SS1_CORE1 when writing to TMU Registers
     <td> TMU
-    <td> Implemented <br> Updating the TCM section in each of the Core 1 of each cluster to start after the TCM Overlap region. <br> \ref EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
+    <td> Implemented a workaround \ref TMU_TCMA_ERRATA <br> Workaround: Do not use initial bytes (0x40-0x3A0) of ATCM from CPU1 allocation. Initial bytes (0x40-0x3A0 => 868 bytes) of CORE1 TCM are blocked using linker command settings of multi-core application/examples. <br> Refer \ref EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
 </tr>
 </table>
 
