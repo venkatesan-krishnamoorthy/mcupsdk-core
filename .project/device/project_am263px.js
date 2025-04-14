@@ -258,6 +258,7 @@ const example_file_list = [
     "examples/kernel/dpl/test_undef/.project/project.js",
 	"examples/kernel/freertos/posix_demo/.project/project.js",
 	"examples/kernel/freertos/task_switch/.project/project.js",
+	"examples/kernel/freertos/task_switch_mpu/.project/project.js",
     "examples/kernel/nortos/wfi_standby_demo/.project/project.js",
     "examples/kernel/nortos/basic_smart_placement/.project/project_nortos.js",
     "examples/security/crypto/dthe_aes/crypto_aes_cbc_128/.project/project.js",
