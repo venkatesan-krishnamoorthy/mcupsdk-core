@@ -56,6 +56,7 @@ Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
 GUI for UART Uniflash Tool                                          | Bootloader
 Ether-ring Feature                                                  | Ethernet And Networking
+FreeRTOS MPU Support for R5F and examples                           | Kernel
 
 ### OS Kernel
 

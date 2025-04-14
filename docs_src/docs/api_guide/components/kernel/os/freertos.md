@@ -17,6 +17,14 @@ MCU+ SDK supports FreeRTOS on below CPUS
 \endcond
 \endcond
 
+\cond SOC_AM263PX
+MCU+ SDK supports [FreeRTOS MPU](https://www.freertos.org/Security/04-FreeRTOS-MPU-memory-protection-unit) on below CPUs
+- ARM R5F
+
+\attention FreeRTOS MPU support is "experimental".
+\attention Users can evaluate the feature.
+\endcond
+
 ## Features Supported {#FREERTOS_SUPPORTED_FEATURES}
 
 - FreeRTOS Kernel @VAR_FREERTOS_KERNEL_VERSION
@@ -28,6 +36,11 @@ MCU+ SDK supports FreeRTOS on below CPUS
   - Tasks, semaphores, mutex, queues, timers, list, heap, event groups
   - preemptive priority based scheduler for multiple cores
   - static and/or dynamic memory allocation mode
+\endcond
+\cond SOC_AM263PX
+- FreeRTOS MPU (only on R5F)
+  - Create user mode and privileged mode tasks
+  - User mode tasks with up-to 7 configurable task specific MPU regions
 \endcond
 - FreeRTOS+POSIX
   - Limited POSIX API wrappers on top of FreeRTOS APIs
@@ -58,7 +71,13 @@ MCU+ SDK supports FreeRTOS on below CPUS
 
 - Co-routines, stream buffer are not enabled and are not compiled by default. Users can add these to the FreeRTOS config and makefile if they want to use these features.
 - Tickless IDLE mode
+\cond !SOC_AM263PX
 - Task level memory protection wrapper
+\endcond
+\cond SOC_AM263PX
+- Switch task from privileged mode to user mode
+- Modify/re-define MPU regions for a task at run time
+\endcond
 \cond !SOC_AM62X
 - R5F ISRs,
   - IRQ mode,
@@ -171,6 +190,10 @@ that are included to build a freertos library.
 ## FreeRTOS usage guidelines
 
 See \subpage KERNEL_FREERTOS_IMPORTANT_GUIDELINES_PAGE for FreeRTOS usage guidelines and comparison to SysBIOS.
+
+\cond SOC_AM263PX
+See \subpage KERNEL_FREERTOS_MPU_IMPORTANT_GUIDELINES_PAGE for FreeRTOS MPU usage guidelines.
+\endcond
 
 ## Additional references
 

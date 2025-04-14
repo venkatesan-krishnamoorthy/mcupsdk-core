@@ -52,6 +52,7 @@ Mbed-TLS                | R5F            | 2.13.1
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
 Ether-ring Implementation                                           | Networking
+FreeRTOS MPU Support for R5F                                        | Kernel
 
 ### OS Kernel
 
