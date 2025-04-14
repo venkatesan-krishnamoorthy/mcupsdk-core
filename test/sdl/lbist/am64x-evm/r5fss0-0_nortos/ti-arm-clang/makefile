@@ -21,18 +21,18 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_lbist.$(PROFILE).out
-COREOUTNAME:=test_lbist.$(PROFILE).optishare.out
+OUTNAME:=lbist_test_app.$(PROFILE).out
+COREOUTNAME:=lbist_test_app.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_lbist.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_lbist.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=test_lbist.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=test_lbist.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_lbist.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_lbist.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_lbist.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_lbist.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=lbist_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=lbist_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=lbist_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=lbist_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=lbist_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=lbist_test_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=lbist_test_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=lbist_test_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 
@@ -225,7 +225,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang test_lbist ...
+	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang lbist_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -352,12 +352,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for test_lbist.$(PROFILE) ...
+	@echo Creating Coverage Report for lbist_test_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o test_lbist.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_lbist.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=test_lbist.$(PROFILE).profdata > coverage/test_lbist.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/test_lbist.$(PROFILE).profdata.json --output-json=coverage/test_lbist.$(PROFILE).analysis.json --output=../test_lbist.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o lbist_test_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=lbist_test_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=lbist_test_app.$(PROFILE).profdata > coverage/lbist_test_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/lbist_test_app.$(PROFILE).profdata.json --output-json=coverage/lbist_test_app.$(PROFILE).analysis.json --output=../lbist_test_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

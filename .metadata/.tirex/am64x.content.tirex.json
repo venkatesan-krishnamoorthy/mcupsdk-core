@@ -19022,7 +19022,7 @@
             "example.general"
         ],
         "description": "This example demonstrates error injecting usecase of Timeout Gasket (TOG) CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_tog",
+        "name": "tog_app",
         "location": "../../examples/sdl/stog/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19186,7 +19186,7 @@
             "example.general"
         ],
         "description": "This example demonstrates the ESM operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "mcu_esm0",
+        "name": "esm_main_app",
         "location": "../../examples/sdl/esm/mcu_esm0/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19219,7 +19219,7 @@
             "example.general"
         ],
         "description": "This example demonstrates the ESM operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "mcu_esm0",
+        "name": "esm_main_app",
         "location": "../../examples/sdl/esm/mcu_esm0/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19350,7 +19350,7 @@
             "example.general"
         ],
         "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc1",
+        "name": "rti_app_uc1",
         "location": "../../examples/sdl/rti/UC1/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19383,7 +19383,7 @@
             "example.general"
         ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc1",
+        "name": "rti_app_uc1",
         "location": "../../examples/sdl/rti/UC1/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19416,7 +19416,7 @@
             "example.general"
         ],
         "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc2",
+        "name": "rti_app_uc2",
         "location": "../../examples/sdl/rti/UC2/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19449,7 +19449,7 @@
             "example.general"
         ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc2",
+        "name": "rti_app_uc2",
         "location": "../../examples/sdl/rti/UC2/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19482,7 +19482,7 @@
             "example.general"
         ],
         "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc3",
+        "name": "rti_app_uc3",
         "location": "../../examples/sdl/rti/UC3/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19515,7 +19515,7 @@
             "example.general"
         ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc3",
+        "name": "rti_app_uc3",
         "location": "../../examples/sdl/rti/UC3/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19548,7 +19548,7 @@
             "example.general"
         ],
         "description": "This example verifies RTI operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc4",
+        "name": "rti_app_uc4",
         "location": "../../examples/sdl/rti/UC4/am64x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
@@ -19581,7 +19581,7 @@
             "example.general"
         ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_rti_example_uc4",
+        "name": "rti_app_uc4",
         "location": "../../examples/sdl/rti/UC4/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS64EVM"
