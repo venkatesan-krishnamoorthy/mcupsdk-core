@@ -14,6 +14,7 @@ The example does the below
 - Show usage of clock delay
 - Show usage of cache APIs
 - Show usage of heap APIs
+- Create couple of RTOS user tasks with task specific MPU regions (in FreeRTOS MPU example)
 
 # Supported Combinations
 
@@ -54,12 +55,25 @@ The example does the below
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  ^              | r5fss0-0 freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/kernel/dpl/dpl_demo/
+
+\endcond
+
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss0-0 freertos
+ ^              | r5fss0-0 freertos_mpu
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/kernel/dpl/dpl_demo/
@@ -147,5 +161,23 @@ Note: In case of FREERTOS CPU Cycles will not match with the measured time
 [DPL] Allocated 1023 bytes @ 0x82020440, heap free size = 896 bytes
 [DPL] Free'ed 1023 bytes @ 0x82020440, heap free size = 1984 bytes
 All tests have passed on a53_core1!!
+\endcode
+\endcond
+
+\cond SOC_AM263PX
+Shown below is a sample output for FreeRTOS MPU application user tasks,
+
+\code
+[FreeRTOS MPU] Creating User mode tasks... !!!
+
+[FreeRTOS MPU] user 1 ... start !!!
+user 1 variable = 1
+shared variable = 1
+[FreeRTOS MPU] user 1 ... done !!!
+
+[FreeRTOS MPU] user 2 ... start !!!
+user 2 variable = 1
+shared variable = 2
+[FreeRTOS MPU] user 2 ... done !!!
 \endcode
 \endcond

@@ -56,6 +56,17 @@ static HeapP_Object gMyHeapObj;
 /* user defined ISR and semaphore to signal from ISR to main thread */
 static SemaphoreP_Object gMyISRDoneSem;
 
+#if defined(MPU_FREERTOS)
+/** Following variables are declared in this file instead of `dpl_demo_freertos_mpu.c` to place them in
+ * unprivileged regions so that user threads will also be able to access them */
+
+/* Shared variable used by user mode tasks */
+uint32_t gMyVar;
+
+/* User defined semaphore to synchronize b/w user threads and main thread */
+SemaphoreP_Object gMpuSyncSem;
+#endif
+
 static void myISR(void *arg)
 {
     SemaphoreP_post(&gMyISRDoneSem);
@@ -67,7 +78,7 @@ void dpl_demo_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    /* eample usage of Hwi and Sempahore APIs */
+    /* example usage of Hwi and Semaphore APIs */
     {
     #if defined (AMP_FREERTOS_A53)
         DebugP_log("DPL Demo Example started on a53_core%d  \n\r", Armv8_getCoreId());
@@ -164,6 +175,14 @@ void dpl_demo_main(void *args)
 
         HeapP_destruct(&gMyHeapObj);
     }
+#if defined(MPU_FREERTOS)
+    {
+        void dpl_demo_freertos_mpu_main(void *args);
+
+        dpl_demo_freertos_mpu_main(args);
+    }
+#endif
+    
 #if defined(AMP_FREERTOS_A53)
     DebugP_log("All tests have passed on a53_core%d!!\r\n", Armv8_getCoreId());
 #else

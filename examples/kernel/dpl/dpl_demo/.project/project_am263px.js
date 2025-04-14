@@ -9,6 +9,15 @@ const files = {
     ],
 };
 
+const files_freertos_mpu = {
+    common: [
+        ...files.common,
+        "dpl_demo_freertos_mpu.c",
+        "dpl_demo_freertos_mpu_user1.c",
+        "dpl_demo_freertos_mpu_user2.c",
+    ],
+};
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -43,6 +52,13 @@ const includes_freertos_r5f = {
     ],
 };
 
+const includes_freertos_r5f_mpu = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F_MPU",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f_mpu",
+    ],
+};
 
 const libs_nortos_r5f = {
     common: [
@@ -60,11 +76,24 @@ const libs_freertos_r5f = {
     ],
 };
 
+const libs_freertos_r5f_mpu = {
+    common: [
+        "freertos.am263px.r5f-mpu.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
 
 const lnkfiles = {
     common: [
         "linker.cmd",
     ]
+};
+
+const defines_freertos_r5f_mpu = {
+    common: [
+        "MPU_FREERTOS"
+    ],
 };
 
 const syscfgfile = "../example.syscfg";
@@ -93,12 +122,23 @@ const templates_freertos_r5f =
     }
 ];
 
+const templates_freertos_r5f_mpu =
+[
+    {
+        input: ".project/templates/am263px/freertos/main_freertos_mpu.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "dpl_demo_main",
+        },
+    }
+];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos_mpu" },
 ];
 
 function getComponentProperty() {
@@ -126,8 +166,15 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {
-        if(buildOption.os.match(/freertos*/) )
-        {
+        if(buildOption.os.match(/freertos_mpu/)) {
+            build_property.files = files_freertos_mpu;
+            build_property.includes = includes_freertos_r5f_mpu;
+            build_property.libdirs = libdirs_freertos;
+            build_property.libs = libs_freertos_r5f_mpu;
+            build_property.defines = defines_freertos_r5f_mpu;
+            build_property.templates = templates_freertos_r5f_mpu;
+        }
+        else if (buildOption.os.match(/freertos/)) {
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
