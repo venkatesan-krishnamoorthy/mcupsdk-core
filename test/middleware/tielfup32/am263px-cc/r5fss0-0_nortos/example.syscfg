@@ -56,7 +56,7 @@ mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
 
 mpu_armv73.$name             = "CONFIG_MPU_REGION3";
 mpu_armv73.baseAddr          = 0x70000000;
-mpu_armv73.size              = 21;
+mpu_armv73.size              = 22;
 mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
 
 default_linker1.$name = "memory_configurator_default_linker0";
