@@ -59,7 +59,7 @@ Mbed-TLS                | R5F            | 2.13.1
 
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
-FreeRTOS MPU Support for R5F                                        | Kernel
+-                                                                   | -
 
 ### OS Kernel
 

@@ -20,9 +20,6 @@ MCU+ SDK supports FreeRTOS on below CPUS
 \cond SOC_AM263PX
 MCU+ SDK supports [FreeRTOS MPU](https://www.freertos.org/Security/04-FreeRTOS-MPU-memory-protection-unit) on below CPUs
 - ARM R5F
-
-\attention FreeRTOS MPU support is "experimental".
-\attention Users can evaluate the feature.
 \endcond
 
 ## Features Supported {#FREERTOS_SUPPORTED_FEATURES}
@@ -75,8 +72,12 @@ MCU+ SDK supports [FreeRTOS MPU](https://www.freertos.org/Security/04-FreeRTOS-M
 - Task level memory protection wrapper
 \endcond
 \cond SOC_AM263PX
-- Switch task from privileged mode to user mode
-- Modify/re-define MPU regions for a task at run time
+- [`portSWITCH_TO_USER_MODE`](https://www.freertos.org/Documentation/02-Kernel/04-API-references/13-FreeRTOS-MPU-specific/04-portSWITCH_TO_USER_MODE)
+  is not supported
+  - i.e, a task created in privileged mode cannot set its privilege level to user mode
+- [`vTaskAllocateMPURegions`](https://www.freertos.org/Documentation/02-Kernel/04-API-references/13-FreeRTOS-MPU-specific/03-vTaskAllocateMPURegions)
+  is not tested and should not be used
+  - i.e, a task created with task specific MPU regions cannot modify/re-define the MPU regions at run time
 \endcond
 \cond !SOC_AM62X
 - R5F ISRs,

@@ -49,7 +49,8 @@ for official FreeRTOS documentation.
 
 -  Various FreeRTOS kernel APIS like create/delete tasks/semaphore/events can be used only from privileged 
    tasks and are not available for user mode tasks
-   - Refer **System Call restrictions** under "Changes in FreeRTOS version 10.6.0" in
+   - Refer **System Call restrictions** under "Changes in FreeRTOS version 10.6.0" and 
+     "Changes in FreeRTOS version 10.5.0" in
      [FreeRTOS - Memory Protection Unit (MPU) Support - Upgrade Information](https://www.freertos.org/Security/04-FreeRTOS-MPU-memory-protection-unit#upgrade-information)
      for the list of APIs that are not accessible from user mode tasks
    - Hence following DPL APIs which are implemented using these restricted kernel APIs should as well be used
@@ -79,6 +80,22 @@ for official FreeRTOS documentation.
       This is expected to be updated in future releases such that `HeapP_construct` & `HeapP_destruct` can be 
       used only from a privileged task, whereas `HeapP_alloc`, `HeapP_free` & `HeapP_getHeapStats` will be
       accessible even for user mode tasks.
+
+- RTI registers are read-only in user mode and can be modified only in privileged mode. 
+  - Hence various SDK APIs which are impacted due to this performs temporary switch to privileged mode
+    when invoked from user mode tasks. This is similar to how FreeRTOS kernel system calls are implemented for
+    user mode tasks. Following are the list of SDK APIs,
+    - `TimerP_setup`
+    - `TimerP_start`
+    - `TimerP_stop`
+    - `TimerP_clearOverflowInt`
+
+- Performance monitoring registers in Cortex-R5 will be accessible in user mode only if 
+  [`c9, User Enable Register`](https://developer.arm.com/documentation/ddi0460/d/Events-and-Performance-Monitor/Performance-monitoring-registers/c9--User-Enable-Register?lang=en)
+  `EN` bit is set. This needs to be set from privileged mode.
+  - Hence SDK sets this as part of starting the scheduler before switching to the first task. This enables
+    user mode tasks to access the PMU registers as well as use various DPL `CycleCounterP` APIs
+    (\ref KERNEL_DPL_CYCLE_COUNTER)
 
 - While creating the first task for an application that uses FreeRTOS MPU, make sure to create in privileged
   mode so as to be able to create other tasks, semaphores, etc.
