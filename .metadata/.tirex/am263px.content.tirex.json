@@ -16564,7 +16564,7 @@
             "LP-AM263P"
         ],
         "kernel": [
-            "freertos_mpu"
+            "freertos"
         ],
         "compiler": [
             "ticlang"
@@ -17290,7 +17290,7 @@
             "LP-AM263P"
         ],
         "kernel": [
-            "freertos_mpu"
+            "freertos"
         ],
         "compiler": [
             "ticlang"
