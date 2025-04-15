@@ -154,6 +154,7 @@ uint32_t DebugP_shmLogReaderGetString(DebugP_ShmLog *shmLog,
             shmLog->rdIndex = rd_idx;
             /* dummy read to ensure data is written to memory */
             rd_idx = shmLog->rdIndex;
+            (void) rd_idx;
         }
     }
     return num_bytes;

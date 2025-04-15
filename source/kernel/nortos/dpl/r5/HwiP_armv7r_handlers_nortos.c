@@ -236,8 +236,8 @@ void TEXT_HWI HwiP_undefined_handler_c(volatile uint32_t LR)
     }UNDEF_REG;
 
     UNDEF_REG abort_regs;
-    abort_regs.SPSR=GET_SPSR();
-    abort_regs.LR=LR;
+    abort_regs.SPSR = GET_SPSR();
+    abort_regs.LR   = LR;
 
     HwiP_user_undefined_handler_c(abort_regs.LR, abort_regs.SPSR);
 
@@ -277,20 +277,22 @@ void TEXT_HWI HwiP_prefetch_abort_handler_c(volatile uint32_t LR)
     PREFETCH_ABORT_REG abort_regs;
 
     /*Extract register values through functions coded in ASM*/
-    abort_regs.AIFSR=GET_AIFSR();
-    abort_regs.IFAR=GET_IFAR();
-    abort_regs.IFSR=GET_IFSR();
-    abort_regs.LR=LR;
-    abort_regs.SPSR=GET_SPSR();
+    abort_regs.AIFSR = GET_AIFSR();
+    abort_regs.IFAR  = GET_IFAR();
+    abort_regs.IFSR  = GET_IFSR();
+    abort_regs.LR    = LR;
+    abort_regs.SPSR  = GET_SPSR();
 
     /*Extract contents of IFSR register
     1. status: indicates the type of fault generated
     2. sd: distinguishes between an AXI Decode or Slave error on an external abort.
     This bit is only valid for external aborts. For all other aborts types of abort,
     this bit is set to zero*/
-    IFSR ifsr;
-    ifsr.status=(abort_regs.IFSR & 0xF) |((abort_regs.IFSR>>10 & 0x1)<<4);
-    ifsr.sd=(abort_regs.IFSR>>12) & 0x1;
+    IFSR     ifsr;
+    uint32_t ifsr_value = abort_regs.IFSR;
+
+    ifsr.status = ((ifsr_value & 0xF) | (((ifsr_value >> 10) & 0x1) << 4));
+    ifsr.sd     = ((ifsr_value >> 12) & 0x1);
 
     /*Extract contents of AIFSR register
     1. index: returns the index value for the access giving the error
@@ -298,11 +300,13 @@ void TEXT_HWI HwiP_prefetch_abort_handler_c(volatile uint32_t LR)
     3. recoverable_error:  value returned in this field indicates if the error is recoverable
         (0=Unrecoverable error, 1=Recoverable Error)
     4. cacheway: value returned in this field indicates the cache way or ways in which the error occurred*/
-    AIFSR aifsr;
-    aifsr.index=(abort_regs.AIFSR>>5) & 0x1FF;
-    aifsr.side_ext=((abort_regs.AIFSR>>22) & 0x3) | ((abort_regs.AIFSR>>20 & 0x1)<<2);
-    aifsr.recoverable_error=(abort_regs.AIFSR>>21) & 0x1;
-    aifsr.cacheway=(abort_regs.AIFSR>>24) & 0xF;
+    AIFSR    aifsr;
+    uint32_t aifsr_value = abort_regs.AIFSR;
+
+    aifsr.index             = ((aifsr_value >> 5) & 0x1FF);
+    aifsr.side_ext          = (((aifsr_value >> 22) & 0x3) | (((aifsr_value >> 20) & 0x1) << 2));
+    aifsr.recoverable_error = ((aifsr_value >> 21) & 0x1);
+    aifsr.cacheway          = ((aifsr_value >> 24) & 0xF);
 
     HwiP_user_prefetch_abort_handler_c(ifsr, aifsr, abort_regs.IFAR, abort_regs.LR, abort_regs.SPSR);
 
@@ -331,11 +335,11 @@ void TEXT_HWI HwiP_data_abort_handler_c(volatile uint32_t LR)
 
     /*Extract register values through functions coded in ASM*/
     DATA_ABORT_REG abort_regs;
-    abort_regs.ADFSR=GET_ADFSR();
-    abort_regs.DFAR=GET_DFAR();
-    abort_regs.DFSR=GET_DFSR();
-    abort_regs.LR=LR;
-    abort_regs.SPSR=GET_SPSR();
+    abort_regs.ADFSR = GET_ADFSR();
+    abort_regs.DFAR  = GET_DFAR();
+    abort_regs.DFSR  = GET_DFSR();
+    abort_regs.LR    = LR;
+    abort_regs.SPSR  = GET_SPSR();
 
     /*Extract contents of DFSR register
     1. status: indicates the type of fault generated
@@ -345,9 +349,11 @@ void TEXT_HWI HwiP_data_abort_handler_c(volatile uint32_t LR)
     3. rw:  Indicates whether a read or write access caused an abort
         (0=read abort; 1=write abort)*/
     DFSR dfsr;
-    dfsr.status=(abort_regs.DFSR & 0xF) |((abort_regs.DFSR>>10 & 0x1)<<4);
-    dfsr.rw=(abort_regs.DFSR>>11) & 0x1;
-    dfsr.sd=(abort_regs.DFSR>>12) & 0x1;
+    uint32_t dfsr_value = abort_regs.DFSR;
+
+    dfsr.status = ((dfsr_value & 0xF) | (((dfsr_value >> 10) & 0x1) << 4));
+    dfsr.rw     = ((dfsr_value >> 11) & 0x1);
+    dfsr.sd     = ((dfsr_value >> 12) & 0x1);
 
     /*Extract contents of ADFSR register
     1. index: returns the index value for the access giving the error
@@ -356,10 +362,12 @@ void TEXT_HWI HwiP_data_abort_handler_c(volatile uint32_t LR)
         (0=Unrecoverable error, 1=Recoverable Error)
     4. cacheway: value returned in this field indicates the cache way or ways in which the error occurred*/
     ADFSR adfsr;
-    adfsr.index=(abort_regs.ADFSR>>5) & 0x1FF;
-    adfsr.side_ext=((abort_regs.ADFSR>>22) & 0x3) | ((abort_regs.ADFSR>>20 & 0x1)<<2);
-    adfsr.recoverable_error=(abort_regs.ADFSR>>21) & 0x1;
-    adfsr.cacheway=(abort_regs.ADFSR>>24) & 0xF;
+    uint32_t adfsr_value = abort_regs.ADFSR; 
+
+    adfsr.index             = ((adfsr_value >> 5) & 0x1FF);
+    adfsr.side_ext          = (((adfsr_value >> 22) & 0x3) | (((adfsr_value >> 20) & 0x1) << 2));
+    adfsr.recoverable_error = ((adfsr_value >> 21) & 0x1);
+    adfsr.cacheway          = ((adfsr_value >> 24) & 0xF);
 
     HwiP_user_data_abort_handler_c(dfsr, adfsr, abort_regs.DFAR, abort_regs.LR, abort_regs.SPSR);
 

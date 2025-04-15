@@ -246,16 +246,12 @@ uint32_t MPU_SECTION MpuP_isUserAuthorizedToAccessMemory(uint32_t memAddr, uint3
                     isGranted = 1U;
                 }
             }
-            else if (perm == MpuP_RP_RW) 
+            else
             {
                 if (accessPerm == MpuP_AP_ALL_RW)
                 {
                     isGranted = 1U;
                 }
-            }
-            else
-            {
-                /* Do Nothing */
             }
 
             if (isGranted == 1U)
