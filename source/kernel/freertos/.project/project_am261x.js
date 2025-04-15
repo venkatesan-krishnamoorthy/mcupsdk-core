@@ -190,7 +190,6 @@ const filedirs_r5f_mpu = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
-    { device: device, cpu: "r5f-mpu", cgt: "ti-arm-clang", os: "freertos"},
 ];
 
 const templates_freertos_r5f =

@@ -284,7 +284,6 @@ const filedirs_m4f = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
-    { device: device, cpu: "r5f-mpu", cgt: "ti-arm-clang", os: "freertos"},
     { device: device, cpu: "r5f", cgt: "gcc-armv7",    os: "freertos"},
     { device: device, cpu: "m4f", cgt: "ti-arm-clang", os: "freertos"},
 ];

@@ -290,7 +290,6 @@ const filedirs_c66 = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang", os: "freertos"},
-    { device: device, cpu: "r5f-mpu", cgt: "ti-arm-clang", os: "freertos"},
     { device: device, cpu: "c66", cgt: "ti-c6000",     os: "freertos"},
 ];
 

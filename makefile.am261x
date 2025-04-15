@@ -40,7 +40,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am261x littlefs_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x middleware_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x nortos_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am261x freertos_r5f.ti-arm-clang freertos_r5f-mpu.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am261x freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x mathlib_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x enet-cpsw_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x lwipif-cpsw-freertos_r5f.ti-arm-clang
@@ -79,7 +79,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am261x littlefs_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x middleware_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x nortos_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am261x freertos_r5f.ti-arm-clang_clean freertos_r5f-mpu.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am261x freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x mathlib_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x enet-cpsw_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
@@ -717,7 +717,7 @@ BUILD_COMBO_freertos_fat = freertos_fat_r5f.ti-arm-clang
 BUILD_COMBO_littlefs = littlefs_r5f.ti-arm-clang
 BUILD_COMBO_middleware = middleware_r5f.ti-arm-clang
 BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang
-BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang freertos_r5f-mpu.ti-arm-clang
+BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang
 BUILD_COMBO_mathlib = mathlib_r5f.ti-arm-clang
 BUILD_COMBO_enet-cpsw = enet-cpsw_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang
@@ -884,7 +884,7 @@ BUILD_COMBO_CLEAN_freertos_fat = freertos_fat_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_littlefs = littlefs_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_middleware = middleware_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean freertos_r5f-mpu.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_mathlib = mathlib_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
@@ -1045,7 +1045,7 @@ BUILD_COMBO_SCRUB_freertos_fat = freertos_fat_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_littlefs = littlefs_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_middleware = middleware_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub freertos_r5f-mpu.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_mathlib = mathlib_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_scrub_scrub
