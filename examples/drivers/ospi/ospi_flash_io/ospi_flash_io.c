@@ -74,24 +74,31 @@ void ospi_flash_io_main(void *args)
     offset = APP_OSPI_FLASH_OFFSET_BASE;
     ospi_flash_io_fill_buffers();
     Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
-    status = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
 
-    if(status != SystemP_SUCCESS)
+    status = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
+    if(SystemP_SUCCESS != status)
     {
         DebugP_log("Block Erase Failed at 0x%X offset !!!", offset);
     }
+
     if(SystemP_SUCCESS == status)
     {
         status = Flash_write(gFlashHandle[CONFIG_FLASH0], offset, gOspiTxBuf, APP_OSPI_DATA_SIZE);
+        if(SystemP_SUCCESS != status)
+        {
+            DebugP_log("Flash Write of %d bytes failed at 0x%X offset !!!", APP_OSPI_DATA_SIZE, offset);
+        }
     }
-    else
-    {
-        DebugP_log("Flash Write of %d bytes failed at 0x%X offset !!!", APP_OSPI_DATA_SIZE, offset);
-    }
+
     if(SystemP_SUCCESS == status)
     {
         status = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gOspiRxBuf, APP_OSPI_DATA_SIZE);
+        if(SystemP_SUCCESS != status)
+        {
+            DebugP_log("Flash Read of %d bytes failed at 0x%X offset !!!", APP_OSPI_DATA_SIZE, offset);
+        }
     }
+
     if(SystemP_SUCCESS == status)
     {
         status |= ospi_flash_io_compare_buffers();
@@ -100,23 +107,31 @@ void ospi_flash_io_main(void *args)
     offset = APP_OSPI_FLASH_OFFSET_BASE + (flashAttrs->blockSize*2);
     ospi_flash_io_fill_buffers();
     Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
+    
     status = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
-    if(status != SystemP_SUCCESS)
+    if(SystemP_SUCCESS != status)
     {
         DebugP_log("Block Erase Failed at 0x%X offset !!!", offset);
     }
+
     if(SystemP_SUCCESS == status)
     {
         status = Flash_write(gFlashHandle[CONFIG_FLASH0], offset, gOspiTxBuf, APP_OSPI_DATA_SIZE);
+        if(SystemP_SUCCESS != status)
+        {
+            DebugP_log("Flash Write of %d bytes failed at 0x%X offset !!!", APP_OSPI_DATA_SIZE, offset);
+        }
     }
-    else
-    {
-        DebugP_log("Flash Write of %d bytes failed at 0x%X offset !!!", APP_OSPI_DATA_SIZE, offset);
-    }
+
     if(SystemP_SUCCESS == status)
     {
         status = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gOspiRxBuf, APP_OSPI_DATA_SIZE);
+        if(SystemP_SUCCESS != status)
+        {
+            DebugP_log("Flash Read of %d bytes failed at 0x%X offset !!!", APP_OSPI_DATA_SIZE, offset);
+        }
     }
+
     if(SystemP_SUCCESS == status)
     {
         status |= ospi_flash_io_compare_buffers();
