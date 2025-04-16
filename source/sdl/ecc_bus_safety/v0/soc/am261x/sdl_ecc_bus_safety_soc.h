@@ -142,9 +142,6 @@ extern "C" {
 #define SDL_MCRC_U_BASE                             (0x35000000U)
 #define SDL_MCRC_U_BASE_END                         (0x350003FFU-8U)
 
-#define SDL_STIM_U_BASE                             (0x53500000U)
-#define SDL_STIM_U_BASE_END                         (0x535001FFU-8U)
-
 #define SDL_SCRP0_U_BASE                            (0x48000000U)
 #define SDL_SCRP0_U_BASE_END                        (0x4803FFFFU-8U)
 
