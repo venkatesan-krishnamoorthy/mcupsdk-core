@@ -256,7 +256,7 @@ section12.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 section12.output_section[0].alignment = 0;
 
 section13.$name                        = "DATA_CACHE_STORAGE_MEMORY";
-section13.load_memory                  = "OCRAM CACHED";
+section13.load_memory                  = "OCRAM_CACHED";
 section13.output_section.create(1);
 section13.output_section[0].palignment = true;
 section13.output_section[0].$name      = ".DATA_Cache.buffer";
