@@ -80,6 +80,7 @@ typedef struct ClockP_Config_
     uint32_t timerInputPreScaler; /**< Timer divider to apply to the input clock */
     uint32_t usecPerTick; /**< period of one timer tick in units of usecs */
     uint8_t  intrPriority; /**< Tick Interrupt priority */
+    uint8_t isPulseInterrupt; /**< Interrupt type */
 
 } ClockP_Config;
 

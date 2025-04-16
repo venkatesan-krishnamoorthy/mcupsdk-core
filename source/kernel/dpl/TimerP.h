@@ -93,7 +93,6 @@ typedef struct TimerP_Params_ {
                             */
     uint32_t enableOverflowInt; /**< 0: Do not enable timer overflow interrupt, 1: enable timer overflow interrupt */
     uint32_t enableDmaTrigger;  /**< 0: Do not enable DMA trigger from timer, 1: enable DMA trigger from timer */
-    uint8_t isPulse;            /**< 0: Map interrupt as level interrupt, 1: Map interrupt as pulse interrupt */
 
 } TimerP_Params;
 

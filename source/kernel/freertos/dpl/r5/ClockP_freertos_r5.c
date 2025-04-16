@@ -77,7 +77,6 @@ void ClockP_init(void)
     timerParams.periodInUsec      = gClockConfig.usecPerTick;
     timerParams.oneshotMode       = 0;
     timerParams.enableOverflowInt = 1;
-    timerParams.isPulse           = 1;
     TimerP_setup(gClockCtrl.timerBaseAddr, &timerParams);
 
     /* Get timer reload count, we will use this later to compute current time in usecs */
@@ -87,7 +86,7 @@ void ClockP_init(void)
     HwiP_Params_init(&timerHwiParams);
     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
     timerHwiParams.callback = ClockP_timerTickIsr;
-    timerHwiParams.isPulse = 0;
+    timerHwiParams.isPulse = gClockConfig.isPulseInterrupt;
     timerHwiParams.priority = gClockConfig.intrPriority;
     (void)HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
 
