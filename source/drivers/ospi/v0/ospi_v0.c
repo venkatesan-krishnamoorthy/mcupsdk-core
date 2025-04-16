@@ -886,7 +886,7 @@ int32_t OSPI_readDirect(OSPI_Handle handle, OSPI_Transaction *trans)
             status += OSPI_lld_readDirect(hOspi, trans);
         }
         /* Switch to INDAC mode if DAC was initially in disabled state */
-        if (FALSE == obj->isDacEnable)
+        if (FALSE == OSPI_isDacEnable(handle))
         {
             status += OSPI_disableDacMode(handle);
         }
@@ -918,7 +918,7 @@ int32_t OSPI_readIndirect(OSPI_Handle handle, OSPI_Transaction *trans)
         }
 
         /* Return to DAC mode if it was initially in enabled state */
-        if (OSPI_TRUE == obj->isDacEnable)
+        if (OSPI_TRUE == OSPI_isDacEnable(handle))
         {
             status = OSPI_enableDacMode(handle);
         }
@@ -999,7 +999,7 @@ int32_t OSPI_writeIndirect(OSPI_Handle handle, OSPI_Transaction *trans)
         }
 
         /* Return to DAC mode if it was initially in enabled state */
-        if (OSPI_TRUE == obj->isDacEnable)
+        if (OSPI_TRUE == OSPI_isDacEnable(handle))
         {
             status += OSPI_enableDacMode(handle);
         }
