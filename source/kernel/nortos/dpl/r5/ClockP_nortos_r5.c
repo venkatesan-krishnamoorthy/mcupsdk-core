@@ -70,6 +70,7 @@ void ClockP_init(void)
     timerParams.periodInUsec      = gClockConfig.usecPerTick;
     timerParams.oneshotMode       = 0;
     timerParams.enableOverflowInt = 1;
+    timerParams.isPulse           = 1;
     TimerP_setup(gClockCtrl.timerBaseAddr, &timerParams);
 
     /* Get timer reload count, we will use this later to compute current time in usecs */
