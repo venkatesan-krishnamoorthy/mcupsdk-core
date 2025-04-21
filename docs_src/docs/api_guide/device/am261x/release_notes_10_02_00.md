@@ -152,6 +152,26 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
 
 <!-- Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->
 
+### Safety Diagnostic Library
+
+Module            | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                                            | Key features not tested / NOT supported
+------------------|-----------------|-------------------|------------------|------------------------------------------------------------------------------------------------|----------------------------------------
+MCRC              | R5F             | NA                |  NORTOS | Full CPU, Auto CPU Mode and Semi CPU Auto Mode                                                          | -
+DCC               | R5F             | NA                |  NORTOS | Single Shot and Continuous modes                                    | -
+PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
+ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
+RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
+ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | -
+ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
+CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode. TMU and RL2 are also validated                      | -
+R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
+TMU ROM Checksum  | R5F             | NA                |  NORTOS | ROM checksum for TMU                                                                         | -
+Time out Gasket(STOG)  | R5F             | NA                |  NORTOS | Timeout gasket feature                    | -
+Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, under and thershold temperature interrupts                   | -
+Integrated Example  | R5F             | NA                |FreeRTOS | Integrated example with all the SDL modules integrated in to one example.|  ECC for TPTC, ECC Bus Safety and STC.
+
+**Note**: SDL is validated only on SOM Board.
+
 ## Fixed Issues
 
 <table>
@@ -162,14 +182,6 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <th> Applicable Releases
     <th> Applicable Devices
     <th> Resolution/Comments
-</tr>
-<tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
 </tr>
 </table>
 
@@ -314,6 +326,34 @@ ICSS-EMAC                   | R5F            | YES               | FreeRTOS    |
     <td> EQEP: EQEP frequency measurement example is not working as expected
     <td> EQEP
     <td> 10.00.01 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-8392
+    <td> In ECC bus safety example, ECC error is not properly cleared at the source.
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-8787
+    <td> ECC TPTC and STC examples are not supported in SDL integrated example.
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Use standalone examples.
+</tr>
+<tr>
+    <td> PROC_SDL-8857
+    <td> SDL integrated example does not support ECC Bus Safety.
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Use standalone example.
+</tr>
+<tr>
+    <td> PROC_SDL-8859
+    <td> STC example does not support R5FSS0.
+    <td> SDL
+    <td> 10.02.00 onwards
     <td> None
 </tr>
 <tr>

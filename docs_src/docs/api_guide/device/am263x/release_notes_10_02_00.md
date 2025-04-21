@@ -160,7 +160,7 @@ DCC               | R5F             | NA                |  NORTOS | Single Shot 
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
 ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
 RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | R5F data Cache(DED)
+ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | -
 ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
@@ -177,6 +177,23 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> PROC_SDL-8519
+    <td> In ECC for R5F data cache only, double bit test is not supported.
+    <td> SDL
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Fixed the example.
+</tr>
+<tr>
+    <td> PROC_SDL-8864
+    <td> D-tag and D-data ECC examples fail in release profile.
+    <td> SDL
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Fixed the example.
+</tr>
+
 <tr>
     <td> -
     <td> -
@@ -344,25 +361,11 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> None
 </tr>
 <tr>
-    <td> PROC_SDL-8519
-    <td> In ECC for R5F data cache only, double bit test is not supported.
-    <td> SDL
-    <td> 10.00.00 onwards
-    <td> ECC test for single bit injection on R5F data cache, release profile binary is showing some inconsistency on result.
-</tr>
-<tr>
     <td> PROC_SDL-8857
     <td> SDL integrated example does not support ECC Bus Safety.
     <td> SDL
     <td> 10.01.00 onwards
     <td> Use standalone example.
-</tr>
-<tr>
-    <td> PROC_SDL-8864
-    <td> D-tag and D-data ECC examples fail in release profile.
-    <td> SDL
-    <td> 10.00.00 onwards
-    <td> None.
 </tr>
 <tr>
     <td> MCUSDK-13466
