@@ -89,8 +89,8 @@ Probe the following
 
 ## AM261X-LP
 Probe the following
-- CONFIG_EPWM0 output on  PIN J5/7 70  (EPWM0_A)
-- CONFIG_EPWM0 output on  PIN J6/8 57  (EPWM0_B)
+- CONFIG_EPWM0 output on  PIN J6/8 76  (EPWM7_A)
+- CONFIG_EPWM0 output on  PIN J6/8 75  (EPWM7_B)
 - CONFIG_EPWM1 output on  PIN J5/7 69  (EPWM1_A)
 - CONFIG_EPWM1 output on  PIN J5/7 63  (EPWM1_B)
 - CONFIG_EPWM2 output on  PIN J2/4 40  (EPWM2_A)

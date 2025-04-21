@@ -104,7 +104,7 @@ When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 ## AM261X-LP
 - Connect J1/J3 Pin 30 (DAC_OUT) to J1/3 Pin 23 and J1/3 2 (CMPSSA0H/L)
 - Probe the following on boosterpack
-  - EPWM0A    : J5/7 Pin 70
+  - EPWM3A    : J5/7 Pin 38
   - EPWM1A    : J5/7 Pin 69
   - EPWM2A    : J2/4 Pin 40
   - DEActive0 : J5/7 Pin 49

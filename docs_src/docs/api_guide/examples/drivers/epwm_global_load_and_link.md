@@ -36,12 +36,12 @@ Shadow registers are used for CMP, TBPRD regs, while global load is only used on
 # External Connections.
 Probe the EPWM outputs for the above EPWMs and Status pin.
 
-## AM263Px or AM263x Control Card with HSEC 180 Pin out
+## AM263Px or AM263x or AM261x Control Card with HSEC 180 Pin out
 - CONFIG_EPWM_NO_GLD          : EPWM 0A/0B on HSEC pins 49/51 
 - CONFIG_EPWM1_GLD            : EPWM 1A/1B on HSEC pins 53/55 
 - CONFIG_EPWM2_GLD_LINK_SELF  : EPWM 2A/2B on HSEC pins 57/59 
 - CONFIG_EPWM3_GLD_LINK_EPWM2 : EPWM 3A/3B on HSEC pins 61/63
-- Status Pin                  : GPIO on HSEC pin 50 
+- Status Pin                  : GPIO on HSEC pin 57 
  
 ## AM263Px or AM263x Launch Pad
 - CONFIG_EPWM_NO_GLD          : EPWM 0A/0B on BoosterPack J4 11 / J8 59 
@@ -51,11 +51,11 @@ Probe the EPWM outputs for the above EPWMs and Status pin.
 - Status Pin                  : GPIO on                   J8 52
 
 ## AM261x Launch Pad
-- CONFIG_EPWM_NO_GLD          : EPWM 2A/2B on BoosterPack J2 40 / J2 39 
-- CONFIG_EPWM1_GLD            : EPWM 3A/3B on BoosterPack J2 38 / J2 37 
-- CONFIG_EPWM2_GLD_LINK_SELF  : EPWM 4A/4B on BoosterPack J2 36 / J2 35 
-- CONFIG_EPWM3_GLD_LINK_EPWM2 : EPWM 5A/5B on BoosterPack J6 80 / J6 79
-- Status Pin                  : GPIO on HSEC pin 50       J6 78
+- CONFIG_EPWM_NO_GLD          : EPWM 2A/2B on BoosterPack J4 40 / J4 39 
+- CONFIG_EPWM1_GLD            : EPWM 3A/3B on BoosterPack J4 38 / J4 37 
+- CONFIG_EPWM2_GLD_LINK_SELF  : EPWM 4A/4B on BoosterPack J4 36 / J4 35 
+- CONFIG_EPWM3_GLD_LINK_EPWM2 : EPWM 5A/5B on BoosterPack J6 80 / J2 13
+- Status Pin                  : GPIO on                   J6 78
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_GLOBAL_LOAD_AND_LINK_COMBOS}
 

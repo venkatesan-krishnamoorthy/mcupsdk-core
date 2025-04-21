@@ -4,12 +4,12 @@
 
 # Introduction
 
-This example configures ePWM0, ePWM1 and ePWM2 to produce an waveform with independent modulation on ePWMxA and ePWMxB. The TB counter is in up count mode for this example.
+This example configures ePWM0, ePWM1 and ePWM2 (ePWM2, ePWM3 and ePWM4 in case of AM261x-LP) to produce an waveform with independent modulation on ePWMxA and ePWMxB. The TB counter is in up count mode for this example.
 
 The compare values CMPA and CMPB are modified within the ePWM's ISR.
 
 ## ISR Configuration
-1. INTXbar0, INTXbar1 and INTXbar2 are set for EPWM0INT, EPWM1INT and EPWM2INT
+1. INTXbar0, INTXbar1 and INTXbar2 are set for EPWM0INT, EPWM1INT and EPWM2INT (EPWM2INT, EPWM3INT and EPWM4INT in case of AM261x-LP)
 2. App_epwmIntrISR_x service this interrupts
     - Updates the CMPA and CMPB compare values at every 10'th interrupt as follows:
         - If CMPA/B is incrising, check if it reached max value. If not, increase CMPA/B else, change direction and decrease CMPA/B
@@ -41,12 +41,12 @@ When using AM263X-CC, AM263PX-CC or AM261X-SOM with TMDSHSECDOCK (HSEC180 contro
 - Capture waveform on boosterpack header J2/J4 Pin 40 for epwm2_B
 
 ## AM261X-LP
-- Capture waveform on boosterpack header J6/J8 Pin 70 for epwm0_A
-- Capture waveform on boosterpack header J6/J8 Pin 57 for epwm0_B
-- Capture waveform on boosterpack header J2/J4 Pin 69 for epwm1_A
-- Capture waveform on boosterpack header J2/J4 Pin 63 for epwm1_B
 - Capture waveform on boosterpack header J2/J4 Pin 40 for epwm2_A
 - Capture waveform on boosterpack header J2/J4 Pin 39 for epwm2_B
+- Capture waveform on boosterpack header J2/J4 Pin 38 for epwm3_A
+- Capture waveform on boosterpack header J2/J4 Pin 37 for epwm3_B
+- Capture waveform on boosterpack header J2/J4 Pin 36 for epwm4_A
+- Capture waveform on boosterpack header J2/J4 Pin 35 for epwm4_B
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_UP_AQ_COMBOS}
 

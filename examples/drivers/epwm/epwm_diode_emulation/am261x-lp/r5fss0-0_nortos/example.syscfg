@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -67,7 +67,9 @@ ioexp1.$name                                     = "CONFIG_IOEXP0";
 ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode   = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
-ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_state  = 1;
+ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_state  = 1;
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_state  = 1;
 
 epwm1.epwmTimebase_counterMode                       = "EPWM_COUNTER_MODE_UP";
 epwm1.epwmTimebase_period                            = 24000;
@@ -84,9 +86,9 @@ epwm1.epwmICLB_LUTDEC_5                              = "1";
 epwm1.epwmICLB_LUTDEC_6                              = "1";
 epwm1.epwmICLB_LUTDEC_7                              = "1";
 epwm1.epwmICLB_LUTDEC_2                              = "1";
-epwm1.EPWM.$assign                                   = "EPWM0";
-epwm1.EPWM.A.$assign                                 = "GPIO43";
-epwm1.EPWM.B.$assign                                 = "GPIO44";
+epwm1.EPWM.$assign                                   = "EPWM7";
+epwm1.EPWM.A.$assign                                 = "GPIO57";
+epwm1.EPWM.B.$assign                                 = "GPIO63";
 
 epwm2.$name                                          = "TripL_source";
 epwm2.epwmTimebase_counterMode                       = "EPWM_COUNTER_MODE_UP";
@@ -220,6 +222,11 @@ const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/s
 const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
 
 const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
@@ -455,14 +462,14 @@ icl_xbar1.$name      = "CONFIG_ICL_XBAR0";
 icl_xbar1.xbarOutput = ["MDL1_OUTA"];
 
 input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
-input_xbar1.xbarOutput = "GPIO43";
+input_xbar1.xbarOutput = "GPIO57";
 
 input_xbar2.$name      = "CONFIG_INPUT_XBAR1";
 input_xbar2.instance   = "INPUT_XBAR_1";
 input_xbar2.xbarOutput = "GPIO45";
 
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
-int_xbar1.xbarOutput = ["EPWM0_INT"];
+int_xbar1.xbarOutput = ["EPWM7_INT"];
 
 int_xbar2.$name      = "CONFIG_INT_XBAR1";
 int_xbar2.xbarOutput = ["EPWM1_INT"];

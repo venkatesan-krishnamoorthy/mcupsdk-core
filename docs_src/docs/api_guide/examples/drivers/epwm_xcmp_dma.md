@@ -26,7 +26,7 @@ Shadow sets 2,3 are set to repeat 5 times each.
 
 connect the following EPWM outputs to an oscilloscope to view the waveform.
 
-## AM263Px-CC E1 or AM2631x-SOM
+## AM263Px-CC E1 or AM261x-SOM
     - EPWM0_A and EPWM0_B pin ie, HSEC 49, HSEC 51.
     - EPWM1_A and EPWM1_B pin ie, HSEC 53, HSEC 55.
     - EPWM2_A and EPWM2_B pin ie, HSEC 50, HSEC 52.
@@ -49,7 +49,7 @@ connect the following EPWM outputs to an oscilloscope to view the waveform.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_XCMP_DMA_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

@@ -13,11 +13,11 @@ The EPWM Edge Detection in DCCAP is a feature to monitor the trip input to be pr
 # Example Description
 This example showcases the configurations needed to use the Edge Detection feature in the DCCAP to detect occurrence of a trip event in a configured time window. The window is configured by MIN and MAX values configured in MINMAX register set. Purpose of this window is to detect the occurrence of such edge. If no such edge occurs, this module will generate a trip event as well as interrupt configurable by user.
  
-EPMW0_A to detect the trip within a MINMAX window and trip its EPWMxA output
+EPMW0_A (EPWM2_A in case of AM261x-LP) to detect the trip within a MINMAX window and trip its EPWMxA output
 EPMW1_A waveform is used as a trip input. 
 
 # Configurations 
-1. EPWM0
+1. EPWM0 (EPWM2 in case of AM261x-LP)
   - DCCAP is enabled, trip inputs are configured for Trip1. 
   - waveform A/B are configured (in the example) to match the min-max window for observing.
   - IN Trip zone, CAPEVT is configured for CBC source and Trip action on output A to low Action when trip occured.
@@ -36,7 +36,7 @@ The EPWM1A is routed internally via GPIO. if wish to use a different/external tr
      3. connect external trip input to GPIO45   
 
 # External Connections
-EPWM0_A/B and EPWM1_A pin can be connected to an oscilloscope to view the waveform.
+EPWM0_A/B (EPWM2_A/B in case of AM261x-LP) and EPWM1_A pin can be connected to an oscilloscope to view the waveform.
 
 ## AM263Px-CC or AM261x-SOM
 When using AM263Px-CC or AM261x-SOM with MDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
@@ -52,8 +52,8 @@ Probe the following on boosterpack
 
 ## AM261x-LP
 Probe the following on boosterpack
-- EPWM0A can be observed on J5/J7 pin 70
-- EPWM0B can be observed on J6/J8 pin 57
+- EPWM2A can be observed on J2/J4 pin 40
+- EPWM2B can be observed on J2/J4 pin 39
 - EPWM1A (Trip Input) can be observed on J5/J7 pin 69
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DCCAP_COMBOS}

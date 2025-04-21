@@ -4,12 +4,12 @@
 
 # Introduction
 
-This example configures ePWM0, ePWM1 and ePWM2 to produce an waveform with independent modulation on ePWMxA and ePWMxB. The TB counter is in up-down count mode for this example.
+This example configures ePWM0, ePWM1 and ePWM2 (ePWM2, ePWM3 and ePWM4 in case of AM261x-LP) to produce an waveform with independent modulation on ePWMxA and ePWMxB. The TB counter is in up-down count mode for this example.
 
 The compare values CMPA and CMPB are modified within the ePWM's ISR.
 
 ## ISR Configuration
-1. INTXbar0, INTXbar1 and INTXbar2 are set for EPWM0INT, EPWM1INT and EPWM2INT
+1. INTXbar0, INTXbar1 and INTXbar2 are set for EPWM0INT, EPWM1INT and EPWM2INT (EPWM2INT, EPWM3INT and EPWM4INT in case of AM261x-LP)
 2. App_epwmIntrISR_x service this interrupts
     - Updates the CMPA and CMPB compare values at every 10'th interrupt as follows:
         - If CMPA/B is increasing, check if it reached max value. If not, increase CMPA/B else, change direction and decrease CMPA/B
@@ -19,16 +19,9 @@ The compare values CMPA and CMPB are modified within the ePWM's ISR.
 \image html am263x_epwm_updown_aq.png "EPWM Asymetric Waveform with Independent Modulation using UP-DOWN-Count mode"
 
 # External Connections
-
-- For AM263X-CC or AM263PX-CC or AM261x-SOM
-    - EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
-    - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
-    - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
-
-- For AM263X-LP or AM263PX-LP or AM261X-LP
-    - EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform. (Note this will require IO exapander configurations for AM261X-LP, please refer schematics and syscfg for details)
-    - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform. (Note this will require IO exapander configurations for AM261X-LP, please refer schematics and syscfg for details)
-    - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform. (Note this will require IO exapander configurations for AM261X-LP, please refer schematics and syscfg for details)
+- EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
+- EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
+- EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
 
 ## AM263X-CC or AM263PX-CC or AM261X-SOM
 When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
@@ -48,12 +41,12 @@ When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 contro
 - Capture waveform on boosterpack header J2/J4 Pin 40 for epwm2_B
 
 ## AM261X-LP
-- Capture waveform on boosterpack header J5/J7 Pin 70 for epwm0_A
-- Capture waveform on boosterpack header J6/J8 Pin 57 for epwm0_B
-- Capture waveform on boosterpack header J5/J7 Pin 69 for epwm1_A
-- Capture waveform on boosterpack header J5/J7 Pin 63 for epwm1_B
 - Capture waveform on boosterpack header J2/J4 Pin 40 for epwm2_A
 - Capture waveform on boosterpack header J2/J4 Pin 39 for epwm2_B
+- Capture waveform on boosterpack header J2/J4 Pin 38 for epwm3_A
+- Capture waveform on boosterpack header J2/J4 Pin 37 for epwm3_B
+- Capture waveform on boosterpack header J2/J4 Pin 36 for epwm4_A
+- Capture waveform on boosterpack header J2/J4 Pin 35 for epwm4_B
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_UPDOWN_AQ_COMBOS}
 

@@ -3,14 +3,12 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const ioexp           = scripting.addModule("/board/ioexp/ioexp", {}, false);
-const ioexp1          = ioexp.addInstance();
 const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1           = epwm.addInstance();
 const epwm2           = epwm.addInstance();
@@ -50,12 +48,6 @@ const int_xbar3       = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-ioexp1.$name                                     = "CONFIG_IOEXP0";
-ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
-ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode   = 0;
-ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
-ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_state  = 1;
-
 epwm1.$name                                                      = "CONFIG_EPWM0";
 epwm1.epwmTimebase_period                                        = 2000;
 epwm1.epwmCounterCompare_cmpA                                    = 50;
@@ -67,9 +59,7 @@ epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
-epwm1.EPWM.$assign                                               = "EPWM0";
-epwm1.EPWM.A.$assign                                             = "GPIO43";
-epwm1.EPWM.B.$assign                                             = "GPIO44";
+epwm1.EPWM.$assign                                               = "EPWM2";
 
 epwm2.$name                                                      = "CONFIG_EPWM1";
 epwm2.epwmTimebase_period                                        = 2000;
@@ -82,9 +72,7 @@ epwm2.epwmTimebase_counterMode                                   = "EPWM_COUNTER
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO      = "EPWM_AQ_OUTPUT_LOW";
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTPUT_HIGH";
-epwm2.EPWM.$assign                                               = "EPWM1";
-epwm2.EPWM.A.$assign                                             = "GPIO45";
-epwm2.EPWM.B.$assign                                             = "GPIO46";
+epwm2.EPWM.$assign                                               = "EPWM3";
 
 epwm3.$name                                                      = "CONFIG_EPWM2";
 epwm3.epwmTimebase_period                                        = 2000;
@@ -97,16 +85,8 @@ epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTP
 epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
 epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD    = "EPWM_AQ_OUTPUT_LOW";
 epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
-epwm3.EPWM.$assign                                               = "EPWM2";
-epwm3.EPWM.A.$assign                                             = "GPIO47";
-epwm3.EPWM.B.$assign                                             = "GPIO48";
-
-const i2c               = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1              = i2c.addInstance({}, false);
-i2c1.$name              = "CONFIG_I2C0";
-ioexp1.peripheralDriver = i2c1;
-i2c1.I2C.$assign        = "I2C0";
-i2c1.I2C_child.$name    = "drivers_i2c_v1_i2c_v1_template0";
+epwm3.EPWM.$assign                                               = "EPWM4";
+epwm3.EPWM.B.$assign                                             = "GPIO52";
 
 const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
 const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
@@ -118,6 +98,11 @@ const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/s
 const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
 
 const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
@@ -353,21 +338,24 @@ section13.output_section[0].palignment      = true;
 section13.output_section[0].include_defines = true;
 
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
-int_xbar1.xbarOutput = ["EPWM0_INT"];
+int_xbar1.xbarOutput = ["EPWM2_INT"];
 
 int_xbar2.$name      = "CONFIG_INT_XBAR1";
-int_xbar2.xbarOutput = ["EPWM1_INT"];
 int_xbar2.instance   = "INT_XBAR_1";
+int_xbar2.xbarOutput = ["EPWM3_INT"];
 
 int_xbar3.$name      = "CONFIG_INT_XBAR2";
-int_xbar3.xbarOutput = ["EPWM2_INT"];
 int_xbar3.instance   = "INT_XBAR_2";
+int_xbar3.xbarOutput = ["EPWM4_INT"];
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c1.I2C.SCL.$suggestSolution           = "GPIO135";
-i2c1.I2C.SDA.$suggestSolution           = "GPIO134";
+epwm1.EPWM.A.$suggestSolution           = "GPIO47";
+epwm1.EPWM.B.$suggestSolution           = "GPIO48";
+epwm2.EPWM.A.$suggestSolution           = "GPIO49";
+epwm2.EPWM.B.$suggestSolution           = "GPIO50";
+epwm3.EPWM.A.$suggestSolution           = "GPIO51";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

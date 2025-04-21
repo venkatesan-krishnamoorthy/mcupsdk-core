@@ -9,7 +9,7 @@ A CMPSS example that enables the CMPSS High comparator and feeds the
 asynchronous output to GPIO and EPWM
 
 This example enables the CMPSSA1 COMPH comparator and feeds the asynchronous
-CTRIPOUTH signal to the XBAROUT0 (XBAROUT8 in case of AM263PX) pin and CTRIPH to EPWM0B.
+CTRIPOUTH signal to the XBAROUT0 (XBAROUT8 in case of AM263PX) pin and CTRIPH to EPWM0B (EPWM2B in case of AM261x-LP).
 
 \imageStyle{am263_cmpss_asynchronous_trip.png,width:50%}
 \image html am263_cmpss_asynchronous_trip.png "Block diagram"
@@ -17,20 +17,20 @@ CTRIPOUTH signal to the XBAROUT0 (XBAROUT8 in case of AM263PX) pin and CTRIPH to
 CMPSS is configured to generate trip signals to trip the EPWM signals.
 CMPIN1P is used to give positive input and internal DAC is configured
 to provide the negative input. Internal DAC is configured to provide a
-signal at VDD/2. An EPWM signal is generated at EPWM0B and is configured
+signal at VDD/2. An EPWM signal is generated at EPWM0B (EPWM2B in case of AM261x-LP) and is configured
 to be tripped by CTRIPOUTH.
 
 When a low input(VSS) is provided to CMPIN1P,
     - Trip signal(XBAROUTx) output is low
-    - EPWM0B gives a PWM signal
+    - EPWM0B (EPWM2B in case of AM261x-LP) gives a PWM signal
 
 When a high input(higher than VDD/2) is provided to CMPIN1P,
     - Trip signal(XBAROUTx) output turns high
-    - EPWM0B gets tripped and outputs as high
+    - EPWM0B (EPWM2B in case of AM261x-LP) gets tripped and outputs as high
 
 # External Connections
  - Give input on CMPIN1P
- - Outputs can be observed on XBAROUT0(XBAROUT8 in case of AM263PX) and EPWM0B using an oscilloscope
+ - Outputs can be observed on XBAROUT0(XBAROUT8 in case of AM263PX) and EPWM0B (EPWM2B in case of AM261x-LP) using an oscilloscope
 
 ## AM263PX-CC E2 or AM263X-CC E2 or AM261X-SOM
 When using AM263x-CC or AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
@@ -46,7 +46,7 @@ When using AM263x-LP
 When using AM261x-LP 
 - Feed the Analog input on J7 Pin 63
 - Capture the Trip out on OUTXBAR OUT 0 ON GPIO1 or J8 Pin 51
-- Capture the EPWM output on J7 Pin 70
+- Capture the EPWM output on J7 Pin 39
 
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP_COMBOS}
 

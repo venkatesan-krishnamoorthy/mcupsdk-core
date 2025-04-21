@@ -33,11 +33,11 @@ When using AM263X-LP or AM263PX-LP
 
 ## AM261X-LP
 When using AM261X-LP
-- Capture waveform on J7.70 / J8.57 for epwm0
 - Capture waveform on J7.69 / J7.63 for epwm1
-- Capture waveform on J2.40 / J2.39 for epwm2
-- Capture waveform on J2.38 / J2.37 for epwm3
-- Capture waveform on J2.36 / J2.35 for epwm4
+- Capture waveform on J4.40 / J4.39 for epwm2
+- Capture waveform on J4.38 / J4.37 for epwm3
+- Capture waveform on J4.36 / J4.35 for epwm4
+- Capture waveform on J8.78 / J8.77 for epwm6
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_HR_UPDOWN_COMBOS}
 

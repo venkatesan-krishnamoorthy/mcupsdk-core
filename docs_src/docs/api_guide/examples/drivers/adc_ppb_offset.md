@@ -42,15 +42,15 @@ ADC SOC0 and SOC1 are set for Channel 0, with sample window 17 each and are trig
 - Feed Analog Input to ADC1_AIN0, HSEC Pin 12
 ### AM263X-CC E1
 - Feed Analog Input to ADC1_AIN0, HSEC Pin 18
-### AM263PX-LP or AM263X-LP
+### AM263PX-LP or AM263X-LP or AM261X-LP
 - Feed Analog Input to ADC1_AIN0, J1/3 Pin 24
 
 # Watch Variables
 - gAdc1Soc0Result[] holds the digital representation of the Analog signal on ADC1_AIN0
 - gAdc1Soc1Result[] holds the digital representation of the Analog signal on ADC1_AIN0 with Calibration offset
 - gAdc1PPB1Result[] holds the digital representation of the Analog signal on ADC1_AIN0 with Calibration offset with Reference Offset of 0
-- gAdc1PPB1Result[] holds the digital representation of the Analog signal on ADC1_AIN0 with Calibration offset with Reference Offset of 50
-- gAdc1PPB1Result[] holds the digital representation of the Analog signal on ADC1_AIN0 with Calibration offset with Reference Offset of 50 and Twos complement enabled.
+- gAdc1PPB2Result[] holds the digital representation of the Analog signal on ADC1_AIN0 with Calibration offset with Reference Offset of 50
+- gAdc1PPB3Result[] holds the digital representation of the Analog signal on ADC1_AIN0 with Calibration offset with Reference Offset of 50 and Twos complement enabled.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_OFFSET_COMBOS}
 

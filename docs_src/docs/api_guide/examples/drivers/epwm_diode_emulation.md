@@ -7,7 +7,7 @@ This example demonstrates the functionalities of epwm working in DE mode, the tr
 
 # EPWM Basic Configuration
 
-All total 7 epwm instances have been used out of which EPWM0A and EPWM1A are made to be TripH and TripL sources respectively.
+All total 7 epwm instances have been used out of which EPWM0A (EPWM7A in case of AM261x-LP) and EPWM1A are made to be TripH and TripL sources respectively.
 
 The screenshots attached in the documentation are as per the results obtained by executing the example on CC. Please note that there are some instance differences between CC and LP.
 
@@ -31,7 +31,7 @@ EPWM5A(B) on CC <--> EPWM13A(B) on LP \n
 EPWM6A(B) on CC <--> EPWM12A(B) on LP \n
 \endcond
 \cond SOC_AM261X
-EPWM0A(B) on CC <--> EPWM0A(B) on LP  \n
+EPWM0A(B) on CC <--> EPWM7A(B) on LP  \n
 EPWM1A    on CC <--> EPWM1A on LP     \n
 EPWM2A(B) on CC <--> EPWM2A(B) on LP  \n
 EPWM3A(B) on CC <--> EPWM3A(B) on LP  \n
@@ -41,7 +41,7 @@ EPWM6A(B) on CC <--> EPWM6A(B) on LP  \n
 \endcond
 \imageStyle{am263_epwm_de_basic_config.PNG,width:40%}
  \image html am263_epwm_de_basic_config.PNG "Figure 1.a Basic waveform configuration"
-The above diagram shows the configuration for EPWM0A (TripH) and EPWM1A (TripL) and the ones marked as Channel A and B are consistent across the remaining 5 epwm instances.
+The above diagram shows the configuration for EPWM0A (TripH) (EPWM7A in case of AM261x-LP) and EPWM1A (TripL) and the ones marked as Channel A and B are consistent across the remaining 5 epwm instances.
 
 The table below summarizes the configurations of the EPWMs for the given submodules mentioned in the column.
 
@@ -81,7 +81,7 @@ Once TripHorTripL gets High as marked by the red single marker, it enters into t
 
 The region bounded by the green pair of markers denote the zone where EPWM2 is out of DEACTIVE mode. How?
 Observe the PWMSYNCOUT coming before the instance marked by first green marker, EPWM2A was still in the DEACTIVE mode as TripHorTripL was high. On occurrence of this PWMSYNC (marked by first green), since TripHorTripL goes low, DEACTIVE flag will get cleared and EPWM2A starts following the normal AQ actions (take EPWM4A as reference).
-Recall that we have configured EPWM0 and EPWM1 such that they alternate their AQ actions after a period of 5 and 10 TBPRDs respectively. This is the reason why we see that TripHorTripL remains LOW for min(5, 10) i.e. 5 PWMSYNCs. After that again EPWM2 enters into DEACTIVE mode.
+Recall that we have configured EPWM0 (EPWM7 in case of AM261x-LP) and EPWM1 such that they alternate their AQ actions after a period of 5 and 10 TBPRDs respectively. This is the reason why we see that TripHorTripL remains LOW for min(5, 10) i.e. 5 PWMSYNCs. After that again EPWM2 enters into DEACTIVE mode.
 
 Channel B:
 
@@ -179,7 +179,7 @@ Similarly for channel B, the flag gets cleared at the point marked by the green 
 - EPWM6_A(B), pin can be connected to an oscilloscope to view the waveform.
 - Output Xbar 13 and 14 can be connected to an oscilloscope to view the waveform.
 
-## AM263PX-CC
+## AM263PX-CC or AM261X-SOM
 When using AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC pin 49, 51 to scope for EPWM0A(B)
 - Connect HSEC pin 53 to scope for EPWM1A
@@ -201,7 +201,7 @@ When using AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 - Connect J6/J8 pin 53, 57 to scope for EPWM12A(B)
 
 ## AM261X-LP
-- Connect J5/J7 pin 70, J6/J8 pin 57 to scope for EPWM0A(B)
+- Connect J6/J8 pin 76, 75 to scope for EPWM7A(B)
 - Connect J5/J7 pin 69 to scope for EPWM1A
 - Connect J2/J4 pin 40, 39 to scope for EPWM2A(B)
 - Connect J2/J4 pin 38, 37 to scope for EPWM3A(B)
@@ -211,7 +211,7 @@ When using AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DIODE_EMULATION_COMBOS}
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX | SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

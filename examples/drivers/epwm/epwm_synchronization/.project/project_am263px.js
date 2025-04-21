@@ -49,13 +49,13 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_EPWM_SYNCHRONIZATION";
 
 const templates_nortos_r5f =
 [
-    {
-        input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "epwm_synchronization_main",
-        },
-    }
+    // {
+    //     input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
+    //     output: "../main.c",
+    //     options: {
+    //         entryFunction: "epwm_synchronization_main",
+    //     },
+    // }
 ];
 
 const buildOptionCombos = [

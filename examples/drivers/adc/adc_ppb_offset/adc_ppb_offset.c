@@ -74,8 +74,8 @@
  *      ADC1_INT1 is set to EOC/SOC1.
  *
  * External Connections :
- * AM263X-CC or AM263PX-CC    :   Feed Analog Input to ADC1_AIN0, HSEC Pin 12
- * AM263X-LP or AM263PX-LP    :   Feed Analog Input to ADC1_AIN0, J1/3 Pin 24
+ * AM263X-CC or AM263PX-CC or AM261X-SOM  :   Feed Analog Input to ADC1_AIN0, HSEC Pin 12
+ * AM263X-LP or AM263PX-LP or AM261X-LP   :   Feed Analog Input to ADC1_AIN0, J1/3 Pin 24
  *
  * Watch Variables :
  * - gAdc1Soc0Result[] holds the digital representation of the Analog signal on ADC1_AIN0
@@ -83,9 +83,9 @@
  *                     with Calibration offset
  * - gAdc1PPB1Result[] holds the digital representation of the Analog signal on ADC1_AIN0
  *                     with Calibration offset with Reference Offset of 0
- * - gAdc1PPB1Result[] holds the digital representation of the Analog signal on ADC1_AIN0
+ * - gAdc1PPB2Result[] holds the digital representation of the Analog signal on ADC1_AIN0
  *                     with Calibration offset with Reference Offset of 50
- * - gAdc1PPB1Result[] holds the digital representation of the Analog signal on ADC1_AIN0
+ * - gAdc1PPB3Result[] holds the digital representation of the Analog signal on ADC1_AIN0
  *                     with Calibration offset with Reference Offset of 50
  *                     and Twos complement enabled.
  */

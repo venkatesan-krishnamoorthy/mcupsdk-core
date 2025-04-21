@@ -36,6 +36,8 @@
 
 void epwm_synchronization_main(void *args);
 
+EPWM_SyncInPulseSource App_syncPwm = EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0;
+
 int main(void)
 {
     System_init();

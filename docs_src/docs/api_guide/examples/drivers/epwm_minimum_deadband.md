@@ -14,7 +14,7 @@ The screenshots attached in the documentation are as per the results obtained by
 
 The mapping is such that:
 
-EPWM0A(B) on CC <--> EPWM0A(B) on LP    \n
+EPWM0A(B) on CC <--> EPWM0A(B) on LP  (EPWM7A(B) in case of AM261x-LP)  \n
 EPWM1A(B) on CC <--> EPWM1A(B) on LP    \n
 EPWM2A(B) on CC <--> EPWM2A(B) on LP    \n
 EPWM3A(B) on CC <--> EPWM3A(B) on LP    \n
@@ -141,8 +141,8 @@ We select EPWM3A_sclk as the output for MDLXBAR_1.
 - EPWM4_A/B, pin can be connected to an oscilloscope to view the waveform.
 - EPWM6_A/B, pin can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC or AM263PX-CC
-When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC or AM261X-SOM
+When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC pin 49, 51 to scope for EPWM0A(B)
 - Connect HSEC pin 53, 55 to scope for EPWM1A(B)
 - Connect HSEC pin 50, 52 to scope for EPWM2A(B)
@@ -159,7 +159,7 @@ When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Basebo
 - Connect J6/J8 pin 53, 57 to scope for EPWM12A(B)
 
 ## AM261X-LP
-- Connect J5/J7 pin 70, J6/J8 pin 57 to scope for EPWM0A(B)
+- Connect J6/J8 pin 76, 75 to scope for EPWM7A(B)
 - Connect J5/J7 pin 69, 63 to scope for EPWM1A(B)
 - Connect J2/J4 pin 40, 39 to scope for EPWM2A(B)
 - Connect J2/J4 pin 38, 37 to scope for EPWM3A(B)

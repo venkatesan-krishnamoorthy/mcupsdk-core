@@ -32,7 +32,7 @@ This example configures ePWMx as follows
     - GPIO11 is connected to GPIO12.
     - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
 - For AM261x-LP
-    - GPIO16 is connected to GPIO17.
+    - GPIO5 is connected to GPIO6.
     - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
 
 ## AM263X-CC or AM263PX-CC or AM261X-SOM
@@ -48,13 +48,13 @@ When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 contro
 - Capture waveform on boosterpack header J2/J4 Pin 38 for epwm1_B
 
 ## AM261X-LP
-- Connect boosterpack header J2/J4 pin 19 to J1/J3 pin 7
+- Connect boosterpack header J6/J8 pin 52 to J6/J8 53 
 - Capture waveform on boosterpack header J5/J7 Pin 69 for epwm1_A
 - Capture waveform on boosterpack header J5/J7 Pin 63 for epwm1_B
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_VALLEY_SWITCHING_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

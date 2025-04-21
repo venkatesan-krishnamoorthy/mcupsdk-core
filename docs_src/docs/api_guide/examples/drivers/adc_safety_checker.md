@@ -35,7 +35,7 @@ ADC1_AIN0, ADC1_AIN1 pins should be connected to signals to be converted
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SAFETY_CHECKER_COMBOS}
 
-\cond SOC_AM263PX || SOC_AM261X || SOC_AM261X
+\cond SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

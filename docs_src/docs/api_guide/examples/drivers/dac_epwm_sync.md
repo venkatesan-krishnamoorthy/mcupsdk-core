@@ -15,7 +15,7 @@ Note that, the events for EPWMSYNCPER signal and the Interrupt signal from  EPWM
 
 ## External connections
 The status Pin, EPWM output A, DAC output may be probed to view the  waveforms
-### On AM263x-CC or AM263Px-CC, with HSEC dock
+### On AM263x-CC or AM263Px-CC with HSEC dock
   - Probe the HSEC Pin 9 for DAC output.
   - Probe the HSEC Pin 49 for EPWM A output.
   - Probe the HSEC Pin 51 for STATUS (GPIO 44) output.
@@ -24,9 +24,14 @@ The status Pin, EPWM output A, DAC output may be probed to view the  waveforms
   - Probe the J4 Pin 11 for EPWM A output.
   - Probe the J8 Pin 59 for STATUS (GPIO 44) output.
 
+### On AM261x-LP,
+  - Probe the J3 Pin 30
+  - Probe the J4 Pin 40 for EPWM A output.
+  - Probe the J4 Pin 39 for STATUS (GPIO 48) output.
+
 # Supported Combinations {#EXAMPLES_DRIVERS_DAC_EPWM_SYNC_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

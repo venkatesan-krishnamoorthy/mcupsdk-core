@@ -43,7 +43,7 @@
 ## AM263X-CC or AM263Px-CC or AM261X-SOM
 No external connection is required.
 
-## AM263X-LP or AM263Px-LP or AM261X-SOM
+## AM263X-LP or AM263Px-LP or AM261X-LP
 No external connection is required.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ECAP_EDMA_COMBOS}

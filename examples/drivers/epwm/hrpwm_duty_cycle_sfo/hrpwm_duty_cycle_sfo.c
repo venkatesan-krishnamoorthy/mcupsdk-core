@@ -148,7 +148,7 @@ void hrpwm_duty_cycle_sfo(void *args)
 {
     int32_t  status = SFO_INCOMPLETE;
     float dutyFine = MIN_HRPWM_DUTY_PERCENT;
-    uint32_t base = CSL_CONTROLSS_G0_EPWM0_U_BASE;
+    uint32_t base = CONFIG_EPWM0_BASE_ADDR;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
@@ -171,7 +171,7 @@ void hrpwm_duty_cycle_sfo(void *args)
         }
     }
 
-   initHRPWM_duty(CSL_CONTROLSS_G0_EPWM0_U_BASE, PWM_PERIOD_CYCLES, PWM_DUTY_PERCENT_INITIAL);
+   initHRPWM_duty(CONFIG_EPWM0_BASE_ADDR, PWM_PERIOD_CYCLES, PWM_DUTY_PERCENT_INITIAL);
 
 
     for(dutyFine = MIN_HRPWM_DUTY_PERCENT; dutyFine < 99.9; dutyFine += 0.15)

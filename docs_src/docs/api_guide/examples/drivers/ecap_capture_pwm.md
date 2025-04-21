@@ -41,7 +41,7 @@ The example does the below
 ## AM263X-CC or AM263PX-CC or AM261X-SOM
 No external connection is required.
 
-## AM263X-LP or AM263PX-LP
+## AM263X-LP or AM263PX-LP or AM261X-LP
 No external connection is required.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ECAP_CAPTURE_PWM_COMBOS}

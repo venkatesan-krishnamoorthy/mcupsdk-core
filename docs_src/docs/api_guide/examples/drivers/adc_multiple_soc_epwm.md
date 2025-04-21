@@ -45,7 +45,6 @@ When using AM263x-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking
 
 ## AM263X-LP or AM263X-LP
 When using LP
-- Feed the analog inputs
 - Feed analog inputs to the following.
     - ADC2_AIN0 - J1/J3 25
     - ADC2_AIN1 - J5/J7 63
@@ -56,14 +55,13 @@ When using LP
 
 ## AM261X-LP
 When using LP
-- Feed the analog inputs
 - Feed analog inputs to the following.
-    - ADC2_AIN0 - J3 25
-    - ADC2_AIN2 - J7 65   | note this will require IO expander configurations. check schematics and syscfg for details.
-    - ADC2_AIN3 - J7 69   | note this will require IO expander configurations. check schematics and syscfg for details.
+    - ADC2_AIN0 - J1/3 25
+    - ADC2_AIN2 - J5/7 65   | note this will require IO expander configurations. check schematics and syscfg for details.
+    - ADC2_AIN3 - J1/3 6
     - ADC1_AIN0 - J1/J3 24
-    - ADC1_AIN1 - J1/J3 29
-    - ADC1_AIN2 - J5/J7 67
+    - ADC1_AIN1 - J1/J3 42
+    - ADC1_AIN2 - J5/J7 64
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_MULTIPLE_SOC_EPWM_COMBOS}
 

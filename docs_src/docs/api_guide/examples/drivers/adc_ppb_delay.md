@@ -104,7 +104,7 @@ Feed analog inputs to channels
 
 Shown below is a sample output when the application is run,
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263X || SOC_AM263PX
 \code
 ADC PPB Delay Test Started
 Delays associated with
@@ -129,6 +129,7 @@ All tests have passed!!
 \endcond
 
 \cond SOC_AM261X
+\code
 ADC PPB Delay Test Started
 Delays associated with
 conversion	SOC 0	SOC 1
@@ -153,4 +154,5 @@ conversion	SOC 0	SOC 1
 	250	    70	    2
 ADC PPB Delay Test Passed
 All tests have passed!!
+\endcode
 \endcond

@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -63,11 +63,13 @@ ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_N_mode = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_mode   = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_SO_mode   = 0;
 ioexp1.TCA6408ARGTR_port0_pinBP_MUX_SW_S1_state  = 1;
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_mode   = 0;
+ioexp1.TCA6408ARGTR_port0_pinBP_BO_MUX_EN_state  = 1;
 
 ecap1.eventStop           = "ECAP_EVENT_2";
 ecap1.emulationMode       = "ECAP_EMULATION_FREE_RUN";
 ecap1.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
-ecap1.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
+ecap1.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 ecap1.reArm               = true;
 ecap1.counterResetOnEvent = ["ECAP_EVENT_2"];
 ecap1.resetCounters       = true;
@@ -80,7 +82,7 @@ ecap1.loadCounter         = true;
 ecap2.ecapBase            = "CSL_CONTROLSS_ECAP1_U_BASE";
 ecap2.emulationMode       = "ECAP_EMULATION_FREE_RUN";
 ecap2.reArm               = true;
-ecap2.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
+ecap2.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 ecap2.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
 ecap2.eventStop           = "ECAP_EVENT_2";
 ecap2.counterResetOnEvent = ["ECAP_EVENT_2"];
@@ -92,7 +94,7 @@ ecap2.loadCounter         = true;
 
 ecap3.ecapBase            = "CSL_CONTROLSS_ECAP2_U_BASE";
 ecap3.emulationMode       = "ECAP_EMULATION_FREE_RUN";
-ecap3.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
+ecap3.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 ecap3.counterResetOnEvent = ["ECAP_EVENT_2"];
 ecap3.eventStop           = "ECAP_EVENT_2";
 ecap3.reArm               = true;
@@ -114,14 +116,16 @@ epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTP
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
-epwm1.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
 epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
 epwm1.epwmTimebase_counterModeAfterSync                          = "EPWM_COUNT_MODE_UP_AFTER_SYNC";
 epwm1.epwmTimebase_phaseEnable                                   = true;
-epwm1.EPWM.$assign                                               = "EPWM0";
+epwm1.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+epwm1.EPWM.$assign                                               = "EPWM7";
+epwm1.EPWM.A.$assign                                             = "GPIO57";
+epwm1.EPWM.B.$assign                                             = "GPIO63";
 
 epwm2.$name                                                      = "CONFIG_EPWM1";
-epwm2.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
+epwm2.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 epwm2.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
 epwm2.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
 epwm2.epwmTimebase_period                                        = 2000;
@@ -142,7 +146,7 @@ epwm2.EPWM.$assign                                               = "EPWM1";
 epwm2.EPWM.B.$assign                                             = "GPIO46";
 
 epwm3.$name                                                      = "CONFIG_EPWM2";
-epwm3.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
+epwm3.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 epwm3.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
 epwm3.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
 epwm3.epwmTimebase_period                                        = 2000;
@@ -164,7 +168,7 @@ epwm3.epwmTimebase_counterModeAfterSync                          = "EPWM_COUNT_M
 epwm3.EPWM.$assign                                               = "EPWM2";
 
 epwm4.$name                                                      = "CONFIG_EPWM3";
-epwm4.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
+epwm4.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 epwm4.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
 epwm4.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
 epwm4.epwmTimebase_period                                        = 2000;
@@ -185,7 +189,7 @@ epwm4.epwmTimebase_counterModeAfterSync                          = "EPWM_COUNT_M
 epwm4.EPWM.$assign                                               = "EPWM3";
 
 epwm5.$name                                                      = "CONFIG_EPWM4";
-epwm5.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
+epwm5.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 epwm5.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
 epwm5.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
 epwm5.epwmTimebase_period                                        = 2000;
@@ -206,7 +210,7 @@ epwm5.epwmTimebase_counterModeAfterSync                          = "EPWM_COUNT_M
 epwm5.EPWM.$assign                                               = "EPWM4";
 
 epwm6.$name                                                      = "CONFIG_EPWM5";
-epwm6.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM7";
+epwm6.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
 epwm6.epwmTimebase_clockDiv                                      = "EPWM_CLOCK_DIVIDER_4";
 epwm6.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_4";
 epwm6.epwmTimebase_period                                        = 2000;
@@ -255,7 +259,7 @@ epwm8.epwmTimebase_counterModeAfterSync = "EPWM_COUNT_MODE_UP_AFTER_SYNC";
 epwm8.epwmTimebase_period               = 2000;
 epwm8.epwmTimebase_clockDiv             = "EPWM_CLOCK_DIVIDER_4";
 epwm8.epwmTimebase_hsClockDiv           = "EPWM_HSCLOCK_DIVIDER_4";
-epwm8.EPWM.$assign                      = "EPWM7";
+epwm8.EPWM.$assign                      = "EPWM0";
 epwm8.EPWM.A.$used                      = false;
 epwm8.EPWM.B.$used                      = false;
 
@@ -276,6 +280,12 @@ const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/s
 const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+ecap.ecapSocControls   = soc_ctrl_ecap1;
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
 
 const soc_ctrl_epwm              = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1             = soc_ctrl_epwm.addInstance({}, false);
@@ -513,7 +523,7 @@ section12.output_section[0].$name     = ".bss.sipc_secure_host_queue_mem";
 section12.output_section[0].alignment = 0;
 
 input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
-input_xbar1.xbarOutput = "GPIO43";
+input_xbar1.xbarOutput = "GPIO57";
 
 input_xbar2.$name      = "CONFIG_INPUT_XBAR1";
 input_xbar2.instance   = "INPUT_XBAR_1";
@@ -528,8 +538,6 @@ input_xbar3.xbarOutput = "GPIO46";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "GPIO43";
-epwm1.EPWM.B.$suggestSolution           = "GPIO44";
 epwm2.EPWM.A.$suggestSolution           = "GPIO45";
 epwm3.EPWM.A.$suggestSolution           = "GPIO47";
 epwm3.EPWM.B.$suggestSolution           = "GPIO48";

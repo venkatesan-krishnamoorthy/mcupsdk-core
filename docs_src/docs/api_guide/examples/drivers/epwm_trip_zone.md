@@ -58,7 +58,7 @@ For CBC as observed at the end, after exiting the loop, it recovers from trip st
     - GPIO48 is connected to GPIO122
     - EPWM2_A and EPWM3_A pin can be connected to an oscilloscope to view the waveform.
 - For AM261x-LP:
-    - GPIO3 is connected to GPIO4
+    - GPIO5 is connected to GPIO6
     - EPWM2_A and EPWM3_A pin can be connected to an oscilloscope to view the waveform.
 \endcond
 
@@ -90,7 +90,7 @@ When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 - Connect HSEC Pin 54 to scope for epwm3_A
 
 ## AM261X-LP
-- Connect boosterpack header J1/J3 pin 8 to J2/J4 pin 18
+- Connect boosterpack header J6/J8 pin 52 to J6/J8 pin 53
 - Connect J2/J4 pin 40 and 38 to scope
 \endcond
 

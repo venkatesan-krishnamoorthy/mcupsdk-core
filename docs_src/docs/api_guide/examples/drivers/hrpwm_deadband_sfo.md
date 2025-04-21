@@ -10,21 +10,21 @@ This example modifies the MEP control registers to show edge displacement for hi
 \image html am263_hrpwm_deadband_sfo_fig1.PNG "Block diagram"
 
 # External Connections
-- EPWM0_A/B pin can be connected to an oscilloscope to view the waveform.
+- EPWM0_A/B (EPWM1_A/B in case of AM261x-LP) pin can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC or AM263PX-CC
+## AM263X-CC or AM263PX-CC or AM261X-SOM
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC 49 for epwm0_A
 - Connect HSEC 51 for epwm0_B
 
 ## AM261X-LP
 When using AM261x-LP
-- Connect J5/J7 Pin 70 for epwm0_A
-- Connect J6/J8 Pin 57 for epwm0_B
+- Connect J5/J7 Pin 69 for epwm1_A
+- Connect J5/J7 Pin 63 for epwm1_B
 
 # Supported Combinations {#EXAMPLES_DRIVERS_HRPWM_DEADBAND_SFO_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

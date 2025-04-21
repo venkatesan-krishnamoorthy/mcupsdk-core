@@ -34,6 +34,8 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 
+EPWM_SyncInPulseSource App_syncPwm = EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0;
+
 void epwm_synchronization_main(void *args);
 
 int main(void)

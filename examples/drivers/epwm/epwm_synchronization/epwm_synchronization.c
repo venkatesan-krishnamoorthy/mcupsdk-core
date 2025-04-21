@@ -109,6 +109,8 @@ uint32_t gEcap5BaseAddr = ECAP5_CAPTURE_BASE_ADDR;
 
 #define SCALING_FACTOR (8)
 
+extern EPWM_SyncInPulseSource App_syncPwm;
+
 typedef struct{
 
     uint32_t                         epwmModule;
@@ -234,13 +236,13 @@ void AppEpwmInit(void *args)
 
     /* Setting Sync In Pulse Source for EPWM4 */
     /* Sync In pulse source for EPWM4 is EPWM0 sync-out signal, and EPWM4 does not have any sync-out pulse */
-    gepwm4_details.source = EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0;
+    gepwm4_details.source = App_syncPwm;
     // EPWM_enableSyncOutPulseSource(gepwm4_details.epwmModule, 0);
     EPWM_setSyncInPulseSource(gepwm4_details.epwmModule, gepwm4_details.source);
 
     /* Setting Sync In Pulse Source for EPWM5 */
     /* Sync In pulse source for EPWM4 is EPWM0 sync-out signal, and EPWM5 does not have any sync-out pulse */
-    gepwm5_details.source = EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0;
+    gepwm5_details.source = App_syncPwm;
     // EPWM_enableSyncOutPulseSource(gepwm5_details.epwmModule, 0);
     EPWM_setSyncInPulseSource(gepwm5_details.epwmModule, gepwm5_details.source);
 

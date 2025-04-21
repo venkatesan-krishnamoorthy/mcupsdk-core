@@ -55,7 +55,7 @@ When using AM263x-LP
 
 ## AM261X-LP
 When using AM261x-LP
-- Connect boosterpack header J6/J8 Pin 58 to oscilloscope
+- Connect boosterpack header J6/J8 Pin 51 to oscilloscope
 
 ## AM261X-SOM E1
 When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)

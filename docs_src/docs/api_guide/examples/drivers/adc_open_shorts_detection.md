@@ -64,6 +64,8 @@ ADC0-SOC0 Samples on Channel 2.
     - Feed Analog input to ADC0_AIN2 - HSEC PIN 15
 - on AM263Px LP
     - Feed Analog Input to the ADC0_AIN2 - J7 Pin 66
+- on AM261x-LP
+    - Feed Analog Input to the ADC0_AIN2 - J7 Pin 63
 
 ## Watch Variables
 osDetectStatusVal - OS detection status of voltage on ADC Channel.
@@ -72,7 +74,7 @@ adcResult         - a digital representation of the voltage on ADC Channel.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_OPEN_SHORTS_DETECTION_COMBOS}
 
-\cond SOC_AM263PX
+\cond SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

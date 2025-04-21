@@ -272,8 +272,50 @@ or connect IGBT, OCP, OVP and Speed Signals from HSEC as below:
 - Capture EPWM2_B waveform at HSEC Pin 52
 
 
-## AM263X-LP or AM263PX-LP
+## AM263X-LP or AM263PX-LP or AM261X-LP
 
+Connect IGBT, OCP, OVP and Speed Signals as below:
+ - Provide 'IGBT Fault signal' input to GPIO51
+
+  - 3.3v -> 1 (Low side IGBT has issue)
+  - 0v -> 0 (no issue)
+
+ - Provide 'OCP Signal' input to GPIO52
+  - 3.3v -> 1 (Over current)
+  - 0v -> 0 (current normal)
+
+
+ - Provide 'OVP Signal' input to GPIO53
+  - 3.3v -> 1 (Over voltage)
+  - 0v -> 0 (voltage normal)
+
+
+ - (not supported) Provide 'Speed Signal' input to pin (TBD)
+
+  - PWM signal, PWM frequency corresponding to motor Speed. CPLD need to calculate the motor speed based on this PWM frequency and judge the speed > Threshold or not.
+
+
+ - Provide 'Speed Level' input to GPIO54
+
+  - 3.3v -> 1 (Speed > high Threshold)
+  - 0v -> 0 (Speed < high Threshold)
+
+or connect IGBT, OCP, OVP and Speed Signals from HSEC as below:
+- IGBT_FAULT_IN (GPIO51) Signal with IGBT_FAULT_OUT (GPIO55) Signal
+  - Connect J4 pin 36 to J8 pin 78
+- OCP_IN (GPIO52) Signal with OCP_OUT (GPIO56) Signal
+  - Connect J4 pin 35 to J8 pin 77
+- OVP_IN (GPIO53) Signal with OVP_OUT (GPIO57) Signal
+  - Connect J8 pin 80 to J8 pin 76
+- SPEED_LEVEL_IN (GPIO54) Signal with SPEED_LEVEL_OUT (GPIO58) Signal
+  - Connect J8 pin 79 to J8 pin 75
+
+- Capture EPWM3_A waveform at J4 pin 38
+- Capture EPWM3_B waveform at J4 pin 37
+- Capture EPWM1_A waveform at J7 pin 69
+- Capture EPWM1_B waveform at J7 pin 63
+- Capture EPWM2_A waveform at J4 pin 40
+- Capture EPWM2_B waveform at J4 pin 39
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_PROTECTION_PRU_COMBOS}
 

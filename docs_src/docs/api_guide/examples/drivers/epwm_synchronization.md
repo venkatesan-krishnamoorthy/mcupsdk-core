@@ -80,6 +80,14 @@ Probe the following on the HSEC pins
 - CONFIG_EPWM4 - EPWM 4A/4B : 57 / 59
 - CONFIG_EPWM5 - EPWM 5A/5B : 61 / 63
 
+When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+Probe the following on the HSEC pins
+- CONFIG_EPWM0 - EPWM 0A/0B : 49 / 51
+- CONFIG_EPWM1 - EPWM 1A/1B : 53 / 55
+- CONFIG_EPWM2 - EPWM 2A/2B : 50 / 52
+- CONFIG_EPWM3 - EPWM 3A/3B : 54 / 56
+- CONFIG_EPWM4 - EPWM 4A/4B : 57 / 59
+- CONFIG_EPWM5 - EPWM 6A/6B : 58 / 60
 
 Early Access: For AM263Px-CC E1, the connections is same as that of AM263x
 
@@ -92,16 +100,16 @@ When using AM263X-LP or AM263PX-LP
 - CONFIG_EPWM5 - EPWM 13A/13B : J8.79 / J8.80
 
 When using AM261X-LP
-- CONFIG_EPWM0 - EPWM 0A/0B :   J7.70 / J8.57
+- CONFIG_EPWM0 - EPWM 7A/7B :   J8.76 / J8.75
 - CONFIG_EPWM1 - EPWM 1A/1B :   J7.69 / J7.63
 - CONFIG_EPWM2 - EPWM 2A/2B :   J2.40 / J2.39
 - CONFIG_EPWM3 - EPWM 3A/3B :   J2.38 / J2.37
 - CONFIG_EPWM4 - EPWM 4A/4B :   J2.36 / J2.35
-- CONFIG_EPWM5 - EPWM 6A/6B :   J6.78 / J6.77
+- CONFIG_EPWM5 - EPWM 6A/6B :   J8.78 / J8.77
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_SYNCHRONIZATION_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

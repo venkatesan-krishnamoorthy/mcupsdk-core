@@ -20,17 +20,17 @@ Note: To use the reference voltage generated on ControlCard, make sure that the 
 When using with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Capture waveform on HSEC Pin 9 (in case of AM261x and AM263Px please take care of IO expander)
 
-## AM263X-LP or AM263PX-LP
+## AM263X-LP or AM263PX-LP or AM261X-LP
 
 Note: To use the reference voltage generated on LaunchPad, make sure that the DAC_VREF source select switch S1 on LaunchPad is set to position 1-2
 
-With AM263X-LP or AM263Px-LP
+With AM263X-LP or AM263Px-LP or AM261x-LP
 -  Capture waveform on boosterpack header J1/J3 Pin 30.
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_DAC_CONSTANT_VOLTAGE_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

@@ -37,15 +37,15 @@ Debug Mode is present, for when enabled, the events occuring in the min-max wind
 This example configures 3 ECAP moudule, with a total of 6 signal monitoring modules, each with one configuration that are supported. All ECAPs are enabled with Interrupts for the Errors from the Signal Monitoring Modules.  An EPWM is configured to provide the input, routed to ECAP via GPI and Inputxbar. This input is varied in a way to cross min and max values from the siganl monitoring modules and the application checks for the interrupt flags are well as the debug range values.
 
 # External Connections
-## AM263PX-CC
+## AM263PX-CC or AM261X-SOM
 No external connection is required.
 
-## AM263PX-LP
+## AM263PX-LP or AM261X-LP
 No external connection is required.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ECAP_SIGNAL_MONITORING_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+\cond SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

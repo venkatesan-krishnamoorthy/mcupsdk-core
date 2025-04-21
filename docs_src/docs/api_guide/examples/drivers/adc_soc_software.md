@@ -56,6 +56,16 @@ Shown below is a sample output when the application is run,
 
 \code
 ADC Software Triggered Conversion Test Started ...
+ADC Result register value : 4095
+ADC Result register value : 4095
+ADC Result register value : 4095
+ADC Result register value : 4095
+ADC Result register value : 4095
+ADC Result register value : 4095
+ADC Result register value : 4095
+ADC Result register value : 4095
+ADC Result register value : 4095
+ADC Result register value : 4095
 ADC Software Triggered Conversion Test Passed!!
 All tests have passed!!
 \endcode

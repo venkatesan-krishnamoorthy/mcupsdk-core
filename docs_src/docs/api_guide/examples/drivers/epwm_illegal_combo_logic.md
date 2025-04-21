@@ -33,7 +33,7 @@ EPWM5A(B) on CC <--> EPWM13A(B) on LP  \n
 EPWM6A(B) on CC <--> EPWM12A(B) on LP  \n
 \endcond
 \cond SOC_AM261X
-EPWM0A(B) on CC <--> EPWM0A(B) on LP   \n
+EPWM0A(B) on CC <--> EPWM7A(B) on LP   \n
 EPWM1A    on CC <--> EPWM1A on LP      \n
 EPWM2B    on CC <--> EPWM2B on LP      \n
 EPWM3A(B) on CC <--> EPWM3A(B) on LP   \n
@@ -125,11 +125,11 @@ X                  | 1                 | 1                     | 0
 
 ## Both NOT HIGH at the same time
 
-EPWM0 is configured such that when TripIN gets HIGH, then it pulls EPWM0A to high.
-Here the EPWM0A_MDL has been routed through EPWM2 in the same process as mentioned in the above cases.
-EPWM2B shows how EPWM0B was before ICL was applied to it.
-The ICL for block B inside EPWM0 was configured such that EPWM0A and EPWM0B cannot be high at the same time. So whenever EPWM0A_MDL gets pulled because of the trip, the EPWM0B should be pulled down.
-Since ICL Block A is disabled, EPWM0A_MDL will go as the final output.
+EPWM0 (EPWM7 in case of AM261x-LP) is configured such that when TripIN gets HIGH, then it pulls EPWM0A (EPWM7A in case of AM261x-LP) to high.
+Here the EPWM0A_MDL (EPWM7A_MDL in case of AM261x-LP) has been routed through EPWM2 in the same process as mentioned in the above cases.
+EPWM2B shows how EPWM0B (EPWM7B in case of AM261x-LP) was before ICL was applied to it.
+The ICL for block B inside EPWM0 (EPWM7 in case of AM261x-LP) was configured such that EPWM0A and EPWM0B (EPWM7A and EPWM7B in case of AM261x-LP) cannot be high at the same time. So whenever EPWM0A_MDL (EPWM7A_MDL in case of AM261x-LP) gets pulled because of the trip, the EPWM0B (EPWM7B in case of AM261x-LP) should be pulled down.
+Since ICL Block A is disabled, EPWM0A_MDL (EPWM7A_MDL in case of AM261x-LP) will go as the final output.
 
 \imageStyle{am263_epwm_icl_both_not_high_connection.PNG,width:60%}
  \image html am263_epwm_icl_both_not_high_connection.PNG "Figure 3.a Connection between EPWMs"
@@ -189,7 +189,7 @@ When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 contro
 
 \cond SOC_AM261X
 ## AM261X-LP
-- Connect J5/J7 pin 70, J6/J8 pin 57 to scope for EPWM0A(B)
+- Connect J6/J8 pin 76, 75 to scope for EPWM7A(B)
 - Connect J5/J7 pin 69 to scope for EPWM1A
 - Connect J2/J4 pin 39 to scope for EPWM2B
 - Connect J2/J4 pin 38, 37 to scope for EPWM3A(B)
@@ -200,7 +200,7 @@ When using AM263x-CC, AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 contro
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_ILLEGAL_COMBO_LOGIC_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
 
  Parameter      | Value
  ---------------|-----------

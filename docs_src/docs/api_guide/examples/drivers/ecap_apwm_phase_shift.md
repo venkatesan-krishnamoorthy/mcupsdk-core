@@ -22,7 +22,7 @@ Observe ECAP outputs on the Outputxbar instances
 - CC E2, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on HSEC pins 85 and 87
 - LP, outputxbar 7,8 showcase ecap0,1 apwm outs respectively on J5.49, J5.50
 ## AM261x
-- LP, outputxbar 1,4, showcase ecap 0,1 apwm outs respectively on J4.17, J4.12
+- LP, outputxbar 1,5, showcase ecap 0,1 apwm outs respectively on J1.5, J5.48
 - SOM E1, outputxbar 5,6 showcase ecap0,1 apwm outs respectively on HSEC pins 76 and 78
 
 

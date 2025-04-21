@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -51,7 +51,7 @@ ecap1.$name             = "CONFIG_ECAP0";
 ecap1.ecapMode          = "APWM";
 ecap1.emulationMode     = "ECAP_EMULATION_FREE_RUN";
 ecap1.useInterrupts     = false;
-ecap1.syncInPulseSource = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+ecap1.syncInPulseSource = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM1";
 ecap1.apwmPeriod        = 5000;
 ecap1.apwmCompare       = 2500;
 ecap1.loadCounter       = true;
@@ -64,7 +64,7 @@ ecap2.emulationMode     = "ECAP_EMULATION_FREE_RUN";
 ecap2.useInterrupts     = false;
 ecap2.apwmPeriod        = 5000;
 ecap2.apwmCompare       = 2500;
-ecap2.syncInPulseSource = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+ecap2.syncInPulseSource = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM1";
 ecap2.loadCounter       = true;
 ecap2.enableLoadCounter = true;
 ecap2.phaseShiftCount   = 2500;
@@ -75,7 +75,7 @@ epwm1.epwmTimebase_period           = 5000;
 epwm1.epwmTimebase_counterMode      = "EPWM_COUNTER_MODE_UP";
 epwm1.epwmTimebase_syncOutPulseMode = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
 epwm1.epwmTimebase_periodLoadMode   = "EPWM_PERIOD_DIRECT_LOAD";
-epwm1.EPWM.$assign                  = "EPWM0";
+epwm1.EPWM.$assign                  = "EPWM1";
 
 const soc_ctrl_adc    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_adc", {}, false);
 const soc_ctrl_adc1   = soc_ctrl_adc.addInstance({}, false);
@@ -87,6 +87,12 @@ const soc_ctrl_cmpss    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/s
 const soc_ctrl_cmpss1   = soc_ctrl_cmpss.addInstance({}, false);
 soc_ctrl_cmpss1.$name   = "soc_ctrl_cmpss0";
 soc_ctrl.soc_ctrl_cmpss = soc_ctrl_cmpss1;
+
+const soc_ctrl_ecap    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_ecap", {}, false);
+const soc_ctrl_ecap1   = soc_ctrl_ecap.addInstance({}, false);
+soc_ctrl_ecap1.$name   = "soc_ctrl_ecap0";
+ecap.ecapSocControls   = soc_ctrl_ecap1;
+soc_ctrl.soc_ctrl_ecap = soc_ctrl_ecap1;
 
 const soc_ctrl_epwm    = scripting.addModule("/drivers/soc_ctrl/v0/subModules/soc_ctrl_epwm", {}, false);
 const soc_ctrl_epwm1   = soc_ctrl_epwm.addInstance({}, false);
@@ -315,13 +321,13 @@ output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "GPIO15";
 
 output_xbar2.$name                      = "CONFIG_OUTPUT_XBAR1";
 output_xbar2.xbarOutput                 = ["ECAP1_OUT"];
-output_xbar2.OUTPUTXBAR.$assign         = "OUTPUTXBAR4";
-output_xbar2.OUTPUTXBAR.XBAROUT.$assign = "GPIO18";
+output_xbar2.OUTPUTXBAR.$assign         = "OUTPUTXBAR5";
+output_xbar2.OUTPUTXBAR.XBAROUT.$assign = "GPIO19";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution = "GPIO43";
-epwm1.EPWM.B.$suggestSolution = "GPIO44";
+epwm1.EPWM.A.$suggestSolution = "GPIO45";
+epwm1.EPWM.B.$suggestSolution = "GPIO46";
