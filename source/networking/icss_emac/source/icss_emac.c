@@ -820,7 +820,7 @@ int32_t ICSS_EMAC_rxPktGet(ICSS_EMAC_RxArgument *rxArg, void *userArg)
     ICSS_EMAC_PortParams        *sPort;
     PRUICSS_Handle              pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
     PRUICSS_HwAttrs const       *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
-    uint8_t                     numHostQueues;
+    uint8_t                     numHostQueues = pDynamicMMap->numQueues;
 
     if(((((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject).customRxCallBack).callBack != NULL)
     {
