@@ -252,14 +252,17 @@ int32_t FLSOPSKD_write(FLSOPSKD_Handle *pHandle, uint32_t destAddr, uint8_t *pSr
         flashPageSize = params->pageSizeInBytes;
         pHandle->lastOperationXipDowntime = 0;
         pHandle->lastOperationXipDowntime = 0;
+
         do
         {
+            uint32_t newDestAddr = destAddr + bytesWritten;
+            uint8_t* pSrc = pSrcBuffer + bytesWritten;
             CSL_REG32_WR(&pReg->FOTA_GP0, FLSOPSKD_OPCODE_WRITE_TO_FLASH);
             CSL_REG32_WR(&pReg->FOTA_GP1, 0);
-            CSL_REG32_WR(&pReg->FOTA_ADDR, destAddr + bytesWritten);
+            CSL_REG32_WR(&pReg->FOTA_ADDR, newDestAddr);
             CSL_REG32_WR(&pReg->FOTA_CNT, flashPageSize);
-            memcpy((void *)CSL_FSS_WBUF_GENREGS_REGS_BASE, pSrcBuffer + bytesWritten, flashPageSize);
-            memcpy((void *)(CSL_FSS_WBUF_GENREGS_REGS_BASE + flashPageSize), pSrcBuffer + bytesWritten, flashPageSize);
+            memcpy((void *)CSL_FSS_WBUF_GENREGS_REGS_BASE, pSrc, flashPageSize);
+            memcpy((void *)(CSL_FSS_WBUF_GENREGS_REGS_BASE + flashPageSize), pSrc, flashPageSize);
             CSL_REG32_WR(&pReg->STS_IRQ.STATUS, TRUE);
             CSL_REG32_FINS(&pReg->FOTA_CTRL, FSS_FOTA_GENREGS_FOTA_CTRL_GO, TRUE);
             status = FLSOPSKD_busyPoll(pHandle);

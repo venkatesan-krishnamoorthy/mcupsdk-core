@@ -173,6 +173,8 @@ void main()
             FOTA_ReleaseCfgBusOwnership();
             // Poll the Flash wait until write has completed
             FOTA_WaitFlashBusy(0xB1D0,0x1); //150us Delay
+            /* !!! DONOT REMOVE THE FOLLOWING DELAY !!! */
+            for(volatile int delay = 0; delay < 1000; delay++);
         }
         break;
         case 1:
@@ -377,7 +379,7 @@ void FOTA_WaitFlashBusy(uint16_t delay, uint16_t loop_count)
     ESFR_MCU_CFG_WR_DAT3 = ESFR_MCU_CFG_RD_DAT3;
     ESFR_MCU_CFG_WR_DAT2 = ESFR_MCU_CFG_RD_DAT2;
     ESFR_MCU_CFG_WR_DAT1 = ESFR_MCU_CFG_RD_DAT1;
-    ESFR_MCU_CFG_WR_DAT0 = 5;
+    ESFR_MCU_CFG_WR_DAT0 = 0xfa;
     FOTA_WriteCfg(OPTISPI_CFG_OPCODE_EXT_LOWER_REG, ESFR_OSPI_REGS_RSEL);
 
     // Addr RDSR = 0x0
@@ -470,7 +472,7 @@ void FOTA_EraseSector()
     ESFR_MCU_CFG_WR_DAT3 = ESFR_MCU_CFG_RD_DAT3;
     ESFR_MCU_CFG_WR_DAT2 = ESFR_MCU_CFG_RD_DAT2;
     ESFR_MCU_CFG_WR_DAT1 = ESFR_MCU_CFG_RD_DAT1;
-    ESFR_MCU_CFG_WR_DAT0 = 0x6;
+    ESFR_MCU_CFG_WR_DAT0 = 0xF9;
     FOTA_WriteCfg(OPTISPI_CFG_OPCODE_EXT_LOWER_REG, ESFR_OSPI_REGS_RSEL);
     ESFR_MCU_CFG_WR_DAT0 = 0x01;
     ESFR_MCU_CFG_WR_DAT1 = 0x00;
@@ -502,12 +504,12 @@ void FOTA_EraseSector()
     ESFR_MCU_CFG_WR_DAT3 = ESFR_MCU_CFG_RD_DAT3;
     ESFR_MCU_CFG_WR_DAT2 = ESFR_MCU_CFG_RD_DAT2;
     ESFR_MCU_CFG_WR_DAT1 = ESFR_MCU_CFG_RD_DAT1;
-    ESFR_MCU_CFG_WR_DAT0 = gStig_opcode;
+    ESFR_MCU_CFG_WR_DAT0 = gStig_exopcode;
     FOTA_WriteCfg(OPTISPI_CFG_OPCODE_EXT_LOWER_REG, ESFR_OSPI_REGS_RSEL);
     ESFR_MCU_CFG_WR_DAT0 = 0x01;
     ESFR_MCU_CFG_WR_DAT1 = 0x00;
     ESFR_MCU_CFG_WR_DAT2 = 0x0B;
-    ESFR_MCU_CFG_WR_DAT3 = gStig_exopcode;
+    ESFR_MCU_CFG_WR_DAT3 = gStig_opcode;
     FOTA_WriteCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
 
     // poll to determine when the STIG command is done
