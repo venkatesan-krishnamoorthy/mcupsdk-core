@@ -38,7 +38,7 @@
 #include "../test_fota_agent.h"
 
 #define EXT_FLASH_ERASE_OPCODE      (0x21U)
-#define EXT_FLASH_ERASE_EXTOPCODE   (0x21U)
+#define EXT_FLASH_ERASE_EXTOPCODE   (0xDEU)
 #define EXT_FLASH_ERASE_SIZE        (4096U)
 #define EXT_FLASH_PAGE_SIZE         (256U)
 #define FLASH_DATA_INITIAL_VALUE    (0xFFFFFFFF)
