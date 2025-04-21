@@ -34,7 +34,7 @@
 #define __BOARD_H__
 
 #define ERASE_OP_CODE                   (0x21U)
-#define ERASE_EXOP_CODE                 ERASE_OP_CODE
+#define ERASE_EXOP_CODE                 (0xDEU)
 #define FLASH_PAGE_SIZE                 (256U)
 #define ERASE_SECTOR_SIZE               (4096U)
 

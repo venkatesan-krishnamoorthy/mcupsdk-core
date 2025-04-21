@@ -39,6 +39,8 @@
 #include "ti_board_open_close.h"
 #include "ti_board_config.h"
 
+#define RUN_XIP_IN_PARALLEL
+
 extern void hopperFnxFlash();
 extern void loopwait();
 
@@ -61,6 +63,18 @@ int main()
     and flash writes and parallely do the XIP.
     */
     SOC_sendSoftwareInterrupt(CSL_CORE_ID_R5FSS0_1);
+
+#ifdef RUN_XIP_IN_PARALLEL
+    /*
+    start XIP. Hopper Function is placed in flash memory/
+    */
+    DebugP_log("\r\nStarting XIP Function.\r\n");
+    for(int i = 0; i < 2000; i++)
+    {
+        hopperFnxFlash();
+    }
+    DebugP_log("XIP Function ended.\r\n");
+#endif 
 
     while(1)
     {
