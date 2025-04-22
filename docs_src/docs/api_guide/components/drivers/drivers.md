@@ -62,9 +62,6 @@ It consists of below sub-modules
 - \subpage DRIVERS_ESM_PAGE
 - \subpage DRIVERS_GPADC_PAGE
 - \subpage DRIVERS_GPIO_PAGE
-\cond SOC_AM273X
-- \subpage DRIVERS_HSMCLIENT_PAGE
-\endcond
 - \subpage DRIVERS_HWA_PAGE
 - \subpage DRIVERS_I2C_PAGE
 - \subpage DRIVERS_IPC_NOTIFY_PAGE
@@ -98,7 +95,6 @@ It consists of below sub-modules
 - \subpage DRIVERS_FSI_PAGE
 - \subpage DRIVERS_GPIO_PAGE
 - \subpage DRIVERS_GPMC_PAGE
-- \subpage DRIVERS_HSMCLIENT_PAGE
 - \subpage DRIVERS_I2C_PAGE
 - \subpage DRIVERS_IPC_NOTIFY_PAGE
 - \subpage DRIVERS_IPC_RPMESSAGE_PAGE
@@ -135,7 +131,6 @@ It consists of below sub-modules
 - \subpage DRIVERS_FSS_PAGE
 - \subpage DRIVERS_FSI_PAGE
 - \subpage DRIVERS_GPIO_PAGE
-- \subpage DRIVERS_HSMCLIENT_PAGE
 - \subpage DRIVERS_I2C_PAGE
 - \subpage DRIVERS_IPC_NOTIFY_PAGE
 - \subpage DRIVERS_IPC_RPMESSAGE_PAGE
@@ -173,7 +168,6 @@ It consists of below sub-modules
 - \subpage DRIVERS_FSS_PAGE
 - \subpage DRIVERS_FSI_PAGE
 - \subpage DRIVERS_GPIO_PAGE
-- \subpage DRIVERS_HSMCLIENT_PAGE
 - \subpage DRIVERS_GPMC_PAGE
 - \subpage DRIVERS_I2C_PAGE
 - \subpage DRIVERS_IPC_NOTIFY_PAGE

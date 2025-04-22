@@ -189,6 +189,11 @@ information refer @ref DRIVERS_HSMCLIENT_PAGE
 \endcond
 
 ### Modules
+This page links to the HSM client used to access HSM services.
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X || SOC_AM273X
+- \subpage DRIVERS_HSMCLIENT_PAGE
+\endcond
 
 This page links to sub modules that enable authentication, data integrity and
 its confidentiality with the on-chip hardware accelarators.
@@ -221,3 +226,4 @@ the drivers only operate in CPU mode of data copy.
 the drivers only operate in CPU mode of data copy.
 
 \endcond
+

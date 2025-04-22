@@ -272,31 +272,31 @@ table below
 
 - This service is available on **HS-SE** devices.
 - The service issued to HSM Server retrieves the data of Extended OTP row based on row index provided as param.
-- User needs to instantiate EfuseRead_t object and call HsmClient_readOTPRow() API to get the data of Extended OTP row.
+- User needs to instantiate NvmOtpRead_t object and call HsmClient_readOTPRow() API to get the data of Extended OTP row.
 
 ## HSM Client Write OTP Row Service. {#DRIVERS_HSMCLIENT_WRITE_OTP_ROW}
 
 - This service is available on **HS-SE** devices.
 - The service issued to HSM Server writes the data to Extended OTP efuse row based on row index provided as param.
-- User needs to instantiate EfuseRowWrite_t object and call HsmClient_writeOTPRow() API to writes the data to Extended OTP row.
+- User needs to instantiate NvmOtpRowWrite_t object and call HsmClient_writeOTPRow() API to writes the data to Extended OTP row.
 
 ## HSM Client Lock OTP Row Service. {#DRIVERS_HSMCLIENT_LOCK_OTP_ROW}
 
 - This service is available on **HS-SE** devices.
 - The service issued to HSM Server sets the protection status bit of the specified row to 1.
-- User needs to instantiate EfuseRowProt_t object and call HsmClient_lockOTPRow() API to lock the Extended OTP row.
+- User needs to instantiate NvmOtpRowProt_t object and call HsmClient_lockOTPRow() API to lock the Extended OTP row.
 
 ## HSM Client Get OTP Row Count Service. {#DRIVERS_HSMCLIENT_GET_OTP_ROW_COUNT}
 
 - This service is available on **HS-SE** devices.
 - The service issued to HSM Server retrieves the count of Extended OTP rows.
-- User needs to instantiate EfuseRowCount_t object and call HsmClient_getOTPRowCount() API to to get the Extended OTP rows.
+- User needs to instantiate NvmOtpRowCount_t object and call HsmClient_getOTPRowCount() API to to get the Extended OTP rows.
 
 ## HSM Client Get OTP Row Protection Service. {#DRIVERS_HSMCLIENT_GET_OTP_ROW_PROTECTION}
 
 - This service is available on **HS-SE** devices.
 - The service issued to HSM Server retrieves the Extended OTP efuse row protection status.
-- User needs to instantiate EfuseRowProt_t object and call HsmClient_getOTPRowProtection() API to to get Extended OTP efuse row protection status.
+- User needs to instantiate NvmOtpRowProt_t object and call HsmClient_getOTPRowProtection() API to to get Extended OTP efuse row protection status.
 
 ## HSM Client Proc Auth Boot Service. {#DRIVERS_HSMCLIENT_PROC_AUTH_BOOT}
 
@@ -351,6 +351,35 @@ However there are certain checks over the inputs given by the user for example t
 - The service issued to HSM Server by SBL.
 - This service is responsible for importing keyring.
 - Once the request, HSM will parse the sent X.509 certificate and populate the keyring in HSM secure ram.
+
+\cond (SOC_AM263PX || SOC_AM261X)
+## HSM Client Configure OTFA Service {#DRIVERS_HSMCLIENT_configOTFARegions}
+
+- This service is available on **HS_SE** devices.
+- The service issued to HSM Server to configure the OTFA(On-The-Fly-Authentication) registers from the OtfaConfig Paramter.
+- This service is responsible for configuring OTFA regions.
+- Once the request is made, HSM will parse the input and write the required values to the OTFA registers and configure OTFA.
+
+## HSM Client Read OTFA Region Configuration Service {#DRIVERS_HSMCLIENT_readOTFARegions}
+
+- This service is available on **HS_SE** devices.
+- This service is responsible for reading the OTFA region configuration.
+- The service issued to HSM Server to read the OTFA configurations of a particular region that is configured.
+- Once the request is made, HSM will check the region number passed and if it is valid, then display the configurations for that region.
+
+## HSM Client Verify RoT Switching Certificate {#DRIVERS_HSMCLIENT_VerifyROTSwitchingCertificate}
+
+- This service is available on **HS_SE** devices.
+- The service issued to HSM Server to validate the RoT Switching Certificate. Once the certificate is validated, the RoT will switch to 
+  backup keys temporily (current power cycle).
+- This then can be used to authenticate images against backup keys.
+- To permanently switch to backup keys, the HsmClient_UpdateKeyRevsion API is invoked
+
+## HSM Client Update Key Revision {#DRIVERS_HSMCLIENT_UpdateKeyRevsion}
+
+- This service is available on **HS_SE** devices.
+- This service is responsible for switching the RoT to backup keys permanently.
+\endcond
 
 ## APIs
 @ref DRV_HSMCLIENT_MODULE
