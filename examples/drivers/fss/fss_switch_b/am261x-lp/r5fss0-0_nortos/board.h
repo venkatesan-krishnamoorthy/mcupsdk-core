@@ -37,5 +37,6 @@
 #define ERASE_EXOP_CODE                 (0xDEU)
 #define FLASH_PAGE_SIZE                 (256U)
 #define ERASE_SECTOR_SIZE               (4096U)
+#define FLASH_SIZE                      (32 * 1024 * 1024)
 
 #endif

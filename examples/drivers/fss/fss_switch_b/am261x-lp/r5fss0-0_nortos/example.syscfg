@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.2+3837"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -147,7 +147,7 @@ section1.output_section[0].palignment = true;
 
 section2.load_memory                  = "OCRAM";
 section2.$name                        = "Text Segments";
-section2.output_section.create(5);
+section2.output_section.create(6);
 section2.output_section[0].$name      = ".text.hwi";
 section2.output_section[0].palignment = true;
 section2.output_section[1].$name      = ".text.cache";
@@ -158,6 +158,8 @@ section2.output_section[3].$name      = ".text.boot";
 section2.output_section[3].palignment = true;
 section2.output_section[4].$name      = ".text:abort";
 section2.output_section[4].palignment = true;
+section2.output_section[5].$name      = ".rodata.cfg";
+section2.output_section[5].palignment = true;
 
 section3.load_memory                  = "OCRAM";
 section3.$name                        = "Code and Read-Only Data";

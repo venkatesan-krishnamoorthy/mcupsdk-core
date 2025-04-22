@@ -1,3 +1,4 @@
+
 /*
  *  Copyright (C) 2025 Texas Instruments Incorporated
  *
@@ -30,18 +31,15 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __NEW_APPLICATION_IMAGES_H__
-#define __NEW_APPLICATION_IMAGES_H__
+#ifndef NEW_APPLICATION_IMAGES_H_
+#define NEW_APPLICATION_IMAGES_H_
 
-#include <stdint.h>
+/* Generated from hello_world_xip_fss1.release.mcelf by bin_to_c_array.py */
 
-#define hello_world_release_xip_size (24252U)
-#define hello_world_release_size (7812U)
+#define MCELF_FILE_LEN (5828U)
+#define MCELFXIP_FILE_LEN (26308U)
 
-// array size is 24252
-extern uint8_t hello_world_release_xip[];
 
-// array size is 7812
-extern uint8_t hello_world_release[];
-
-#endif
+extern uint8_t mcelf_file[5828];
+extern uint8_t mcelfxip_file[26308];
+#endif // NEW_APPLICATION_IMAGES_H_

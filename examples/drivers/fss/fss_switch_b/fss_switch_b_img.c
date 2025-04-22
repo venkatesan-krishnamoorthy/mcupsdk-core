@@ -46,7 +46,6 @@
 #define BOOINFO_ADDRESS (0x80000U)
 #define BOOT_REGION_A (0U)
 #define BOOT_REGION_B (1U)
-#define FLASH_SIZE (32 * 1024 * 1024)
 
 typedef struct bootinfo_sector_s_t
 {
@@ -123,13 +122,13 @@ void switch_b_img_main(void *args)
     DebugP_log("Got MCELF file\r\n");
     status = FOTAAgent_writeStart(&gFotaAgentHandle, FLASH_SIZE / 2 + 0x81000, FALSE);
     DebugP_assert(status == SystemP_SUCCESS);
-    for (uint32_t cnt = 0; cnt < hello_world_release_size; cnt++)
+    for (uint32_t cnt = 0; cnt < MCELF_FILE_LEN; cnt++)
     {
         /*
             as and when a byte is being recv, it is being sent to agent which will handle
             all the intricacies.
         */
-        uint8_t byte = hello_world_release[cnt];
+        uint8_t byte = mcelf_file[cnt];
         status = FOTAAgent_writeUpdate(&gFotaAgentHandle, &byte, 1);
         DebugP_assert(status == SystemP_SUCCESS);
     }
@@ -139,13 +138,13 @@ void switch_b_img_main(void *args)
     DebugP_log("Got MCELF_XIP file\r\n");
     status = FOTAAgent_writeStart(&gFotaAgentHandle, FLASH_SIZE / 2, TRUE);
     DebugP_assert(status == SystemP_SUCCESS);
-    for (uint32_t cnt = 0; cnt < hello_world_release_xip_size; cnt++)
+    for (uint32_t cnt = 0; cnt < MCELFXIP_FILE_LEN; cnt++)
     {
         /*
             as and when a byte is being recv, it is being sent to agent which will handle
             all the intricacies.
         */
-        uint8_t byte = hello_world_release_xip[cnt];
+        uint8_t byte = mcelfxip_file[cnt];
         status = FOTAAgent_writeUpdate(&gFotaAgentHandle, &byte, 1);
         DebugP_assert(status == SystemP_SUCCESS);
     }
