@@ -2173,6 +2173,7 @@ static inline void ICSS_EMAC_pollPkt(ICSS_EMAC_Handle icssEmacHandle)
     uint16_t                isNRT = 0;
     ICSS_EMAC_RxArgument    rxArg;
     ICSS_EMAC_PktInfo       rxPktInfo;
+    uint8_t                 numQueues = ((((ICSS_EMAC_Object *)icssEmacHandle->object)->fwDynamicMMap).numQueues);
 
     while((allQueuesEempty != 1) && (numPacketsInLoop <= (((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->pacingThreshold)))
     {
@@ -2184,10 +2185,10 @@ static inline void ICSS_EMAC_pollPkt(ICSS_EMAC_Handle icssEmacHandle)
             if(((ICSS_EMAC_Attrs *)(icssEmacHandle->attrs))->splitQueue)
             {
                 /*Check if queue is being used for port1 (Queue_No. > Max_Queue/2) */
-                if(rxPktInfo.queueNumber >= (((((ICSS_EMAC_Object *)icssEmacHandle->object)->fwDynamicMMap).numQueues) / 2))
+                if(rxPktInfo.queueNumber >= (numQueues / 2))
                 {
                     /*If the queue is NRT*/
-                    if((rxPktInfo.queueNumber - (((((ICSS_EMAC_Object *)icssEmacHandle->object)->fwDynamicMMap).numQueues) / 2)) >= ((ICSS_EMAC_Attrs *)(icssEmacHandle->attrs))->ethPrioQueue)
+                    if((rxPktInfo.queueNumber - (numQueues  / 2)) >= ((ICSS_EMAC_Attrs *)(icssEmacHandle->attrs))->ethPrioQueue)
                     {
                         isNRT = 1;
                     }
@@ -2203,10 +2204,32 @@ static inline void ICSS_EMAC_pollPkt(ICSS_EMAC_Handle icssEmacHandle)
             }
             else
             {
-                if(rxPktInfo.queueNumber >= ((ICSS_EMAC_Attrs *)(icssEmacHandle->attrs))->ethPrioQueue)
+                if(((ICSS_EMAC_Attrs *)icssEmacHandle->attrs)->hostQueueIsolationMode == 1)
+                {
+                    /* Check for Port 0 and Port 1 to confirm whether the selected queue is NRT or RT*/
+                    if(rxPktInfo.queueNumber < numQueues) 
                     {
-                        isNRT = 1;
+                        if(rxPktInfo.queueNumber >= ((ICSS_EMAC_Attrs *)(icssEmacHandle->attrs))->ethPrioQueue)
+                        {
+                            isNRT = 1;
+                        }
                     }
+                    else
+                    {
+                        if(rxPktInfo.queueNumber >= ((ICSS_EMAC_Attrs *)(icssEmacHandle->attrs))->ethPrioQueue + numQueues)
+                        {
+                            isNRT = 1;
+                        }
+                    }
+
+                }
+                else 
+                {
+                    if(rxPktInfo.queueNumber >= ((ICSS_EMAC_Attrs *)(icssEmacHandle->attrs))->ethPrioQueue)
+                        {
+                            isNRT = 1;
+                        }
+                }
             }
 
             if(isNRT && ((((ICSS_EMAC_Object *)icssEmacHandle->object)->callBackObject).rxNRTCallBack).callBack != NULL)
