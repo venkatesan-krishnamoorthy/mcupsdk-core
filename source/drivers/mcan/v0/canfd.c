@@ -1749,7 +1749,6 @@ int32_t CANFD_read(CANFD_MsgObjHandle rxMsgHandle, uint32_t numMsgs, uint8_t* da
             DebugP_assert(NULL != config);
             ptrCanFdObj = (CANFD_Object*)config->object;
             attrs = config->attrs;
-            ptrCanMsgObj->fifoNum = attrs->fifoNum;
             if((ptrCanFdObj != NULL) && (attrs != NULL))
             {
                 if((CANFD_OPER_MODE_INTERRUPT == attrs->operMode) ||
@@ -1999,7 +1998,7 @@ static int32_t CANFD_readPoll(CANFD_MsgObjHandle rxMsgHandle, uint8_t* data)
         if(ptrCanMsgObj->rxMemType == MCAN_MEM_TYPE_FIFO)
         {
             retVal = CANFD_readPollProcessFIFO(ptrCanMsgObj, 
-                                               ptrCanMsgObj->fifoNum);
+                                               ptrCanMsgObj->rxFifoNum);
         }
     }
     else

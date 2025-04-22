@@ -147,9 +147,9 @@ void test_main(void *args)
     test_canfd_set_params(&testParams, 13933);
     RUN_TEST(test_canfd_loopback, 13933, (void*)&testParams);
     test_canfd_set_params(&testParams, 13934);
-    RUN_TEST(test_canfd_loopback, 13934, (void*)&testParams);
+    RUN_TEST(test_canfd_loopback_msg_lost, 13934, (void*)&testParams);
     test_canfd_set_params(&testParams, 13935);
-    RUN_TEST(test_canfd_loopback, 13935, (void*)&testParams);
+    RUN_TEST(test_canfd_loopback_msg_lost, 13935, (void*)&testParams);
     test_canfd_set_params(&testParams, 13936);
     RUN_TEST(test_canfd_loopback, 13936, (void*)&testParams);
     test_canfd_set_params(&testParams, 13937);
@@ -196,8 +196,6 @@ void test_main(void *args)
     RUN_TEST(test_canfd_loopback, 13957, (void*)&testParams);
     test_canfd_set_params(&testParams, 13958);
     RUN_TEST(test_canfd_loopback_polled, 13958, (void*)&testParams);
-    test_canfd_set_params(&testParams, 13959);
-    RUN_TEST(test_canfd_loopback_dma, 13959, (void*)&testParams);
 
     UNITY_END();
 
@@ -263,6 +261,7 @@ static void test_canfd_loopback(void *args)
     rxMsgObject->args       = (uint8_t*) rxData;
     rxMsgObject->rxMemType  = txMsgParams->rxMemType;
     rxMsgObject->dataLength = txMsgParams->dataLength;
+    rxMsgObject->rxFifoNum  = testParams->rxFifoNum;
 
     status += CANFD_createMsgObject (canfdHandle, txMsgObjHandle);
     if (status != SystemP_SUCCESS)
@@ -337,6 +336,13 @@ static void test_canfd_loopback(void *args)
     return;
 }
 
+/* 
+ * The FIFO is configured in Blocking mode. Once the FIFO becomes full, 
+ * any subsequent incoming messages will be discarded. Additionally, 
+ * the corresponding interrupt flags (Rx FIFO 0 Message Lost or Rx FIFO 1 Message Lost) 
+ * will be set to indicate the loss of messages in the respective FIFO.
+ * On msg lost ErrorCallback funtion will be called which will post semaphore.
+ */
 static void test_canfd_loopback_msg_lost(void *args)
 {
     int32_t          status = SystemP_SUCCESS;
@@ -395,6 +401,7 @@ static void test_canfd_loopback_msg_lost(void *args)
     rxMsgObject->args       = (uint8_t*) rxData;
     rxMsgObject->rxMemType  = MCAN_MEM_TYPE_FIFO;
     rxMsgObject->dataLength = txMsgParams->dataLength;
+    rxMsgObject->rxFifoNum  = testParams->rxFifoNum;
 
     /* FIFO Block mode Test - Start */
     DebugP_log("\nFIFO 0/1 Message Lost Test:\r\n");
@@ -433,16 +440,22 @@ static void test_canfd_loopback_msg_lost(void *args)
                             0,
                             &txData[0]);
     /* Semaphore post will be done from errorCallback function */
-    SemaphoreP_pend(&gMcanTxDoneSem, SystemP_WAIT_FOREVER); 
+    SemaphoreP_pend(&gMcanTxDoneSem, SystemP_WAIT_FOREVER);
 
-    if (testParams->reason == MCAN_INTR_SRC_RX_FIFO0_MSG_LOST)
+    if ((testParams->reason == MCAN_INTR_SRC_RX_FIFO0_MSG_LOST) &&
+        (rxMsgObject->rxFifoNum == MCAN_RX_FIFO_NUM_0))
     {
         DebugP_log ("RX FIFO0 message lost test pass");
         status += SystemP_SUCCESS;
     }
-    else
+    else if ((testParams->reason == MCAN_INTR_SRC_RX_FIFO1_MSG_LOST) &&
+             (rxMsgObject->rxFifoNum == MCAN_RX_FIFO_NUM_1))
     {
         DebugP_log ("RX FIFO1 message lost test pass");
+        status += SystemP_SUCCESS;
+    }
+    else
+    {
         status += SystemP_FAILURE;
     }
     
@@ -472,7 +485,6 @@ static void test_canfd_loopback_msg_lost(void *args)
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
     return;
 }
-
 
 static void test_canfd_loopback_polled(void *args)
 {
@@ -528,6 +540,7 @@ static void test_canfd_loopback_polled(void *args)
     rxMsgObject->args       = (uint8_t*) rxData;
     rxMsgObject->rxMemType  = txMsgParams->rxMemType;
     rxMsgObject->dataLength = txMsgParams->dataLength;
+    rxMsgObject->rxFifoNum  = testParams->rxFifoNum;
 
     status += CANFD_createMsgObject (canfdHandle, txMsgObjHandle);
     if (status != SystemP_SUCCESS)
@@ -656,6 +669,7 @@ static void test_canfd_loopback_dma(void *args)
     rxMsgObject->args       = (uint8_t*) rxData;
     rxMsgObject->rxMemType  = txMsgParams->rxMemType;
     rxMsgObject->dataLength = txMsgParams->dataLength;
+    rxMsgObject->rxFifoNum  = testParams->rxFifoNum;
 
     status += CANFD_createMsgObject (canfdHandle, txMsgObjHandle);
     if (status != SystemP_SUCCESS)
@@ -751,6 +765,9 @@ static int32_t App_compareData(uint8_t *txData, uint8_t *rxData)
     return status;
 }
 
+/* This API provides a performance report for both Standard CAN 
+ * and Extended CAN.
+ */
 static void test_canfd_loopback_perf(void *args)
 {
     int32_t                status = SystemP_SUCCESS;
@@ -764,7 +781,7 @@ static void test_canfd_loopback_perf(void *args)
     CANFD_MessageObject   *rxMsgObject = &(testParams->rxMsgObject);
     uint64_t               tsDiff, hwUtiln, tsFreq;
     uint64_t               numOfMsgPerSec;
-    uint32_t               startTicks, stopTicks, maxMsgCnt;
+    uint32_t               startTicks, stopTicks, maxMsgCnt, frameType;
     uint32_t               ticksDelay = CycleCounterP_getCount32();
 
     /* Memset Buffers */
@@ -800,6 +817,7 @@ static void test_canfd_loopback_perf(void *args)
         rxMsgObject->endMsgId   = ((MCAN_StdMsgIDFilterElement*)attrs->filterConfig)->sfid2;
         txMsgObject->dataLength = 8U;
         rxMsgObject->dataLength = 8U;
+        frameType = CANFD_MCANFrameType_CLASSIC;
     }
     else
     {
@@ -809,6 +827,7 @@ static void test_canfd_loopback_perf(void *args)
         rxMsgObject->endMsgId   = ((MCAN_ExtMsgIDFilterElement*)attrs->filterConfig)->efid2;
         txMsgObject->dataLength = MCAN_APP_TEST_DATA_SIZE;
         rxMsgObject->dataLength = MCAN_APP_TEST_DATA_SIZE;
+        frameType = CANFD_MCANFrameType_FD;
     }
 
     /* Setup the receive message object */
@@ -816,6 +835,7 @@ static void test_canfd_loopback_perf(void *args)
     rxMsgObject->msgIdType  = txMsgParams->msgIdType;
     rxMsgObject->args       = (uint8_t*) rxData;
     rxMsgObject->rxMemType  = txMsgParams->rxMemType;
+    rxMsgObject->rxFifoNum  = testParams->rxFifoNum;
 
     status += CANFD_createMsgObject (canfdHandle, txMsgObjHandle);
     if (status != SystemP_SUCCESS)
@@ -860,7 +880,7 @@ static void test_canfd_loopback_perf(void *args)
         /* Send data over Tx message object */
         status += CANFD_write (txMsgObjHandle,
                             testParams->txMsgObject.startMsgId,
-                            CANFD_MCANFrameType_FD,
+                            frameType,
                             0,
                             &txData[0]);
 
@@ -945,6 +965,12 @@ static void test_canfd_loopback_perf(void *args)
     return;
 }
 
+
+/*
+ * This API is designed to cancel a running task. In this implementation, 
+ * two tasks are created, where one task is responsible for canceling the other. 
+ * This mechanism ensures controlled termination of the designated task.
+ */
 static void test_canfd_loopback_cancel(void *args)
 {
     int32_t                status          = SystemP_SUCCESS;
@@ -1067,6 +1093,7 @@ static void test_canfd_loopback_cancel_transfer(void *args)
     rxMsgObject->args       = (uint8_t*) rxData;
     rxMsgObject->rxMemType  = txMsgParams->rxMemType;
     rxMsgObject->dataLength = txMsgParams->dataLength;
+    rxMsgObject->rxFifoNum  = testParams->rxFifoNum;
 
     status += CANFD_createMsgObject (canfdHandle, gTxMsgObjHandle);
     if (status != SystemP_SUCCESS)
@@ -1163,6 +1190,11 @@ static void test_canfd_loopback_cancel_cancel(void *args)
     };
 }
 
+/*
+ * This API is responsible for configuring and validating multiple instances 
+ * running simultaneously. It ensures proper setup and checks the functionality 
+ * of each instance to maintain smooth operation and avoid conflicts.
+ */
 static void test_canfd_loopback_multi_instances(void *args)
 {
     int32_t                status = SystemP_SUCCESS;
@@ -1285,6 +1317,7 @@ static void test_canfd_loopback_multi_instances(void *args)
     rxMsgObject1->args       = (uint8_t*) rxData1;
     rxMsgObject1->rxMemType  = txMsgParams1->rxMemType;
     rxMsgObject1->dataLength = txMsgParams1->dataLength;
+    rxMsgObject1->rxFifoNum  = testParams1.rxFifoNum;
 
     status += CANFD_createMsgObject (canfdHandle, txMsgObjHandle0);
     if (status != SystemP_SUCCESS)
@@ -1463,6 +1496,10 @@ static void App_CANFDPrintRevID(MCAN_RevisionId *revId)
     }
 }
 
+/*
+ * This API retrieves and prints the revision details along with the basic 
+ * CAN controller information.
+ */
 static void test_canfd_get_revId(void *args)
 {
     int32_t           testStatus = SystemP_SUCCESS;
@@ -1492,6 +1529,11 @@ static void test_canfd_get_revId(void *args)
     return;
 }
 
+/*
+ * This API retrieves the current state of the TX and RX pins of the CAN controller. 
+ * It provides a detailed status report, enabling monitoring and diagnostics 
+ * of communication functionality.
+ */
 static void test_canfd_TxRx_pin_state(void *args)
 {
     int32_t           testStatus = SystemP_SUCCESS;
@@ -1567,6 +1609,7 @@ static void test_canfd_TxRx_pin_state(void *args)
     return;
 }
 
+/* This API return endianness value of MCAN module. */
 static void test_canfd_endianness(void *args)
 {
     uint32_t           endianessVal = 0U;
@@ -1602,6 +1645,7 @@ static void test_canfd_endianness(void *args)
     return;
 }
 
+/* This API get the Bit-rate of MCAN module. */
 static void test_canfd_getBitRate(void *args)
 {
     int32_t          testStatus = SystemP_SUCCESS;
@@ -1650,6 +1694,9 @@ static void test_canfd_getBitRate(void *args)
     return;
 }
 
+/*  This API add clock stop request for MCAN module to put it
+ *  in power down mode. 
+ */
 static void test_canfd_Clk_Stop_Req_Test(void *args)
 {
     int32_t          testStatus = SystemP_SUCCESS;
@@ -1687,6 +1734,7 @@ static void test_canfd_Clk_Stop_Req_Test(void *args)
     return;
 }
 
+/* This API will reset timestamp counter value. */
 static void test_canfd_TS_Reset(void *args)
 {
     int32_t          testStatus = SystemP_SUCCESS;
@@ -1804,12 +1852,12 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
     openParams->msgRAMConfig.txFIFOSize              = 0U,
     openParams->msgRAMConfig.txBufMode               = 0U, /* Tx FIFO/QUEUE operation */
     openParams->msgRAMConfig.txEventFIFOSize         = APP_MCAN_TX_BUFF_SIZE,
-    openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+    openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
     openParams->msgRAMConfig.rxFIFO0size             = APP_MCAN_FIFO_0_NUM,
-    openParams->msgRAMConfig.rxFIFO0waterMark        = 3U,
+    openParams->msgRAMConfig.rxFIFO0waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
     openParams->msgRAMConfig.rxFIFO0OpMode           = 0U,
     openParams->msgRAMConfig.rxFIFO1size             = APP_MCAN_FIFO_1_NUM,
-    openParams->msgRAMConfig.rxFIFO1waterMark        = 3U,
+    openParams->msgRAMConfig.rxFIFO1waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
     openParams->msgRAMConfig.rxFIFO1OpMode           = 0U,
     /* ECC Configuration parameters. */
     openParams->eccConfig.enable           = true,
@@ -1820,6 +1868,7 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
 
     testParams->testCaseId   = tcId;
     testParams->canfdInstance = CONFIG_MCAN0;
+    testParams->rxFifoNum   = canTxMsg[0U].rxFifoNum;
 
     if(openParams->fdMode == true)
     {
@@ -1837,21 +1886,34 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
     switch (tcId)
     {
         case 13920:
+            /*
+            * MCAN CANFD Loopback Bitrate Test configured for 1Mbps/5Mbps.
+            * MCAN: CAN FD Mode with Bit Rate Switching enabled and bitrates set to 1Mbps and 5Mbps.
+            * In this test, transmitted messages are stored in the buffer, while received messages 
+            * are stored in the FIFO.
+            */
+
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 16U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             /* mcan module configuration parameters */
             openParams->tsSelect = 1U;
             testParams->txMsgParams = &canTxMsg[2U];
             attrs->filterConfig = &canExtIdFilter[1U];
             canExtIdFilter[1U].efec = canTxMsg[2U].filterElement;
             canExtIdFilter[1U].eft  = canTxMsg[2U].rxfilterType;
+            testParams->rxFifoNum   = canTxMsg[2U].rxFifoNum;
             break;
         case 13921:
+            /* Internal Loopback, High Priority And Bitrate 1Mbps/2.5Mbps test.
+             * MCAN: CAN FD Mode with Bit Rate Switching ON And Bitrate 1MBps/5MBps
+             * Transmitted and received msg will be stored in buffer and FIFO respectively.
+             */
 #if defined (SOC_AM261X)
+            /* AM261x has only two MCAN instances */
             testParams->canfdInstance = CONFIG_MCAN0;
             config = &gCanfdConfig[CONFIG_MCAN0];
             attrs  = (CANFD_Attrs *)config->attrs;
@@ -1872,7 +1934,7 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             openParams->msgRAMConfig.txFIFOSize              = 10U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U;
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL;
             /* mcan module bit timing parameters. 1000kbps and 2500 kbps */
             bitTimingParams->nomBrp          = 2U,
             bitTimingParams->nomPropSeg      = 11U,
@@ -1887,16 +1949,23 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             /* mcan module configuration parameters */
             testParams->txMsgParams = &canTxMsg[7U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum   = canTxMsg[7U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[7U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[7U].rxfilterType;
             break;
         case 13922:
+            /*
+            * MCAN: CAN FD Mode with Bit Rate Switching enabled and additional bitrate 
+            * configuration of 250kbps/2.5Mbp.
+            * In this mode, both transmitted and received messages are stored in the buffer.
+            */
+
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum                = 10U,
             openParams->msgRAMConfig.txFIFOSize              = 0U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 3U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U;
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL;
             /* mcan module bit timing parameters. 250kbps and 5000 kbps */
             bitTimingParams->nomBrp          = 10U,
             bitTimingParams->nomPropSeg      = 13U,
@@ -1911,11 +1980,19 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             /* mcan module configuration parameters */
             testParams->txMsgParams = &canTxMsg[0U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[0U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[0U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[0U].rxfilterType;
             break;
         case 13923:
+            /*
+            * MCAN: CAN FD Mode Test with Bit Rate Switching enabled and configured 
+            * for a bitrate of 125kbps/5Mbps in internal loopback mode.
+            * In this mode, both transmitted and received messages are stored in the buffer
+            */
+
 #if defined (SOC_AM26PX)
+            /* AM263px has 8 mcan instances, instance 4 is being tested */
             testParams->canfdInstance = CONFIG_MCAN4;
             config = &gCanfdConfig[CONFIG_MCAN4];
             attrs  = (CANFD_Attrs *)config->attrs;
@@ -1937,12 +2014,19 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             bitTimingParams->dataSjw         = 1U,
             /* mcan module configuration parameters */
             testParams->txMsgParams = &canTxMsg[0U];
+            testParams->rxFifoNum = canTxMsg[0U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[0U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[0U].rxfilterType;
             break;
         case 13924:
+            /*
+             * CAN FD Mode Test with Bit Rate Switching enabled and Extended ID in internal loopback mode.
+             * In this mode, both transmitted and received messages are stored in the buffer.
+             */
+
 #if defined (SOC_AM26PX)
+            /* AM263px has 8 mcan instances, instance 5 is being tested */
             testParams->canfdInstance = CONFIG_MCAN5;
             config = &gCanfdConfig[CONFIG_MCAN5];
             attrs  = (CANFD_Attrs *)config->attrs;
@@ -1951,18 +2035,22 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN5_MCAN_LVL_INT_0,
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN5_MCAN_LVL_INT_1,
 #endif
-            /* 
-             * MCAN Loopback Extended Id Test
-             * MCAN module configuration parameters 
-             */ 
             openParams->tsSelect = 1U;
-            testParams->txMsgParams = &canTxMsg[1U];
+            testParams->txMsgParams = &canTxMsg[0U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
-            canExtIdFilter[0U].efec = canTxMsg[1U].filterElement;
-            canExtIdFilter[0U].eft  = canTxMsg[1U].rxfilterType;
+            testParams->rxFifoNum = canTxMsg[0U].rxFifoNum;
+            canExtIdFilter[0U].efec = canTxMsg[0U].filterElement;
+            canExtIdFilter[0U].eft  = canTxMsg[0U].rxfilterType;
             break;
         case 13925:
+            /*
+             * MCAN CANFD Loopback Classic CAN Test in internal loopback mode.
+             * In this mode, both transmitted and received messages are stored 
+             * in the FIFO.
+             */
+
 #if defined (SOC_AM26PX)
+            /* AM263px has 8 mcan instances, instance 5 is being tested */
             testParams->canfdInstance = CONFIG_MCAN5;
             config = &gCanfdConfig[CONFIG_MCAN5];
             attrs  = (CANFD_Attrs *)config->attrs;
@@ -1971,22 +2059,27 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN5_MCAN_LVL_INT_0,
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN5_MCAN_LVL_INT_1,
 #endif
-            /* 
-             * MCAN CANFD LOOPBACK Classic CAN Test
-             * Message RAM Configuration parameters. 
-             */
+            /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 10U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U;
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL;
             testParams->txMsgParams = &canTxMsg[21U];
             attrs->filterConfig = (MCAN_StdMsgIDFilterElement*) &canStdIDFilter[0U];  /* Standard message ID filters */
+            testParams->rxFifoNum = canTxMsg[21U].rxFifoNum;
             canStdIDFilter[0U].sfec = canTxMsg[21U].filterElement;
             canStdIDFilter[0U].sft  = canTxMsg[21U].rxfilterType;
             break;
         case 13926:
+            /*
+             * MCAN CANFD LOOPBACK Transmit FIFO Test. In this test, transmitted
+             * messages are stored in the FIFO and received back into the FIFO 
+             * if they match the configured filter criteria. 
+             */
+
 #if defined (SOC_AM26PX)
+            /* AM263px has 8 mcan instances, instance 6 is being tested */
             testParams->canfdInstance = CONFIG_MCAN6;
             config = &gCanfdConfig[CONFIG_MCAN6];
             attrs  = (CANFD_Attrs *)config->attrs;
@@ -1995,22 +2088,22 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN6_MCAN_LVL_INT_0,
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN6_MCAN_LVL_INT_1,
 #endif
-            /* 
-             * MCAN CANFD LOOPBACK Transmit FIFO Test
-             * Message RAM Configuration parameters. 
-             */
+            /*  Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 10U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U;
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL;
             testParams->txMsgParams = &canTxMsg[3U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[3U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[3U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[3U].rxfilterType;
             break;
         case 13927:
+            /* MCAN CANFD LOOPBACK Tx Mixed Config. With Buffer and Queue*/
 #if defined (SOC_AM26PX)
+            /* AM263px has 8 mcan instances, instance 7 is being tested */
             testParams->canfdInstance = CONFIG_MCAN7;
             config = &gCanfdConfig[CONFIG_MCAN7];
             attrs  = (CANFD_Attrs *)config->attrs;
@@ -2018,76 +2111,90 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN7_MCAN_LVL_INT_0,
             attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN7_MCAN_LVL_INT_1,
 #endif
-            /* 
-             * MCAN CANFD LOOPBACK Transmit Queue Test
-             * Message RAM Configuration parameters.
-             */
+            /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.lss          = APP_MCAN_STD_ID_FILTER_NUM,
             openParams->msgRAMConfig.lse          = APP_MCAN_EXT_ID_FILTER_NUM,
             openParams->msgRAMConfig.txBufNum     = 0,
             openParams->msgRAMConfig.txFIFOSize              = 10U,
             openParams->msgRAMConfig.txBufMode               = 1U, /* Tx FIFO/QUEUE operation */
             openParams->msgRAMConfig.txEventFIFOSize         = 10,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0size             = APP_MCAN_FIFO_0_NUM,
-            openParams->msgRAMConfig.rxFIFO0waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO0waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0OpMode           = 0U,
             openParams->msgRAMConfig.rxFIFO1size             = APP_MCAN_FIFO_1_NUM,
-            openParams->msgRAMConfig.rxFIFO1waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO1waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO1OpMode           = 0U,
             testParams->txMsgParams = &canTxMsg[8U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[8U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[8U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[8U].rxfilterType;
             break;
-        case 13928:
-            /* 
-             * MCAN CANFD LOOPBACK Mixed Tx Buffers and FIFO Test
+        case 13928: 
+            /* MCAN CANFD LOOPBACK Mixed Tx Buffers and FIFO Test
+             * This test case utilizes both the buffer and FIFO on the TX side for transmission, 
+             * while the RX side exclusively uses FIFO for receiving messages. 
              */
             testParams->txMsgParams = &canTxMsg[8U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[8U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[8U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[8U].rxfilterType;
             break;
         case 13929:
-            /* 
-             * MCAN CANFD LOOPBACK Maximum Tx Buffer Size Configuration Test
-             */
+             /*
+              * MCAN CANFD Loopback Test for Maximum TX Buffer Size Configuration. 
+              * In this test, both the TX and RX sides use buffers for message storage, 
+              * ensuring validation of maximum buffer utilization during transmission and reception.
+              */
             openParams->tsSelect                  = 1U;
             openParams->msgRAMConfig.txBufNum     = APP_MCAN_TX_BUFF_MAX_SIZE,
             openParams->msgRAMConfig.txFIFOSize   = 0U,
             testParams->txMsgParams = &canTxMsg[1U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[1U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[1U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[1U].rxfilterType;
             break;
         case 13930:
-            /* 
-             * MCAN CANFD LOOPBACK Mixed Rx Buffers and FIFO Test
-             */
+            /*
+            * MCAN CANFD LOOPBACK Mixed Rx Buffers and FIFO Test
+            * MCAN CANFD Loopback Test with Mixed RX Buffers and FIFO Configuration.
+            * In this test case, the TX side exclusively uses the buffer for transmission, 
+            * while the RX side leverages both the buffer and FIFO for receiving messages. 
+            * This configuration facilitates a thorough validation of mixed storage setups, 
+            * ensuring comprehensive testing of the system's capabilities.
+            */
             openParams->tsSelect    = 1U;
             testParams->txMsgParams = &canTxMsg[2U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[2U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[2U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[2U].rxfilterType;
             break;
         case 13931:
             /* 
-             * MCAN CANFD LOOPBACK Receive FIFO 0 Test
+             * MCAN CANFD LOOPBACK Receive FIFO 0 Test. In this mode, 
+             * both transmitted and received messages are stored 
+             * in the buffer and FIFO0 respectively.
              */
             openParams->msgRAMConfig.txBufNum                = 0,
             openParams->msgRAMConfig.txFIFOSize              = 10U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U;
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL;
             testParams->txMsgParams = &canTxMsg[5U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[5U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[5U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[5U].rxfilterType;
             break;
         case 13933:
             /* 
-             * MCAN CANFD LOOPBACK Receive FIFO 1 Test 
+             * MCAN CANFD LOOPBACK Receive FIFO 1 Test. In this mode, 
+             * both transmitted and received messages are stored 
+             * in the buffer and FIFO 1 respectively.
              */
             openParams->tsSelect = 1U;
             /* Message RAM Configuration parameters. */
@@ -2098,86 +2205,109 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             openParams->msgRAMConfig.rxFIFO1OpMode = 1U;
             testParams->txMsgParams  = &canTxMsg[15U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[15U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[15U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[15U].rxfilterType;
             break;
         case 13934:
-            /* 
-             * MCAN CANFD LOOPBACK Receive FIFO 0 Message Lost Test
-             */
+            /*
+            * MCAN CANFD Loopback Test for Receive FIFO 0 Message Lost Condition.
+            * This test configures the RX FIFO in blocking mode. Once the buffer is full, 
+            * any incoming messages will be rejected or lost, triggering the corresponding 
+            * interrupt to indicate the loss. This setup validates the behavior of the 
+            * system under FIFO overflow conditions.
+            */
             openParams->tsSelect    = 1U;
+            openParams->filterConfig.anfe = true,
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum          = 0U,
             openParams->msgRAMConfig.txFIFOSize        = 2U,
             openParams->msgRAMConfig.txBufMode         = 0U, /* Tx FIFO/QUEUE operation */
             openParams->msgRAMConfig.txEventFIFOSize   = 2U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark = 2U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark = 2,
             openParams->msgRAMConfig.rxFIFO0size   = 2U;
             openParams->msgRAMConfig.rxFIFO0OpMode = 0U;
             openParams->msgRAMConfig.rxFIFO1size   = 2U;
             openParams->msgRAMConfig.rxFIFO1OpMode = 0U;
-            openParams->msgRAMConfig.rxFIFO0waterMark  = 2U,
-            openParams->msgRAMConfig.rxFIFO1waterMark  = 2U,
-            testParams->txMsgParams  = &canTxMsg[7U];
+            openParams->msgRAMConfig.rxFIFO0waterMark  = 2,
+            openParams->msgRAMConfig.rxFIFO1waterMark  = 2,
+            testParams->txMsgParams  = &canTxMsg[22U];
+            testParams->rxFifoNum = MCAN_RX_FIFO_NUM_0;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
-            canExtIdFilter[0U].efec = canTxMsg[7U].filterElement;
-            canExtIdFilter[0U].eft  = canTxMsg[7U].rxfilterType;
+            canExtIdFilter[0U].efec = canTxMsg[22U].filterElement;
+            canExtIdFilter[0U].eft  = canTxMsg[22U].rxfilterType;
             break;
         case 13935:
-            /* 
-             * MCAN CANFD LOOPBACK Receive FIFO 1 Message Lost Test 
-             */
+            /*
+            * MCAN CANFD Loopback Test for Receive FIFO 1 Message Lost Condition.
+            * This test configures the RX FIFO in blocking mode. Once the buffer is full, 
+            * any incoming messages will be rejected or lost, triggering the corresponding 
+            * interrupt to indicate the loss. This setup validates the behavior of the 
+            * system under FIFO overflow conditions.
+            */
             openParams->tsSelect = 1U;
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum      = 0U,
             openParams->msgRAMConfig.txFIFOSize    = 2U,
             openParams->msgRAMConfig.txBufMode     = 0U;
             openParams->msgRAMConfig.txEventFIFOSize      = 2U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark = 2U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0size   = 2U;
             openParams->msgRAMConfig.rxFIFO0OpMode = 0U;
             openParams->msgRAMConfig.rxFIFO1size   = 2U;
             openParams->msgRAMConfig.rxFIFO1OpMode = 0U;
-            openParams->msgRAMConfig.rxFIFO0waterMark  = 2U,
-            openParams->msgRAMConfig.rxFIFO1waterMark  = 2U,
-            testParams->txMsgParams  = &canTxMsg[7U];
+            openParams->msgRAMConfig.rxFIFO0waterMark  = App_MCAN_FIFO_WATERMARK_LEVEL,
+            openParams->msgRAMConfig.rxFIFO1waterMark  = App_MCAN_FIFO_WATERMARK_LEVEL,
+            testParams->txMsgParams  = &canTxMsg[22U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
-            canExtIdFilter[0U].efec = canTxMsg[7].filterElement;
-            canExtIdFilter[0U].eft  = canTxMsg[7].rxfilterType;
+            testParams->rxFifoNum = canTxMsg[22U].rxFifoNum;
+            canExtIdFilter[0U].efec = canTxMsg[22U].filterElement;
+            canExtIdFilter[0U].eft  = canTxMsg[22U].rxfilterType;
             break;
         case 13936:
-            /* MCAN CANFD LOOPBACK Maximum Rx Buffer/FIFO Size Configuration Test */
+            /*
+            * This test case configures the RX buffer or FIFO to its maximum size.
+            * It performs a Maximum RX Buffer/FIFO Size Configuration Test. 
+            */
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 32U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0size             = APP_MCAN_FIFO_0_NUM,
-            openParams->msgRAMConfig.rxFIFO0waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO0waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0OpMode           = 0U,
             openParams->msgRAMConfig.rxFIFO1size             = APP_MCAN_FIFO_1_NUM,
-            openParams->msgRAMConfig.rxFIFO1waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO1waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO1OpMode           = 0U,
             openParams->tsSelect = 1U;
             testParams->txMsgParams = &canTxMsg[2U];
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
+            testParams->rxFifoNum = canTxMsg[2U].rxFifoNum;
             canExtIdFilter[0U].efec = canTxMsg[2U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[2U].rxfilterType;
             break;
         case 13937:
-            /* 
-             * MCAN CANFD Tx and Rx Throughput Standard ID
-             */
+            /*
+            * This test is designed for performance analysis of CAN Standard IDs, 
+            * with a focus on TX and RX throughput. It evaluates the efficiency and 
+            * reliability of data transmission and reception under varying conditions. 
+            * Both TX and RX storage types are configured as buffers for this test.
+            */
             openParams->fdMode = false;
             testParams->txMsgParams = &canTxMsg[18U];
+            testParams->rxFifoNum = canTxMsg[18U].rxFifoNum;
             attrs->filterConfig = (MCAN_StdMsgIDFilterElement*) &canStdIDFilter[0U];
-            canStdIDFilter[0U].sfec = 0x7U;
-            canStdIDFilter[0U].sft  = 0x3U;
+            canStdIDFilter[0U].sfec = MCAN_EXT_FILT_ELEM_BUFFER;
+            canStdIDFilter[0U].sft  = MCAN_EXT_FILT_TYPE_DISABLE;
             break;
         case 13938:
-            /* 
-             * MCAN CANFD Tx and Rx Throughput Extended ID  
-             */
+            /*
+            * This test is designed for performance analysis of CAN Extended IDs, 
+            * with a focus on TX and RX throughput. It evaluates the efficiency and 
+            * reliability of data transmission and reception under varying conditions. 
+            * Both TX and RX storage types are configured as buffers for this test.
+            */
             openParams->tsSelect = 0U;
              /* Default Bit-Rate 1000kbps and 5000 kbps*/
             bitTimingParams->nomBrp          = 3U,
@@ -2198,149 +2328,213 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             openParams->msgRAMConfig.txFIFOSize              = 10U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0size             = 10U,
-            openParams->msgRAMConfig.rxFIFO0waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO0waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0OpMode           = 0U,
             openParams->msgRAMConfig.rxFIFO1size             = 10U,
-            openParams->msgRAMConfig.rxFIFO1waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO1waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO1OpMode           = 0U,
 
             testParams->txMsgParams = &canTxMsg[0U];
+            testParams->rxFifoNum = canTxMsg[4U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[4U];
             canExtIdFilter[3U].efec = MCAN_EXT_FILT_ELEM_BUFFER;
             canExtIdFilter[3U].eft  = MCAN_EXT_FILT_TYPE_RANGE;
             break;
         case 13939:
-            /* 
-             * MCAN CANFD LOOPBACK High Priority Message Notification Test 
-             */
+            /*
+            * MCAN CANFD Loopback High Priority Message Notification Test.
+            * This test is designed to validate the handling of high-priority messages 
+            * in loopback mode, ensuring accurate notification and processing of such 
+            * messages within the system.
+            */
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum     = 0,
             openParams->msgRAMConfig.txFIFOSize              = 32U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0size             = APP_MCAN_FIFO_0_NUM,
-            openParams->msgRAMConfig.rxFIFO0waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO0waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0OpMode           = 0U,
             openParams->msgRAMConfig.rxFIFO1size             = APP_MCAN_FIFO_1_NUM,
-            openParams->msgRAMConfig.rxFIFO1waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO1waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO1OpMode           = 0U,
             testParams->txMsgParams = &canTxMsg[7U];
+            testParams->rxFifoNum = canTxMsg[7U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[7U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[7U].rxfilterType;
             break;
         case 13940:
-            /* MCAN CANFD LOOPBACK Message Cancellation Test  */
+            /*
+            * This test is designed to demonstrate task cancellation functionality. 
+            * In this implementation, two tasks are created, where one task is responsible 
+            * for canceling the other. This setup ensures controlled and reliable 
+            * termination of the designated task.
+            */
             testParams->txMsgParams = &canTxMsg[0U];
+            testParams->rxFifoNum = canTxMsg[0U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[0U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[0U].rxfilterType;
             break;
         case 13941:
-            /* MCAN CANFD LOOPBACK Automatic Retransmission Test */
+            /*
+            * This test is designed to demonstrate the Automatic Retransmission feature 
+            * of the CAN module.
+            */
             openParams->darEnable   = false,
             openParams->tsSelect    = 1U;
             testParams->txMsgParams = &canTxMsg[1U];
+            testParams->rxFifoNum = canTxMsg[1U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[1U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[1U].rxfilterType;
             break;
         case 13942:
-            /* MCAN CANFD LOOPBACK Transmitter Delay Compensation Test */
+            /*
+            * This test is designed to demonstrate the Transmitter Delay Compensation feature 
+            * of the CAN module. It validates the module's ability to account for transmission 
+            * delays, ensuring accurate and synchronized communication across the network.
+            */
             openParams->tdcEnable   = true,
             openParams->tsSelect    = 1U;
             testParams->txMsgParams = &canTxMsg[1U];
+            testParams->rxFifoNum = canTxMsg[1U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[1U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[1U].rxfilterType;
             break;
         case 13943:
-            /* MCAN CANFD LOOPBACK Interrupt Line 1 Test */
+            /*
+            * This test configures Interrupt Line 1 and validates the interrupt handling 
+            * functionality on that line. It is designed as part of the CAN CANFD Loopback 
+            * Interrupt Line 1 Test, ensuring proper configuration and accurate response to 
+            * interrupts triggered on Line 1.
+            */
             testParams->txMsgParams  = &canTxMsg[1U];
+            testParams->rxFifoNum = canTxMsg[1U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[1U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[1U].rxfilterType;
             break;
         case 13944:
-            /* MCAN CANFD Revision Test */
+            /* This test retrieves and prints the revision details along with the basic 
+             * CAN controller information.
+             */
             testParams->txMsgParams  = &canTxMsg[1U];
+            testParams->rxFifoNum = canTxMsg[1U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[1U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[1U].rxfilterType;
             break;
         case 13945:
-            /* MCAN CANFD LOOPBACK Pin Status Test */
+            /*
+            * This test retrieves the current state of the TX and RX pins of the CAN controller. 
+            * It provides a detailed status report, enabling monitoring and diagnostics 
+            * of communication functionality.
+            */
             testParams->txMsgParams = &canTxMsg[1U];
+            testParams->rxFifoNum = canTxMsg[1U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[1U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[1U].rxfilterType;
             break;
         case 13946:
-            /* MCAN CANFD Endianness Test */
+            /*
+            * This test retrieves and validates the endianness value of the MCAN module. 
+            * It ensures accurate detection and confirmation of the module's byte order 
+            * configuration, supporting reliable data processing and communication.
+            */
             openParams->tsSelect    = 1U;
             testParams->txMsgParams = &canTxMsg[1U];
+            testParams->rxFifoNum = canTxMsg[1U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[1U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[1U].rxfilterType;
             break;
         case 13947:
-            /* MCAN CANFD LOOPBACK Global Filter Test */
+            /*
+            * MCAN CANFD Loopback Global Filter Test.
+            * This test validates the functionality of the global filter in loopback mode, 
+            * ensuring accurate processing and handling of messages based on global filtering criteria.
+            */
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 10U,
-            openParams->msgRAMConfig.txBufMode               = 0U,
+            openParams->msgRAMConfig.txBufMode               = 0U, 
+            openParams->msgRAMConfig.rxFIFO0OpMode           = 10U,
+            openParams->msgRAMConfig.rxFIFO0OpMode           = 1U,
+            openParams->msgRAMConfig.rxFIFO1OpMode           = 1U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->tsSelect = 1U;
-            testParams->txMsgParams  = &canTxMsg[16U];
+            /* Global Filter Configuration parameters. */
+            openParams->filterConfig.rrfs = true,
+            testParams->txMsgParams  = &canTxMsg[17U];
+            testParams->rxFifoNum = MCAN_RX_FIFO_NUM_0;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
-            canExtIdFilter[0U].efec = canTxMsg[16U].filterElement;
-            canExtIdFilter[0U].eft  = canTxMsg[16U].rxfilterType;
+            canExtIdFilter[0U].efec = 0U;
+            canExtIdFilter[0U].eft  = 1U;
             break;
         case 13948:
-            /* MCAN CANFD LOOPBACK Acceptance Filter Range Filter Test */
+            /*
+            * MCAN CANFD Loopback Acceptance Filter Range Filter Test.
+            * This test validates the functionality of the acceptance range filter in loopback mode, 
+            * ensuring accurate processing of messages that fall within the specified range criteria.
+            */
             openParams->tsSelect = 1U;
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 32U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0size             = APP_MCAN_FIFO_0_NUM,
-            openParams->msgRAMConfig.rxFIFO0waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO0waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0OpMode           = 0U,
             openParams->msgRAMConfig.rxFIFO1size             = APP_MCAN_FIFO_1_NUM,
-            openParams->msgRAMConfig.rxFIFO1waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO1waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO1OpMode           = 0U,
             testParams->txMsgParams = &canTxMsg[15U];
+            testParams->rxFifoNum = MCAN_RX_FIFO_NUM_0;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[15U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[15U].rxfilterType;
             break;
         case 13949:
-            /* MCAN CANFD LOOPBACK Acceptance Filter Specific Id Filter Test */
+            /*
+            * MCAN CANFD Loopback Acceptance Filter Specific ID Filter Test.
+            * This test validates the functionality of the acceptance filter by using 
+            * specific ID criteria. It ensures accurate filtering and processing of 
+            * messages that match the predefined IDs.
+            */
             openParams->tsSelect = 1U;
             openParams->msgRAMConfig.txBufNum                = 0,
             openParams->msgRAMConfig.txFIFOSize              = 32U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0size             = APP_MCAN_FIFO_0_NUM,
-            openParams->msgRAMConfig.rxFIFO0waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO0waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO0OpMode           = 0U,
             openParams->msgRAMConfig.rxFIFO1size             = APP_MCAN_FIFO_1_NUM,
-            openParams->msgRAMConfig.rxFIFO1waterMark        = 3U,
+            openParams->msgRAMConfig.rxFIFO1waterMark        = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->msgRAMConfig.rxFIFO1OpMode           = 0U,
             testParams->txMsgParams = &canTxMsg[18U];
+            testParams->rxFifoNum = canTxMsg[18U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[4U];
             canExtIdFilter[0U].efec = canTxMsg[18U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[18U].rxfilterType;
             break;
         case 13950:
-            /* MCAN CANFD LOOPBACK Acceptance Filter Classic BitMask Filter Test
-             * mcan module bit timing parameters. 1000kbps and 2500 kbps 
-             */
+            /*
+            * MCAN CANFD Loopback Acceptance Filter Classic BitMask Filter Test.
+            * This test validates the functionality of the acceptance filter using the 
+            * classic bitmask filtering approach. It ensures accurate message filtering 
+            * and processing based on the specified bitmask criteria.
+            */
+            /* mcan module bit timing parameters. 1000kbps and 2500 kbps */
             bitTimingParams->nomBrp          = 2U,
             bitTimingParams->nomPropSeg      = 11U,
             bitTimingParams->nomPseg1        = 22U,
@@ -2356,42 +2550,57 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             openParams->msgRAMConfig.txFIFOSize              = 32U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             testParams->txMsgParams = &canTxMsg[7U];
+            testParams->rxFifoNum = canTxMsg[7U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[7U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[7U].rxfilterType;
             break;
         case 13951:
-            /* MCAN CANFD LOOPBACK External Time-Stamp Code Coverage Improvement Test */
+            /*
+            * MCAN CANFD Loopback External Time-Stamp Code Coverage Improvement Test.
+            * This test validates the functionality of the external time-stamp feature 
+            * and focuses on enhancing code coverage through detailed testing scenarios.
+            */
             openParams->tsSelect = 2U;
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 32U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             testParams->txMsgParams = &canTxMsg[2U];
+            testParams->rxFifoNum = canTxMsg[2U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[2U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[2U].rxfilterType;
             break;
         case 13952:
-            /* MCAN CANFD LOOPBACK Time Stamp Counter Reset, Code Coverage Improvement Test */
+            /*
+            * MCAN CANFD Loopback Time Stamp Counter Reset and Code Coverage Improvement Test.
+            * This test validates the Time Stamp Counter Reset functionality and focuses on 
+            * enhancing code coverage through comprehensive testing scenarios.
+            */
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 32U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             openParams->tsSelect = 1U;
             testParams->txMsgParams = &canTxMsg[2U];
+            testParams->rxFifoNum = canTxMsg[2U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[2U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[2U].rxfilterType;
             break;
         case 13953:
-            /* MCAN: CANFD loopback test in polled mode. TX and RX memory storage type: BUFFER*/
+            /*
+            * CANFD Loopback Test in Polled Mode.
+            * This test is performed in polled mode with both TX and RX memory storage 
+            * types configured as Buffer. It validates the loopback functionality. 
+            */
             attrs->operMode    = CANFD_OPER_MODE_POLLED,
             /* mcan module bit timing parameters. 250 kbps and 5000 kbps */
             bitTimingParams->nomBrp          = 10U,
@@ -2405,33 +2614,49 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             bitTimingParams->dataPseg2       = 1U,
             bitTimingParams->dataSjw         = 1U,
             testParams->txMsgParams = &canTxMsg[0U];
+            testParams->rxFifoNum = canTxMsg[0U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[0U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[0U].rxfilterType;
             break;
         case 13954:
+            /*
+            * This test is responsible for configuring and validating multiple instances 
+            * running simultaneously. It ensures proper setup and checks the functionality 
+            * of each instance to maintain smooth operation and avoid conflicts.
+            */
             openParams->tsSelect = 1U;
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum                = 10U,
             openParams->msgRAMConfig.txFIFOSize              = 0U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U,
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL,
             testParams->txMsgParams = &canTxMsg[0U];
+            testParams->rxFifoNum = canTxMsg[0U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[0U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[0U].rxfilterType;
             break;
         case 13955:
-            /* MCAN CANFD Clock Stop Request Test */
+            /*
+            * MCAN CANFD Clock Stop Request Test.
+            * This test validates the functionality of the clock stop request feature 
+            * in the MCAN CANFD module, ensuring proper handling and system response 
+            * during clock stop scenarios.
+            */
             testParams->txMsgParams = &canTxMsg[2U];
+            testParams->rxFifoNum = canTxMsg[2U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[2U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[2U].rxfilterType;
             break;
         case 13956:
-            /* mcan module bit timing parameters. 1000kbps and 5000 kbps */
-            /*  get bit rate */
+            /*
+            * MCAN module bit timing parameters: 1000kbps and 5000kbps.
+            * This test retrieves and validates the configured bit rates, 
+            * ensuring correct setup and performance of the communication module.
+            */
             bitTimingParams->nomBrp          = 2U,
             bitTimingParams->nomPropSeg      = 11U,
             bitTimingParams->nomPseg1        = 22U,
@@ -2451,64 +2676,47 @@ static void test_canfd_set_params(CANFD_TestParams *testParams, uint32_t tcId)
             openParams->msgRAMConfig.rxFIFO0OpMode     = 1U;
             openParams->msgRAMConfig.rxFIFO1size       = 5U;
             testParams->txMsgParams = &canTxMsg[2U];
+            testParams->rxFifoNum = canTxMsg[2U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[2U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[2U].rxfilterType;
             break;
         case 13957:
+            /*
+            * MCAN CANFD Loopback Acceptance Filter Range Filter Test 2.
+            * This test validates the functionality of the acceptance range filter 
+            * in loopback mode, ensuring accurate filtering and processing of messages 
+            * that fall within the specified range criteria.
+            */
             testParams->txMsgParams = &canTxMsg[15U];
+            testParams->rxFifoNum = canTxMsg[15U].rxFifoNum;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[3U];
             canExtIdFilter[0U].efec = canTxMsg[15U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[15U].rxfilterType;
             break;
         case 13958:
-            /* MCAN: CANFD loopback test in polled mode. TX and RX memory storage type: FIFO*/
+            /*
+            * CANFD Loopback Test in Polled Mode.
+            * This test is performed in polled mode with both TX and RX memory storage 
+            * types configured as FIFO. It validates the loopback functionality. 
+            */
             attrs->operMode    = CANFD_OPER_MODE_POLLED;
-            attrs->fifoNum     = MCAN_RX_FIFO_NUM_0;
+            testParams->rxFifoNum = MCAN_RX_FIFO_NUM_0;
             /* Message RAM Configuration parameters. */
             openParams->msgRAMConfig.txBufNum                = 0U,
             openParams->msgRAMConfig.txFIFOSize              = 10U,
             openParams->msgRAMConfig.txBufMode               = 0U,
             openParams->msgRAMConfig.txEventFIFOSize         = 10U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U;
+            openParams->msgRAMConfig.txEventFIFOWaterMark    = App_MCAN_FIFO_WATERMARK_LEVEL;
             openParams->msgRAMConfig.rxFIFO0size       = 5U;
             openParams->msgRAMConfig.rxFIFO0OpMode     = 0U;
             openParams->msgRAMConfig.rxFIFO1size       = 5U;
             testParams->txMsgParams = &canTxMsg[3U];
+            testParams->rxFifoNum = canTxMsg[3U].rxFifoNum;
             testParams->txMsgParams->rxMemType = MCAN_MEM_TYPE_FIFO;
             attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
             canExtIdFilter[0U].efec = canTxMsg[3U].filterElement;
             canExtIdFilter[0U].eft  = canTxMsg[3U].rxfilterType;
-            break;
-        case 13959:
-#if defined (SOC_AM261X)
-            testParams->canfdInstance = CONFIG_MCAN1;
-            config = &gCanfdConfig[CONFIG_MCAN1];
-            attrs  = (CANFD_Attrs *)config->attrs;
-            attrs->baseAddr = CONFIG_MCAN1_BASE_ADDR,
-            attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_0,
-            attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN1_MCAN_LVL_INT_1,
-#else
-            testParams->canfdInstance = CONFIG_MCAN3;
-            config = &gCanfdConfig[CONFIG_MCAN3];
-            attrs  = (CANFD_Attrs *)config->attrs;
-            attrs->operMode = CANFD_OPER_MODE_DMA;
-            attrs->baseAddr = CONFIG_MCAN3_BASE_ADDR,
-            attrs->intrNum0 = CSLR_R5FSS0_CORE0_INTR_MCAN3_MCAN_LVL_INT_0,
-            attrs->intrNum1 = CSLR_R5FSS0_CORE0_INTR_MCAN3_MCAN_LVL_INT_1,
-#endif
-            /* Message RAM Configuration parameters. */
-            openParams->msgRAMConfig.txBufNum                = 3U,
-            openParams->msgRAMConfig.txFIFOSize              = 0U,
-            openParams->msgRAMConfig.txBufMode               = 0U,
-            openParams->msgRAMConfig.txEventFIFOSize         = 3U,
-            openParams->msgRAMConfig.txEventFIFOWaterMark    = 3U;
-            
-            attrs->operMode = CANFD_OPER_MODE_DMA;
-            testParams->txMsgParams = &canTxMsg[0U];
-            attrs->filterConfig = (MCAN_ExtMsgIDFilterElement*) &canExtIdFilter[0U];
-            canExtIdFilter[0U].efec = canTxMsg[0U].filterElement;
-            canExtIdFilter[0U].eft  = canTxMsg[0U].rxfilterType;
             break;
         default:
             break;

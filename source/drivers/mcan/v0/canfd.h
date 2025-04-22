@@ -1077,11 +1077,6 @@ typedef struct CANFD_Attrs_s
     uint32_t         rxMemType;
 
     /**
-     * \brief   FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).
-     */
-    uint32_t               fifoNum;
-
-    /**
      * \brief    void pointer to #MCAN_ExtMsgIDFilterElement or 
      *           #MCAN_StdMsgIDFilterElement structure. It will point 
      *            to any of the two structure based on fdMode. 
@@ -1598,7 +1593,7 @@ typedef struct CANFD_MessageObject_t
     /**
      * \brief   FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).
      */
-    uint32_t               fifoNum;
+    uint32_t               rxFifoNum;
 
     /**
      * \brief   Number of interrupts received
@@ -2218,8 +2213,6 @@ uint32_t CANFD_getTxPinState(CANFD_Handle canfdHandle);
  * \brief   This API will get the configured bit timings for MCAN module.
  *
  * \param   canfdHandle     #CANFD_Handle returned from #CANFD_open()
- * \param   configParams    Configuration parameters for MCAN bit timing.
- *                          Refer struct MCAN_BitTimingParams.
  */
 void CANFD_getBitTime(CANFD_Handle canfdHandle);
 

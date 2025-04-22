@@ -84,6 +84,7 @@ extern "C" {
 #define APP_MCAN_TX_BUFF_MAX_SIZE                (32U)
 #define APP_MCAN_TX_FIFO_MAX_SIZE                (32U)
 #define APP_MCAN_RX_BUFF_MAX_NUM                 (64U)
+#define App_MCAN_FIFO_WATERMARK_LEVEL            (3U)
 
 /* Theoretical maximum throughput numbers */
 #define MCAN_THEOROTICAL_MAX_STD_1_5_MBPS       (7430U)
@@ -136,6 +137,11 @@ typedef struct App_CANFD_TxMsgParams_t {
      *  Part of message ram to accessed by this message object. Refer enum #MCAN_MemType.
      */
     MCAN_MemType   rxMemType;
+    
+    /**
+     * \brief   FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).
+     */
+    uint32_t       rxFifoNum;
 }App_CANFD_TxMsgParams;
 
 typedef struct CANFD_TestParams_s {
@@ -162,6 +168,10 @@ typedef struct CANFD_TestParams_s {
     /*  This enumeration describes a list of all the reasons for which the driver 
         will invoke application callback functions. */
     CANFD_Reason reason;
+    /**
+     * \brief   FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).
+     */
+    uint32_t       rxFifoNum;
 } CANFD_TestParams;
 
 /* ========================================================================== */
@@ -196,7 +206,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* txBuffNum. Buffer number where message is to be stored. */
         APP_CANFD_STORE_INTO_RX_BUFFER, /* filterElement. */
         0U, /* filter type(rxfilterType): Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        0U, /* (rxMemType). Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* (rxMemType). Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 1 */
     {
@@ -210,7 +221,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_INTO_RX_BUFFER, /* filterElement. */
         1U, /* Rx filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        0U, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 2 */
     {
@@ -238,7 +250,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_INTO_RX_BUFFER, /* filterElement.*/
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        0U, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 3 */
     {
@@ -252,7 +265,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         1U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_0, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 4 */
     {
@@ -266,7 +280,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_0, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 5 */
     {
@@ -295,7 +310,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. standard or extended filter element. 
                     Refer efec in MCAN_ExtMsgIDFilterElement or sfec in MCAN_StdMsgIDFilterElement structure */
         0U, /* filter type(rxfilterType): Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_0, /* (rxMemType). Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* (rxMemType). Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 6 */
     {  
@@ -323,7 +339,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_0, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 7 */
     {
@@ -351,7 +368,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_SET_PRIORITY_AND_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         2U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_0, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 8 */
     {
@@ -379,7 +397,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_INTO_RX_BUFFER, /* filterElement. */
         1U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        0U, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 9 */
     {
@@ -407,7 +426,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_INTO_RX_BUFFER, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        0U, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 10 */
     {
@@ -435,7 +455,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_INTO_RX_BUFFER, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        0U, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 11 */
     {
@@ -463,7 +484,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_1, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_1, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 12 */
     {
@@ -491,7 +513,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         1U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_1, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_1, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 13 */
     {
@@ -519,7 +542,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         2U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_1, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_1, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 14 */
     {
@@ -547,7 +571,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         3U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_1, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_1, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 15 */
     {
@@ -575,7 +600,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         3U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_1_IF_FILTER_MATCHES, /* filterElement. */
         3U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_1, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_1, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 16 */
     { 
@@ -589,7 +615,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         1U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        0U, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
 
     /* Message 17 */
@@ -604,7 +631,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         3U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_0, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_1, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 18 */
     {
@@ -619,6 +647,7 @@ App_CANFD_TxMsgParams canTxMsg[] =
         APP_CANFD_STORE_INTO_RX_BUFFER, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
         MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 19 */
     {
@@ -646,7 +675,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_1_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_1, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_1, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 20 */
     {
@@ -674,7 +704,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_INTO_RX_BUFFER, /* filterElement.  */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        0U, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_BUF, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 21 */
     {
@@ -688,7 +719,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_0_IF_FILTER_MATCHES, /* filterElement. */
         0U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_0, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_0, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
     /* Message 22 */
     {
@@ -716,7 +748,8 @@ App_CANFD_TxMsgParams canTxMsg[] =
         0U, /* Buffer number where message is to be stored. */
         APP_CANFD_STORE_IN_RXFIFO_1_IF_FILTER_MATCHES, /* filterElement. */
         3U, /* filter type: Refer sft in MCAN_StdMsgIDFilterElement structure or eft in MCAN_ExtMsgIDFilterElement structure. */
-        MCAN_RX_FIFO_NUM_1, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_MEM_TYPE_FIFO, /* Buffer/FIFO number where received message is to be stored */
+        MCAN_RX_FIFO_NUM_1, /* FIFO Num (MCAN_RX_FIFO_NUM_0/MCAN_RX_FIFO_NUM_1).  */
     },
 };
 
