@@ -217,17 +217,21 @@ LIN_Handle LIN_open(uint32_t index, LIN_OpenParams *openParams)
         object      = (LIN_Object *)handle->object;
         hwAttrs     = (LIN_HwAttrs const *)handle->hwAttrs;
 
+        DebugP_assert(NULL_PTR != object);
+        DebugP_assert(NULL_PTR != hwAttrs);
+
         if(object->isOpen == true)
         {
             status = SystemP_FAILURE;
             handle = NULL;
         }
+        else
+        {
+            DebugP_assert(NULL != gLinDrvObj.lock);
+            status = SemaphoreP_pend(&gLinDrvObj.lockObj, SystemP_WAIT_FOREVER);
+        }
     }
-
-    DebugP_assert(status==SystemP_SUCCESS);
-    DebugP_assert(NULL != gLinDrvObj.lock);
-    status = SemaphoreP_pend(&gLinDrvObj.lockObj, SystemP_WAIT_FOREVER);
-
+    
     if (status == SystemP_SUCCESS)
     {
         /* Mark the handle as being used */
