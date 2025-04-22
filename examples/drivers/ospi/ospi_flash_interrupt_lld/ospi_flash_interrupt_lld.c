@@ -53,8 +53,8 @@ uint32_t intrNum;
 uint32_t gOSPIVimStsAddr, intrNum, gOSPIVimStsClrMask, intcBaseAddr;
 uint32_t blk, page;
 
-void ospi_flash_diag_test_fill_buffers(void);
-int32_t ospi_flash_diag_test_compare_buffers(void);
+void ospi_flash_interrupt_test_fill_buffers(void);
+int32_t ospi_flash_interrupt_test_compare_buffers(void);
 void isrCallback(void *args);
 
 uint32_t transferMutex = MUTEX_ARM_LOCKED;
@@ -82,7 +82,7 @@ void ospi_flash_interrupt_lld(void *args)
 
     OSPI_lld_configResetPin(gOspiHandle,2);
 
-    DebugP_log("[OSPI Flash Diagnostic Test] Starting ...\r\n");
+    DebugP_log("[OSPI Flash Interrupt Test] Starting ...\r\n");
 
 #if defined (SOC_AM64X)
 /* The OSPI Controller will be configured in 8s-8s-8s mode */
@@ -99,8 +99,8 @@ void ospi_flash_interrupt_lld(void *args)
 
     if(SystemP_SUCCESS == status)
     {
-        DebugP_log("[OSPI Flash Diagnostic Test] Flash Manufacturer ID : 0x%X\r\n", manfId);
-        DebugP_log("[OSPI Flash Diagnostic Test] Flash Device ID       : 0x%X\r\n", deviceId);
+        DebugP_log("[OSPI Flash Interrupt Test] Flash Manufacturer ID : 0x%X\r\n", manfId);
+        DebugP_log("[OSPI Flash Interrupt Test] Flash Device ID       : 0x%X\r\n", deviceId);
     }
 
     /* Fill buffers with known data,
@@ -111,27 +111,27 @@ void ospi_flash_interrupt_lld(void *args)
 
     if( SystemP_SUCCESS == status)
     {
-        ospi_flash_diag_test_fill_buffers();
+        ospi_flash_interrupt_test_fill_buffers();
 
         uint32_t offset  = APP_OSPI_FLASH_OFFSET;
 
-        DebugP_log("[OSPI Flash Diagnostic Test] Executing Flash Erase on first block...\r\n");
+        DebugP_log("[OSPI Flash Interrupt Test] Executing Flash Erase on first block...\r\n");
         status = OSPI_lld_norFlashErase(gOspiHandle, offset);
         if(SystemP_SUCCESS == status)
         {
-            DebugP_log("[OSPI Flash Diagnostic Test] Done !!!\r\n");
+            DebugP_log("[OSPI Flash Interrupt Test] Done !!!\r\n");
         }
         else
         {
-            DebugP_log("[OSPI Flash Diagnostic Test] Erase Failed !!!\r\n");
+            DebugP_log("[OSPI Flash Interrupt Test] Erase Failed !!!\r\n");
         }
-        DebugP_log("[OSPI Flash Diagnostic Test] Performing Write-Read Test...\r\n");
+        DebugP_log("[OSPI Flash Interrupt Test] Performing Write-Read Test...\r\n");
         status = OSPI_lld_norFlashWrite(gOspiHandle, offset, gOspiTxBuf, APP_OSPI_DATA_SIZE);
         while(try_lock_mutex(&transferMutex) == MUTEX_ARM_LOCKED);
         transferMutex = MUTEX_ARM_LOCKED;
         if(SystemP_SUCCESS != status)
         {
-            DebugP_log("[OSPI Flash Diagnostic Test] Wtite Failed !!!\r\n");
+            DebugP_log("[OSPI Flash Interrupt Test] Write Failed !!!\r\n");
         }
         else
         {
@@ -140,11 +140,11 @@ void ospi_flash_interrupt_lld(void *args)
         OSPI_lld_norFlashReadIndirect(gOspiHandle, offset, gOspiRxBuf, APP_OSPI_DATA_SIZE);
         while(try_lock_mutex(&transferMutex) == MUTEX_ARM_LOCKED);
 
-        status |= ospi_flash_diag_test_compare_buffers();
+        status |= ospi_flash_interrupt_test_compare_buffers();
 
         if(SystemP_SUCCESS == status)
         {
-            DebugP_log("[OSPI Flash Diagnostic Test] Write-Read Test Passed!\r\n");
+            DebugP_log("[OSPI Flash Interrupt Test] Write-Read Test Passed!\r\n");
         }
     }
 
@@ -161,7 +161,7 @@ void ospi_flash_interrupt_lld(void *args)
     Drivers_close();
 }
 
-void ospi_flash_diag_test_fill_buffers()
+void ospi_flash_interrupt_test_fill_buffers()
 {
     uint32_t i;
 
@@ -172,7 +172,7 @@ void ospi_flash_diag_test_fill_buffers()
     }
 }
 
-int32_t ospi_flash_diag_test_compare_buffers()
+int32_t ospi_flash_interrupt_test_compare_buffers()
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t i;

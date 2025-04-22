@@ -185,6 +185,7 @@ int32_t OSPI_edmaInit(OSPI_DmaHandle ospiDmaArgs)
 int32_t OSPI_edmaDeInit(OSPI_DmaHandle ospiDmaArgs)
 {
     int32_t             status = SystemP_SUCCESS;
+    int32_t             retVal;
     uint32_t            baseAddr, regionId, dmaCh, tcc, param,dmaChainCh, chainParam;
 
     OSPILLD_Handle hOspi = (OSPILLD_Handle)ospiDmaArgs;
@@ -199,11 +200,14 @@ int32_t OSPI_edmaDeInit(OSPI_DmaHandle ospiDmaArgs)
     dmaChainCh  = edmaParams->edmaChainChId;
     tcc         = edmaParams->edmaTcc;
     param       = edmaParams->edmaParam;
+    chainParam  = edmaParams->edmaChainParam;
 
     /* Free channel */
-    status += EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+    retVal = EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
          dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_OSPI_EVT_QUEUE_NO);
 
+    status = (retVal == (uint32_t)TRUE) ? SystemP_SUCCESS : SystemP_FAILURE;
+    
     if(edmaParams->isIntEnabled == TRUE)
     {
         status = EDMA_unregisterIntr(ospiEdmaHandle, &edmaParams->edmaIntrObj);
