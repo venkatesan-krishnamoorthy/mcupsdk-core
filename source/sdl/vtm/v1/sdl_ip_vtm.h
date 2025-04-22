@@ -103,6 +103,9 @@ typedef uint8_t SDL_VTM_configTsCtrl;
 #define SDL_VTM_TMPSOFF_OFF         0x1U
 #define SDL_VTM_TMPSOFF_ON          0x0U
 
+#define SDL_VTM_MUX_HIZ             0x1U
+#define SDL_VTM_NORMAL_HIZ          0x0U
+
 #define SDL_VTM_SENSOR_SEL0         (1U << 0U)
 #define SDL_VTM_SENSOR_SEL1         (1U << 1U)
 #define SDL_VTM_SENSOR_SEL2         (1U << 2U)

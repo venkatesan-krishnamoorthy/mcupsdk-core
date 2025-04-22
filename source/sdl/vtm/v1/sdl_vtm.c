@@ -103,6 +103,10 @@ int32_t SDL_VTM_initTs(const SDL_VTM_configTs *pConfig)
         SDL_REG32_FINS((SDL_TOP_CTRL_U_BASE+SDL_VTM_TSENSE_CFG),\
                         TOP_CTRL_TSENSE_CFG_TSENSE_CFG_TMPSOFF, \
                         SDL_VTM_TMPSOFF_ON);
+        /* Enable MUX HIZ bit */
+        SDL_REG32_FINS((SDL_TOP_CTRL_U_BASE+SDL_VTM_TSENSE_CFG),\
+                        TOP_CTRL_TSENSE_CFG_TSENSE_CFG_SNSR_MX_HIZ, \
+                        SDL_VTM_NORMAL_HIZ);
 
        if(pConfig->cfgTs0Tshut == 1U)
         {
