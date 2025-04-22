@@ -75,15 +75,28 @@ If the \ref EXAMPLES_DRIVERS_SBL_OSPI_SWAP is being used, the on next board rese
 
 \endcond
 
+\cond SOC_AM261X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/fss/fss_switch_b
+
+\endcond
+
 # Steps to Run the Example
 
-- **When using makefiles to build**, note the required combination and build using
-  make command (see \ref MAKEFILE_BUILD_PAGE)
+- **When using makefiles to build**
+    - please make sure to build and run example \ref EXAMPLES_HELLO_WORLD_XIP_FSS1 to validate.
+    - using python3, run python script bin_to_c_array.py. 
+    - note the required combination (\ref EXAMPLES_DRIVERS_FOTA_AGENT_COMBOS) and build using make command (see \ref MAKEFILE_BUILD_PAGE)
 - Load the application using \ref EXAMPLES_DRIVERS_SBL_OSPI_SWAP
 
 # Sample Output
 
-
+\cond SOC_AM263PX
 \code
 
     Starting OSPI Bootloader ...
@@ -127,3 +140,48 @@ If the \ref EXAMPLES_DRIVERS_SBL_OSPI_SWAP is being used, the on next board rese
     Hello World!
 
 \endcode
+\endcond
+
+\cond SOC_AM261X
+\code
+
+    Starting OSPI Bootloader ... 
+    KPI_DATA: [BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH 
+    KPI_DATA: [BOOTLOADER_PROFILE] Boot Media Clock : 166.667 MHz 
+    KPI_DATA: [BOOTLOADER_PROFILE] Boot Image Size  : 65 KB 
+    KPI_DATA: [BOOTLOADER_PROFILE] Cores present    : 
+    KPI_DATA: [BOOTLOADER PROFILE] System_init                      :        443us 
+    KPI_DATA: [BOOTLOADER PROFILE] Drivers_open                     :         94us 
+    KPI_DATA: [BOOTLOADER PROFILE] LoadHsmRtFw                      :       6251us 
+    KPI_DATA: [BOOTLOADER PROFILE] Board_driversOpen                :      22850us 
+    KPI_DATA: [BOOTLOADER PROFILE] CPU load                         :       4323us 
+    KPI_DATA: [BOOTLOADER PROFILE] SBL End                          :          9us 
+    KPI_DATA: [BOOTLOADER_PROFILE] SBL Total Time Taken             :      33973us 
+
+    Image loading done, switching to application ...
+    Starting application
+    Receiving application... 
+    Got MCELF file
+    Got MCELF_XIP file
+    Done writing new application to flash...
+    Updating Flash's Boot Sector...
+    Finish Updating Flash's Boot Sector... Please reset board to start new application
+
+
+    Starting OSPI Bootloader ... 
+    KPI_DATA: [BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH 
+    KPI_DATA: [BOOTLOADER_PROFILE] Boot Media Clock : 166.667 MHz 
+    KPI_DATA: [BOOTLOADER_PROFILE] Boot Image Size  : 5 KB 
+    KPI_DATA: [BOOTLOADER_PROFILE] Cores present    : 
+    KPI_DATA: [BOOTLOADER PROFILE] System_init                      :        443us 
+    KPI_DATA: [BOOTLOADER PROFILE] Drivers_open                     :         94us 
+    KPI_DATA: [BOOTLOADER PROFILE] LoadHsmRtFw                      :       6251us 
+    KPI_DATA: [BOOTLOADER PROFILE] Board_driversOpen                :      24701us 
+    KPI_DATA: [BOOTLOADER PROFILE] CPU load                         :       3963us 
+    KPI_DATA: [BOOTLOADER PROFILE] SBL End                          :          9us 
+    KPI_DATA: [BOOTLOADER_PROFILE] SBL Total Time Taken             :      35464us 
+
+    Image loading done, switching to application ...
+    Hello World!
+\endcode
+\endcond 

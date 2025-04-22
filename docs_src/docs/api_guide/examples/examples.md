@@ -59,6 +59,9 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_BENCHMARKS
 -# \subpage EXAMPLES_EMPTY
 -# \subpage EXAMPLES_HELLO_WORLD
+\cond SOC_AM263PX || SOC_AM261X
+-# \subpage EXAMPLES_HELLO_WORLD_XIP_FSS1
+\endcond
 -# \subpage EXAMPLES_HELLO_WORLD_CPP
 -# \subpage EXAMPLES_KERNEL
 -# \subpage EXAMPLES_DRIVERS
@@ -70,6 +73,7 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_SDL
 -# \subpage EXAMPLES_BASIC_SMART_PLACEMENT
 \endcond
+
 
 \cond SOC_AM263X || SOC_AM263PX  || SOC_AM261X
 -# \subpage EXAMPLES_SDL
