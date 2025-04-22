@@ -1,4 +1,4 @@
-# Enet CPSW Ether-Ring Example {#EXAMPLES_ENET_CPSW_ETHERRING}
+# Enet CPSW Ether-Ring TSN Example {#EXAMPLES_ENET_CPSW_ETHERRING}
 
 [TOC]
 
@@ -6,9 +6,6 @@
 This example application illustrates the configuration and usage of Ether-Ring topology with 4 nodes connected in loop where each node works as central compute, zone left,
 zone right and zone tail.
 The example application enables both MAC ports by default and each node is connected to it's neighbouring node in a loop. This application uses Concurrence execution of gPTP IEEE 802.1AS stack and IEEE 802.1 Qbv (EST) configuration and Ether-ring (‘802.1CB-like’) to support Packet Duplication, Ring Termination in Hardware and Duplicate Rejection in Software.
-
-  \image html etherring_topology.png Ether-Ring Topology width=20%
-  
 
 The example application opens two DMA TX channels and two DMA RX channels.  The TX0 and RX0 DMA channel will be used by the application to send the Class-A and Class-D stream packets via Ether-Ring Driver. The TX0 and RX0 DMA channel will be used for GPTP.
 
@@ -19,6 +16,9 @@ The application uses \ref ENET_MOD_TAS API for EST configuration ,\ref ENET_CPSW
 API for packet transmission.
 
 \note This application only provides the Etherring Functionality. But the Performance will be acheived in further releases.
+
+# Ether-Ring overview
+Please refer **[here](\ref ETHERRING_OVERVIEW)** for Ether-Ring overview
 
 # Configuration Parameters
 

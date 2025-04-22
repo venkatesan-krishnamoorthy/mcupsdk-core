@@ -25,3 +25,6 @@
 - \subpage ETHERNET_ADDON_BOARDS_TOP
 \endcond
 - \subpage PACKETPOOL_CONFIG_TOP
+\cond SOC_AM263PX || SOC_AM263X
+- \subpage ETHERRING_OVERVIEW
+\endcond

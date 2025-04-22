@@ -3,31 +3,31 @@
 [TOC]
 
 # Introduction
-This application illustrates the simultaneous configuration and usage of redundancy traffic (Real-time) and background LWIP traffic in the Ether-Ring topology. The Ether-ring TrafficGen application allows configuring traffic profiles such as Tx Heavy, Rx Heavy, and Symmetric for redundancy traffic. Each node either acts as a TCP Server or TCP Client in the network, and LWIP traffic will be sent from the client to the server in the background.
+This application illustrates the simultaneous configuration and usage of redundancy traffic (Real-time) and background LWIP traffic in the Ether-Ring topology. The Ether-ring TrafficGen application allows configuring traffic profiles such as Transmit Heavy, Receive Heavy, and Symmetric for redundancy traffic. Each node either acts as a TCP Server or TCP Client in the network, and LWIP traffic will be sent from the client to the server in the background.
 
 The purpose of this application is to perform Latency benchmarking with different traffic profiles for redundancy traffic with LWIP running in the background. The idea is to calculate the Latency without depending on the PTP GET_CURRENT_TIMESTAMP. This is because the timestamp is not accurate due to the delay added by IOCTL calls and the PTP timestamp in the FIFO model.
 
 This application enables both MAC ports by default and each node is connected to its neighbouring node in a loop. This application uses Ether-ring (‘802.1CB-like’) to support Packet Duplication, Ring Termination in Hardware and Duplicate Rejection in Software.
-
-\image html etherring_topology.png Ether-Ring Topology width=20%
   
 The example application opens two DMA TX channels and two DMA RX channels. The TX0 and RX0 DMA channels are dedicated to handling redundancy packets via the Ether-Ring Driver, ensuring reliable data transmission even in case of failures. The TX1 and RX1 DMA channels are reserved for LWIP Background traffic.
 
+# Ether-Ring overview
+Please refer **[here](\ref ETHERRING_OVERVIEW)** for Ether-Ring overview
 
 # Traffic Profiles for Redundancy Traffic
 The redundancy traffic is divided into 3 types to perform Latency benchmarking based on use case. The application can configure all the Zones in one of the following types by modifying the `gTrafficProfile` variable in the code:
 
-- **Tx Heavy**: The redundancy traffic transmitted from the CPU is more compared to the traffic received by the CPU. This traffic type simulates the majority of Zonal controllers in Automotive, where multiple Ethernet streams are periodically sent to the "CENTRAL COMPUTE."
-- **Rx Heavy**: The redundancy traffic received to the CPU is more compared to the traffic transmitted from CPU. This simulates the Zonal Controller where the streams received are more compared to the streams sent.
+- **Transmit Heavy**: The redundancy traffic transmitted from the CPU is more compared to the traffic received by the CPU. This traffic type simulates the majority of Zonal controllers in Automotive, where multiple Ethernet streams are periodically sent to the "CENTRAL COMPUTE."
+- **Receive Heavy**: The redundancy traffic received to the CPU is more compared to the traffic transmitted from CPU. This simulates the Zonal Controller where the streams received are more compared to the streams sent.
 - **Symmetric Traffic**: This traffic type configures the zones to send and receive same data rate of Real-time ethernet traffic periodically.
 
-## Tx-Heavy(Profile-A)
-  \image html tp1.PNG Tx Heavy Traffic profile with each nodes acting as transmitter and subsequent receiver of each stream width=55%
+## Transmit-Heavy(Profile-A)
+  \image html tp1.PNG Transmit Heavy Traffic profile with each nodes acting as transmitter and subsequent receiver of each stream width=55%
 
-By default, the application configures the Traffic profile as "Tx Heavy." The user can modify the configuration by changing the value of `gTrafficProfile` in the code (e.g., `gTrafficProfile = TRAFFIC_PROFILE_B;` for Rx Heavy) based on the use case.
+By default, the application configures the Traffic profile as "Transmit Heavy." The user can modify the configuration by changing the value of `gTrafficProfile` in the code (e.g., `gTrafficProfile = TRAFFIC_PROFILE_B;` for Receive Heavy) based on the use case.
 
-## Rx-Heavy(Profile-B)
- \image html tp2.PNG Rx-Heavy Traffic with each nodes acting as transmitter and subsequent receiver of each stream width=55%
+## Receive-Heavy(Profile-B)
+ \image html tp2.PNG Receive-Heavy Traffic with each nodes acting as transmitter and subsequent receiver of each stream width=55%
  
 ## Symmetric Traffic(Profile-C)
  \image html tp3.PNG Symmetric Traffic with each nodes acting as transmitter and subsequent receiver of each stream width=55%
@@ -68,18 +68,13 @@ When a packet is received on the farthest node (Node 2) from Node 0, the Etherne
 As the Round Trip method is used to benchmark latency, the CPU time from source node is used to measure the packet transmit and receive time. Due to this, PTP synchronization is not needed for benchmarking latency.
 
 # Measured Average and Maximum Latency
-Latency is measured for all the traffic profiles with Real-time traffic and LWIP Running in the background
-Traffic Type | Average Latency(us) | Max Latency(us)
---------|------------ |------------
-Profile-A(Tx-Heavy) |  44 | 94
-Profile-B(Rx-Heavy) |  40 | 96
-Profile-C(Symmetric) |  27 | 80
+Please refer **[here](\ref enetlld_performance)** for Ether-Ring performance
 
 # Configuration Parameters
 Typically, the application's parameters in "etherring_trafficgen_config.h" that a developer may want to change are:
 
 - **ENETAPP_MAX_NODES_IN_RING** - Application configures the max nodes as 4 and but the user can choose to update the number of nodes in etherring.
-- **ENETAPP_NUM_CLASSA_STREAMS** -  The number of Class A Streams are configured as 3 for Tx Heavy and Rx Heavy Traffic profiles.
+- **ENETAPP_NUM_CLASSA_STREAMS** -  The number of Class A Streams are configured as 3 for Transmit Heavy and Receive Heavy Traffic profiles.
 - **ENETAPP_MAX_CLASSA_STREAMS** -  By default maximum Class A Streams are configured as 3. User has to update it based on the "ENETAPP_NUM_CLASSA_STREAMS" configuration.
 - **ENETAPP_ENABLE_TCP_BG_TRAFFIC** - Flag to enable or disable the Lwip background traffic. 
 - **ENETAPP_CLASSA_PAYLOAD_LENGTH** - Class A payload length is configured as 500 by default and user can update it to achieve the desired data rate.

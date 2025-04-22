@@ -179,6 +179,16 @@ where \<bw\> is 25M, 50M, 100M, etc\n
      $```iperf -c <evm_ip> -u -b <bw> -r```\n
 where \<bw\> is 25M, 50M, 100M, etc\n
 
+# Ether-Ring Performance
+
+Traffic Type | Average Latency(us) | Max Latency(us)
+--------|------------ |------------
+Profile-A(Transmit-Heavy) |  44 | 94
+Profile-B(Receive-Heavy) |  40 | 96
+Profile-C(Symmetric Traffic) |  27 | 80
+
 # See Also
 \ref NETWORKING
 \ref EXAMPLES_ENET_LWIP_CPSW
+\ref EXAMPLES_ENET_CPSW_ETHERRING_TRAFFICGEN
+\ref EXAMPLES_ENET_CPSW_ETHERRING
