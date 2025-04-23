@@ -72,7 +72,7 @@ This mode is used to boot flashed applications via EVM flash like OSPI flash.
 ##### AM261X-LP
 
 \code
-BOOTMODE [ 1 : 4 ] (SW1) = 0011
+BOOTMODE [ 1 : 4 ] (SW1) = 1100
 \endcode
 
   \imageStyle{am261x_lp_boot_pins_ospi.png,width:30%}

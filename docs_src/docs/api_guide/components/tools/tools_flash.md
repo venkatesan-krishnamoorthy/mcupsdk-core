@@ -901,7 +901,23 @@ The detailed sequence of steps that happen when flashing files is listed below, 
 
 ## JTAG Uniflash {#TOOLS_FLASH_JTAG_UNIFLASH}
 
-JTAG is used as the transport or interface to send the file to flash to the EVM.
+- JTAG(Joint Test Action Group) is used as the transport or interface to send the file to flash to the EVM.
+- It uses a serial protocol to communicate with the DAP (Debug Access Port) on the EVM.
+
+### Sequence of steps that happen when flashing via JTAG
+
+- Debugger initializes the SOC
+  - CCS connects using the JTAG interface and uses gel scripts to initialize PLLs, clocks and memory.
+- Flash driver gets loaded into RAM
+  - A flash programming algorithm is loaded into RAM via JTAG.
+  - This algorithm contains a program that can write to the flash memory.
+- Then your binary (.appimage/.mcelf/.tiimage) is streamed over the JTAG. The driver receives chunks of the application, unlocks the target flash memory regions, erases the sectors and performs flash write operation.
+\if (SOC_AM263X || SOC_AM273X || SOC_AWR294X)
+- Once the JTAG has successfully received the SBL and application binaries, switch to QSPI bootmode and reset the board.
+\else
+- Once the JTAG has successfully received the SBL and application binaries, switch to OSPI bootmode and reset the board.
+\endif
+- ROM bootloader will boot the flashed SBL(secondary bootloader) and the SBL will boot up the application.
 
 ### Important files and folders
 
