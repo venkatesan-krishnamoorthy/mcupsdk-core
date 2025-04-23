@@ -1170,19 +1170,21 @@ int32_t CANFD_createMsgObject(CANFD_Handle handle,
     int32_t                     retVal = SystemP_SUCCESS;
     CANFD_Config               *config;
     CANFD_Object               *ptrCanFdObj = NULL;
-    CANFD_OpenParams           *openParams = NULL;
 
     if ((handle != NULL) && (ptrCanMsgObj != NULL))
     {
         config = (CANFD_Config*) handle;
         /* Get the pointer to the CAN Driver Block */
         ptrCanFdObj = (CANFD_Object *) config->object;
-        openParams  = ptrCanFdObj->openParams;
         baseAddr    = ptrCanFdObj->regBaseAddress;
 
         /* Save the specified parameters */
         ptrCanMsgObj->canfdHandle = (CANFD_Config*) handle;
-        if(openParams->fdMode == true)
+        /* initialize the below varible to zero */
+        ptrCanMsgObj->messageProcessed = 0U;
+        ptrCanMsgObj->interruptsRxed = 0U;
+        ptrCanMsgObj->dmaEventNo = 0U;
+        if(ptrCanMsgObj->msgIdType == CANFD_MCANXidType_29_BIT)
         {
             ptrCanMsgObj->filterConfig = (MCAN_ExtMsgIDFilterElement*)config->attrs->filterConfig;
         }
