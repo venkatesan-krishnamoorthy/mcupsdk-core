@@ -39,6 +39,8 @@ See also these additional pages for more details and examples about XIP,
 
 ## Enable XIP for an application
 
+### Using linker.cmd
+
 To enable XIP for a application, below changes need to be done,
 
 - Enable cache for the XIP flash region. This is need to get better performance for the XIP execution
@@ -111,6 +113,43 @@ To enable XIP for a application, below changes need to be done,
   - Add a MPU/MMU entry to mark the flash region as executable + cached
   - And update the linker command to mark the code/rodata sections as `FLASH` instead of RAM.
   - Rest of the steps remain exactly the same as non-XIP case.
+
+### Using Memory Configurator 
+
+#### Moving .rodata and .text to flash
+As mentioned in the previous section, move <b>`.rodata`</b> and <b>`.text`</b> in external flash, as shown in the following image:
+
+\imageStyle{enabling_xip_mem_configurator_1.png,width:80%}
+\image html enabling_xip_mem_configurator_1.png "Moving text and rodata to flash."
+
+Here load and run memory, both are set to FLASH memory. 
+
+Make sure that <b>`Alignment with padding`</b> checkbox has been checked.
+
+#### Moving cfg rodata to internal memory 
+Then, it is required to move <b>`.rodata.cfg`</b> in the internal memory. For this, refer to the following image:
+
+\imageStyle{enabling_xip_mem_configurator_2.png,width:80%}
+\image html enabling_xip_mem_configurator_2.png "Moving cfg rodata to internal memory."
+
+Here, <b>`.cfg.rodata`</b> output section has been added in <b>`Text Segments`</b> group. 
+
+Make sure that <b> `Alignment with padding` </b> checkbox has been checked.
+
+#### Moving CIO to internal memory
+
+Refer to following image:
+
+\imageStyle{enabling_xip_mem_configurator_3.png,width:80%}
+\image html enabling_xip_mem_configurator_3.png "Moving CIO to internal memory."
+
+1. add <b>`cio`</b> output section to <b>`Text Segments`</b> group.
+2. Make sure that <b>`Alignment with padding`</b> checkbox has been checked.
+3. Add <b>`-llibsysbm.a<trgmsg.c.obj> (.text)`</b> as the input section 
+
+With the above, this will direct cio library in internal memory.
+
+This step is required if CCS logs are enabled. In production build, CCS logs should be disabled.
 
 ## Enabling secure XIP using OTFA
 
