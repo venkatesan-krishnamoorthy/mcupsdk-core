@@ -16,6 +16,7 @@ const r5f01_asmfiles = {
 
 const r5fss00_projectspec_files = {
     common: [
+        "hopperFnx.S"
     ]
 }
 

@@ -18,6 +18,7 @@ const projectSpecFiles = {
     {
         common:
         [
+            "new_application_images.h",
             "board.h"
         ]
     }

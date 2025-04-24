@@ -322,7 +322,7 @@ section13.output_section[0].input_section[0].$name = "*(privileged_functions)";
 section13.output_section[1].palignment             = true;
 section13.output_section[1].$name                  = ".text.dpl_demo.freertos_mpu.privileged";
 section13.output_section[1].input_section.create(1);
-section13.output_section[1].input_section[0].$name = "dpl_demo_freertos_mpu.obj(.text)";
+section13.output_section[1].input_section[0].$name = "dpl_demo_freertos_mpu.o*(.text)";
 
 section14.$name                                    = "Privileged Data Segments";
 section14.load_memory                              = "PRIVILEGED_DATA";
@@ -336,7 +336,7 @@ section14.output_section[0].input_section[0].$name = "*(privileged_data)";
 section14.output_section[1].palignment             = true;
 section14.output_section[1].$name                  = ".data.dpl_demo.freertos_mpu.privileged";
 section14.output_section[1].input_section.create(1);
-section14.output_section[1].input_section[0].$name = "dpl_demo_freertos_mpu.obj(.data, .bss)";
+section14.output_section[1].input_section[0].$name = "dpl_demo_freertos_mpu.o*(.data, .bss)";
 
 section15.$name                                    = "User1 Text Sections ";
 section15.load_memory                              = "USER1_TEXT";
@@ -347,7 +347,7 @@ section15.output_section[0].macro_name             = "TEXTTASK_SWITCH_MPUPING_SE
 section15.output_section[0].palignment             = true;
 section15.output_section[0].$name                  = ".text.dpl_demo.freertos_mpu.user1";
 section15.output_section[0].input_section.create(1);
-section15.output_section[0].input_section[0].$name = "dpl_demo_freertos_mpu_user1.obj(.text)";
+section15.output_section[0].input_section[0].$name = "dpl_demo_freertos_mpu_user1.o*(.text)";
 
 section16.$name                                    = "User1 Data Sections ";
 section16.group_start                              = "__DATA_USER1_START";
@@ -357,7 +357,7 @@ section16.output_section.create(1);
 section16.output_section[0].palignment             = true;
 section16.output_section[0].$name                  = ".data.dpl_demo.freertos_mpu.user1";
 section16.output_section[0].input_section.create(1);
-section16.output_section[0].input_section[0].$name = "dpl_demo_freertos_mpu_user1.obj(.data, .bss)";
+section16.output_section[0].input_section[0].$name = "dpl_demo_freertos_mpu_user1.o*(.data, .bss)";
 
 section17.$name                                    = "User2 Text Sections";
 section17.group_start                              = "__TEXT_USER2_START";
@@ -368,7 +368,7 @@ section17.output_section[0].macro_name             = "TEXTTASK_SWITCH_MPUPING_SE
 section17.output_section[0].palignment             = true;
 section17.output_section[0].$name                  = ".text.dpl_demo.freertos_mpu.user2";
 section17.output_section[0].input_section.create(1);
-section17.output_section[0].input_section[0].$name = "dpl_demo_freertos_mpu_user2.obj(.text)";
+section17.output_section[0].input_section[0].$name = "dpl_demo_freertos_mpu_user2.o*(.text)";
 
 section18.$name                                    = "User2 Data Sections";
 section18.group_start                              = "__DATA_USER2_START";
@@ -378,4 +378,4 @@ section18.output_section.create(1);
 section18.output_section[0].palignment             = true;
 section18.output_section[0].$name                  = ".data.dpl_demo.freertos_mpu.user2";
 section18.output_section[0].input_section.create(1);
-section18.output_section[0].input_section[0].$name = "dpl_demo_freertos_mpu_user2.obj(.data, .bss)";
+section18.output_section[0].input_section[0].$name = "dpl_demo_freertos_mpu_user2.o*(.data, .bss)";

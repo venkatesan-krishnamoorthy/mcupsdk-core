@@ -322,7 +322,7 @@ section13.output_section[0].input_section[0].$name = "*(privileged_functions)";
 section13.output_section[1].$name                  = ".text.task_switch_mpu.privileged";
 section13.output_section[1].palignment             = true;
 section13.output_section[1].input_section.create(1);
-section13.output_section[1].input_section[0].$name = "task_switch_mpu.obj(.text)";
+section13.output_section[1].input_section[0].$name = "task_switch_mpu.o*(.text)";
 
 section14.$name                                    = "Privileged Data Segments";
 section14.load_memory                              = "PRIVILEGED_DATA";
@@ -336,7 +336,7 @@ section14.output_section[0].input_section[0].$name = "*(privileged_data)";
 section14.output_section[1].$name                  = ".data.task_switch_mpu.privileged";
 section14.output_section[1].palignment             = true;
 section14.output_section[1].input_section.create(1);
-section14.output_section[1].input_section[0].$name = "task_switch_mpu.obj(.data, .bss)";
+section14.output_section[1].input_section[0].$name = "task_switch_mpu.o*(.data, .bss)";
 
 section15.load_memory                              = "PING_TEXT";
 section15.$name                                    = "Ping Task Text Sections ";
@@ -347,7 +347,7 @@ section15.output_section[0].$name                  = ".text.task_switch_mpu.ping
 section15.output_section[0].macro_name             = "TEXTTASK_SWITCH_MPUPING_SECTION";
 section15.output_section[0].palignment             = true;
 section15.output_section[0].input_section.create(1);
-section15.output_section[0].input_section[0].$name = "task_switch_mpu_ping.obj(.text)";
+section15.output_section[0].input_section[0].$name = "task_switch_mpu_ping.o*(.text)";
 
 section16.group_start                              = "__DATA_PING_START";
 section16.group_end                                = "__DATA_PING_END";
@@ -357,7 +357,7 @@ section16.output_section.create(1);
 section16.output_section[0].$name                  = ".data.task_switch_mpu.ping";
 section16.output_section[0].palignment             = true;
 section16.output_section[0].input_section.create(1);
-section16.output_section[0].input_section[0].$name = "task_switch_mpu_ping.obj(.data, .bss)";
+section16.output_section[0].input_section[0].$name = "task_switch_mpu_ping.o*(.data, .bss)";
 
 section17.$name                                    = "Pong Task Text Sections";
 section17.group_start                              = "__TEXT_PONG_START";
@@ -368,7 +368,7 @@ section17.output_section[0].macro_name             = "TEXTTASK_SWITCH_MPUPING_SE
 section17.output_section[0].palignment             = true;
 section17.output_section[0].$name                  = ".text.task_switch_mpu.pong";
 section17.output_section[0].input_section.create(1);
-section17.output_section[0].input_section[0].$name = "task_switch_mpu_pong.obj(.text)";
+section17.output_section[0].input_section[0].$name = "task_switch_mpu_pong.o*(.text)";
 
 section18.group_start                              = "__DATA_PONG_START";
 section18.group_end                                = "__DATA_PONG_END";
@@ -378,4 +378,4 @@ section18.output_section.create(1);
 section18.output_section[0].palignment             = true;
 section18.output_section[0].$name                  = ".data.task_switch_mpu.pong";
 section18.output_section[0].input_section.create(1);
-section18.output_section[0].input_section[0].$name = "task_switch_mpu_pong.obj(.data, .bss)";
+section18.output_section[0].input_section[0].$name = "task_switch_mpu_pong.o*(.data, .bss)";

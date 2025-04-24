@@ -15,6 +15,20 @@ const files_nortos_rf5_01 = {
     ],
 };
 
+const r5fss00_projectspec_files = {
+    common: [
+        "gpio_controller.h",
+        "gpio_controller_mcspi_peripheral.h",
+    ]
+}
+
+const r5fss01_projectspec_files = {
+    common: [
+        "mcspi_peripheral.h",
+        "gpio_controller_mcspi_peripheral.h",
+    ]
+}
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -121,10 +135,12 @@ if(buildOption.cpu.match(/r5f*/)) {
     if(buildOption.cpu.match(/r5fss0-0/)) {
             build_property.files = files_nortos_rf5_00;
             build_property.templates = templates_nortos_r5fss00;
+            build_property.projectspecfiles = r5fss00_projectspec_files;
         }
         else{
             build_property.files = files_nortos_rf5_01;
             build_property.templates = templates_nortos_r5fss01;
+            build_property.projectspecfiles = r5fss01_projectspec_files;
         }
     }
 

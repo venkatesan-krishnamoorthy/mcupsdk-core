@@ -100,6 +100,8 @@
         </file>
         <file path="../../new_application_images.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
+        <file path="../../new_application_images.h" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
         <file path="../../board.h" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">

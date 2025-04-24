@@ -32,7 +32,7 @@
 
 #include <stdio.h>
 #include <kernel/dpl/DebugP.h>
-#include "am263x-cc/r5fss0-0_nortos/gpio_controller.h"
+#include "gpio_controller.h"
 
 /*
  * This example demonstrates the usage of GPIO module to emulate the SPI

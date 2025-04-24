@@ -10,6 +10,15 @@ const files = {
     ],
 };
 
+const projectspecfiles = {
+    common: [
+        "appprofile.h",
+        "csl_arm_r5_pmu.h",
+        "csl_arm_r5.h",
+        "load.h"
+    ],
+};
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -90,6 +99,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.files = files;
+    build_property.projectspecfiles = projectspecfiles;
     build_property.asmfiles =
     {
         common:[

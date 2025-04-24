@@ -41,7 +41,7 @@
  */
 
 #include <kernel/dpl/DebugP.h>
-#include "am263x-cc/r5fss0-1_nortos/mcspi_peripheral.h"
+#include "mcspi_peripheral.h"
 
 /* Function definitions */
 static inline void App_bufferFill();

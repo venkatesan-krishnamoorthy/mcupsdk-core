@@ -92,7 +92,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.files = files;
-    build_property.projectspecfiles = projectSpecFiles;
+    build_property.projectspecfiles = projectSpecFiles[buildOption.board];
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs;
     build_property.lnkfiles = lnkfiles;

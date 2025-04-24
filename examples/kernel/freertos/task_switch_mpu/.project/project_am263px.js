@@ -12,6 +12,13 @@ const files = {
     ],
 };
 
+const projectspecfiles = {
+    common:
+    [
+        "task_switch_mpu_private.h"
+    ]
+}
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -94,6 +101,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.files = files;
+    build_property.projectspecfiles = projectspecfiles;
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs;
     build_property.lnkfiles = lnkfiles;

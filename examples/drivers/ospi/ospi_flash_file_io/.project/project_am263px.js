@@ -10,6 +10,20 @@ const files = {
     ],
 };
 
+const projectspecfiles = {
+    "am263px-cc":
+    {
+        common:
+        [
+            "board.h"
+        ]
+    },
+    "am263px-lp":
+    {
+        common: []
+    }
+}
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -99,6 +113,7 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
+    build_property.projectspecfiles = projectspecfiles[buildOption.board];
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;

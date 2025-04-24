@@ -20,6 +20,14 @@ const filedirs = {
     ],
 };
 
+const projectspecfiles = {
+    common: [
+        "csl_arm_r5_pmu.h",
+        "appprofile.h",
+        "load.h"
+    ]
+}
+
 const libdirs_freertos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
@@ -89,6 +97,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.files = files;
+    build_property.projectspecfiles = projectspecfiles;
     build_property.asmfiles =
     {
         common:[
