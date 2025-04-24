@@ -182,6 +182,8 @@ void Bootloader_profilePrintProfileLog(void)
     }
     uint32_t clk = gProfileObj.bootMediaClk;
 
+    DebugP_log("KPI_DATA: [BOOTLOADER_PROFILE] CPU Clock        : %.3f MHz \r\n", (float)cpuMHz);
+
     DebugP_log("KPI_DATA: [BOOTLOADER_PROFILE] Boot Media       : %s \r\n", bootMediaName);
     /* If boot media clock is not given don't print that information */
     if(clk != 0)
