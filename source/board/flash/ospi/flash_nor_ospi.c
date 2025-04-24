@@ -1241,7 +1241,7 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
 
         /* Set Mode Clocks and Dummy Clocks in Controller and Flash Memory */
         status += Flash_norOspiSetModeDummy(config, obj->ospiHandle);
-
+        
         /* Set RD Capture Delay by reading ID */
         uint32_t origBaudRateDiv = 0U;
         OSPI_getBaudRateDivFromObj(obj->ospiHandle, &origBaudRateDiv);
@@ -1267,10 +1267,23 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
 #if defined (SOC_AM263PX)
             OSPI_configBaudrate(obj->ospiHandle, origBaudRateDiv);
 #endif
-
+            /* Check if attack vector status is successful over the readCaptureDelay sweep */
             if(attackVectorStatus != SystemP_SUCCESS)
             {
-                /* Flash the attack vector to the last block */
+                readDataCapDelay = 8U;
+                while((attackVectorStatus != SystemP_SUCCESS) && (readDataCapDelay > 0U))
+                {
+                    OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
+                    attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+                    readDataCapDelay--;
+                }
+            }
+            if(attackVectorStatus != SystemP_SUCCESS)
+            {
+                /* Flash the attack vector to the last block if the attack vector is not already written in the flash.
+                 * This step ensures that the PHY tuning data is available for proper operation of the OSPI interface.
+                 * Without this, the system may fail to achieve optimal performance or encounter communication issues.
+                 */
                 uint32_t sect = 0, page = 0;
                 uint32_t phyTuningData = 0,phyTuningDataSize = 0;
                 OSPI_phyGetTuningData(&phyTuningData, &phyTuningDataSize);
@@ -1279,13 +1292,14 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
                 Flash_norOspiWrite(config, phyTuningOffset, (uint8_t *)phyTuningData, phyTuningDataSize);
                 attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
                 
-                readDataCapDelay = 4U;
+                readDataCapDelay = 8U;
                 while((attackVectorStatus != SystemP_SUCCESS) && (readDataCapDelay > 0U))
                 {
                     OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
                     attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
                     readDataCapDelay--;
                 }
+
             }
 
             if(attackVectorStatus == SystemP_SUCCESS)
