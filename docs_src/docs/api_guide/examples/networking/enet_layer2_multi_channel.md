@@ -211,6 +211,71 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 ## Sample output for Multi-Channel example
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+
+\code
+==========================
+   L2 Multi-channel Test
+==========================
+
+Init all peripheral clocks
+----------------------------------------------
+
+Create RX tasks
+----------------------------------------------
+cpsw-3g: Create RX task
+
+Open all peripherals
+----------------------------------------------
+cpsw-3g: Open enet
+
+Init all configs
+----------------------------------------------
+cpsw-3g: init config
+Link Status Changed. PHY: 0x0, state: up
+Open MAC port 1
+EnetPhy_bindDriver:1873 
+PHY 0 is alive
+PHY 3 is alive
+
+Attach core id 0 on all peripherals
+----------------------------------------------
+cpsw-3g: Attach core
+cpsw-3g: Open DMA
+initQs() freePktInfoQ initialized with 16 pkts
+initQs() freePktInfoQ initialized with 16 pkts
+cpsw-3g: Waiting for link up...
+Cpsw_handleLinkUp:1653 
+MAC Port 1: link up
+cpsw-3g: Port 1 link is up
+cpsw-3g: MAC port addr: f4:84:4c:fc:34:fe
+TimeSync PTP enabled
+
+Enet Multi-channel Menu:
+ 'c'  -  GetCurrentTime
+ 't'  -  Toggle Printing timestamps
+ 's'  -  Print statistics
+ 'r'  -  Reset statistics
+ 'm'  -  Show allocated MAC addresses
+ 'p'  -  Enable Policer for rate limiting
+ 'x'  -  Stop the test
+
+t
+
+Enable Timestamp Printing 
+TX Timestamp: 12042935861
+TX Timestamp: 12252934996
+TX Timestamp: 12462935116
+TX Timestamp: 20672934936
+TX Timestamp: 20882934951
+TX Timestamp: 21092935541
+
+\endcode
+
+\endcond
+
+\cond SOC_AM64X || SOC_AM243X
+
 \code
 
 ==========================
@@ -272,6 +337,8 @@ RX PTP time is : 16238653702
 TX PTP time is : 16238698897
 
 \endcode
+
+\endcond
 
 # See Also
 
