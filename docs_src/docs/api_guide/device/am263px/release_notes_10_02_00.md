@@ -213,12 +213,52 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Fixed the example.
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> MCUSDK-13341
+    <td> ECAP: Emulation mode does not work.
+    <td> ECAP
+    <td> 9.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Added halt control API for ECAP in soc.c file and emulation mode in syscfg to be emulation free.
+</tr>
+<tr>
+    <td> MCUSDK-14051
+    <td> EQEP: CW CCW example doesn't use polling or interrupt
+    <td> EQEP
+    <td> 10.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Modified example to use unit timer interrupt.
+</tr>
+<tr>
+    <td> MCUSDK-12354
+    <td> ADC: Syscfg code generation failed for soc-reference
+    <td> ADC
+    <td> 9.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Update reference monitor number and buffer number
+</tr>
+<tr>
+    <td> MCUSDK-14332
+    <td> SDFM soc ctrl syscfg: code generates outside callable functions
+    <td> SDFM
+    <td> 10.00.01 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Updated code generation of soc ctrl sdfm module in syscfg.
+</tr>
+<tr>
+    <td> MCUSDK-12265
+    <td> SDFM single channel filter sync CPU read example failure for AM263P-LP.
+    <td> ADC
+    <td> 9.00.01 onwards
+    <td> AM263Px
+    <td> New ccs version has updated gel files that configure PLLs in dev boot mode.
+</tr>
+<tr>
+    <td> MCUSDK-12238
+    <td> OUTPUTXBAR input sources from CMPSS needs to be renamed
+    <td> ADC
+    <td> 9.00.01 onwards
+    <td> AM263Px
+    <td> OUTPUTXBAR input sources from CMPSS are renamed as CMPSSA/Bx_CTRIPOUTH/L.
 </tr>
 </table>
 
@@ -260,13 +300,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> None
 </tr>
 <tr>
-    <td> MCUSDK-14051
-    <td> EQEP : CW CCW example doesn't use polling or interrupt
-    <td> EQEP
-    <td> 10.00.01
-    <td> None
-</tr>
-<tr>
     <td> MCUSDK-12312
     <td> ROM bootloader fails when booting from Macronix Flash on AM263Px-LP
     <td> SBL
@@ -286,13 +319,6 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Common
     <td> 09.01.00
     <td> Use 64KB TCM in user application
-</tr>
-<tr>
-    <td> MCUSDK-12265
-    <td> SDFM example failure on am263px-lp
-    <td> SDFM
-    <td> 09.01.00
-    <td> None
 </tr>
 <tr>
     <td> MCUSDK-11675
@@ -554,6 +580,12 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> ADC: Interrupts may Stop if INTxCONT (Continue-to-Interrupt Mode) is not Set
     <td> ADC
     <td> Implemented
+</tr>
+<tr>
+    <td> i2375
+    <td> SDFM: SDFM module event flags (SDIFLG.FLTx_FLG_CEVTx) do not get set again if the comparator event is still active and digital filter path (using SDCOMPxCTL.CEVTxDIGFILTSEL) is being selected
+    <td> SDFM
+    <td> Open
 </tr>
 <tr>
     <td> i2383

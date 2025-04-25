@@ -193,7 +193,46 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263x, AM263Px
     <td> Fixed the example.
 </tr>
-
+<tr>
+    <td> MCUSDK-13341
+    <td> ECAP: Emulation mode does not work.
+    <td> ECAP
+    <td> 9.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Add halt control API for ECAP in soc.c file and emulation mode in syscfg to be emulation free.
+</tr>
+<tr>
+    <td> MCUSDK-14051
+    <td> EQEP: CW CCW example doesn't use polling or interrupt
+    <td> EQEP
+    <td> 10.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Modified example to use unit timer interrupt.
+</tr>
+<tr>
+    <td> MCUSDK-12354
+    <td> ADC: Syscfg code generation failed for soc-reference
+    <td> ADC
+    <td> 9.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Update reference monitor number and buffer number
+</tr>
+<tr>
+    <td> MCUSDK-14332
+    <td> SDFM soc ctrl syscfg: code generates outside callable functions
+    <td> SDFM
+    <td> 10.00.01 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Updated code generation of soc ctrl sdfm module in syscfg.
+</tr>
+<tr>
+    <td> MCUSDK-12238
+    <td> OUTPUTXBAR input sources from CMPSS needs to be renamed
+    <td> ADC
+    <td> 9.00.01 onwards
+    <td> AM263Px
+    <td> OUTPUTXBAR input sources from CMPSS are renamed as CMPSSA/Bx_CTRIPOUTH/L.
+</tr>
 <tr>
     <td> -
     <td> -
@@ -232,13 +271,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> EQEP: EQEP frequency measurement example is not working as expected
     <td> EQEP
     <td> 10.00.01 onwards
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-14051
-    <td> EQEP : CW CCW example doesn't use polling or interrupt
-    <td> EQEP
-    <td> 10.00.01
     <td> None
 </tr>
 <tr>
@@ -473,6 +505,12 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 <tr>
     <td> i2354
     <td> SDFM: Two Back-to-Back Writes to SDCPARMx Register Bit Fields CEVT1SEL, CEVT2SEL, and HZEN Within Three SD-Modulator Clock Cycles can Corrupt SDFM State Machine, Resulting in Spurious Comparator Events
+    <td> SDFM
+    <td> Open
+</tr>
+<tr>
+    <td> i2375
+    <td> SDFM: SDFM module event flags (SDIFLG.FLTx_FLG_CEVTx) do not get set again if the comparator event is still active and digital filter path (using SDCOMPxCTL.CEVTxDIGFILTSEL) is being selected
     <td> SDFM
     <td> Open
 </tr>
