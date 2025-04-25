@@ -139,14 +139,19 @@ int main(void)
                     {
                         int32_t otfaConfigStatus;
                         OTFA_Config_t otfaConfigInfo;
+                        uint8_t doEnableECC = FALSE;
+                        uint32_t dataBaseAddress = OSPI_getFlashDataBaseAddr(ospiHandle);
 
                         otfaConfigInfo.masterEnable = otfaConfig.isOTFAECCMEnabled;
                         otfaConfigInfo.macSize = otfaConfig.macSize;
                         otfaConfigInfo.keySize = otfaConfig.aesKeySize;
                         otfaConfigInfo.numRegions = otfaConfig.regionLen;
 
+                        FSS_disableECC();
+
                         for(uint8_t i = 0; i < otfaConfig.regionLen; i++)
                         {
+                            /* security */
                             otfaConfigInfo.OTFA_Reg[i].regionSize = otfaConfig.region[i].size;
                             otfaConfigInfo.OTFA_Reg[i].regionStAddr = otfaConfig.region[i].startAddress;
                             otfaConfigInfo.OTFA_Reg[i].reservedArea = 0x0;
@@ -169,9 +174,24 @@ int main(void)
                             memset(otfaConfigInfo.OTFA_Reg[i].authAesKey,0x0,otfaConfig.aesKeySize);
                             memset(otfaConfigInfo.OTFA_Reg[i].encrAesKey,0x0,otfaConfig.aesKeySize);
                             memcpy(otfaConfigInfo.OTFA_Reg[i].regionIV,otfaConfig.region[i].iv,16U);
+
+                            /* safety */
+                            if(otfaConfig.region[i].eccEnable == TRUE)
+                            {
+                                FSS_ECCRegionConfig regionConfig;
+                                doEnableECC = TRUE;
+                                regionConfig.size = otfaConfig.region[i].size;
+                                regionConfig.startAddress = otfaConfig.region[i].startAddress - dataBaseAddress;
+                                regionConfig.regionIndex = i;
+                                FSS_configECCMRegion(&regionConfig);
+                            }
                         }
 
                         otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                        if(doEnableECC == TRUE)
+                        {
+                            FSS_enableECC();
+                        }
                         if(otfaConfigStatus == SystemP_SUCCESS)
                         {
                             DebugP_log("\r\n configuration of OTFA successfully done.\n");
