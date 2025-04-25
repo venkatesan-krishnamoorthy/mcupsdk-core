@@ -16,6 +16,7 @@ Feature                                                                         
 EDMA Error Handling Support                                                                              | EDMA
 Rev A Launchpad Support                                                                                  | Board
 LIN LLD Support                                                                                          | LIN
+IEEE1722 Simple Talker/Listener example with PCM data for stereo channel                                 | Networking
 
 ## Device and Validation Information
 
@@ -49,9 +50,10 @@ Mbed-TLS                | R5F            | 2.13.1
 \attention TI would not support these feature on public e2e.
 \attention Experimental features will be enabled with limited examples and SW modules.
 
-Feature                                                             | Module
---------------------------------------------------------------------|--------------------------
-Ether-ring Implementation                                           | Networking
+Feature                                                                       | Module
+------------------------------------------------------------------------------|--------------------------
+Ether-ring Driver Implementation                                              | Networking
+Ether-ring Demo with Real Time Traffic Generator and Background LwIP traffic  | Networking
 
 ### OS Kernel
 
@@ -139,12 +141,12 @@ Module                      | Supported CPUs | SysConfig Support | OS Support   
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
-Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
+Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration, IEEE 1722 compliant AVTP Stack  | Multi-Clock Domain
 LwIP                                         | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
 Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | RMII, MII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 Mbed-TLS                                     | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
-Ether-ring Implementation | R5F            | NO                | FreeRTOS    | EDuplicate Rejection, Ring termination and Packet Duplication | Latency measurement, Performance KPIs
+Ether-ring Implementation | R5F            | NO                | FreeRTOS    | Duplicate Rejection, Ring termination and Packet Duplication, Latency measurement for different real-time traffic profiles, Performance KPIs | N/A
 
 ### Demos
 
@@ -432,6 +434,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Infra
     <td> Example build fails in CCS only in MAC Machines
     <td> \ref CCS_MAC_ISSUE
+</tr>
+<tr>
+    <td> MCUSDK-14509
+    <td> AM263x/Am263px/AM261x: 10% Packet drop with UDP iperf in 100M bandwidth in 1Gbps FullDuplex linkspeed
+    <td> Networking
+    <td> 10.00.00 onwards
+    <td> -
 </tr>
 </table>
 
