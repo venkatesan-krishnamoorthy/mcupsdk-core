@@ -400,6 +400,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Use standalone example.
 </tr>
 <tr>
+    <td> PROC_SDL-9148
+    <td> ECC D-Data fail during release
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> None
+</tr>
+<tr>
     <td> MCUSDK-13466
     <td> UART Transfer fails in 10MHz Auto Baud mode
     <td> UART

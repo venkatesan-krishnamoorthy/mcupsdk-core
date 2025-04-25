@@ -159,7 +159,7 @@ DCC               | R5F             | NA                |  NORTOS | Single Shot 
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
 ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
 RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | -
+ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | FSS FOTA and OSPI
 ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode. TMU and RL2 are also validated                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
@@ -211,6 +211,14 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 10.01.00 onwards
     <td> AM263Px
     <td> Fixed the example.
+</tr>
+<tr>
+    <td> PROC_SDL-8859
+    <td> STC example does not support R5FSS0.
+    <td> SDL
+    <td> 10.01.00 onwards
+    <td> AM263Px
+    <td> Moved the example in SBL NULL Bootloader example.
 </tr>
 <tr>
     <td> MCUSDK-13341
@@ -412,11 +420,60 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> Use standalone example.
 </tr>
 <tr>
-    <td> PROC_SDL-8859
-    <td> STC example does not support R5FSS0.
+    <td> PROC_SDL-9148
+    <td> ECC D-Data fail during release
     <td> SDL
-    <td> 10.01.00 onwards
-    <td> Update the example to run the test for R5FSS0 from R5FSS1.
+    <td> 10.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-9149
+    <td> ECC D-Tag stuck in System_Init during release R5FSS1-0
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-9150
+    <td> PBIST Example and Test apps are getting mixed data with bootloader data in R5FSS1-0
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Functionality works and log gets mixed. Disable DPL_Log.
+</tr>
+<tr>
+    <td> PROC_SDL-9151
+    <td> CCM Example and Test apps are getting mixed data with bootloader data in R5FSS1-0
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Functionality works and log gets mixed. Disable DPL_Log.
+</tr>
+<tr>
+    <td> PROC_SDL-9152
+    <td> R5F Utils Example and Test apps are getting mixed data with bootloader data
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Functionality works and log gets mixed. Disable DPL_Log.
+</tr>
+<tr>
+    <td> PROC_SDL-9153
+    <td> TOG Example stuck in System_Init during release
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-9154
+    <td> VTM Example stuck in UC2
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-9163
+    <td> ECC Aggregators FSS FOTA and OSPI
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> None
 </tr>
 <tr>
     <td> MCUSDK-13473

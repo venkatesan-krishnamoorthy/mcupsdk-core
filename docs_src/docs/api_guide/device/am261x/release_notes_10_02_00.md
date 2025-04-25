@@ -161,7 +161,7 @@ DCC               | R5F             | NA                |  NORTOS | Single Shot 
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
 ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
 RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | -
+ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | FSS FOTA and OSPI
 ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode. TMU and RL2 are also validated                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
@@ -350,18 +350,18 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Use standalone example.
 </tr>
 <tr>
-    <td> PROC_SDL-8859
-    <td> STC example does not support R5FSS0.
+    <td> PROC_SDL-9147
+    <td> VTM Usecase stuck in integrated example
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Use standalone example.
+</tr>
+<tr>
+    <td> PROC_SDL-9163
+    <td> ECC Aggregators FSS FOTA and OSPI
     <td> SDL
     <td> 10.02.00 onwards
     <td> None
-</tr>
-<tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
 </tr>
 </table>
 

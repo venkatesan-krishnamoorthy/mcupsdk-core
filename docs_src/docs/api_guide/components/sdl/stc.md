@@ -25,17 +25,24 @@ from the 1st interval of each segment.
 Errors detected by the STC module during operation are reported via ESM error (application will receive via ESM application callback).
 
 ## SysConfig Features
-
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+@VAR_SYSCFG_USAGE_NOTE
+\endcond
+\cond SOC_AM273X || SOC_AWR294X
 - None
+\endcond
 
 ## Features NOT Supported
 
 - None
 
 ## Important Usage Guidelines
-
-- Once R5F STC is Done, R5F Core will be reset and STC Reset cause will be set. For running the STC again on R5F, SOC will need power cycle.
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM261X
+- R5F STC can be tested by enabling sysconfig in SBL_NULL bootloader example only, not in standalone example.
+\endcond
 \cond SOC_AM273X || SOC_AWR294X
+- Once R5F STC is Done, R5F Core will be reset and STC Reset cause will be set. For running the STC again on R5F, SOC will need power cycle.
+
 - Once DSP STC is Done, DSP Core will be reset and STC Reset cause will be set. For running STC again for DSP, SOC will need power cycle..
 
 For DSP STC, before running STC from R5F, Interrupt register and ISR for that interrupt should be running in DSP core. ISR should have a flow to take DSP Core in to low power mode.
