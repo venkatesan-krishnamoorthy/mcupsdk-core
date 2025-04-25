@@ -122,22 +122,19 @@ To change packet pool configuration from syscfg, please refer to \ref PACKETPOOL
 
 \code
 
-0: Internal MAC loopback
-1: External PHY loopback
-Enter option:0
-
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 1
+ Enet Loopback: Iteration 1 
 =============================
 CPSW_3G Test
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+Open MAC port 1
+Setting in NO-PHY mode for MAC port 1
 PHY 0 is alive
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -149,6 +146,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -164,21 +163,22 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 2
+ Enet Loopback: Iteration 2 
 =============================
 CPSW_3G Test
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:0 From 4 To 1 
+Open MAC port 1
+Setting in NO-PHY mode for MAC port 1
 PHY 0 is alive
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -190,6 +190,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -205,21 +207,22 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 3
+ Enet Loopback: Iteration 3 
 =============================
 CPSW_3G Test
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:0 From 4 To 1 
+Open MAC port 1
+Setting in NO-PHY mode for MAC port 1
 PHY 0 is alive
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -231,6 +234,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -246,21 +251,22 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 4
+ Enet Loopback: Iteration 4 
 =============================
 CPSW_3G Test
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:0 From 4 To 1 
+Open MAC port 1
+Setting in NO-PHY mode for MAC port 1
 PHY 0 is alive
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -272,6 +278,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -287,21 +295,22 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 5
+ Enet Loopback: Iteration 5 
 =============================
 CPSW_3G Test
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:0 From 4 To 1 
+Open MAC port 1
+Setting in NO-PHY mode for MAC port 1
 PHY 0 is alive
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -313,6 +322,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -328,10 +339,10 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
 Loopback application completed
+All tests have passed!!
 
 \endcode
 
@@ -339,24 +350,20 @@ Loopback application completed
 
 \code
 
-0: Internal MAC loopback
-1: External PHY loopback
-Enter option:1
-
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 1
+ Enet Loopback: Iteration 1 
 =============================
 CPSW_3G Test
-EnetPhy_bindDriver: PHY 0: OUI:080028 Model:0f Ver:01 <-> 'dp83869' : OK
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+Open MAC port 1
+EnetPhy_bindDriver:1873 
 PHY 0 is alive
-Cpsw_handleLinkUp: Port 1: Link up: 100-Mbps Full-Duplex
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
+Cpsw_handleLinkUp:1653 
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -368,6 +375,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -383,23 +392,23 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 2
+ Enet Loopback: Iteration 2 
 =============================
 CPSW_3G Test
-EnetPhy_bindDriver: PHY 0: OUI:080028 Model:0f Ver:01 <-> 'dp83869' : OK
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:0 From 4 To 1 
+Open MAC port 1
+EnetPhy_bindDriver:1873 
 PHY 0 is alive
-Cpsw_handleLinkUp: Port 1: Link up: 100-Mbps Full-Duplex
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
+Cpsw_handleLinkUp:1653 
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -411,6 +420,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -426,23 +437,23 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 3
+ Enet Loopback: Iteration 3 
 =============================
 CPSW_3G Test
-EnetPhy_bindDriver: PHY 0: OUI:080028 Model:0f Ver:01 <-> 'dp83869' : OK
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:0 From 4 To 1 
+Open MAC port 1
+EnetPhy_bindDriver:1873 
 PHY 0 is alive
-Cpsw_handleLinkUp: Port 1: Link up: 100-Mbps Full-Duplex
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
+Cpsw_handleLinkUp:1653 
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -454,6 +465,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -469,23 +482,23 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 4
+ Enet Loopback: Iteration 4 
 =============================
 CPSW_3G Test
-EnetPhy_bindDriver: PHY 0: OUI:080028 Model:0f Ver:01 <-> 'dp83869' : OK
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:0 From 4 To 1 
+Open MAC port 1
+EnetPhy_bindDriver:1873 
 PHY 0 is alive
-Cpsw_handleLinkUp: Port 1: Link up: 100-Mbps Full-Duplex
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
+Cpsw_handleLinkUp:1653 
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -497,6 +510,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -512,23 +527,23 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
-Create periodic tick task
 =============================
- Enet Loopback: Iteration 5
+ Enet Loopback: Iteration 5 
 =============================
 CPSW_3G Test
-EnetPhy_bindDriver: PHY 0: OUI:080028 Model:0f Ver:01 <-> 'dp83869' : OK
-initQs() txFreePktInfoQ initialized with 16 pkts
-Host MAC address: 70:ff:76:1d:ec:f2
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:0 From 4 To 1 
+Open MAC port 1
+EnetPhy_bindDriver:1873 
 PHY 0 is alive
-Cpsw_handleLinkUp: Port 1: Link up: 100-Mbps Full-Duplex
+PHY 3 is alive
+initQs() txFreePktInfoQ initialized with 16 pkts
+Cpsw_handleLinkUp:1653 
 Received 5000 packets
-Delete EnetLpbk_rxTask() and exit..
-Transmitted 5000 packets
-Delete EnetLpbk_txTask() and exit..
+Delete EnetApp_rxTask() and exit..
+Transmitted 5000 packets 
+Delete EnetApp_txTask() and exit..
 
  Port 0 Statistics
 -----------------------------------------
@@ -540,6 +555,8 @@ Delete EnetLpbk_txTask() and exit..
   txOctets                = 2590000
   octetsFrames512to1023   = 10000
   netOctets               = 5180000
+  txPri[0]                = 5000
+  txPriBcnt[0]            = 2590000
 
 
  Port 1 Statistics
@@ -555,10 +572,10 @@ Delete EnetLpbk_txTask() and exit..
   txPri[0]                = 5000
   txPriBcnt[0]            = 2590000
 
-Cpsw_handleLinkDown: Port 1: Link down
+Cpsw_handleLinkDown:1679 
 Test complete: PASS
-Delete EnetLpbk_tickTask() and exit..
 Loopback application completed
+All tests have passed!!
 
 \endcode
 
