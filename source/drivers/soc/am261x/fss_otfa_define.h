@@ -98,6 +98,7 @@
 #define ENC_MODE_ECB_PLUS       2
 
 #define CRYPTO_MODE_GCM         2
+#define CRYPTO_MODE_DIS         3
 #define CRYPTO_MODE_CCM         4
 
 

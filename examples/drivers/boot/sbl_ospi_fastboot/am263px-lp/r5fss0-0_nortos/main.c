@@ -45,6 +45,8 @@
 
 
 
+extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
+
 extern HsmClient_t gHSMClient;
 
 /**
@@ -194,9 +196,14 @@ int main(void)
                                     break;
 
                                 case CRYPTO_MODE_GCM:
-                                default:
                                     otfaConfigInfo.OTFA_Reg[i].authMode = MAC_MODE_GMAC;
                                     otfaConfigInfo.OTFA_Reg[i].encMode  = ENC_MODE_AES_CTR;
+                                    break;
+
+                                case CRYPTO_MODE_DIS:
+                                default:
+                                    otfaConfigInfo.OTFA_Reg[i].authMode = MAC_MODE_DIS;
+                                    otfaConfigInfo.OTFA_Reg[i].encMode  = ENC_MODE_DIS;
                                     break;
                             }
                             otfaConfigInfo.OTFA_Reg[i].encrKeyFetchMode = otfaConfig.region[i].keyFetchMode;
@@ -217,15 +224,17 @@ int main(void)
                                 FSS_configECCMRegion(&regionConfig);
                             }
                         }
-
-                        otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                        if(BOOTLOADER_DEVTYPE_HSSE == ptrTopCtrlRegs->EFUSE_DEVICE_TYPE)
+                        {
+                            otfaConfigStatus = HsmClient_configOTFARegions(&gHSMClient, &otfaConfigInfo, SystemP_WAIT_FOREVER);
+                            if(otfaConfigStatus == SystemP_SUCCESS)
+                            {
+                                DebugP_log("\r\n configuration of OTFA successfully done.\n");
+                            }
+                        }
                         if(doEnableECC == TRUE)
                         {
                             FSS_enableECC();
-                        }
-                        if(otfaConfigStatus == SystemP_SUCCESS)
-                        {
-                            DebugP_log("\r\n configuration of OTFA successfully done.\n");
                         }
                     }
                 }
