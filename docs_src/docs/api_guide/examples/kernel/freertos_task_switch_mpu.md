@@ -24,14 +24,14 @@ configurations as well as the task specific MPU regions configurations,
 | R5F_TCMA        | 0x00000040 | 31.9 KB | [1]ATCM                  | -                               |
 | R5F_TCMB        | 0x00080000 | 32 KB   | [2]BTCM                  | -                               |
 | FLASH           | 0x60100000 | 512 KB  | [6]FLASH                 | -                               |
-| SBL             | 0x70000000 | 256 KB  | [4]OCRAM_UNPRIVILEGED    | -                               |
-| OCRAM           | 0x70040000 | 256 KB  | [4]OCRAM_UNPRIVILEGED    | -                               |
-| PRIVILEGED_TEXT | 0x70080000 | 64 KB   | [5]OCRAM_PRIVILEGED_TEXT | -                               |
-| PRIVILEGED_DATA | 0x70090000 | 64 KB   | [3]OCRAM_BACKGROUND      |  [8]Ping/Pong Task Stack Region |
-| PING_TEXT       | 0x700A0000 | 4 KB    | [3]OCRAM_BACKGROUND      |  [9]Ping Task Region 0          |
-| PING_DATA       | 0x700A1000 | 4 KB    | [3]OCRAM_BACKGROUND      | [10]Ping Task Region 1          |
-| PONG_TEXT       | 0x700A2000 | 4 KB    | [3]OCRAM_BACKGROUND      |  [9]Pong Task Region 0          |
-| PONG_DATA       | 0x700A3000 | 4 KB    | [3]OCRAM_BACKGROUND      | [10]Pong Task Region 1          |
+| SBL             | 0x70000000 | 256 KB  | [3]OCRAM_BACKGROUND      | -                               |
+| OCRAM           | 0x70040000 | 128 KB  | [4]OCRAM_UNPRIVILEGED    | -                               |
+| PRIVILEGED_TEXT | 0x70060000 | 64 KB   | [5]OCRAM_PRIVILEGED_TEXT | -                               |
+| PRIVILEGED_DATA | 0x70070000 | 56 KB   | [3]OCRAM_BACKGROUND      |  [8]Ping/Pong Task Stack Region |
+| PING_TEXT       | 0x7007E000 | 2 KB    | [3]OCRAM_BACKGROUND      |  [9]Ping Task Region 0          |
+| PING_DATA       | 0x7007E800 | 2 KB    | [3]OCRAM_BACKGROUND      | [10]Ping Task Region 1          |
+| PONG_TEXT       | 0x7007F000 | 2 KB    | [3]OCRAM_BACKGROUND      |  [9]Pong Task Region 0          |
+| PONG_DATA       | 0x7007F800 | 2 KB    | [3]OCRAM_BACKGROUND      | [10]Pong Task Region 1          |
 
 | [idx]Static MPU Regions       | Base Address | Size   | Execute | Access Permissions        |
 |-------------------------------|--------------|--------|---------|---------------------------|
@@ -39,15 +39,15 @@ configurations as well as the task specific MPU regions configurations,
 | [1]ATCM                       | 0x00000000   | 32 KB  | Yes     | Supervisor RW, User BLOCK |
 | [2]BTCM                       | 0x00080000   | 32 KB  | Yes     | Supervisor RW, User BLOCK |
 | [3]OCRAM_BACKGROUND           | 0x70000000   | 2 MB   | No      | Supervisor RW, User BLOCK |
-| [4]OCRAM_UNPRIVILEGED         | 0x70000000   | 512 KB | Yes     | Supervisor RW, User RW    |
-| [5]OCRAM_PRIVILEGED_TEXT      | 0x70080000   | 64 KB  | Yes     | Supervisor RD, User BLOCK |
+| [4]OCRAM_UNPRIVILEGED         | 0x70040000   | 128 KB | Yes     | Supervisor RW, User RW    |
+| [5]OCRAM_PRIVILEGED_TEXT      | 0x70060000   | 64 KB  | Yes     | Supervisor RD, User BLOCK |
 | [6]FLASH                      | 0x60100000   | 512 KB | Yes     | Supervisor RD, User BLOCK |
 
 | [idx]Ping/Pong Task MPU Regions | Base Address          | Size   | Execute | Access Permissions     |
 |---------------------------------|-----------------------|--------|---------|------------------------|
 |  [8]Stack Region                | -                     | -      | No      | Supervisor RW, User RW |
-|  [9]PING_TEXT/PONG_TEXT         | 0x700A0000/0x700A2000 | *4 KB  | Yes     | Supervisor RD, User RD |
-| [10]PING_DATA/PONG_DATA         | 0x700A1000/0x700A3000 | *4 KB  | No      | Supervisor RW, User RW |
+|  [9]PING_TEXT/PONG_TEXT         | 0x7007E000/0x7007F000 | *2 KB  | Yes     | Supervisor RD, User RD |
+| [10]PING_DATA/PONG_DATA         | 0x7007E800/0x7007F800 | *2 KB  | No      | Supervisor RW, User RW |
 
 Note:
 - [0]BACKGROUND_REGION with User RW access is required for peripheral access
