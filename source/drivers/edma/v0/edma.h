@@ -642,7 +642,9 @@ typedef struct
     uint32_t                errIntrAggEnableMask;
     /**< Error Interrupt Aggregator enable mask */
     uint32_t                errIntrAggStatusAddr;
-    /**< Error Interrupt Aggregator enable address */
+    /**< Error Interrupt Aggregator status address */
+    uint32_t                errIntrAggRawStatusAddr;
+    /**< Error Interrupt Aggregator raw status address */
     uint32_t                errIntrAggClearMask;
     /**< Error Interrupt Aggregator clear mask */
 } EDMA_Attrs;

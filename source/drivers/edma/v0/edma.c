@@ -2323,7 +2323,7 @@ static void EDMA_errorIsrFxn(void *args)
     EDMA_Object        *object;
     const EDMA_Attrs   *attrs;
     EDMA_ErrorInfo     *errorInfo;
-    uint32_t           ccBaseAddr, tc0BaseAddr, tc1BaseAddr, errorStatus;
+    uint32_t           ccBaseAddr, tc0BaseAddr, tc1BaseAddr, errorStatus, errorStatusRaw, isErrorRetriggered;
 
     DebugP_assert(NULL != handle);
     config = (EDMA_Config *) handle;
@@ -2338,46 +2338,70 @@ static void EDMA_errorIsrFxn(void *args)
     tc1BaseAddr = attrs->tcBaseAddr[EDMA_TPTC1];
     errorInfo = &object->errorInfo;
 
-    /* Clear the previous error log */
-    memset(errorInfo, 0, sizeof(EDMA_ErrorInfo));
+    /*
+     * Errata i2394: Errata states that new events may be lost while events
+     * in the Aggregated status are being cleared by writing to the register.
+     * Fix is to check if any bit is set in the Aggregated Raw status register
+     * and service it before exiting the interrupt.
+     */
+    do
+    {  
+        /* Clear the previous error log */
+        memset(errorInfo, 0, sizeof(EDMA_ErrorInfo));
 
-    /* Read EDMA Aggregated Error status register and store in error log */
-    errorStatus = HW_RD_REG32(attrs->errIntrAggStatusAddr);
-    errorInfo->errorStatus = errorStatus;
-    
-    /* Handle TPCC errors */
-    if((errorStatus & EDMA_TPCC_A_ERRINT) == EDMA_TPCC_A_ERRINT)
-    {
-        /* Read TPCC errors and store in error log */
-        EDMA_getCcErrorInfo(ccBaseAddr, &errorInfo->ccErrorInfo);
-        /* Clear TPCC Errors*/
-        EDMA_clearCcErrors(ccBaseAddr, attrs->initPrms.regionId, &errorInfo->ccErrorInfo);
-    }
-    /* Handle TPTC0 errors */
-    if((errorStatus & EDMA_TPTC_A0_ERR) == EDMA_TPTC_A0_ERR)
-    {
-        /* Read TPTC0 errors and store in error log */
-        EDMA_getTcErrorInfo(tc0BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC0]);
-        /* Clear TPTC0 Errors*/
-        EDMA_clearTcErrors(tc0BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC0]);
-    }
-    /* Handle TPTC1 errors */
-    if((errorStatus & EDMA_TPTC_A1_ERR) == EDMA_TPTC_A0_ERR)
-    {
-        /* Read TPTC1 errors and store in error log */
-        EDMA_getTcErrorInfo(tc1BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC1]);
-        /* Clear TPTC1 Errors*/
-        EDMA_clearTcErrors(tc1BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC1]);
-    }
+        /* Read EDMA Aggregated Error status register and store in error log */
+        errorStatus = HW_RD_REG32(attrs->errIntrAggStatusAddr);
+        errorInfo->errorStatus = errorStatus;
+        
+        /* Handle TPCC errors */
+        if((errorStatus & EDMA_TPCC_A_ERRINT) == EDMA_TPCC_A_ERRINT)
+        {
+            /* Read TPCC errors and store in error log */
+            EDMA_getCcErrorInfo(ccBaseAddr, &errorInfo->ccErrorInfo);
+            /* Clear TPCC Errors*/
+            EDMA_clearCcErrors(ccBaseAddr, attrs->initPrms.regionId, &errorInfo->ccErrorInfo);
+        }
+        /* Handle TPTC0 errors */
+        if((errorStatus & EDMA_TPTC_A0_ERR) == EDMA_TPTC_A0_ERR)
+        {
+            /* Read TPTC0 errors and store in error log */
+            EDMA_getTcErrorInfo(tc0BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC0]);
+            /* Clear TPTC0 Errors*/
+            EDMA_clearTcErrors(tc0BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC0]);
+        }
+        /* Handle TPTC1 errors */
+        if((errorStatus & EDMA_TPTC_A1_ERR) == EDMA_TPTC_A0_ERR)
+        {
+            /* Read TPTC1 errors and store in error log */
+            EDMA_getTcErrorInfo(tc1BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC1]);
+            /* Clear TPTC1 Errors*/
+            EDMA_clearTcErrors(tc1BaseAddr, &errorInfo->tcErrorInfo[EDMA_TPTC1]);
+        }
 
-    /* Invoke application error callback function */
-    if(object->errCallback != NULL)
-    {
-        object->errCallback(errorInfo, object->errCallbackArgs);
-    }
+        /* Invoke application error callback function */
+        if(object->errCallback != NULL)
+        {
+            object->errCallback(errorInfo, object->errCallbackArgs);
+        }
 
-    /* Clear the aggregator error interrupt */
-    HW_WR_REG32(attrs->errIntrAggStatusAddr, errorStatus);
-    /* re evaluate the edma error interrupt. */
-    HW_WR_FIELD32(ccBaseAddr + EDMA_TPCC_EEVAL, EDMA_TPCC_EEVAL_EVAL, 1);
+        /* Clear the aggregated error interrupt */
+        HW_WR_REG32(attrs->errIntrAggStatusAddr, errorStatus);
+        /* re evaluate the edma error interrupt. */
+        HW_WR_FIELD32(ccBaseAddr + EDMA_TPCC_EEVAL, EDMA_TPCC_EEVAL_EVAL, 1);
+
+        errorStatus = HW_RD_REG32(attrs->errIntrAggStatusAddr);
+        errorStatusRaw = HW_RD_REG32(attrs->errIntrAggRawStatusAddr);
+
+        if(((errorStatus & attrs->errIntrAggEnableMask) != 0U) ||
+           ((errorStatusRaw & attrs->errIntrAggEnableMask) != 0U))
+        {
+            /* Errata occured */
+            isErrorRetriggered = TRUE;
+        }
+        else
+        {
+            /* Errata did not occur */
+            isErrorRetriggered = FALSE;
+        }
+    } while(isErrorRetriggered == TRUE);
 }
