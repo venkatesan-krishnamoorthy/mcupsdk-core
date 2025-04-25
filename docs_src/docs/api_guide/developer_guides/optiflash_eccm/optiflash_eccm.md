@@ -18,8 +18,9 @@ The following is an example of a config file (conf.json)
 {
     "regions": [
         {
-            "start": 1611661312,
-            "size": 4194304,
+            "start": "0x60100000",
+            "size": "0x400000",     
+            "cryptoMode":"na",
             "eccEnable": true
         }
     ]
