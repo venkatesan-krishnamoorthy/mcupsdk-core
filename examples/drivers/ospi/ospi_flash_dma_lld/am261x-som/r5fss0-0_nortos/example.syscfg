@@ -43,11 +43,21 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-ospi1.$name        = "CONFIG_OSPI0";
-ospi1.inputClkFreq = 80000000;
+ospi1.$name             = "CONFIG_OSPI0";
+ospi1.inputClkFreq      = 83333333;
 ospi1.sdkInfra     = "LLD";
-ospi1.dmaEnable    = true;
-ospi1.OSPI.$assign = "OSPI0";
+ospi1.OSPI.$assign      = "OSPI0";
+ospi1.OSPI.CLK.$assign  = "GPIO2";
+ospi1.OSPI.CSn0.$assign = "GPIO0";
+ospi1.OSPI.DQS.$assign  = "GPIO76";
+ospi1.OSPI.D7.$assign   = "GPIO10";
+ospi1.OSPI.D6.$assign   = "GPIO9";
+ospi1.OSPI.D5.$assign   = "GPIO8";
+ospi1.OSPI.D4.$assign   = "GPIO7";
+ospi1.OSPI.D3.$assign   = "GPIO6";
+ospi1.OSPI.D2.$assign   = "GPIO5";
+ospi1.OSPI.D1.$assign   = "GPIO4";
+ospi1.OSPI.D0.$assign   = "GPIO3";
 ospi1.child.$name  = "drivers_ospi_v0_ospi_v0_am261x_lld_template0";
 
 const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
