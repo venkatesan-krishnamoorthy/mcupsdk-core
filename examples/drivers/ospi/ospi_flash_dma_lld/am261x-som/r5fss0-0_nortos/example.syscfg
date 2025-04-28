@@ -46,6 +46,7 @@ const section12       = section.addInstance();
 ospi1.$name             = "CONFIG_OSPI0";
 ospi1.inputClkFreq      = 83333333;
 ospi1.sdkInfra     = "LLD";
+ospi1.dmaEnable    = true;
 ospi1.OSPI.$assign      = "OSPI0";
 ospi1.OSPI.CLK.$assign  = "GPIO2";
 ospi1.OSPI.CSn0.$assign = "GPIO0";
