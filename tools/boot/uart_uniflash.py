@@ -515,8 +515,8 @@ def main(argv):
             if((f_size + BOOTLOADER_UNIFLASH_HEADER_SIZE >= BOOTLOADER_UNIFLASH_BUF_SIZE_BYTES) and (cmdlinecfg.optype in ["flash", "flashverify"])):
                 # Send by parts
                 status, timetaken = send_file_by_parts(cmdlinecfg, serialport)
-            elif linecfg.optype in ["flash-mcelf-xip"]:
-                send_mcelf_xip(linecfg, serialport)
+            elif cmdlinecfg.optype in ["flash-mcelf-xip"]:
+                send_mcelf_xip(cmdlinecfg, serialport)
             else:
                 # Send normally
                 tempfilename = create_temp_file(cmdlinecfg)
