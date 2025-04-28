@@ -243,6 +243,9 @@ int32_t UART_lld_dmaWrite(UARTLLD_Handle hUart, const UART_Transaction *transact
     baseAddr               = edmaChCfg->edmaBaseAddr;
     regionId               = edmaChCfg->edmaRegionId;
 
+    /* Flush TX FIFO before the transaction */
+    UART_lld_flushTxFifo(hUart);
+
     /* Fetch the EDMA paramters for UART TX transfer */
     dmaTxCh    = edmaChCfg->edmaTxChId;
     tccTx      = edmaChCfg->edmaTccTx;
@@ -546,63 +549,34 @@ int32_t UART_lld_dmaDisableChannel(UARTLLD_Handle hUart,
 static void UART_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
 {
     UARTLLD_Handle hUart;
-    UARTLLD_InitHandle hUartInit;
-
-    uint32_t lineStatus      = 0U;
-    uint32_t startTicks, elapsedTicks;
-    uint32_t bytesRemain;
-    uint32_t bytesSent;
+    uint32_t bytesRemain, bytesSent;
 
     /* Check parameters */
     if(NULL != args)
     {
         hUart = (UARTLLD_Handle)args;
-        hUartInit = hUart->hUartInit;
-
-        /* Update current tick value to perform timeout operation */
-        startTicks = hUartInit->clockP_get();
-        do
+        hUart->writeTrans.status = UART_TRANSFER_STATUS_SUCCESS;
+        if(hUart->writeTrans.count >= hUart->hUartInit->txTrigLvl)
         {
-            lineStatus = UART_readLineStatus(hUart->baseAddr);
-            elapsedTicks = hUartInit->clockP_get() - startTicks;
-        }
-        while (((uint32_t) (UART_LSR_TX_FIFO_E_MASK |
-                            UART_LSR_TX_SR_E_MASK) !=
-                (lineStatus & (uint32_t) (UART_LSR_TX_FIFO_E_MASK |
-                                        UART_LSR_TX_SR_E_MASK)))
-                && (elapsedTicks < hUart->lineStatusTimeout));
-
-        if(elapsedTicks >= hUart->lineStatusTimeout)
-        {
-            hUart->writeTrans.status      = UART_TRANSFER_STATUS_TIMEOUT;
-            hUart->writeTrans.count       = hUart->writeCount;
+            bytesRemain = hUart->writeTrans.count % hUart->hUartInit->txTrigLvl;
+            bytesSent = hUart->writeTrans.count - bytesRemain;
         }
         else
         {
-            hUart->writeTrans.status = UART_TRANSFER_STATUS_SUCCESS;
-            if(hUart->writeTrans.count >= hUart->hUartInit->txTrigLvl)
-            {
-                bytesRemain = hUart->writeTrans.count % hUart->hUartInit->txTrigLvl;
-                bytesSent = hUart->writeTrans.count - bytesRemain;
-            }
-            else
-            {
-                bytesRemain = 0;
-                bytesSent = bytesRemain;
-            }
-            if(bytesRemain > 0)
-            {
-                UART_lld_flushTxFifo(hUart);
-                hUart->writeTrans.count = bytesRemain;
-                hUart->writeTrans.buf = (uint8_t *)hUart->writeTrans.buf + bytesSent;
-                UART_lld_dmaWrite(hUart, &hUart->writeTrans);
-            }
-            else
-            {
-                hUart->hUartInit->writeCompleteCallbackFxn(hUart);
-            }
-            UART_lld_Transaction_deInit(&hUart->writeTrans);
+            bytesRemain = 0;
+            bytesSent = bytesRemain;
         }
+        if(bytesRemain > 0)
+        {
+            hUart->writeTrans.count = bytesRemain;
+            hUart->writeTrans.buf = (uint8_t *)hUart->writeTrans.buf + bytesSent;
+            UART_lld_dmaWrite(hUart, &hUart->writeTrans);
+        }
+        else
+        {
+            hUart->hUartInit->writeCompleteCallbackFxn(hUart);
+        }
+        UART_lld_Transaction_deInit(&hUart->writeTrans);
     }
     return;
 }
