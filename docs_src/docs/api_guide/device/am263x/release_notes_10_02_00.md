@@ -126,6 +126,7 @@ EEPROM     | R5F            | YES               | Only compiled                 
 ETHPHY     | R5F            | YES               | Tested with ethercat_slave_beckhoff_ssc_demo example        | -
 FLASH      | R5F            | YES               | QSPI Flash                                                  | -
 LED        | R5F            | YES               | GPIO                                                        | -
+IOEXPANDER | R5F            | YES               | IO configurability                                          | -
 
 ### CMSIS
 

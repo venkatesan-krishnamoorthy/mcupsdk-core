@@ -137,6 +137,7 @@ FLASH      | R5F            | YES               | OSPI Flash                    
 LED        | R5F            | YES               | GPIO                                                        | -
 ETHPHY     | R5F            | YES               | Tested with ethercat_slave_beckhoff_ssc_demo example        | -
 PMIC       | R5F            | YES               | LDO Voltage control                                         | -
+IOEXPANDER | R5F            | YES               | IO configurability                                          | -
 
 ### Networking
 
