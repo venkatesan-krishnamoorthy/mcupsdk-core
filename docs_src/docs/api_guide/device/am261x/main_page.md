@@ -12,8 +12,8 @@ To get started, see \ref GETTING_STARTED
 
 Given below is a block diagram of the SW modules in this SDK,
 
-\imageStyle{block_diagram_am263px.png,width:70%}
-\image html block_diagram_am263px.png "Software Block Diagram"
+\imageStyle{block_diagram_am261x.png,width:70%}
+\image html block_diagram_am261x.png "Software Block Diagram"
 
 The main software components in the block diagram are described below
 
