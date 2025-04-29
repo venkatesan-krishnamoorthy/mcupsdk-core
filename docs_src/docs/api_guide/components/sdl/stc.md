@@ -123,9 +123,9 @@ void SDL_STC_dspInit(void);
 \endcond
 
 \code
-int32_t sdlResult=SDL_PAAS;
+int32_t sdlResult=SDL_PASS;
 
-sdlResult=   SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_testType testType);
+sdlResult = SDL_STC_selfTest(SDL_STC_Inst instance, SDL_STC_testType testType,SDL_STC_Config *pConfig);
 
 if STC will be Done Successfully, it will return nothing, beacuse core reset would have been done till now.
 if something will be going wrong, it will return something (!=SDL_PASS) value.
