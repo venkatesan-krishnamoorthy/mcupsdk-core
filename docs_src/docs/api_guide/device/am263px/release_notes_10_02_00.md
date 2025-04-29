@@ -651,6 +651,17 @@ Empty           | PRU               | YES                | Bare Metal        | E
 </table>
 
 ## Upgrade and Compatibility Information
+
+### How to run FOTA examples on AM263PX-SIP board
+
+One difference between AM263PX-SIP and AM263PX is the in package flash. In SIP board, flash is of Non-RWW in nature whereas, it is of RWW in other case.
+Example \ref EXAMPLES_FLSOPSKD_BENCHMARK is made to work out of box for AM263PX board but need some manual changes to make it work on AM263PX-SIP board.
+Here, to make this example with AM263PX-SIP board, please removed the <code> RUN_XIP_IN_PARALLEL </code> macro. 
+
+### Changes in FLSOPSKD and FOTAAgent driver
+
+These 2 drivers has been revamped from grounds up and there is an API compatibility break from previous release. On how to use the latest drivers please refer to \ref DRIVERS_FLSOPSKD_PAGE and \ref DRIVERS_FOTA_AGENT_PAGE.
+
 ### Compiler Options
 
 <table>

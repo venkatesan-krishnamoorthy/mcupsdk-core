@@ -496,6 +496,18 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 </table>
 
 ## Upgrade and Compatibility Information
+
+### How to run FOTA examples on AM261x-LP-E1 board
+
+Here, to make \ref EXAMPLES_FLSOPSKD_BENCHMARK example work with AM261x-LP-E1 board, please 
+1. Removed the <code> RUN_XIP_IN_PARALLEL </code> macro. 
+2. Change <code> EXT_FLASH_ERASE_EXTOPCODE </code> value to 0x21.
+
+### Changes in FLSOPSKD and FOTAAgent driver
+
+These 2 drivers has been revamped from grounds up and there is an API compatibility break from previous release. On how to use the latest drivers please refer to \ref DRIVERS_FLSOPSKD_PAGE and \ref DRIVERS_FOTA_AGENT_PAGE.
+
+
 ### Compiler Options
 
 <table>
