@@ -5,8 +5,6 @@
 
 \attention 2. Multi Core ELF image format support has been added (\ref MCELF_LANDING). RPRC format will be deprecated from SDK 11.0.
 
-\attention 3. Test report is not uploaded in SDK due to an issue with the report generation tool.
-
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
@@ -15,7 +13,9 @@
 
 Feature                                                                                                  | Module
 ---------------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                                        | -
+EDMA Error Handling Support                                                                              | EDMA
+Rev A Launchpad Support                                                                                  | Board
+LIN LLD Support                                                                                          | LIN
 
 ## Device and Validation Information
 
@@ -23,7 +23,7 @@ Feature                                                                         
 SOC   | Supported CPUs  | EVM                                                                          | Host PC
 ------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
 AM263x| R5F             | AM263x ControlCard Revision E2  (referred to as am263x-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b
-AM263x| R5F             | AM263x LaunchPad Revision E2  (referred to as am263x-lp in code)             | Windows 10 64b or Ubuntu 18.04 64b
+AM263x| R5F             | AM263x LaunchPad Revision Rev A (referred to as am263x-lp in code)           | Windows 10 64b or Ubuntu 18.04 64b
 \endcond
 
 <!-- Refer here for information about using this release with E2 revision of ControlCard
@@ -34,7 +34,7 @@ AM263x| R5F             | AM263x LaunchPad Revision E2  (referred to as am263x-l
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
 Code Composer Studio    | R5F            | 12.8.1
-SysConfig               | R5F            | 1.21.2 build, build 3837
+SysConfig               | R5F            | 1.22.0 build, build 3893
 TI ARM CLANG            | R5F            | 4.0.1.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
@@ -93,7 +93,7 @@ CMPSS        | R5F            | YES               | NA                          
 CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | RMII, MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes                                                                                                                                     | -
-EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
+EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking, Error Handling                                                   | -
 EPWM         | R5F            | YES               | Yes. Example: epwm_dma                | PWM outputs A and B in up-down count mode, Trip zone, Update PWM using EDMA, Valley switching, High resolution time period adjustment, type5 feature            | -
 EQEP         | R5F            | YES               | NA                                    | Speed and Position measurement. Frequency Measurement, Speed and Direction Measurement, cw-ccw modes                                                                                                                              | -
 FSI          | R5F            | YES               | Yes. Example: fsi_loopback_dma        | RX, TX, polling, interrupt mode, Dma, single lane loopback.                                                                                                     | - FSI Spi Mode
@@ -106,9 +106,9 @@ MCAN         | R5F            | YES               | No                          
 MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback_dma      | Controller/Peripheral mode, basic read/write, polling, interrupt and DMA mode                                                                                            | -
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
 MPU Firewall | R5F            | YES               | NA                                    | Only compiled (Works only on HS-SE  device)                                                                                                                     | -
-MMCSD        | R5F            | YES               | NA                                    | MMCSD 4bit, Raw read/write                                                                                                  | - file IO, eMMC
-PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes
-PMU          | R5F            | NO                | NA                                    | Tested various PMU events                                                                                   | Counter overflow detection is not enabled                                                                                                                        | -
+MMCSD        | R5F            | YES               | NA                                    | MMCSD 4bit, Raw read/write                                                                                                  | file IO, eMMC
+PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes                                                                                                  | -
+PMU          | R5F            | NO                | NA                                    | Tested various PMU events                                                                                   | Counter overflow detection is not enabled
 PRUICSS      | R5F            | YES               | NA                                    | Tested with Ethercat FW HAL                                                                                                                                     | -
 QSPI         | R5F            | YES               | Yes. Example: qspi_flash_dma_transfer | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | -
 RTI          | R5F            | YES               | No                                    | Counter read, timebase selction, comparator setup for Interrupt, DMA requests                                                                                   | Capture feature, fast enabling/disabling of events not tested
@@ -235,12 +235,52 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> OUTPUTXBAR input sources from CMPSS are renamed as CMPSSA/Bx_CTRIPOUTH/L.
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> MCUSDK-13874
+    <td> Syscfg load json function for flash configuration imports does not work
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px
+    <td> Fix in SysCfg Meta file.
+</tr>
+<tr>
+    <td> MCUSDK-13109
+    <td> RTI Interrupt req is Pulse type and not Level type
+    <td> RTI
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Updated interrupt type to Pulse
+</tr>
+<tr>
+    <td> MCUSDK-13523
+    <td> McSPI FIFO not enabled in DMA mode
+    <td> McSPI
+    <td> 10.00.00 onwards
+    <td> AM263x
+    <td> Added FIFO support in McSPI driver for Read and Write
+</tr>
+<tr>
+    <td> MCUSDK-14516
+    <td> UART ISR Blocking for long time
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Removed unwanted timeout loop in UART ISR
+</tr>
+<tr>
+    <td> MCUSDK-13473
+    <td> UART uniflash script fails with large images ( > 1MB)
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Reference before assignment error in python script
+</tr>
+<tr>
+    <td> MCUSDK-12986
+    <td> FreeRTOS: Barrier instructions missing in Interrupt Disable/Enable API's
+    <td> FreeRTOS
+    <td> 09.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> FIQ should be used when Priority masking is required. No update in SDK.
 </tr>
 </table>
 
@@ -275,13 +315,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> None
 </tr>
 <tr>
-    <td> MCUSDK-13702
-    <td> am263x-lp: sbl sd not working for multicore appimages
-    <td> MMCSD, SBL
-    <td> 10.00.00
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-13164
     <td> AM263x: EPWM deadband example failure
     <td> EPWM
@@ -303,43 +336,8 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-11730
-    <td> A wrong counter is used for Event 2 in PMU configuration
-    <td> PMU
-    <td> 09.00.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-13111
-    <td> Memory Configurator/syscfg auto-linker generator doesn't support reordering
-    <td> Build
-    <td> 09.01.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-13109
-    <td> RTI Interrupt req is pulse type and not level type
-    <td> RTI
-    <td> 09.01.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-13014
-    <td> The memory read feature of uniflash erases the memory
-    <td> Flash
-    <td> 09.01.00 onwards
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-13011
     <td> Multicore Empty project not working properly
-    <td> FreeRTOS
-    <td> 09.01.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-12986
-    <td> FreeRTOS: Barrier instructions missing in Interrupt Disable/Enable API's
     <td> FreeRTOS
     <td> 09.01.00 onwards
     <td> -
@@ -420,41 +418,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> SBL
     <td> 10.00.00 onwards
     <td> None.
-</tr>
-<tr>
-    <td> MCUSDK-13511
-    <td> MPU region count incorrect in SysCfg
-    <td> MPU Firewall
-    <td> 09.02.00 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> MCUSDK-13473
-    <td> UART uniflash script fails with large images ( > 1MB)
-    <td> SBL
-    <td> 10.00.00 onwards
-    <td> Use JTAG based flashing
-</tr>
-<tr>
-    <td> MCUSDK-11730
-    <td> A wrong counter is used for Event 2 in PMU configuration
-    <td> PMU
-    <td> 10.00.00 onwards
-    <td> Comment out the code in PMU_init() whcih configures Cycle Counter.
-</tr>
-<tr>
-    <td> MCUSDK-13630
-    <td> Cache should not be enabled at L2 Bank boundaries
-    <td> Cache
-    <td> Cache should not be enabled at last 32Bytes of L2 Bank
-    <td> Create MPU configurations for end of each L2 Bank with Non Cached attribute
-</tr>
-<tr>
-    <td> MCUSDK-13165
-    <td> SBL QSPI flow has incorrect addressing for Secure Boot flow
-    <td> SBL, QSPI
-    <td> SBL QSPI flow has incorrect addressing for Secure Boot flow since it expects MEMMAP configuration
-    <td> Use MCELF Image format
 </tr>
 <tr>
     <td> MCUSDK-13652
@@ -550,7 +513,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> i2394
     <td> Race condition in interrupt and error aggregator capture registers resulting in events miss
     <td> Common
-    <td> Open
+    <td> Updated error aggregator registers in EDMA.
 </tr>
 <tr>
     <td> i2401
@@ -586,6 +549,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Module
     <th> Reported in release
     <th> Workaround
+</tr>
+<tr>
+    <td> MCUSDK-13630
+    <td> Cache should not be enabled at last 32B L2 Bank boundary
+    <td> Cache
+    <td> 10.01.00
+    <td> Create MPU configurations for last 32B of each L2 Bank with Non Cached attribute
 </tr>
 <tr>
     <td> -

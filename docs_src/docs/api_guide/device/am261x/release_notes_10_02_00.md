@@ -7,12 +7,7 @@
 \attention 2. There is a known issue of PMIC Watchdog resetting the SOC every 10 mins in CCS Gel flow. This has been fixed in SBL flow by disabling PMIC Watchdog
               using I2C interface. Use Flash SBL NULL if CCS Debug is needed or Add the same logic for PMIC Watchdog disable in application if CCS debug using Gel
               flow is mandatory.
-\attention 3. Networking examples support has been tested only on AM261x-LP board.
-\attention 4. SDK Datasheet is not generated for AM261x. This will be available in the next SDK release.
-\attention 5. This is an early access release for AM261x SOM Board with limited testing to enable early development for customers. Basic validation of every IP has been done
-              except Networking components and USB.
-\attention 6. There is a known issue of OSPI Phy Tuning not working on AM261x LP and SOM Board. So, Phy tuning is disabled by default in Examples and SBL OSPI. 
-\attention 7. DFU Utils tool is not supported on Mac systems due to a build issue.
+\attention 3. DFU Utils tool is not supported on Mac systems due to a build issue.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
@@ -22,26 +17,32 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|----------------------------------- 
--                                                                                               | -
+OTFA Safety and Security Support                                                                | OptiFlash
+FreeRTOS MPU Support for R5F and Examples                                                       | Kernel
+EDMA Error Handling Support                                                                     | EDMA
+LIN LLD Support                                                                                 | LIN
+OSPI PSRAM Support                                                                              | OSPI
+OSPI NAND and SBL NAND Support                                                                  | OSPI
+Rev E2 Launchpad Support                                                                        | Board
+FOTA Support                                                                                    | OptiFlash
 
 # Modules Not tested/supported in this release
 
-- USB and Networking support on AM261x SOM Board.
-- OSPI Phy Tuning on AM261x LP and SOM Board.
+- USB support on AM261x SOM Board.
 
 ## Device and Validation Information
 
 SOC    | Supported CPUs  | EVM                                                                          | Host PC
 -------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
-AM261x | R5F             | AM261x Launchpad     (referred to as am261x-lp in code). \n                  | Windows 10 64b or Ubuntu 18.04 64b or MacOS
-AM261x | R5F             | AM261x SOM           (referred to as am261x-som in code). \n                 | Windows 10 64b or Ubuntu 18.04 64b or MacOS
+AM261x | R5F             | AM261x Launchpad Rev E2    (referred to as am261x-lp in code). \n            | Windows 10 64b or Ubuntu 18.04 64b or MacOS
+AM261x | R5F             | AM261x SOM Rev E1          (referred to as am261x-som in code). \n           | Windows 10 64b or Ubuntu 18.04 64b or MacOS
 
 ## Dependent Tools and Compiler Information
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
 Code Composer Studio    | R5F            | 12.8.1
-SysConfig               | R5F            | 1.21.2 build, build 3837
+SysConfig               | R5F            | 1.22.0 build, build 3893
 TI ARM CLANG            | R5F            | 4.0.1.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
@@ -101,7 +102,7 @@ CMPSS        | R5F            | YES               | NA                          
 CPSW         | R5F            | YES               | No                                    | MAC & PHY loopback(DP83826-EVM-AM2) with RMII 100Mbps, MAC & PHY loopback(DP83TG720-EVM-AM2) with RGMII 1Gbps, LWIP (DP83TG720-EVM-AM2, DP83826-EVM-AM2): Getting IP, Ping, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes, Signal Monitoring features                                                                                         | -
-EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
+EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking, Error Handling                                                                 | -
 EPWM         | R5F            | YES               | Yes. Example: epwm_dma, epwm_xcmp_dma | Multiple EPWM Sync from Top Module, PWM outputs A and B in up-down count mode, Trip zone, Update PWM using EDMA, Valley switching, High resolution time period adjustment, chopper module features, type5 features, global load and link feature           | -
 EQEP         | R5F            | YES               | NA                                    | Speed and Position measurement. Frequency Measurement, speed direction, cw-ccw modes                                                                            | -
 FSI          | R5F            | YES               | YES                                   | RX, TX, polling, interrupt, DMA mode, single lane loopback.                                                                                                     | - FSI Spi Mode
@@ -115,13 +116,14 @@ MCSPI        | R5F            | YES               | Yes. Example: mcspi_loopback
 MDIO         | R5F            | YES               | NA                                    | Register read/write, link status and link interrupt enable API                                                                                                  | -
 PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes                                                                                                                        | -
 PMU          | R5F            | NO                | NA                                    | Tested various PMU events                                                                                                                                       | Counter overflow detection is not enabled
-OptiFlash    | R5F            | Yes               | NA                                    | FLC, RL2, RAT functionality, XIP with RL2 enabled                                                                                                               | OptiShare
-OSPI         | R5F            | YES               | Yes. Example: ospi_flash_dma          | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | Phy Support
+OptiFlash    | R5F            | Yes               | NA                                    | FLC, RL2, RAT functionality, XIP with RL2 enabled, OTFA, FOTA, Optishare, Smart Layout                                                                                 | -
+OSPI         | R5F            | YES               | Yes. Example: ospi_flash_dma          | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | -
 RTI          | R5F            | YES               | No                                    | Counter read, timebase selection, comparator setup for Interrupt, DMA requests                                                                                  | Capture feature, fast enabling/disabling of events not tested
 SDFM         | R5F            | YES               | No                                    | ECAP Clock LoopBack, Filter data read from CPU, Filter data read with PWM sync, triggered DMA read from the Filter FIFO                                         |  -
 SOC          | R5F            | YES               | NA                                    | Lock/unlock MMRs, clock enable, set Hz, Xbar configuration, SW Warm Reset, Address Translation                                                                  | -
 SPINLOCK     | R5F            | NA                | NA                                    | Lock, unlock HW spinlock                                                                                                                                        | -
 UART         | R5F            | YES               | Yes. Example: uart_echo_dma           | Basic read/write at baud rate 115200, polling, interrupt mode                                                                                                   | HW flow control not tested, DMA mode not supported
+USB          | R5F            | No                | NA                                    | DFU, CDC Echo mode                                                                                                                                      | -
 WATCHDOG     | R5F            | YES               | NA                                    | Reset mode, Interrupt mode                                                                                                                                      | -
 
 ### Trigonometric Operations
@@ -183,6 +185,54 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> MCUSDK-14052
+    <td> AM261x: OSPI Phy tuning fails on am261x LP
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> AM261x
+    <td> Update in the Phy tuning algorith fixed the issue.
+</tr>
+<tr>
+    <td> MCUSDK-13874
+    <td> Syscfg load json function for flash configuration imports does not work
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> AM261x, AM263Px, AM263x
+    <td> Fix in SysCfg Meta file.
+</tr>
+<tr>
+    <td> MCUSDK-13109
+    <td> RTI Interrupt req is Pulse type and not Level type
+    <td> RTI
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Updated interrupt type to Pulse
+</tr>
+<tr>
+    <td> MCUSDK-13523
+    <td> McSPI FIFO not enabled in DMA mode
+    <td> McSPI
+    <td> 10.00.00 onwards
+    <td> AM261x
+    <td> Added FIFO support in McSPI driver for Read and Write
+</tr>
+<tr>
+    <td> MCUSDK-14516
+    <td> UART ISR Blocking for long time
+    <td> UART
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Removed unwanted timeout loop in UART ISR
+</tr>
+<tr>
+    <td> MCUSDK-13473
+    <td> UART uniflash script fails with large images ( > 1MB)
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Reference before assignment error in python script
+</tr>
 </table>
 
 ## Known Issues
@@ -238,13 +288,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13836
-    <td> Networking examples not working in SBL null and SBL OSPI boot mode
-    <td> SBL
-    <td> 10.00.01 onwards
-    <td> Load the image in DEV/CCS boot mode
-</tr>
-<tr>
     <td> MCUSDK-13847
     <td> AM261x: GPTP lwIP debug example doesnt fit in RAM
     <td> Networking
@@ -259,25 +302,11 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-14052
-    <td> AM261x: OSPI Phy tuning fails on am261x LP
-    <td> OSPI
-    <td> 10.00.00 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-14054
-    <td> MMCSD: SysCfg sanity failure on AM26x devices
-    <td> MMCSD
-    <td> 10.00.01 onwards
-    <td> Use default configuration as in SDK examples.
-</tr>
-<tr>
     <td> MCUSDK-14055
     <td> SBL DFU and SBL DFU Uniflash Example failure
     <td> USB
     <td> 10.00.01 onwards
-    <td> -
+    <td> Issue is only in Release mode. Run the examples in Debug mode.
 </tr>
 <tr>
     <td> MCUSDK-14056
@@ -362,6 +391,18 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> SDL
     <td> 10.02.00 onwards
     <td> None
+    <td> MCUSDK-13513
+    <td> AM263Px: Multiple chip selects cannot be configured in SysCfg
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> -
+    <td> -
+    <td> -
+    <td> -
+    <td> -
 </tr>
 </table>
 
@@ -374,10 +415,58 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <th> SDK Status
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> i2189
+    <td> OSPI: Controller PHY Tuning Algorithm
+    <td> OSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2311
+    <td> USART: Spurious DMA Interrupts
+    <td> UART
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2324
+    <td> No synchronizer present between GCM and GCD status signals
+    <td> Common
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2345
+    <td> CPSW: Ethernet Packet corruption occurs if CPDMA fetches a packet which spans across memory banks
+    <td> CPSW
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2351
+    <td> OSPI: Controller does not support Continuous Read mode with NAND Flash
+    <td> OSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2354
+    <td> SDFM: Two Back-to-Back Writes to SDCPARMx Register Bit Fields CEVT1SEL, CEVT2SEL, and HZEN Within Three SD-Modulator Clock Cycles can Corrupt SDFM State Machine, Resulting in Spurious Comparator Events
+    <td> SDFM
+    <td> Open
+</tr>
+<tr>
+    <td> i2356
+    <td> ADC: Interrupts may Stop if INTxCONT (Continue-to-Interrupt Mode) is not Set
+    <td> ADC
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2383
+    <td> OSPI: 2-byte address is not supported in PHY DDR mode
+    <td> OSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2485
+    <td> AM263PX: TMU: TCM Memory Corruption on R5SS0_CORE1 and R5SS1_CORE1 when writing to TMU Registers
+    <td> TMU
+    <td> Implemented a workaround \ref TMU_TCMA_ERRATA <br> Workaround: Do not use initial bytes (0x40-0x3A0) of ATCM from CPU1 allocation. Initial bytes (0x40-0x3A0 => 868 bytes) of CORE1 TCM are blocked using linker command settings of multi-core application/examples. <br> Refer \ref EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
 </tr>
 </table>
 
@@ -398,11 +487,11 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> MCUSDK-13630
+    <td> Cache should not be enabled at last 32B L2 Bank boundary
+    <td> Cache
+    <td> 10.01.00
+    <td> Create MPU configurations for last 32B of each L2 Bank with Non Cached attribute
 </tr>
 </table>
 
