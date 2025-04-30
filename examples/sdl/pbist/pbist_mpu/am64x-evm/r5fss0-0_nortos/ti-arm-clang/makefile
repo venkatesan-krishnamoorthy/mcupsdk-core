@@ -21,18 +21,18 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=sdl_pbist_example.$(PROFILE).out
-COREOUTNAME:=sdl_pbist_example.$(PROFILE).optishare.out
+OUTNAME:=pbist_mpu_example.$(PROFILE).out
+COREOUTNAME:=pbist_mpu_example.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=sdl_pbist_example.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=sdl_pbist_example.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=sdl_pbist_example.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=sdl_pbist_example.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdl_pbist_example.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdl_pbist_example.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdl_pbist_example.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_pbist_example.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=pbist_mpu_example.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=pbist_mpu_example.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=pbist_mpu_example.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=pbist_mpu_example.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=pbist_mpu_example.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=pbist_mpu_example.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=pbist_mpu_example.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=pbist_mpu_example.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 
@@ -221,7 +221,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang sdl_pbist_example ...
+	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang pbist_mpu_example ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -348,12 +348,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for sdl_pbist_example.$(PROFILE) ...
+	@echo Creating Coverage Report for pbist_mpu_example.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sdl_pbist_example.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdl_pbist_example.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sdl_pbist_example.$(PROFILE).profdata > coverage/sdl_pbist_example.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sdl_pbist_example.$(PROFILE).profdata.json --output-json=coverage/sdl_pbist_example.$(PROFILE).analysis.json --output=../sdl_pbist_example.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o pbist_mpu_example.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=pbist_mpu_example.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=pbist_mpu_example.$(PROFILE).profdata > coverage/pbist_mpu_example.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/pbist_mpu_example.$(PROFILE).profdata.json --output-json=coverage/pbist_mpu_example.$(PROFILE).analysis.json --output=../pbist_mpu_example.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

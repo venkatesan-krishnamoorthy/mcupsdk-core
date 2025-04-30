@@ -16645,7 +16645,7 @@
             "example.general"
         ],
         "description": "This example demonstrates the MTOG operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "mtog_example",
+        "name": "mtog_app",
         "location": "../../examples/sdl/mtog/mtog_example/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS243EVM"
@@ -16942,7 +16942,7 @@
             "example.general"
         ],
         "description": "This example verifies the PBIST CPU is M4FSS0-0 running NORTOS.",
-        "name": "sdl_pbist_example",
+        "name": "pbist_mpu_example",
         "location": "../../examples/sdl/pbist/pbist_mpu/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS243EVM"
@@ -16975,7 +16975,7 @@
             "example.general"
         ],
         "description": "This example verifies the PBIST CPU is R5FSS0-0 running NORTOS.",
-        "name": "sdl_pbist_example",
+        "name": "pbist_mpu_example",
         "location": "../../examples/sdl/pbist/pbist_mpu/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS243EVM"
@@ -17105,8 +17105,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ecc Example Example. CPU is M4FSS0-0 running NORTOS.",
-        "name": "ecc_example",
+        "description": "A Ecc App Example. CPU is M4FSS0-0 running NORTOS.",
+        "name": "ecc_app",
         "location": "../../examples/sdl/ecc/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS243EVM"
@@ -17137,8 +17137,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ecc Example Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ecc_example",
+        "description": "A Ecc App Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecc_app",
         "location": "../../examples/sdl/ecc/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDS243EVM"

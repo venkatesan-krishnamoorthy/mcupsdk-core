@@ -125,7 +125,7 @@ function getComponentProperty(device) {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sdl_pbist_example";
+    property.name = "pbist_mpu_example";
     property.isInternal = false;
 	property.description = "This example verifies the PBIST"
     property.buildOptionCombos = buildOptionCombos;

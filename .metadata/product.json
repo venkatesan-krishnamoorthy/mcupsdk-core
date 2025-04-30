@@ -14,8 +14,9 @@
         "/fs/fs",
         "/networking/networking",
         "/security/security",
-        "/memory_configurator/components",
-        "sdl/sdl"
+        "/usb/usb",
+        "/pru_io/pru_io",
+        "/memory_configurator/components"
     ],
     "devices": [
         "AM64x",

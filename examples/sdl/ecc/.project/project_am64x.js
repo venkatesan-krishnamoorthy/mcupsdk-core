@@ -108,7 +108,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ecc_example";
+    property.name = "ecc_app";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 

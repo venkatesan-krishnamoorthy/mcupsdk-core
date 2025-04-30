@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Mtog Example"
-        name = "mtog_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang"
+        title="Mtog App"
+        name = "mtog_app_am243x-evm_m4fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -47,7 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/sdl/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=mtog_example.${ConfigName}.map
+            -m=mtog_app.${ConfigName}.map
             --ram_model
             --reread_libs
             --gen_xml_func_hash
@@ -60,7 +60,7 @@
             --context m4fss0-0 --part ALV --package ALV
         "
 
-        description="A Mtog Example NORTOS project">
+        description="A Mtog App NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

@@ -58,6 +58,6 @@ TIMER_ESM_init: Init MCU ESM complete
   Delta MTOG restore time in micro secs 2
   MTOG complete for MCU MTOG0
 
- MTOG Saftey Example passed.
+ All tests have passed.
 
 \endcode

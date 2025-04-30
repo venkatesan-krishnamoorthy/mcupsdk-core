@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Ecc Example"
-        name = "ecc_example_am64x-sk_m4fss0-0_nortos_ti-arm-clang"
+        title="Ecc App"
+        name = "ecc_app_am64x-sk_m4fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -49,7 +49,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/sdl/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=ecc_example.${ConfigName}.map
+            -m=ecc_app.${ConfigName}.map
             --ram_model
             --reread_libs
             --gen_xml_func_hash
@@ -62,7 +62,7 @@
             --context m4fss0-0 --part Default --package ALV
         "
 
-        description="A Ecc Example NORTOS project">
+        description="A Ecc App NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
