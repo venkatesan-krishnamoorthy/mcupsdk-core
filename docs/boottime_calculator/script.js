@@ -3,33 +3,33 @@
 
 //For AM263x
 const am263x_mcelf_signed_appsizes = [64, 128, 256, 512, 768, 1024, 1536];
-const am263x_mcelf_signed_boottime = [40.5313, 41.0514, 45.6229, 60.4598, 75.3044, 90.1629, 116.1281];
+const am263x_mcelf_signed_boottime = [43.0414, 46.6608, 53.9363, 68.3982, 82.9368, 97.3231, 126.6949];
 
 
 const am263x_mcelf_encrypted_appsizes = [64, 128, 256, 512, 768, 1024, 1536];
-const am263x_mcelf_encrypted_boottime = [42.4021, 44.5898, 56.1803, 76.3964, 96.6124, 116.9272, 157.2603];
+const am263x_mcelf_encrypted_boottime = [44.9173, 50.1876, 60.7206, 81.6829, 102.6271, 123.5777, 165.8423];
 
 //For AM263Px
 
 //28.7848 + 0.00813173 x
 const am263px_mcelf_signed_appsizes = [64, 128, 256, 512, 768, 1024, 1536, 2048, 2560];
-const am263px_mcelf_signed_boottime = [29.3522, 29.8321, 30.7448, 32.6115, 35.0746, 37.1117, 41.5637, 46.3405, 48.772];
+const am263px_mcelf_signed_boottime = [31.0843, 31.5388, 32.5709, 34.0032, 36.4543, 39.7178, 43.8362, 48.9356, 53.1759];
 
 // y = 28.8668 + 0.0336063 x
 const am263px_mcelf_encrypted_appsizes = [64, 128, 256, 512, 768, 1024, 1536, 2048, 2560];
-const am263px_mcelf_encrypted_boottime = [31.2624, 33.3115, 37.4878, 45.8581, 53.6344, 64.1311, 80.4861, 97.6925, 114.8989];
+const am263px_mcelf_encrypted_boottime = [32.3598, 35.1382, 38.7572, 47.4955, 56.5441, 66.4885, 83.5779, 101.8362, 119.8195];
 
 
 // Information Table
 
 const am263x_software_table = ` Software Specifications
 <table>
-<tr><td>MCU+ SDK version</td><td>v10.00.00</td></tr>  
-<tr><td>TIFSMCU version</td><td>v10.00.00</td></tr>  
+<tr><td>MCU+ SDK version</td><td>v10.02.00</td></tr>  
+<tr><td>TIFSMCU version</td><td>v10.02.00</td></tr>  
 <tr><td>Application Image Format version</td><td>MCELF</td></tr>  
-<tr><td>SBL Size</td><td>50KB</td></tr>  
+<tr><td>SBL Size</td><td>44KB</td></tr>  
 <tr><td>SBL Properties</td><td>Signed + Encrypted</td></tr>  
-<tr><td>HSM Runtime Size</td><td>70KB</td></tr>  
+<tr><td>HSM Runtime Size</td><td>72KB</td></tr>  
 <tr><td>HSM Runtime Properties</td><td>Signed + Encrypted</td></tr>  
 <tr><td>Maximum Segment of Application</td><td>64KB</td></tr> 
 </table>
@@ -37,12 +37,12 @@ const am263x_software_table = ` Software Specifications
 
 const am263px_software_table = ` Software Specifications
 <table>
-<tr><td>MCU+ SDK version</td><td>v10.00.00</td></tr>  
-<tr><td>TIFSMCU version</td><td>v10.00.00</td></tr>  
+<tr><td>MCU+ SDK version</td><td>v10.02.00</td></tr>  
+<tr><td>TIFSMCU version</td><td>v10.02.00</td></tr>  
 <tr><td>Application Image Format version</td><td>MCELF</td></tr>  
 <tr><td>SBL Size</td><td>60KB</td></tr>
 <tr><td>SBL Properties</td><td>Signed + Encrypted</td></tr>    
-<tr><td>HSM Runtime Size</td><td>61KB</td></tr>
+<tr><td>HSM Runtime Size</td><td>62KB</td></tr>
 <tr><td>HSM Runtime Properties</td><td>Signed + Encrypted</td></tr>    
 <tr><td>Maximum Segment of Application</td><td>64KB</td></tr> 
 </table>
