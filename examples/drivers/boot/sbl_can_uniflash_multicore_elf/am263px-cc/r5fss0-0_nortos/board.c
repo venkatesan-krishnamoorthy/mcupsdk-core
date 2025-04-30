@@ -226,7 +226,7 @@ void mcanEnableTransceiver(void)
 
     if(status == SystemP_SUCCESS)
     {
-        if(gBoardVer[1] == '0' && gBoardVer[0] == 'A')
+        if(gBoardVer[1] == '\0' && gBoardVer[0] == 'A')
         {
             /* boardVer is REV A */
             status = TCA6424_Mcan_Transceiver();
