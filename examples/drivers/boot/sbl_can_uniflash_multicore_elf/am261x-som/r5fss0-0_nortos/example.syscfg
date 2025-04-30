@@ -43,7 +43,7 @@ const section8    = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
-bootloader1.appImageOffset = "0x00080000";
+bootloader1.appImageOffset = "0x00081000";
 
 bootloader1.flashDriver                   = flash1;
 flash1.$name                              = "CONFIG_FLASH0";
@@ -66,6 +66,8 @@ flash1.protocol                           = "8d_8d_8d";
 flash1.fname                              = "IS25LX064";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
+flash1.peripheralDriver.phyEnable         = true;
+flash1.peripheralDriver.baudRateDiv       = 8;
 flash1.peripheralDriver.inputClkFreq      = 166666666;
 flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
 flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";

@@ -1257,15 +1257,17 @@ int32_t OSPI_lld_phyFindOTP1(OSPILLD_Handle hOspi, uint32_t flashOffset, OSPI_Ph
 
         if(len2 > len1)
         {
+            int delta = (topRight.rxDLL - gapHigh.txDLL)/2;
             searchPoint = topRight;
-            searchPoint.txDLL -= 16;
-            searchPoint.rxDLL -= (int32_t)((float)16*slope);
+            searchPoint.txDLL -= delta;
+            searchPoint.rxDLL -= (int32_t)((float)delta*slope);
         }
         else
         {
+            int delta = (gapLow.txDLL-bottomLeft.txDLL)/2;
             searchPoint = bottomLeft;
-            searchPoint.txDLL += 16;
-            searchPoint.rxDLL += (int32_t)((float)16*slope);
+            searchPoint.txDLL += delta;
+            searchPoint.rxDLL += (int32_t)((float)delta*slope);
         }
     }
 
@@ -1286,7 +1288,7 @@ int32_t OSPI_lld_phyFindOTP1(OSPILLD_Handle hOspi, uint32_t flashOffset, OSPI_Ph
         otp->rdDelay = 0;
     }
 
-    return status;
+        return status;
 }
 
 int32_t OSPI_lld_phyTuneDDR(OSPILLD_Handle hOspi, uint32_t flashOffset)
