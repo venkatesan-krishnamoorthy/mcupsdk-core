@@ -78,7 +78,6 @@ int main(void)
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
-    Bootloader_profileReset();
 
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");

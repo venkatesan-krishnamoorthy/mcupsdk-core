@@ -127,9 +127,6 @@ int main(void)
 %if(enableFastBoot === false) {
     Bootloader_profileAddProfilePoint("System_init");
 %}
-%if(enableFastBoot === false) {
-    Bootloader_profileReset();
-%}
 
     Drivers_open();
 %if(enableFastBoot === false) {
