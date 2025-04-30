@@ -40,6 +40,7 @@
 #include <drivers/i2c.h>
 #include <pmic_core.h>
 #include <pmic_power.h>
+#include <pmic_irq.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -160,6 +161,7 @@ int32_t PMIC_tps65036xxConfigure(PMIC_Config *config)
     int32_t status = SystemP_SUCCESS;
     PMIC_Object *object;
     bool wdgEnabled = (bool)false;
+    bool crcIntMask = (bool)TRUE;
 
     if ((NULL == config))
     {
@@ -169,7 +171,16 @@ int32_t PMIC_tps65036xxConfigure(PMIC_Config *config)
     if (status == SystemP_SUCCESS)
     {
         object = (PMIC_Object *)config->object;
-        const Pmic_CoreHandle_t *pmicCoreHandle = object->pmicCoreHandle;
+        Pmic_CoreHandle_t *pmicCoreHandle = object->pmicCoreHandle;
+
+        // Unlock PMIC registers
+        status = Pmic_unlockRegs(pmicCoreHandle);
+
+        /* Any time a setting is changed so that it is different from what is stored
+         * in the PMIC’s OTP memory, the device will have a reset.
+         * The workaround for this is to mask the CONFIG_CRC interrupt.
+         */
+        status = Pmic_irqSetMask(pmicCoreHandle, PMIC_CONFIG_CRC_INT, crcIntMask);
 
         // Disable WD if its enabled
         status = Pmic_wdgGetEnable(pmicCoreHandle, &wdgEnabled);
