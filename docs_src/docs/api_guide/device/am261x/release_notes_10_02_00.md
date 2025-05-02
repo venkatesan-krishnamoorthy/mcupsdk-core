@@ -8,6 +8,7 @@
               using I2C interface. Use Flash SBL NULL if CCS Debug is needed or Add the same logic for PMIC Watchdog disable in application if CCS debug using Gel
               flow is mandatory.
 \attention 3. DFU Utils tool is not supported on Mac systems due to a build issue.
+\attention 4. Uniflash 9.1.0 does not support out of the box flashing of AM261x-LP E2 binaries. As a workaround, use Uniflash's custom flasher feature mentioned here \ref CUSTOM_FLASH. Out of box flashing support for E2 board will be available in the next Uniflash release.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
