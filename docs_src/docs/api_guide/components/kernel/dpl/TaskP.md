@@ -22,6 +22,8 @@ NA
 - On R5F, and M4F, make sure memory provided as stack is 32b aligned and size is also multiple of 32b
 - Stack and stack size MUST be provided by application and is not allocated internally
 \endif
+- TaskP_loadResetAll() needs to be called in the application. If load counters are not reset, the accumulated load counters can lead to filtered and less steady CPU load values.
+
 ## Example Usage
 
 Include the below file to access the APIs,
