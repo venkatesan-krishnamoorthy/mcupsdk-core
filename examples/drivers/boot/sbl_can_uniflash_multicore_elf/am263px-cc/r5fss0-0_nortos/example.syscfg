@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_S" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4" --package "NFBGA (ZCZ-S)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.0+3721"}
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -58,8 +58,8 @@ pmic1.$name = "CONFIG_PMIC0";
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00081000";
 
-bootloader1.flashDriver              = flash1;
 flash1.$name                         = "CONFIG_FLASH0";
+bootloader1.flashDriver              = flash1;
 flash1.proto_isAddrReg               = true;
 flash1.proto_cmdRegRd                = "0x85";
 flash1.proto_cmdRegWr                = "0x81";
@@ -71,17 +71,20 @@ flash1.dummy_cmdRegWr                = "0x81";
 flash1.strDtr_isAddrReg              = true;
 flash1.strDtr_cmdRegRd               = "0x85";
 flash1.strDtr_cmdRegWr               = "0x81";
-flash1.strDtr_mask                   = "255";
 flash1.xspiWipRdCmd                  = "0x05";
 flash1.strDtr_shift                  = 255;
 flash1.proto_cfgReg                  = "0";
 flash1.dummy_mask                    = "0xFF";
 flash1.protocol                      = "8d_8d_8d";
 flash1.fourByteEnableSeq             = "0";
+flash1.flashBlockSize                = 4096;
+flash1.cmdBlockErase3B               = "0x20";
+flash1.cmdBlockErase4B               = "0x21";
 flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable    = true;
 flash1.peripheralDriver.phyEnable    = true;
 flash1.peripheralDriver.OSPI.$assign = "OSPI0";
+flash1.peripheralDriver.child.$name  = "drivers_ospi_v0_ospi_v0_am263px_template0";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
