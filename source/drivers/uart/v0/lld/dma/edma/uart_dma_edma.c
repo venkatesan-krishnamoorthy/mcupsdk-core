@@ -243,9 +243,6 @@ int32_t UART_lld_dmaWrite(UARTLLD_Handle hUart, const UART_Transaction *transact
     baseAddr               = edmaChCfg->edmaBaseAddr;
     regionId               = edmaChCfg->edmaRegionId;
 
-    /* Flush TX FIFO before the transaction */
-    UART_lld_flushTxFifo(hUart);
-
     /* Fetch the EDMA paramters for UART TX transfer */
     dmaTxCh    = edmaChCfg->edmaTxChId;
     tccTx      = edmaChCfg->edmaTccTx;

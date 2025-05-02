@@ -1782,6 +1782,9 @@ int32_t UART_lld_writeDma(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
                 hUart->writeSizeRemaining      = trans->count;
                 hUart->state = UART_STATE_BUSY;
 
+                /* Flush TX FIFO before the transaction */
+                UART_lld_flushTxFifo(hUart);
+
                 /* DMA mode */
                 status = UART_lld_dmaWrite(hUart, trans);
                 hUart->state = UART_STATE_READY;
