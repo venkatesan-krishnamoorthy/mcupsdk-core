@@ -8,14 +8,21 @@ This page goes over how to use software instrument smart placement.
 
 Software instrumentation implementation make use of ti-arm-clang compiler's instrumentation feature.
 
-\note
-Make sure that ti-arm-clang compiler version is more than 3.1.0 STS.
-
 ## Short Coming of This Method
 
 1. Will not work for C++ code.
 2. All static functions are never considered.
 3. Internal memory constraint applications may not be able to use this.
+
+## Tools and other requirements 
+
+1. `ti-arm-clang` compiler version more than `3.1.0 STS` is required.
+2. `node` version v16.20.2 is required 
+3. Make sure `yargs` and `lodash` modules of node is installed. 
+4. The following steps only work in terminal with `pwd` being equal to `MCU_PLUS_SDK_PATH` environment variable.
+
+\note 
+Underlying scripts can be used in any build system.
 
 ## Steps
 

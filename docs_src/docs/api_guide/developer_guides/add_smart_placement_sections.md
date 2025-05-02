@@ -66,11 +66,15 @@ Priority | Memory Name
 ---------|----------
 0|TCMA
 1|TCMB
-2|MSRAM
+2|MSRAM/OCRAM 
 
 2nd section is as follows:
 
 \image html ti_onchip_sp_section.png
+Priority | Memory Name
+---------|----------
+0|MSRAM/OCRAM
+1|FLASH
 
 and the last section to add is
 
