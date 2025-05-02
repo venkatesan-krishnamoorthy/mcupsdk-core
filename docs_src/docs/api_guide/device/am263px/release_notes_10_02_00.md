@@ -519,7 +519,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> SysCfg unexpectedly changes OSPI Pin
     <td> OSPI
     <td> 10.00.00 onwards
-    <td> Reconfigure OSPI Pins to original state after updating OSPI configurables.
+    <td> Lock the OSPI Pins in SysCfg.
 </tr>
 <tr>
     <td> MCUSDK-14110
@@ -536,7 +536,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13513
+    <td> MCUSDK-14473
     <td> AM263Px: Multiple chip selects cannot be configured in SysCfg
     <td> OSPI
     <td> 10.00.00 onwards

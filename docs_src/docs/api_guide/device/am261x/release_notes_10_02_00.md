@@ -391,11 +391,19 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> SDL
     <td> 10.02.00 onwards
     <td> None
+</tr>
     <td> MCUSDK-13513
     <td> AM263Px: Multiple chip selects cannot be configured in SysCfg
     <td> OSPI
     <td> 10.00.00 onwards
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13182
+    <td> SysCfg unexpectedly changes OSPI Pin
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> Lock the OSPI Pins in OSPI SysCfg.
 </tr>
 <tr>
     <td> -
@@ -461,12 +469,6 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> OSPI: 2-byte address is not supported in PHY DDR mode
     <td> OSPI
     <td> Open
-</tr>
-<tr>
-    <td> i2485
-    <td> AM263PX: TMU: TCM Memory Corruption on R5SS0_CORE1 and R5SS1_CORE1 when writing to TMU Registers
-    <td> TMU
-    <td> Implemented a workaround \ref TMU_TCMA_ERRATA <br> Workaround: Do not use initial bytes (0x40-0x3A0) of ATCM from CPU1 allocation. Initial bytes (0x40-0x3A0 => 868 bytes) of CORE1 TCM are blocked using linker command settings of multi-core application/examples. <br> Refer \ref EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
 </tr>
 </table>
 
