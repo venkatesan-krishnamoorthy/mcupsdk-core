@@ -485,7 +485,7 @@ int32_t Bootloader_runSelfCpuWithLinux(void);
 uint32_t Bootloader_getMulticoreImageSize(Bootloader_Handle handle);
 
 /**
- * \brief API to check if a particular core's RPRC image is present in the multicore image
+ * \brief API to check if a particular core's image is present in the multicore image
  *
  * This API checks the csl core id against an internally maintained bitmap which will be populated
  * after parsing the image. So this API should be called only after the multicore image is parsed.
