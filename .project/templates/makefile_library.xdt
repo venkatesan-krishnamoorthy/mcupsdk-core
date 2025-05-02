@@ -13,7 +13,11 @@ ConfigName:=$(PROFILE)
 % if (args.project.name == "drivers" && (args.project.device == "am243x" || args.project.device == "am64x")) {
 DEVICE_TYPE?=GP
 % }
+% if (args.os != undefined) {
+LIBNAME:=`args.project.name`.`args.project.device`.`args.project.cpu`.`args.project.cgt`.`args.os`.$(PROFILE).lib
+% } else {
 LIBNAME:=`args.project.name`.`args.project.device`.`args.project.cpu`.`args.project.cgt`.$(PROFILE).lib
+% }
 
 % let obj = {}
 % obj = args.project.files;
