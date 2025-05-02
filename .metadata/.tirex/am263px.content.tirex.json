@@ -6628,6 +6628,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Switch To B Image Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "switch_to_b_image",
+        "location": "../../examples/drivers/fss/fss_switch_b/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "fss",
+            "fss_switch_b",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Fsi Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "fsi_loopback_dma",
         "location": "../../examples/drivers/fsi/fsi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -16440,6 +16473,37 @@
         "location": "../../examples/hello_world_xip_fss1/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_xip_fss1",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A \"Hello, World\" Example that with XIP enabled on FSS1 interface CPU is R5FSS0-0 running NORTOS.",
+        "name": "hello_world_xip_fss1",
+        "location": "../../examples/hello_world_xip_fss1/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"

@@ -3,25 +3,18 @@ let path = require('path');
 const device = "am263px";
 
 const files = {
-    "am263px-cc":
-    {
-        common:
-        [
-            "fss_switch_b_img.c",
-            "main.c",
-            "new_application_images.c"
-        ],
-    }
+    common: [
+        "fss_switch_b_img.c",
+        "main.c",
+        "new_application_images.c"
+    ],
+
 }
 const projectSpecFiles = {
-    "am263px-cc":
-    {
-        common:
-        [
-            "new_application_images.h",
-            "board.h"
-        ]
-    }
+    common: [
+        "new_application_images.h",
+        "board.h"
+    ]
 };
 
 
@@ -66,6 +59,7 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_FOTA_AGENT";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -82,8 +76,8 @@ function getComponentProperty() {
 
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
-    build_property.files = files[buildOption.board];
-    build_property.projectspecfiles = projectSpecFiles[buildOption.board];
+    build_property.files = files;
+    build_property.projectspecfiles = projectSpecFiles;
     build_property.filedirs = filedirs;
     build_property.includes = filedirs;
     build_property.libdirs = libdirs;
