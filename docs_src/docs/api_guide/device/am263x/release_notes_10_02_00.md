@@ -7,6 +7,8 @@
 
 \attention 3. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
 
+\attention 4. SDK will be migrated to support CCS Theia from next release (SDK 11.0) and the support for CCS Eclipse will be deprecated.
+
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
