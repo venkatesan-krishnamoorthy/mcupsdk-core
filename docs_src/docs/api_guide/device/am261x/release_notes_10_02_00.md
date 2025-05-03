@@ -4,11 +4,12 @@
 
 \attention 1. Also refer to individual module pages for more details on each feature, unsupported features, important usage guidelines.
 
-\attention 2. There is a known issue of PMIC Watchdog resetting the SOC every 10 mins in CCS Gel flow. This has been fixed in SBL flow by disabling PMIC Watchdog
-              using I2C interface. Use Flash SBL NULL if CCS Debug is needed or Add the same logic for PMIC Watchdog disable in application if CCS debug using Gel
-              flow is mandatory.
+\attention 2. There is a known issue of PMIC Watchdog resetting the SOC every 10 mins in CCS Gel flow. This has been fixed in SBL flow by disabling PMIC Watchdog using I2C interface. Use Flash SBL NULL if CCS Debug is needed or Add the same logic for PMIC Watchdog disable in application if CCS debug using Gel flow is mandatory.
+
 \attention 3. DFU Utils tool is not supported on Mac systems due to a build issue.
 \attention 4. Uniflash 9.1.0 does not support out of the box flashing of AM261x-LP E2 binaries. As a workaround, use Uniflash's custom flasher feature mentioned here \ref CUSTOM_FLASH. Out of box flashing support for E2 board will be available in the next Uniflash release.
+
+\attention 4. The default Stack size is 16KB and Heap size 32 KB for SDK examples. This can be adjusted as per application requirement through Memory Configurator in SysCfg or by updating Linker script in case of standalone applications.
 
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
