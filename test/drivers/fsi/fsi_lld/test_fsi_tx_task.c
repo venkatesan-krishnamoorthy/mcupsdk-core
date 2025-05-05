@@ -235,7 +235,11 @@ void fsi_tx_hwPingTest(void *args)
     FSI_disableTxPingTimer(txBaseAddr);
 
     SemaphoreP_post(p_taskDoneSemaphoreObj);
-    TaskP_exit();
+    while(1)
+    {
+        /* Yield to the main task which deletes this task. */
+        TaskP_yield();
+    };
 }
 
 
@@ -383,7 +387,11 @@ void fsi_tx_negativeTest(void *args)
     DebugP_assert((regVal & FSI_TX_EVT_BUF_OVERRUN) == 0U);
 
     SemaphoreP_post(p_taskDoneSemaphoreObj);
-    TaskP_exit();
+    while(1)
+    {
+        /* Yield to the main task which deletes this task. */
+        TaskP_yield();
+    };
 }
 
 static int32_t Fsi_appTxConfig(uint32_t txBaseAddr,  FSI_TxTestParams *txTestParams)

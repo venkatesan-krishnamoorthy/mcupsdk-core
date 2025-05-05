@@ -306,7 +306,11 @@ void fsi_rx_hwPingTest(void *args)
     FSI_disableRxInternalLoopback(rxBaseAddr);
 
     SemaphoreP_post(p_taskDoneSemaphoreObj);
-    TaskP_exit();
+    while(1)
+    {
+        /* Yield to the main task which deletes this task. */
+        TaskP_yield();
+    };
 }
 
 void fsi_rx_negativeTest(void *args)
@@ -463,7 +467,11 @@ void fsi_rx_negativeTest(void *args)
     DebugP_assert((regVal & FSI_RX_EVT_TYPE_ERR) == 0U);
 
     SemaphoreP_post(p_taskDoneSemaphoreObj);
-    TaskP_exit();
+    while(1)
+    {
+        /* Yield to the main task which deletes this task. */
+        TaskP_yield();
+    };
 }
 
 static int32_t Fsi_appRxConfig(uint32_t rxBaseAddr, FSI_RxTestParams *rxTestParams)
