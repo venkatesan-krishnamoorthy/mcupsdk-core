@@ -58,10 +58,12 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_CGT/DSP_C66 \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/c66 \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM273X \
+	-DOS_FREERTOS \
 
 CFLAGS_common := \
 	-mv6600 \
@@ -94,8 +96,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am273x.c66.ti-c6000.${ConfigName}.lib \
-	-ldrivers.am273x.c66.ti-c6000.${ConfigName}.lib \
-	-lboard.am273x.c66.ti-c6000.${ConfigName}.lib \
+	-ldrivers.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
+	-lboard.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
 	-llibc.a \
 
 LFLAGS_common = \
@@ -107,8 +109,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am273x.c66.ti-c6000.${ConfigName}.lib \
-	drivers.am273x.c66.ti-c6000.${ConfigName}.lib \
-	board.am273x.c66.ti-c6000.${ConfigName}.lib \
+	drivers.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
+	board.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
 	libc.a \
 
 LIBS_PATH_NAME = \

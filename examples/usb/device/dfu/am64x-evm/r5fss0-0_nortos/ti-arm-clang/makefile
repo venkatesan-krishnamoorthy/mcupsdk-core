@@ -63,6 +63,7 @@ INCLUDES_common := \
 DEFINES_common := \
 	-DSOC_AM64X \
 	-DTINYUSB_INTEGRATION \
+	-DOS_NORTOS \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -107,10 +108,10 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lnortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lusbd_cdn_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lusbd_tusb_dfu_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-ldrivers.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lusbd_cdn_nortos.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	-lusbd_tusb_dfu_nortos.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -123,10 +124,10 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	usbd_cdn_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
-	usbd_tusb_dfu_nortos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	drivers.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	usbd_cdn_nortos.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
+	usbd_tusb_dfu_nortos.am64x.r5f.ti-arm-clang.nortos.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

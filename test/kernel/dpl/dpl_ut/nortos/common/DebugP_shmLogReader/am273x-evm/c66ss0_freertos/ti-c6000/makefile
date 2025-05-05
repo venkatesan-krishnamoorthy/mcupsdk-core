@@ -62,6 +62,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_CGT/DSP_C66 \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/c66 \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f \
 	-Igenerated \
 
 DEFINES_common := \
@@ -99,8 +100,8 @@ LIBS_PATH_common = \
 
 LIBS_common = \
 	-lfreertos.am273x.c66.ti-c6000.${ConfigName}.lib \
-	-ldrivers.am273x.c66.ti-c6000.${ConfigName}.lib \
-	-lunity.am273x.c66.ti-c6000.${ConfigName}.lib \
+	-ldrivers.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
+	-lunity.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
 	-llibc.a \
 
 LFLAGS_common = \
@@ -112,8 +113,8 @@ LFLAGS_common = \
 
 LIBS_NAME = \
 	freertos.am273x.c66.ti-c6000.${ConfigName}.lib \
-	drivers.am273x.c66.ti-c6000.${ConfigName}.lib \
-	unity.am273x.c66.ti-c6000.${ConfigName}.lib \
+	drivers.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
+	unity.am273x.c66.ti-c6000.freertos.${ConfigName}.lib \
 	libc.a \
 
 LIBS_PATH_NAME = \
