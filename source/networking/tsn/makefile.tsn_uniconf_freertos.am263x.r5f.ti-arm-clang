@@ -128,6 +128,7 @@ DEFINES_common := \
     -DUB_LOGCAT=2 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
     -D__STDC_WANT_LIB_EXT1__=1 \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

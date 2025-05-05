@@ -41,6 +41,7 @@ DEFINES_common := \
     -DTSNPKGVERSION=\"1.1.4\" \
     -DPRINT_FORMAT_NO_WARNING \
     -DNO_GETOPT_LONG=1 \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-a53+fp+simd \

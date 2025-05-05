@@ -87,6 +87,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/generated \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 
 DEFINES_common := \
     -DSOC_AM263PX \
@@ -94,6 +95,7 @@ DEFINES_common := \
     -DPRINT_FORMAT_NO_WARNING \
     -DUB_LOGCAT=3 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

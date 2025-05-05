@@ -171,6 +171,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM261X \
+    -DOS_NORTOS \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

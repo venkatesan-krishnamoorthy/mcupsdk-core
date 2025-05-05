@@ -88,6 +88,7 @@ INCLUDES_common := \
 
 DEFINES_common := \
     -DSOC_AM273X \
+    -DOS_FREERTOS \
 
 CFLAGS_common := \
     -mv6600 \
