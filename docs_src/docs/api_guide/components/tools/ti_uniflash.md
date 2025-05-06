@@ -131,38 +131,11 @@ After setting up one of the above session launch type, Click the Start button to
 
 3.  Flash Address Table:
     - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
-        \if SOC_AM261X
-        <table>
-        <tr>
-        <th> Board
-        <th> Program
-        <th> Start Address
-        </tr>
-        <tr>
-        <td rowspan=2> AM261x-LP
-        <td> SBL
-        <td> 0x60000000
-        </tr>
-        <tr>
-        <td> Application
-        <td> 0x60081000
-        </tr>
-        <tr>
-        <td rowspan=2> AM261x-SOM
-        <td> SBL
-        <td> 0x60000000
-        </tr>
-        <tr>
-        <td> Application
-        <td> 0x60080000
-        </tr>
-        </table>
-        \else
         | Program     | Start Address |
         |-------------|---------------|
         | SBL         | 0x60000000    |
         | Application | 0x60081000    |
-        \endif
+
     - Edit the application offset field only, if your sbl is configured with custom application offset
 4.  Initiating Programming:
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.

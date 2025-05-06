@@ -213,6 +213,18 @@ In this application, the CAN settings are:
         --file=C:/ti/mcu_plus_sdk_am263x_08_05_00_13/examples/drivers/ipc/ipc_rpmsg_echo/am263x-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0x80000
         \endcode
 \endif
+\if SOC_AM263PX
+        For AM263Px, Default Flash Offset is at 0x81000.
+        \code
+        --file={SDK_PATH}/examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0x81000
+        \endcode
+\endif
+\if SOC_AM261X
+        For AM261x, Default Flash Offset is at 0x81000.
+        \code
+        --file={SDK_PATH}/examples/drivers/ipc/ipc_rpmsg_echo/am261x-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0x81000
+        \endcode
+\endif
 \if SOC_AM273X
         For AM273x, Default Flash Offset is at 0xA0000.
         \code

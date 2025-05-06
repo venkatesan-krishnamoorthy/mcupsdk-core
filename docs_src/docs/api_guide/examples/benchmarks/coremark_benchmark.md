@@ -7,7 +7,7 @@ Coremark is an industry standard benchmark used for testing processor's core fea
 Read more about Coremark here: https://www.eembc.org/coremark/
 
 # Supported Combinations {#EXAMPLES_COREMARK_COMBOS}
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
@@ -58,6 +58,13 @@ Device          | Coremark/MHz
 ----------------|-----------
 AM263Px-CC       | 3.769163
 AM263Px-LP       | 3.769089
+\endcond
+
+\cond SOC_AM261X
+Device          | Coremark/MHz
+----------------|-----------
+AM261x-SOM      | 3.664148
+AM261x-LP       | 4.581006
 \endcond
 
 \cond SOC_AM273X
@@ -177,6 +184,29 @@ seedcrc          : 0xe9f5
 [0]crcfinal      : 0x65c5
 CoreMark 1.0 : 1507.665120
 CoreMark/MHz :3.769163 / STACK
+BENCHMARK END
+\endcode
+\endcond
+
+\cond SOC_AM261X
+\code
+BENCHMARK START - ARM R5F - COREMARK
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Begin tick       : 57
+End tick         : 8186031
+Total ticks      : 8185974
+Total time (secs): 8.185974
+Iterations/Sec   : 1832.402595
+Iterations       : 15000
+Memory location  : STACK
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x65c5
+CoreMark 1.0 : 1832.402595 
+CoreMark/MHz :4.581006 / STACK
 BENCHMARK END
 \endcode
 \endcond

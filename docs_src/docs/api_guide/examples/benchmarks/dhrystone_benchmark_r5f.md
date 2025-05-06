@@ -7,7 +7,7 @@ Dhrystone is a synthetic benchmark that measures and compares processor performa
 Read more about Dhrystone benchmark here: 
 
 # Supported Combinations {#EXAMPLES_DHRYSTONE_COMBOS}
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM261X
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
@@ -51,6 +51,13 @@ Device          | Normalised MIPS/MHz
 ----------------|-----------
 AM263Px-CC      | 1.9610
 AM263Px-LP      | 1.9610
+\endcond
+
+\cond SOC_AM261X
+Device          | Normalised MIPS/MHz
+----------------|-----------
+AM261x-SOM      | 1.9412
+AM261x-LP       | 1.9412
 \endcond
 
 \cond SOC_AM273X
@@ -152,6 +159,25 @@ Dhrystone Benchmark, Version 2.1 (Language: C)
 - Dhrystones per Second:                     689095.5
 
 Normalized MIPS/MHz:                         1.9610
+BENCHMARK END
+\endcode
+\endcond
+
+\cond SOC_AM261X
+\code
+BENCHMARK START - ARM R5F - DHRYSTONE
+status 0
+
+Dhrystone Benchmark, Version 2.1 (Language: C)
+
+- BEGIN cycle count:                         30
+- END Cycle count:                           146600012
+- USER cycle count:                          146599982
+- Usertime in sec:                           0.293200
+- Microseconds for one run through Dhrystone:   0.6 
+- Dhrystones per Second:                     1705320.9 
+
+Normalized MIPS/MHz:                         1.9412
 BENCHMARK END
 \endcode
 \endcond

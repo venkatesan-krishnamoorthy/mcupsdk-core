@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=dhrystone_benchmark.$(PROFILE).out
-COREOUTNAME:=dhrystone_benchmark.$(PROFILE).optishare.out
+OUTNAME:=mathlib_benchmark.$(PROFILE).out
+COREOUTNAME:=mathlib_benchmark.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=dhrystone_benchmark.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=dhrystone_benchmark.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=dhrystone_benchmark.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME:=mathlib_benchmark.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=mathlib_benchmark.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=mathlib_benchmark.$(PROFILE).appimage.signed
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=dhrystone_benchmark.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=dhrystone_benchmark.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=dhrystone_benchmark.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dhrystone_benchmark.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dhrystone_benchmark.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dhrystone_benchmark.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dhrystone_benchmark.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_MCELF:=mathlib_benchmark.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=mathlib_benchmark.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=mathlib_benchmark.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=mathlib_benchmark.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=mathlib_benchmark.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=mathlib_benchmark.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=mathlib_benchmark.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -44,9 +44,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	estubs.c \
-	dhry_1.c \
-	dhry_2.c \
+	mathlib_benchmark.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -64,7 +62,6 @@ FILES_PATH_common = \
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/dpl/ \
 	-Igenerated \
 
 DEFINES_common := \
@@ -80,11 +77,6 @@ CFLAGS_common := \
 	-g \
 	-Wno-gnu-variable-sized-type-not-at-end \
 	-Wno-unused-function \
-
-CFLAGS_release := \
-	-Os \
-	-Oz \
-	-O3 \
 
 CFLAGS_cpp_common := \
 	-Wno-c99-designator \
@@ -102,20 +94,24 @@ CFLAGS_cpp_common := \
 CFLAGS_debug := \
 	-D_DEBUG_=1 \
 
+CFLAGS_release := \
+	-Os \
+
 LNK_FILES_common = \
 	generated/linker.cmd \
 
 LIBS_PATH_common = \
-	-Wl,-igenerated \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/mathlib/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lnortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lmathlib.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -124,23 +120,21 @@ LFLAGS_common = \
 	-Wl,--ram_model \
 	-Wl,--reread_libs \
 	-Wl,--gen_xml_func_hash \
-	-Wl,--zero_init=on \
-	-Wl,--use_memset=fast \
-	-Wl,--use_memcpy=fast \
 
 
 LIBS_NAME = \
 	nortos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	mathlib.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
-	generated \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
+	${MCU_PLUS_SDK_PATH}/source/mathlib/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
@@ -222,7 +216,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang dhrystone_benchmark ...
+	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang mathlib_benchmark ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -372,12 +366,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for dhrystone_benchmark.$(PROFILE) ...
+	@echo Creating Coverage Report for mathlib_benchmark.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o dhrystone_benchmark.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=dhrystone_benchmark.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=dhrystone_benchmark.$(PROFILE).profdata > coverage/dhrystone_benchmark.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/dhrystone_benchmark.$(PROFILE).profdata.json --output-json=coverage/dhrystone_benchmark.$(PROFILE).analysis.json --output=../dhrystone_benchmark.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o mathlib_benchmark.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=mathlib_benchmark.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=mathlib_benchmark.$(PROFILE).profdata > coverage/mathlib_benchmark.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/mathlib_benchmark.$(PROFILE).profdata.json --output-json=coverage/mathlib_benchmark.$(PROFILE).analysis.json --output=../mathlib_benchmark.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))
