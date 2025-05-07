@@ -263,13 +263,13 @@ r5fss0-1    | 5
   `--merge-segments`      | Enable merging segments based on a tolerance limit. Default value is false.
   `--tolerance-limit`     | The maximum difference (in bytes) between the end address of previous segment and start address of current segment for merging the segments. Default value is zero.
   `--ignore-context`      | Enable merging of segments that are of different cores. Default value is false.
-  `--xip`                 | XIP section's start and end address seperated by a colon. It creates a new file `<filename>.mcelf_xip`. Default value is 'none' (XIP is disabled). To enable XIP creation: `--xip=0x60100000:0x60200000`
-  `--max_segment_size`    | Maximum allowed size of a loadable segment. This feature can only be used with merge_segments disabled. Default value is 8192 bytes.
+  `--xip`                 | XIP section's start and end address seperated by a colon. It creates a new file `<filename>.mcelf_xip`. It is a mandatory argument. In case of no XIP regions, use `--xip=None` (XIP is disabled even though file exists). Argument format when XIP region exists: `--xip=0x60100000:0x60200000`
+  `--max-segment-size`    | Maximum allowed size of a loadable segment. This feature can only be used with merge_segments disabled. Default value is 8192 bytes.
   `--xlat`                | SOC specific Address Translation. (Under development, reserved for future use)
-  `--sso`                 | Shared static objects. (Under development, reserved for future use)
-  `--otfaConfigFile`      | path to file which would conatins the OTFA/ECCM configuration. (Refer to \ref BOOTFLOW_XIP and \ref OPTIFLASH_ECCM for how to use this.)
+  `--sso`                 | Path to SSO binary file. Default value is None.
+  `--otfaConfigFile`      | Path to JSON file containing the OTFA config. Disabled by default with value None.
 
-- The input for arguments 3-7 are defined in {MCU_SDK_PATH}/devconfig/devconfig.mak file.
+- The input for arguments 3-8 are defined in {MCU_SDK_PATH}/devconfig/devconfig.mak file.
 
 - Given below are the structs used in the bootloader library to parse a 32 bit MCELF binary
 
