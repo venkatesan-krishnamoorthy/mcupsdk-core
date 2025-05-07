@@ -116,13 +116,7 @@ void ospi_flash_xip_main(void *args)
     /* Open Flash drivers with OSPI instance as input */
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
-
-    /* Flash write operations are INDAC operations. For such operations the DAC mode is disabled. 
-       The system was not enabling DAC mode after the INDAC operations becuase of this flag being false.
-       Inorder to enable the DAC mode after INDAC operations, this change has been made. 
-    */
-    gOspiConfig[CONFIG_OSPI0].object->isDacEnable = true;
-
+    
     /* Test if the XIP still works after flash open */
     ospi_flash_xip_crc_test();
 

@@ -3,7 +3,7 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --part "AM263P4" --package "ZCZ_C" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM263P4-Q1" --package "NFBGA (ZCZ-C)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.0+3893"}
+ * @versions {"tool":"1.23.0+4000"}
  */
 
 /**
@@ -60,7 +60,6 @@ flash1.dummy_cmdRegWr                     = "0x81";
 flash1.strDtr_isAddrReg                   = true;
 flash1.strDtr_cmdRegRd                    = "0x85";
 flash1.strDtr_cmdRegWr                    = "0x81";
-flash1.strDtr_mask                        = "255";
 flash1.xspiWipRdCmd                       = "0x05";
 flash1.strDtr_shift                       = 255;
 flash1.proto_cfgReg                       = "0";
@@ -72,6 +71,7 @@ flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
 flash1.peripheralDriver.inputClkFreq      = 100000000;
 flash1.peripheralDriver.phyEnable         = true;
+flash1.peripheralDriver.dacEnable         = true;
 flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
 flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
 flash1.peripheralDriver.OSPI.DQS.$assign  = "UART1_TXD";
@@ -85,11 +85,12 @@ flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
 flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
 flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am263px_template0";
 
-edma1.$name                 = "CONFIG_EDMA0";
-edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+edma1.$name                        = "CONFIG_EDMA0";
+flash1.peripheralDriver.edmaDriver = edma1;
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";
