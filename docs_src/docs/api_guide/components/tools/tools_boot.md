@@ -267,6 +267,7 @@ r5fss0-1    | 5
   `--max_segment_size`    | Maximum allowed size of a loadable segment. This feature can only be used with merge_segments disabled. Default value is 8192 bytes.
   `--xlat`                | SOC specific Address Translation. (Under development, reserved for future use)
   `--sso`                 | Shared static objects. (Under development, reserved for future use)
+  `--otfaConfigFile`      | path to file which would conatins the OTFA/ECCM configuration. (Refer to \ref BOOTFLOW_XIP and \ref OPTIFLASH_ECCM for how to use this.)
 
 - The input for arguments 3-7 are defined in {MCU_SDK_PATH}/devconfig/devconfig.mak file.
 
