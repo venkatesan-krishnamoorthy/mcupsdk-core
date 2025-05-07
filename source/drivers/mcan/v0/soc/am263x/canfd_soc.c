@@ -70,16 +70,16 @@ int32_t CANFD_writeDma(CANFD_MsgObjHandle handle, uint32_t id, CANFD_MCANFrameTy
 
     if(NULL != handle)
     {
+        retVal = SystemP_SUCCESS;
         /* Get the message object pointer */
         ptrCanMsgObj = (CANFD_MessageObject*)handle;
         /* Get the pointer to the CAN Driver Block */
         ptrCanFdObj = (CANFD_Object*)ptrCanMsgObj->canfdHandle->object;
         baseAddr = ptrCanFdObj->regBaseAddress;
-        retVal = CANFD_isDataSizeValid(ptrCanMsgObj->dataLength);
 
         /* Check for pending messages */
         index = (uint32_t)1U << ptrCanMsgObj->txElement;
-        if ((index == (MCAN_getTxBufReqPend(baseAddr) & index)) || (retVal != SystemP_SUCCESS))
+        if (index == (MCAN_getTxBufReqPend(baseAddr) & index))
         {
             retVal = SystemP_FAILURE;
         }
