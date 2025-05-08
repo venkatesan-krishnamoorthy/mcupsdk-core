@@ -398,6 +398,28 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 10.02.00 onwards
     <td> None
 </tr>
+<tr>
+    <td> PROC_SDL-9154
+    <td> VTM Example stuck in UC2
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> PROC_SDL-9177
+    <td> ECC MSS-L2 example fail in R5FSS0-1 during release
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Use R5FSS0-0 example.
+</tr>
+<tr>
+    <td> PROC_SDL-9179
+    <td> Redefinition error in MCU_PBIST Sysconfig
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Use sdl examples instead of sbl_null to enable MCU_PBIST SYSCFG and test.
+</tr>
+<tr>
     <td> MCUSDK-13513
     <td> Multiple chip selects cannot be configured in SysCfg
     <td> OSPI

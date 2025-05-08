@@ -515,6 +515,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> None
 </tr>
 <tr>
+    <td> PROC_SDL-9179
+    <td> Redefinition error in MCU_PBIST Sysconfig
+    <td> SDL
+    <td> 10.02.00 onwards
+    <td> Use sdl examples instead of sbl_null to enable MCU_PBIST SYSCFG and test.
+</tr>
+<tr>
     <td> MCUSDK-13652
     <td> Readelf throws warning while parsing RS note
     <td> SBL, QSPI
