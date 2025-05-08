@@ -1,9 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.21.999+172"}
+  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.23.0+4000"}
  */
 
 /**
@@ -15,6 +15,7 @@ const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, fa
 const bootloader1 = bootloader.addInstance();
 const uart        = scripting.addModule("/drivers/uart/uart", {}, false);
 const uart1       = uart.addInstance();
+const clock       = scripting.addModule("/kernel/dpl/clock");
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
 const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -36,39 +37,36 @@ const section5    = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-flash1.$name                              = "CONFIG_FLASH0";
-flash1.proto_isAddrReg                    = true;
-flash1.proto_cmdRegRd                     = "0x85";
-flash1.proto_cmdRegWr                     = "0x81";
-flash1.proto_mask                         = "0xff";
-flash1.dummy_isAddrReg                    = true;
-flash1.dummy_cfgReg                       = "1";
-flash1.dummy_cmdRegRd                     = "0x85";
-flash1.dummy_cmdRegWr                     = "0x81";
-flash1.strDtr_isAddrReg                   = true;
-flash1.strDtr_cmdRegRd                    = "0x85";
-flash1.strDtr_cmdRegWr                    = "0x81";
-flash1.strDtr_mask                        = "255";
-flash1.strDtr_shift                       = 255;
-flash1.proto_cfgReg                       = "0";
-flash1.dummy_mask                         = "0xFF";
-flash1.protocol                           = "8d_8d_8d";
-flash1.fname                              = "IS25LX064";
-flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
-flash1.peripheralDriver.dmaEnable         = true;
-flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";
-flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO0";
-flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO76";
-flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO10";
-flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO9";
-flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO8";
-flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO7";
-flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO6";
-flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO5";
-flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO4";
-flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO3";
-flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO66";
+flash1.$name                                    = "CONFIG_FLASH0";
+flash1.proto_cmdRegRd                           = "0x85";
+flash1.proto_cmdRegWr                           = "0x81";
+flash1.proto_mask                               = "0xff";
+flash1.dummy_cfgReg                             = "1";
+flash1.dummy_cmdRegRd                           = "0x85";
+flash1.dummy_cmdRegWr                           = "0x81";
+flash1.strDtr_cmdRegRd                          = "0x85";
+flash1.strDtr_cmdRegWr                          = "0x81";
+flash1.strDtr_mask                              = "255";
+flash1.strDtr_shift                             = 255;
+flash1.proto_cfgReg                             = "0";
+flash1.dummy_mask                               = "0xFF";
+flash1.fname                                    = "IS25LX064";
+flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
+flash1.peripheralDriver.dmaEnable               = true;
+flash1.peripheralDriver.OSPI.$assign            = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$assign        = "GPIO2";
+flash1.peripheralDriver.OSPI.CSn0.$assign       = "GPIO0";
+flash1.peripheralDriver.OSPI.DQS.$assign        = "GPIO76";
+flash1.peripheralDriver.OSPI.D7.$assign         = "GPIO10";
+flash1.peripheralDriver.OSPI.D6.$assign         = "GPIO9";
+flash1.peripheralDriver.OSPI.D5.$assign         = "GPIO8";
+flash1.peripheralDriver.OSPI.D4.$assign         = "GPIO7";
+flash1.peripheralDriver.OSPI.D3.$assign         = "GPIO6";
+flash1.peripheralDriver.OSPI.D2.$assign         = "GPIO5";
+flash1.peripheralDriver.OSPI.D1.$assign         = "GPIO4";
+flash1.peripheralDriver.OSPI.D0.$assign         = "GPIO3";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO66";
+flash1.peripheralDriver.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_template0";
 
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";
@@ -77,10 +75,10 @@ const edma                         = scripting.addModule("/drivers/edma/edma", {
 const edma1                        = edma.addInstance({}, false);
 edma1.$name                        = "CONFIG_EDMA0";
 flash1.peripheralDriver.edmaDriver = edma1;
-edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM4";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM5";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM6";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM7";
 
 uart1.$name            = "CONFIG_UART0";
 uart1.intrEnable       = "DISABLE";
@@ -88,6 +86,8 @@ uart1.UART.$assign     = "UART0";
 uart1.UART.RXD.$assign = "GPIO27";
 uart1.UART.TXD.$assign = "GPIO28";
 uart1.child.$name      = "drivers_uart_v2_uart_v2_template0";
+
+clock.r5ClockFreq = "400MHz";
 
 debug_log.enableCssLog      = false;
 debug_log.enableLogZoneInfo = true;
