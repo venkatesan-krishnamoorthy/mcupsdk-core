@@ -319,7 +319,7 @@ void OSPI_lld_phyResyncDLL(OSPILLD_Handle hOspi)
     /* Set Initial delay for the master DLL */
     CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_INITIAL_DELAY_FLD,
-                   0x10);
+                   0x03);
 
     /* DLL out of reset */
     CSL_REG32_FINS(&pReg->PHY_CONFIGURATION_REG,
@@ -1257,7 +1257,7 @@ int32_t OSPI_lld_phyFindOTP1(OSPILLD_Handle hOspi, uint32_t flashOffset, OSPI_Ph
 
         if(len2 > len1)
         {
-            int delta = (topRight.rxDLL - gapHigh.txDLL)/2;
+            int delta = (topRight.txDLL - gapHigh.txDLL)/2;
             searchPoint = topRight;
             searchPoint.txDLL -= delta;
             searchPoint.rxDLL -= (int32_t)((float)delta*slope);

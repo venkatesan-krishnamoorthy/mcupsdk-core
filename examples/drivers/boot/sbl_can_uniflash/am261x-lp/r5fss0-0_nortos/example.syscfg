@@ -55,9 +55,7 @@ bootloader1.appImageOffset = "0x00081000";
 
 flash1.$name                                    = "CONFIG_FLASH0";
 bootloader1.flashDriver                         = flash1;
-flash1.flashBlockSize                           = 4096;
-flash1.cmdBlockErase3B                          = "0x20";
-flash1.cmdBlockErase4B                          = "0x21";
+
 flash1.peripheralDriver.$name                   = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable               = true;
 flash1.peripheralDriver.phyEnable               = true;

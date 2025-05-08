@@ -596,7 +596,7 @@ class LineCfg():
                         if config_dict['--flash-remap'] == "true":
                             self.remap = True
 
-                    if(self.optype == "flash" or self.optype == "flashverify" or self.optype == "erase" or self.optype == "flash-emmc" or\
+                    if(self.optype == "flash" or self.optype == "flash-sector-write"  or self.optype == "flashverify" or self.optype == "erase" or self.optype == "flash-emmc" or\
                         self.optype == "flashverify-emmc"):
                         if "--flash-offset" not in config_dict.keys():
                             status = "[ERROR] Operation selected was {}, but no offset provided !!!".format(self.optype)
@@ -604,7 +604,7 @@ class LineCfg():
                         else:
                             self.offset = config_dict["--flash-offset"]
 
-                    if(self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or \
+                    if(self.optype == "flash" or self.optype == "flash-sector-write"  or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or \
                         self.optype == "flash-mcelf-xip" or self.optype == "flashverify-mcelf-xip" or \
                         self.optype == "flash-emmc" or self.optype == "flashverify-emmc" or self.optype == "mem"):
                         if "--file" not in config_dict.keys():
@@ -661,7 +661,7 @@ class LineCfg():
                 else:
                     pass
             else:
-                if((self.optype == "flash" or self.optype == "flashverify" or self.optype == "erase" or self.optype == "flashverify-emmc") and (self.offset == None)):
+                if((self.optype == "flash" or self.optype == "flash-sector-write"  or self.optype == "flashverify" or self.optype == "erase" or self.optype == "flashverify-emmc") and (self.offset == None)):
                     self.ops_invalid = True
                     self.exit_now = not self.found_flashwriter_cmd
                     # flash/verify flash/erase, but no offset given. exit with help if no flashwriter
@@ -671,7 +671,7 @@ class LineCfg():
                     else:
                         pass
 
-                if((self.optype == "flash" or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or \
+                if((self.optype == "flash" or self.optype == "flash-sector-write"  or self.optype == "flashverify" or self.optype == "flash-xip" or self.optype == "flashverify-xip" or \
                     self.optype == "flash-mcelf-xip" or self.optype == "flashverify-mcelf-xip" or self.optype == "flashverify-emmc") and (self.filename == None)):
                     self.ops_invalid = True
                     self.exit_now = not self.found_flashwriter_cmd
