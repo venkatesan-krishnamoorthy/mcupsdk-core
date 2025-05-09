@@ -11,6 +11,8 @@
 
 \attention 5. There is a known issue that OSPI pins in SysCfg GUI are getting reset automatically during any module change. The workaround is that OSPI Pins should be locked after proper configuration according to the board Pinout.
 
+\attention 6. The default SysCfg linked to CCS is an older version and needs to updated to the SDK supported version mentioned below. Please follow steps mentioned in \ref CCS_PACKAGE_CHECK.
+
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
@@ -41,7 +43,7 @@ AM263Px| R5F             | AM263Px LaunchPad  Rev E2    (referred to as am263px-
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
 Code Composer Studio    | R5F            | 12.8.1
-SysConfig               | R5F            | 1.22.0 build, build 3893
+SysConfig               | R5F            | 1.23.0 build, build 4000
 TI ARM CLANG            | R5F            | 4.0.1.LTS
 FreeRTOS Kernel         | R5F            | 11.1.0
 LwIP                    | R5F            | STABLE-2_2_0_RELEASE
