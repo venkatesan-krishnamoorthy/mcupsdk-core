@@ -73,6 +73,11 @@ const template_options_lp = {
     board: "am261x-lp"
 }
 
+const template_options_som = {
+    bootformat: "MCELF",
+    board: "am261x-som"
+}
+
 const templates_lp =
 [
     {
@@ -82,12 +87,23 @@ const templates_lp =
     },
 ];
 
+
+const templates_som =
+[
+    {
+        input: ".project/templates/am261x/sbl/sbl_dfu/main.c.xdt",
+        output: "../main.c",
+        options: template_options_som
+    },
+];
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_DFU";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -118,6 +134,10 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.board === "am261x-lp")
     {
         build_property.templates = templates_lp;
+    }
+    else if(buildOption.board === "am261x-som")
+    {
+        build_property.templates = templates_som;
     }
 
     if(buildOption.cpu.match(/r5f*/)) {
