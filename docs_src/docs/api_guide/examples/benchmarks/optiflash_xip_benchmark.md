@@ -20,7 +20,7 @@
  ---------------|-----------
  CPU + OS       | r5fss0-0 freertos
  Toolchain      | ti-arm-clang
- Boards         | @VAR_LP_BOARD_NAME_LOWER
+ Boards         | @VAR_LP_BOARD_NAME_LOWER, @VAR_BOARD_NAME_LOWER
  Example folder | examples/benchmarks/optiflash_benchmark/flash_xip
 
 \endcond

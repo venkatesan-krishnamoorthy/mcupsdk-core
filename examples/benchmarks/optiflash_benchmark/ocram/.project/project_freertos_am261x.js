@@ -78,6 +78,7 @@ const readmeDoxygenPageTag = "EXAMPLES_OPTIFLASH_OCRAM_BENCHMARK";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos", isPartOfSystemProject: false},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: false}
 ];
 
 var template_options = {
