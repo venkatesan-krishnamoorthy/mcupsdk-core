@@ -565,6 +565,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 10.00.00 onwards
     <td> -
 </tr>
+<tr>
+    <td> MCUSDK-14582
+    <td> Flash: Incorrect flash name after Loading Flash JSON
+    <td> OSPI
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
 </table>
 
 ## Errata
@@ -579,7 +586,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> i2189
     <td> OSPI: Controller PHY Tuning Algorithm
     <td> OSPI
-    <td> Open
+    <td> Implemented
 </tr>
 <tr>
     <td> i2311
@@ -603,7 +610,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> i2351
     <td> OSPI: Controller does not support Continuous Read mode with NAND Flash
     <td> OSPI
-    <td> Open
+    <td> Implemented
 </tr>
 <tr>
     <td> i2354
@@ -627,7 +634,7 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> i2383
     <td> OSPI: 2-byte address is not supported in PHY DDR mode
     <td> OSPI
-    <td> Open
+    <td> Implemented
 </tr>
 <tr>
     <td> i2401

@@ -18,6 +18,8 @@
 
 \attention 7. The default SysCfg linked to CCS is an older version and needs to updated to the SDK supported version mentioned below. Please follow steps mentioned in \ref CCS_PACKAGE_CHECK.
 
+\attention 8. CCS 12.8.1 doesn't support AM261x by default. Please follow the steps mentioned in \ref CCS_SETUP_PAGE to enable AM261x device support.
+
 \note The examples will show usage of SW modules and APIs on a specific CPU instance and OS combination. \n
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
@@ -37,7 +39,7 @@ FOTA Support                                                                    
 
 # Modules Not tested/supported in this release
 
-- USB support on AM261x SOM Board.
+- MMCSD and GPMC drivers are not validated on AM261x LP or SOM Board.
 
 ## Device and Validation Information
 
@@ -437,10 +439,10 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> Lock the OSPI Pins in OSPI SysCfg.
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> MCUSDK-14582
+    <td> Flash: Incorrect flash name after Loading Flash JSON
+    <td> OSPI
+    <td> 10.00.00 onwards
     <td> -
 </tr>
 </table>
@@ -457,7 +459,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> i2189
     <td> OSPI: Controller PHY Tuning Algorithm
     <td> OSPI
-    <td> Open
+    <td> Implemented
 </tr>
 <tr>
     <td> i2311
@@ -481,7 +483,7 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> i2351
     <td> OSPI: Controller does not support Continuous Read mode with NAND Flash
     <td> OSPI
-    <td> Open
+    <td> Implemented
 </tr>
 <tr>
     <td> i2354
@@ -499,6 +501,18 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> i2383
     <td> OSPI: 2-byte address is not supported in PHY DDR mode
     <td> OSPI
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2479
+    <td> OSPI Boot Issue with GPIO61 Reset Pin Configuration
+    <td> OSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2480
+    <td> 1µs Glitch on GPIO61/OSPI0_RESET_OUT0 during OSPI Boot
+    <td> GPIO
     <td> Open
 </tr>
 </table>
