@@ -101,7 +101,7 @@ Configuration file is `mcelf_sbl_ospi.cfg`
 - Edit below line in the config file to point to your application `.mcelf` file.
   Give the absolute path to the `.mcelf` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.
         
-        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf --operation=flash --flash-offset=0x81000
+        --file=../../examples/drivers/ipc/ipc_notify_echo/{board}/system_freertos_nortos/ipc_notify_echo_system.release.mcelf --operation=flash-sector-write --flash-offset=0x81000
 
 - Edit below line in the config file to point to your application `.mcelf_xip` file.
   Give the absolute path to the `.mcelf_xip` file or path relative to `${SDK_INSTALL_PATH}/tools/boot`. **Make sure to use forward slash `/` in the filename path**.

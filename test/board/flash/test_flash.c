@@ -93,7 +93,7 @@ uint8_t gFlashTestRxBuf[TEST_FLASH_RX_BUF_SIZE] __attribute__((aligned(128U)));
 /* Testcases */
 static void test_flash_readwrite(void *args);
 static void test_flash_read_multiple();
-
+void board_flash_reset(OSPI_Handle oHandle);
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -105,6 +105,10 @@ void test_main(void *args)
     /* Open OSPI and other drivers */
     Drivers_open();
 
+#if defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
+
     RUN_TEST(test_flash_readwrite, 246, NULL);
 
 #if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)
@@ -113,7 +117,13 @@ void test_main(void *args)
 #else
     Drivers_ospiClose();
     Drivers_ospiOpen();
+
 #endif
+
+#if defined (SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
+
     RUN_TEST(test_flash_read_multiple, 247, NULL);
 
     UNITY_END();

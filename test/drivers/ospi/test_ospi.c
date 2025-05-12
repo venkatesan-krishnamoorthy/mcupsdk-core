@@ -121,7 +121,9 @@ static void test_ospi_read_write_1s1s1s_config(void *args);
 static void test_ospi_read_write_max_config(void *args);
 static void test_ospi_phy_tuning(void *args);
 static void test_ospi_read_write_interrupt(void *args);
-
+#if defined(SOC_AM261X)
+void board_flash_reset(OSPI_Handle oHandle);
+#endif
 #if defined(SOC_AM65X)
 static void test_ospi_read_perf(void *args);
 static float test_ospi_write_in_mb(uint32_t flashOffset, uint32_t writeSize);
@@ -218,6 +220,21 @@ static OSPI_AddrRegion gOspiIntrDmaRestrictRegions[] =
         .regionSize      = 0U,
     }
 #endif
+
+#if defined(SOC_AM261X)
+    {
+        .regionStartAddr = CSL_MSS_TCMA_RAM_BASE,
+        .regionSize      = CSL_MSS_TCMA_RAM_SIZE,
+    },
+    {
+        .regionStartAddr = CSL_HSM_RAM_U_BASE,
+        .regionSize      = 0x2fffc,
+    },
+    {
+        .regionStartAddr = 0xFFFFFFFFU,
+        .regionSize      = 0U,
+    }
+#endif
 };
 
 static OSPI_Attrs gOspiIntrAttrs[CONFIG_OSPI_NUM_INSTANCES] =
@@ -244,6 +261,14 @@ static OSPI_Attrs gOspiIntrAttrs[CONFIG_OSPI_NUM_INSTANCES] =
         .protocol             = OSPI_PROTO_8D_8D_8D,
         .inputClkFreq         = 133333333U,
         .baudRateDiv          = 4,
+#endif
+#if defined(SOC_AM261X)
+        .baseAddr             = CSL_FLASH_CONFIG_REG8_U_BASE,
+        .dataBaseAddr         = CSL_FLASH_DATA_REG0_U_BASE,
+        .intrNum              = 88U,
+        .protocol             = OSPI_PROTO_8D_8D_8D,
+        .inputClkFreq         = 166666666U,
+        .baudRateDiv          = 8,
 #endif
         .intrEnable           = TRUE,
         .intrPriority         = 4U,
@@ -304,7 +329,13 @@ static OSPI_Attrs gOspiNmrlAttrs[CONFIG_OSPI_NUM_INSTANCES] =
         .protocol             = OSPI_PROTO_8D_8D_8D,
         .inputClkFreq         = 133333333U,
 #endif
-
+#if defined(SOC_AM261X)
+        .baseAddr             = CSL_FLASH_CONFIG_REG8_U_BASE,
+        .dataBaseAddr         = CSL_FLASH_DATA_REG0_U_BASE,
+        .intrNum              = 88U,
+        .protocol             = OSPI_PROTO_8D_8D_8D,
+        .inputClkFreq         = 166666666U,
+#endif
         .intrEnable           = FALSE,
         .intrPriority         = 4U,
         .dmaEnable            = TRUE,
@@ -349,6 +380,9 @@ void test_main(void *args)
 {
     /* Open drivers to open the UART driver for console */
     Drivers_open();
+#if defined(SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
 #if defined(SOC_AM65X)
     set_test_flash_type();
     Board_flashClose();
@@ -356,13 +390,18 @@ void test_main(void *args)
     Drivers_ospiOpen();
 #endif
     UNITY_BEGIN();
-
     RUN_TEST(test_ospi_read_write_1s1s1s_config, 13386, NULL);
-    Drivers_ospiClose();
+    Drivers_ospiClose();   
     Drivers_ospiOpen();
+#if defined(SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif 
     RUN_TEST(test_ospi_read_write_interrupt, 13443, NULL);
     Drivers_ospiClose();
     Drivers_ospiOpen();
+#if defined(SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+#endif
     RUN_TEST(test_ospi_phy_tuning, 13387, NULL);
 #if defined(SOC_AM65X)
     Drivers_ospiClose();
@@ -475,6 +514,10 @@ static void test_ospi_phy_tuning(void *args)
 
 #if defined(SOC_AM263PX)
     Flash_reset(gFlashHandle[CONFIG_FLASH0]);
+#endif
+
+#if defined(SOC_AM261X)
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
 #endif
 
     Board_driversClose();

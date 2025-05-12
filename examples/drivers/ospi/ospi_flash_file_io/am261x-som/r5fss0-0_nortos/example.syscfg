@@ -1,9 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM261x_ZFG" --part "AM2612" --package "ZFG" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @v2CliArgs --device "AM2612" --package "NFBGA (ZFG)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.999+169"}
+ * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.22.0+3893"}
  */
 
 /**
@@ -53,12 +53,8 @@ edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 littlefs1.$name                                          = "CONFIG_LITTLEFS0";
 littlefs1.flashOffset                                    = "0x400000";
-littlefs1.blockCount                                     = 32;
 littlefs1.peripheralDriver.$name                         = "CONFIG_FLASH0";
 littlefs1.peripheralDriver.protocol                      = "1s_1s_1s";
-littlefs1.peripheralDriver.flashSize                     = 8388608;
-littlefs1.peripheralDriver.flashDeviceId                 = "0x5A17";
-littlefs1.peripheralDriver.fname                         = "IS25LX064";
 littlefs1.peripheralDriver.peripheralDriver.$name        = "CONFIG_OSPI0";
 littlefs1.peripheralDriver.peripheralDriver.inputClkFreq = 83333333;
 littlefs1.peripheralDriver.peripheralDriver.OSPI.$assign = "OSPI0";
@@ -289,15 +285,17 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$suggestSolution  = "GPIO2";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$suggestSolution = "GPIO62";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.DQS.$suggestSolution  = "GPIO76";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D7.$suggestSolution   = "GPIO10";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D6.$suggestSolution   = "GPIO8";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D5.$suggestSolution   = "GPIO67";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D4.$suggestSolution   = "GPIO7";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO6";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO5";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO4";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO0";
-littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution   = "GPIO66";
+
+littlefs1.peripheralDriver.peripheralDriver.OSPI.CLK.$assign        = "GPIO2";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.CSn0.$assign       = "GPIO0";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.DQS.$assign        = "GPIO76";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D7.$assign         = "GPIO10";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D6.$assign         = "GPIO9";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D5.$assign         = "GPIO8";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D4.$assign         = "GPIO7";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D3.$assign         = "GPIO6";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D2.$assign         = "GPIO5";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D1.$assign         = "GPIO4";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.D0.$assign         = "GPIO3";
+littlefs1.peripheralDriver.peripheralDriver.OSPI.RESET_OUT0.$assign = "GPIO66";
+

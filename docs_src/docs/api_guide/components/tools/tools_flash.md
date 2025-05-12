@@ -462,7 +462,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
 - Edit below line to point to the user application (`.appimage`) file
 
-        --file={path to your application .appimage file} --operation=flash --flash-offset=0x81000
+        --file={path to your application .appimage file} --operation=flash-sector-write --flash-offset=0x81000
 
 \endcond
 

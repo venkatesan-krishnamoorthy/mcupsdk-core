@@ -530,6 +530,14 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
 
 ## Upgrade and Compatibility Information
 
+### Flash Migration in AM261x-LP : E2 to E1
+
+The AM261x-LP E2 has Macronix flash and the sdk supports E2 OOB. In order to migrate to E1 (ISSI flash), the following steps needs to be done - 
+1. Open the syscfg gui for the application
+2. Navigate to the flash module and use LOAD from JSON function
+3. Select the "IS25WX064" flash provided in the sdk path - "{MCU_PLUS_SDK_PATH}/source/sysconfig/board/.meta/flash"
+4. Select 8d protocol and rebuild the application.
+
 ### How to run FOTA examples on AM261x-LP-E1 board
 
 Here, to make \ref EXAMPLES_FLSOPSKD_BENCHMARK example work with AM261x-LP-E1 board, please 

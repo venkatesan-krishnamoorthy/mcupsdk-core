@@ -4,7 +4,7 @@ let device = "am261x";
 
 const files = {
     common: [
-        "test_flash.c",
+        "test_ospi.c",
         "main.c",
         "board.c",
     ],
@@ -75,7 +75,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "test_flash";
+    property.name = "test_ospi";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;

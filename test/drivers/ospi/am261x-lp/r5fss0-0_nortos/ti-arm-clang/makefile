@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_flash.$(PROFILE).out
-COREOUTNAME:=test_flash.$(PROFILE).optishare.out
+OUTNAME:=test_ospi.$(PROFILE).out
+COREOUTNAME:=test_ospi.$(PROFILE).optishare.out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_flash.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_flash.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=test_flash.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME:=test_ospi.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=test_ospi.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=test_ospi.$(PROFILE).appimage.signed
 oeconfig?=None
 
-BOOTIMAGE_NAME_MCELF:=test_flash.$(PROFILE).mcelf
-BOOTIMAGE_NAME_MCELF_HS:=test_flash.$(PROFILE).mcelf.hs
-BOOTIMAGE_RPRC_NAME:=test_flash.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_flash.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_flash.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_flash.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_flash.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME_MCELF:=test_ospi.$(PROFILE).mcelf
+BOOTIMAGE_NAME_MCELF_HS:=test_ospi.$(PROFILE).mcelf.hs
+BOOTIMAGE_RPRC_NAME:=test_ospi.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=test_ospi.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=test_ospi.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=test_ospi.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=test_ospi.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 ifeq ($(DEVICE_TYPE), HS)
@@ -44,7 +44,7 @@ ifeq ($(DEVICE_TYPE), HS)
 endif
 
 FILES_common := \
-	test_flash.c \
+	test_ospi.c \
 	main.c \
 	board.c \
 	ti_drivers_config.c \
@@ -219,7 +219,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang test_flash ...
+	@echo  Scrubing: am261x:r5fss0-0:nortos:ti-arm-clang test_ospi ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -264,11 +264,11 @@ $(SYSCFG_GEN_FILES): syscfg
 ifeq ($(SYSTEM_FLAG), false)
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2611 --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM2612 --package ZFG --output generated/ ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2611 --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZFG --context r5fss0-0 --part AM2612 --package ZFG --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -369,12 +369,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for test_flash.$(PROFILE) ...
+	@echo Creating Coverage Report for test_ospi.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o test_flash.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_flash.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=test_flash.$(PROFILE).profdata > coverage/test_flash.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/test_flash.$(PROFILE).profdata.json --output-json=coverage/test_flash.$(PROFILE).analysis.json --output=../test_flash.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o test_ospi.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_ospi.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=test_ospi.$(PROFILE).profdata > coverage/test_ospi.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/test_ospi.$(PROFILE).profdata.json --output-json=coverage/test_ospi.$(PROFILE).analysis.json --output=../test_ospi.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

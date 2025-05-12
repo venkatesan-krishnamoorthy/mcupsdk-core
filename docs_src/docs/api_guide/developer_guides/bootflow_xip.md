@@ -235,7 +235,7 @@ This step is required if CCS logs are enabled. In production build, CCS logs sho
       --file=(PATH TO)/sbl_ospi_multicore_elf.release.hs.tiimage --operation=flash --flash-offset=0x0
 
       # When sending application image, make sure to flash at offset 0x81000 (default) or to whatever offset your bootloader is configured for
-      --file= (PATH TO)release.mcelf.hs --operation=flash --flash-offset=0x81000
+      --file= (PATH TO)release.mcelf.hs --operation=flash-sector-write --flash-offset=0x81000
 
       # send the XIP image for this application, no need to specify flash offset since flash offset is specified within the image itself
       --file=(PATH TO)release.mcelf_xip --operation=flash-mcelf-xip
@@ -293,7 +293,7 @@ This step is required if CCS logs are enabled. In production build, CCS logs sho
       --file= (PATH TO)/sbl_ospi_multicore_elf.release.hs.tiimage --operation=flash --flash-offset=0x0
 
       # When sending application image, make sure to flash at offset 0x81000 (default) or to whatever offset your bootloader is configured for
-      --file=(PATH TO).release.mcelf.hs --operation=flash --flash-offset=0x81000
+      --file=(PATH TO).release.mcelf.hs --operation=flash-sector-write --flash-offset=0x81000
 
       # send the XIP image for this application, no need to specify flash offset since flash offset is specified within the image itself
       --file=(PATH TO).mcelf_xip --operation=flash-mcelf-xip
