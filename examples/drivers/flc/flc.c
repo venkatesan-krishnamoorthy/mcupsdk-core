@@ -36,6 +36,7 @@
 #include <drivers/ospi.h>
 #include <drivers/optiflash.h>
 #include <kernel/dpl/DebugP.h>
+#include "board.h"
 
 #define APP_OSPI_FLASH_OFFSET_BASE  (0x200000U)
 
@@ -61,6 +62,11 @@ void flc_main(void *args)
 
     /* Open OSPI Driver, among others */
     Drivers_open();
+
+    #ifdef SOC_AM261X
+    board_flash_reset(gOspiHandle[CONFIG_OSPI0]);
+    #endif
+
     /* Open Flash drivers with OSPI instance as input */
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);

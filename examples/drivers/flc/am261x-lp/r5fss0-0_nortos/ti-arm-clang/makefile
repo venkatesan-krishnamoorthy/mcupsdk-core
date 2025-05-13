@@ -46,6 +46,7 @@ endif
 FILES_common := \
 	flc.c \
 	main.c \
+	board.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -56,12 +57,16 @@ FILES_common := \
 
 FILES_PATH_common = \
 	.. \
+	../.. \
 	../../.. \
 	generated \
 
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
+	-I.. \
+	-I../.. \
+	-I../../.. \
 	-Igenerated \
 
 DEFINES_common := \

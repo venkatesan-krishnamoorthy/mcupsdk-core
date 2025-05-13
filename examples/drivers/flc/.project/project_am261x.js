@@ -6,6 +6,7 @@ const files = {
     common: [
         "flc.c",
         "main.c",
+        "board.c"
     ],
 };
 
@@ -15,9 +16,16 @@ const files = {
 const filedirs = {
     common: [
         "..",       /* core_os_combo base */
+        "../..",      
         "../../..", /* Example base */
     ],
 };
+
+const projectspecfiles = {
+    common: [
+        "board.h"
+    ]
+}
 
 const libdirs = {
     common: [
@@ -82,7 +90,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
-
+    build_property.projectspecfiles = projectspecfiles;
+    build_property.includes = filedirs;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
