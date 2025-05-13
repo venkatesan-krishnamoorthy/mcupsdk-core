@@ -152,18 +152,18 @@ static int32_t Psram_ospiOpen(Ram_Config *config)
 
     if(status == SystemP_SUCCESS)
     {   
-        uint8_t readCaptureDelay = OSPI_PSRAM_RD_CAPTURE_DELAY;
+        uint8_t readCaptureDelay = 0U;
 
         OSPI_setRdDataCaptureDelay(obj->ospiHandle, readCaptureDelay);
         status = Psram_ospiReadId(config, &manfId, &deviceId);
 
-        while((status != SystemP_SUCCESS) && readCaptureDelay>0)
+        while((status != SystemP_SUCCESS) && readCaptureDelay<=OSPI_PSRAM_RD_CAPTURE_DELAY)
         {
-            readCaptureDelay--;
+            readCaptureDelay++;
             OSPI_setRdDataCaptureDelay(obj->ospiHandle, readCaptureDelay);
             status = Psram_ospiReadId(config, &manfId, &deviceId);
         }
-    
+
     }
 
     obj->phyEnable = OSPI_isPhyEnable(obj->ospiHandle);
