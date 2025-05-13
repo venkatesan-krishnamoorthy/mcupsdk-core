@@ -93,7 +93,10 @@ uint8_t gFlashTestRxBuf[TEST_FLASH_RX_BUF_SIZE] __attribute__((aligned(128U)));
 /* Testcases */
 static void test_flash_readwrite(void *args);
 static void test_flash_read_multiple();
+
+#if defined (SOC_AM263PX) || (SOC_AM261X)
 void board_flash_reset(OSPI_Handle oHandle);
+#endif
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */

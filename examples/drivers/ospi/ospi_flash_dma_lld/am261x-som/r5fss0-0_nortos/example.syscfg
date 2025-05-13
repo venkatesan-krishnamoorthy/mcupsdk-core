@@ -3,12 +3,14 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM261x_ZCZ" --part "AM2611" --package "ZCZ" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @v2CliArgs --device "AM2611" --package "NFBGA (ZCZ)" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.22.0+3893"}
+ * @versions {"tool":"1.23.0+4000"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const edma            = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1           = edma.addInstance();
 const ospi            = scripting.addModule("/drivers/ospi/ospi", {}, false);
 const ospi1           = ospi.addInstance();
 const clock           = scripting.addModule("/kernel/dpl/clock");
@@ -62,8 +64,6 @@ ospi1.OSPI.D0.$assign         = "GPIO3";
 ospi1.OSPI.RESET_OUT0.$assign = "GPIO66";
 ospi1.child.$name             = "drivers_ospi_v0_ospi_v0_am261x_lld_template0";
 
-const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                 = edma.addInstance({}, false);
 edma1.$name                 = "CONFIG_EDMA0";
 ospi1.edmaDriver            = edma1;
 edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";

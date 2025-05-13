@@ -211,4 +211,4 @@ section5.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "GPIO18";
+flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "GPIO66";

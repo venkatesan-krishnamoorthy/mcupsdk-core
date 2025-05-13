@@ -66,7 +66,7 @@ void ospi_flash_dma_lld(void *args)
     int32_t status = SystemP_SUCCESS;
     uint32_t manfId, deviceId;
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
     /* EDMA Interrupt Call Back Initialization*/
     gOspiHandle->readCompleteCallback = &isrCallback;
 #endif
@@ -134,7 +134,8 @@ void ospi_flash_dma_lld(void *args)
         transaction.buf = (void *)gOspiRxBuf;
         transaction.count = APP_OSPI_DATA_SIZE;
         status = OSPI_lld_readDirectDma(gOspiHandle, &transaction);
-#if defined (SOC_AM263PX)        
+        
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)      
         while(try_lock_mutex(&transferMutex) == MUTEX_ARM_LOCKED);
 #endif
 
