@@ -78,7 +78,7 @@ DAC value	  Measured calibration voltage
 CMPSS Calibration Test Passed!!!All tests have Passed!!!
 \endcond
 
-\cond SOC_AM26PX
+\cond SOC_AM263PX
 CMPSS Calibration Test Started ...
 DAC value	  Measured calibration voltage
 4000:		    3998 

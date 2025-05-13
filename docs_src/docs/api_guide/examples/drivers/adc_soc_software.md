@@ -19,8 +19,8 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Feed analog input for the following
     - ADC0_AIN2 - HSEC 15
 
-## AM263PX-LP or AM263X-LP or AM261X-LP E1
-When using AM263x-LP
+## AM263PX-LP or AM263X-LP or AM261X-LP
+When using AM263x-LP, AM263Px-LP or AM261x-LP
 - Feed analog input (non-zero voltage) to boosterpack header J5/J7 Pin 66 (J5/7 pin 63 in case of AM261x-LP).
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE_COMBOS}

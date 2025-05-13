@@ -308,7 +308,7 @@ or connect IGBT, OCP, OVP and Speed Signals from HSEC as below:
 - OVP_IN (GPIO53) Signal with OVP_OUT (GPIO57) Signal
   - Connect J8 pin 80 to J8 pin 76
 - SPEED_LEVEL_IN (GPIO54) Signal with SPEED_LEVEL_OUT (GPIO58) Signal
-  - Connect J8 pin 79 to J8 pin 75
+  - Connect J8 pin 13 to J8 pin 75
 
 - Capture EPWM3_A waveform at J4 pin 38
 - Capture EPWM3_B waveform at J4 pin 37

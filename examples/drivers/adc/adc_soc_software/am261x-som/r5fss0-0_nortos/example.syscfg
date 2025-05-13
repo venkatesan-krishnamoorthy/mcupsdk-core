@@ -296,4 +296,5 @@ adc1.ADC.AIN2.$suggestSolution          = "ADC0_AIN2";
 adc1.ADC.AIN3.$suggestSolution          = "ADC0_AIN3";
 adc1.ADC.AIN4.$suggestSolution          = "ADC0_AIN4";
 adc1.ADC.AIN5.$suggestSolution          = "ADC0_AIN5";
+adc1.ADC.AIN6.$suggestSolution          = "ADC0_AIN6";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

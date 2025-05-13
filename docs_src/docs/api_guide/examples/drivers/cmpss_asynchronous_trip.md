@@ -38,7 +38,7 @@ When using AM263x-CC or AM263Px-CC or AM261x-SOM with TMDSHSECDOCK (HSEC180 cont
 - Capture and analyze waveforms on USER_LED1 and HSEC pin 51
 
 ## AM263PX-LP or AM263X-LP
-When using AM263x-LP
+When using AM263x-LP or AM263PX-LP
 - Feed analog input on J5/J6 Pin 66
 - Capture and analyze waveforms on DS2 LED and boosterpack header J6/J8 pin 59
 

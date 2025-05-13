@@ -29,7 +29,7 @@ When using AM263x-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Basebo
 - Capture waveform on HSEC Pin 51 for epwm0_B
 
 ## AM263X-LP or AM263PX-LP or AM261X-LP
-When using AM263x-LP or AM263PX-LP
+When using AM263x-LP or AM263PX-LP or AM261X-LP
 - Capture waveform on boosterpack header J2/J4 Pin 37 for epwm1_A
 - Capture waveform on boosterpack header J2/J4 Pin 38 for epwm1_B
 
