@@ -398,6 +398,7 @@ const example_file_list = [
 	"test/kernel/dpl/dpl_ut/nortos/r5/HwiP_armv7r_handlers_nortos/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/r5/PmuP_armv7r/.project/project.js",
 	"test/kernel/freertos/.project/project.js",
+	"test/middleware/tielfup32/.project/project.js",
 	// "source/networking/enet/core/test/performance_benchmarks/ethernet_cpsw/layer2_performance/.project/project.js",
 	"test/sdl/ccm/ccm_func_test/.project/project.js",
 	"test/sdl/ccm/ccm_ip_test/.project/project.js",
