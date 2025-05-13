@@ -324,15 +324,4 @@ FLC1.sourceStartAddress = 0x60200000;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "GPIO2";
-flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "GPIO62";
-flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "GPIO76";
-flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "GPIO10";
-flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "GPIO8";
-flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "GPIO67";
-flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "GPIO7";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "GPIO6";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "GPIO5";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "GPIO4";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "GPIO0";
 debug_log.uartLog.UART.$suggestSolution            = "UART0";
