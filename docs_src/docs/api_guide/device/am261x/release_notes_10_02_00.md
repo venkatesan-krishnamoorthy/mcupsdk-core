@@ -244,6 +244,86 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM263x, AM263Px, AM261x
     <td> Reference before assignment error in python script
 </tr>
+<tr>
+    <td> MCUSDK-13341
+    <td> ECAP: Emulation mode does not work.
+    <td> ECAP
+    <td> 9.02.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Added halt control API for ECAP in soc.c file and emulation mode in syscfg to be emulation free.
+</tr>
+<tr>
+    <td> MCUSDK-14051
+    <td> EQEP: CW CCW example doesn't use polling or interrupt
+    <td> EQEP
+    <td> 10.01.00 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Modified example to use unit timer interrupt.
+</tr>
+<tr>
+    <td> MCUSDK-14332
+    <td> SDFM soc ctrl syscfg: code generates outside callable functions
+    <td> SDFM
+    <td> 10.00.01 onwards
+    <td> AM263x, AM263Px, AM261x
+    <td> Updated code generation of soc ctrl sdfm module in syscfg.
+</tr>
+<tr>
+    <td> MCUSDK-12238
+    <td> OUTPUTXBAR input sources from CMPSS needs to be renamed
+    <td> ADC
+    <td> 9.00.01 onwards
+    <td> AM263Px
+    <td> OUTPUTXBAR input sources from CMPSS are renamed as CMPSSA/Bx_CTRIPOUTH/L.
+</tr>
+<tr>
+    <td> MCUSDK-14367
+    <td> Update IO Expander for AM261x-SOM support
+    <td> SYSCFG
+    <td> 10.00.01 onwards
+    <td> AM261x
+    <td> Updated ioexpander to unique naming for across boards using board and i2c address identifiers. Added template generation for the ioexpander on SOM.
+</tr>
+<tr>
+    <td> MCUSDK-14326
+    <td> Remove extra EPWM instance from DAC Syscfg
+    <td> DAC
+    <td> 10.00.01 onwards
+    <td> AM261x
+    <td> Updated EPWM instances to 10 since device supports only 10 EPWMs.
+</tr>
+<tr>
+    <td> MCUSDK-14329
+    <td> ADC: 32 EPWM Sync out sources are listed
+    <td> EPWM
+    <td> 10.00.01 onwards
+    <td> AM261x
+    <td> Updated EPWM Sync out sources to 10 since device supports only 10 EPWMs.
+</tr>
+<tr>
+    <td> MCUSDK-14330
+    <td> ADC: 12 ADC Safety checker instances are listed
+    <td> ADC
+    <td> 10.00.01 onwards
+    <td> AM261x
+    <td> Updated ADC safety checker instances to 6.
+</tr>
+<tr>
+    <td> MCUSDK-14331
+    <td> ADC: Tile: Selector 1 and Selector 2 allows 6 ADCs
+    <td> ADC
+    <td> 10.00.01 onwards
+    <td> AM261x
+    <td> Fixed ADC instances for safety checker tiles.
+</tr>
+<tr>
+    <td> MCUSDK-14381
+    <td> Update CMPSS Channel connection image in Syscfg
+    <td> CMPSS
+    <td> 10.00.01 onwards
+    <td> AM261x
+    <td> Updated CMPSS Channel connection image in Syscfg.
+</tr>
 </table>
 
 ## Known Issues
@@ -496,6 +576,12 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> ADC: Interrupts may Stop if INTxCONT (Continue-to-Interrupt Mode) is not Set
     <td> ADC
     <td> Implemented
+</tr>
+<tr>
+    <td> i2375
+    <td> SDFM: SDFM module event flags (SDIFLG.FLTx_FLG_CEVTx) do not get set again if the comparator event is still active and digital filter path (using SDCOMPxCTL.CEVTxDIGFILTSEL) is being selected
+    <td> SDFM
+    <td> Open
 </tr>
 <tr>
     <td> i2383

@@ -278,6 +278,14 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> OUTPUTXBAR input sources from CMPSS are renamed as CMPSSA/Bx_CTRIPOUTH/L.
 </tr>
 <tr>
+    <td> MCUSDK-13563
+    <td> Add IO Expander support in Syscfg
+    <td> SYSCFG
+    <td> 10.00.01 onwards
+    <td> AM263x, AM263Px
+    <td> Added IO Expander support for AM263x and AM263Px in Syscfg.
+</tr>
+<tr>
     <td> MCUSDK-13874
     <td> Syscfg load json function for flash configuration imports does not work
     <td> OSPI
