@@ -26,16 +26,19 @@
 
 ## New in this Release
 
-Feature                                                                                         | Module
-------------------------------------------------------------------------------------------------|----------------------------------- 
-OTFA Safety and Security Support                                                                | OptiFlash
-FreeRTOS MPU Support for R5F and Examples                                                       | Kernel
-EDMA Error Handling Support                                                                     | EDMA
-LIN LLD Support                                                                                 | LIN
-OSPI PSRAM Support                                                                              | OSPI
-OSPI NAND and SBL NAND Support                                                                  | OSPI
-Rev E2 Launchpad Support                                                                        | Board
-FOTA Support                                                                                    | OptiFlash
+Feature                                                                                               | Module
+------------------------------------------------------------------------------------------------------|----------------------------------- 
+OTFA Safety and Security Support                                                                      | OptiFlash
+FreeRTOS MPU Support for R5F and Examples                                                             | Kernel
+EDMA Error Handling Support                                                                           | EDMA
+LIN LLD Support                                                                                       | LIN
+OSPI PSRAM Support                                                                                    | OSPI
+OSPI NAND and SBL NAND Support                                                                        | OSPI
+Rev E2 Launchpad Support                                                                              | Board
+FOTA Support                                                                                          | OptiFlash
+CPSW Cut-through switching functionality is enabled and switching latency performance is benchmarked  | Networking
+Support for RMII, RGMII and MII mode is enabled                                                       | Networking
+AM261-SOM Board Example Support (Loopback, Layer2 and LwIP)                                           | Networking
 
 # Modules Not tested/supported in this release
 
@@ -110,7 +113,7 @@ Peripheral   | Supported CPUs | SysConfig Support | DMA Supported               
 ADC          | R5F            | YES               | Yes. Examples:  adc_soc_continuous_dma, adc_alternate_dma_trigger | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA (normal and alternate triggers), EPWM trip through PPB limit, PPB features, Burst mode, Single and Differential mode, Interrupt with Offset from Aquisition Window, EPWM/ECAP/RTI triggered conversions, Trigger Repeater for Undersampling and Oversampling, Global Force on Multiple ADCs, Internal DAC Loopback to Calibration Channels, Safety Checker and Aggregator, Open Short Detection feature                 | External channel selection
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL OSPI         | Boot modes: OSPI, UART. All R5F's                                                                                                                               | -
 CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter, Calibration                                                                                                                                           | CMPSS Dac LoopBack feature
-CPSW         | R5F            | YES               | No                                    | MAC & PHY loopback(DP83826-EVM-AM2) with RMII 100Mbps, MAC & PHY loopback(DP83TG720-EVM-AM2) with RGMII 1Gbps, LWIP (DP83TG720-EVM-AM2, DP83826-EVM-AM2): Getting IP, Ping, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | MII mode
+CPSW         | R5F            | YES               | No                                    | MAC & PHY loopback(DP83826-EVM-AM2) with RMII and MII 100Mbps , MAC & PHY loopback(DP83TG720-EVM-AM2) with RGMII 1Gbps, LWIP (DP83TG720-EVM-AM2, DP83826-EVM-AM2): Getting IP, Ping, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | 
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes, Signal Monitoring features                                                                                         | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking, Error Handling                                                                 | -
@@ -324,6 +327,27 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> AM261x
     <td> Updated CMPSS Channel connection image in Syscfg.
 </tr>
+<tr>
+    <td> MCUSDK-13828
+    <td> AM261x: ENET: Iperf TCP failing with 1Gbps
+    <td> Networking
+    <td> 10.02.00 onwards
+    <td> Disabled CCS print logs
+</tr>
+<tr>
+    <td> MCUSDK-14146
+    <td> AM261x Networking examples are not detected by CCS
+    <td> Networking
+    <td> 10.00.00 onwards
+    <td> Changed the script to enable networking examples
+</tr>
+<tr>
+    <td> MCUSDK-14124
+    <td> MDIO header files having the same IFDEF header guards
+    <td> Networking
+    <td> 10.01.00 onwards
+    <td> Changed the header guard
+</tr>
 </table>
 
 ## Known Issues
@@ -365,15 +389,8 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-13828
-    <td> AM261x: ENET: Iperf TCP failing with 1Gbps
-    <td> Networking
-    <td> 10.00.01 onwards
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-13829
-    <td> AM261x: ENET: EST fails for priority 0 with IND phy
+    <td> MCUSDK-14596
+    <td> AM261x: Enet: GPTP link configuration read failure for RMII and MII 
     <td> Networking
     <td> 10.00.01 onwards
     <td> -
