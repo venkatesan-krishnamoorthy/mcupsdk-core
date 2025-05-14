@@ -90,7 +90,7 @@ The standard DFU-Utility is not compatible with the AM261x device. Instead, plea
 3. Run the following command which uses \ref INSTALL_DFU_UTIL to send the SBL DFU bootloader tiimage. 
 
 
-        sudo dfu-util -i 0 -a 0 <path to mcu_plus_sdk>/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_dfu.release.hs_fs.tiimage 
+        sudo dfu-util -i 0 -a 0 -D <path to mcu_plus_sdk>/tools/boot/sbl_prebuilt/@VAR_BOARD_NAME_LOWER/sbl_dfu.release.hs_fs.tiimage 
 
  \imageStyle{sbl_dfu_rom.png,width:50%}
  \image html sbl_dfu_rom.png "DFU ROM boot log"
