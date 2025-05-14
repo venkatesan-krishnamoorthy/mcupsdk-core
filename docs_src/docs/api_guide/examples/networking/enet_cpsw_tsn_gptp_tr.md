@@ -349,6 +349,14 @@ domain=0, offset=0nsec, hw-adjrate=26240ppb
 Due to AM273x CPSW limitation, it is not possible to clasify the packets based on ethernet frame type and direct it to different Rx Flow / channel. Hence  a single Rx DMA channel is shared among multiple applications, including gPTP stack.
 \endcond
 
+## Troubleshooting issues
+
+\cond SOC_AM261X
+- For @VAR_LP_BOARD_NAME_LOWER, Software configures MDIO based on Board version(E1/E2) which is read from EEPROM. It expects 
+  on-board EEPROM to be pre-programmed for E2 EVMs. If EEPROM(0x51) is not programmed, the software considers 
+  EVM as "E1" version.
+\endcond
+
 # See Also
 
 \ref NETWORKING |

@@ -465,6 +465,14 @@ Print statistics
 - Observe that packets are switched by limiting data rate to 25 mpbs.
 - Observe that the dropped packets are marked with 'alePolicyMatchRed' in CPSW statistics print.
 
+## Troubleshooting issues
+
+\cond SOC_AM261X
+- For @VAR_LP_BOARD_NAME_LOWER, Software configures MDIO based on Board version(E1/E2) which is read from EEPROM. It expects 
+  on-board EEPROM to be pre-programmed for E2 EVMs. If EEPROM(0x51) is not programmed, the software considers 
+  EVM as "E1" version.
+\endcond
+
 # See Also
 
 \ref NETWORKING

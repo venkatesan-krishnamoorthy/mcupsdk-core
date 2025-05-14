@@ -396,6 +396,15 @@ domain=0, offset=0nsec, hw-adjrate=26240ppb
 \endcode
 
 \endcond
+
+## Troubleshooting issues
+
+\cond SOC_AM261X
+- For @VAR_LP_BOARD_NAME_LOWER, Software configures MDIO based on Board version(E1/E2) which is read from EEPROM. It expects 
+  on-board EEPROM to be pre-programmed for E2 EVMs. If EEPROM(0x51) is not programmed, the software considers 
+  EVM as "E1" version.
+\endcond
+
 # See Also
 
 \ref NETWORKING |

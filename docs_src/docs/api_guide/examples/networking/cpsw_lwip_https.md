@@ -338,6 +338,12 @@ Network is UP ...
    - Rebuild the libraries and examples (\ref MAKEFILE_BUILD_PAGE)
 \endcond
 
+\cond SOC_AM261X
+- For @VAR_LP_BOARD_NAME_LOWER, Software configures MDIO based on Board version(E1/E2) which is read from EEPROM. It expects 
+  on-board EEPROM to be pre-programmed for E2 EVMs. If EEPROM(0x51) is not programmed, the software considers 
+  EVM as "E1" version.
+\endcond
+
 - If you see a valid, non-zero MAC address and continuosly seieing "Waiting for network UP..." prints in UART terminal
    - Make sure you see `Enet IF UP Event.` message, if not check the ethernet cable
    - Check the local network and check if the DHCP server is indeed running as expected
