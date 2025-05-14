@@ -40,23 +40,24 @@ const tinyusb1    = tinyusb.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+flash1.$name                              = "CONFIG_FLASH0";
+flash1.strDtr_mask                        = "255";
+flash1.fname                              = "IS25LX064";
 flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable         = true;
-flash1.peripheralDriver.phyEnable         = true;
 flash1.peripheralDriver.OSPI.$assign      = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO10";
-flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO62";
-flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO9";
-flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO68";
-flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO8";
-flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO67";
-flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO76";
-flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO69";
-flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO7";
-flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO70";
-flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO2";
-flash1.peripheralDriver.OSPI.RESET_OUT0.$assign   = "GPIO61";
-
+flash1.peripheralDriver.OSPI.CLK.$assign  = "GPIO2";
+flash1.peripheralDriver.OSPI.CSn0.$assign = "GPIO0";
+flash1.peripheralDriver.OSPI.DQS.$assign  = "GPIO76";
+flash1.peripheralDriver.OSPI.D7.$assign   = "GPIO10";
+flash1.peripheralDriver.OSPI.D6.$assign   = "GPIO9";
+flash1.peripheralDriver.OSPI.D5.$assign   = "GPIO8";
+flash1.peripheralDriver.OSPI.D4.$assign   = "GPIO7";
+flash1.peripheralDriver.OSPI.D3.$assign   = "GPIO6";
+flash1.peripheralDriver.OSPI.D2.$assign   = "GPIO5";
+flash1.peripheralDriver.OSPI.D1.$assign   = "GPIO4";
+flash1.peripheralDriver.OSPI.D0.$assign   = "GPIO3";
+flash1.peripheralDriver.child.$name       = "drivers_ospi_v0_ospi_v0_am261x_template0";
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";
 
@@ -235,3 +236,5 @@ tinyusb1.USB0.$suggestSolution              = "USB0";
 tinyusb1.USB0.USB0_DM.$suggestSolution      = "GPIO140";
 tinyusb1.USB0.USB0_DP.$suggestSolution      = "GPIO139";
 tinyusb1.USB0.USB0_DRVVBUS.$suggestSolution = "GPIO121";
+
+flash1.peripheralDriver.OSPI.RESET_OUT0.$suggestSolution = "GPIO66";
