@@ -448,6 +448,13 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 10.00.00 onwards
     <td> -
 </tr>
+<tr>
+    <td> MCUSDK-14102
+    <td> Applications > 1MB not flashing using TI Uniflash tool
+    <td> Uniflash tool
+    <td> 10.00.00 onwards
+    <td> \ref UNIFLASH_1MB_ISSUE
+</tr>
 </table>
 
 ## Errata

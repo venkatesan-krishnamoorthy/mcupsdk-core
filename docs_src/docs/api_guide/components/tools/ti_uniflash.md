@@ -259,6 +259,17 @@ After setting up one of the above session launch type, Click the Start button to
 ## Existing Limitations{#LIMITATIONS}
   - If the flashing operation hangs in the serial session, the Cancel button will be unresponsive. To resolve the issue, close uniflash, relaunch it, and ensure that your board selection and flash configurations are correct.
 
+### Issues with flashing applications > 1MB in serial session {#UNIFLASH_1MB_ISSUE}
+
+ - To resolve this, go to the serial flasher script located at
+ \code
+ C:/ti/uniflash_9.1.0/deskdb/content/TICloudAgent/win/ccs_base/sitara_mcu/serial/FlashPython.py
+ \endcode
+ - Modify line 288 to include an argument "optype" while calling create_temp_file
+ \code
+ tempfilename = create_temp_file(filename, offset, optype)
+ \endcode
+
 ## Troubleshooting {#TI_UNIFLASH_TROUBLESHOOTING}
   - If the default flashing algorithm that comes with Uniflash is not working for you, you can try using the one that comes with the SDK.
   - You can find the prebuilt flashers at the following location:
