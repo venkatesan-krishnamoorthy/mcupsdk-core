@@ -587,6 +587,13 @@ Empty           | PRU               | YES                | Bare Metal        | E
     <td> 10.00.00 onwards
     <td> \ref UNIFLASH_1MB_ISSUE
 </tr>
+<tr>
+    <td> MCUSDK-14547
+    <td> XIP Flashing not supported in SBL JTAG Uniflash example
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
 </table>
 
 ## Errata

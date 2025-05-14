@@ -556,6 +556,48 @@ Integrated Example  | R5F             | NA                |FreeRTOS | Integrated
     <td> 10.02.00 onwards
     <td> -
 </tr>
+<tr>
+    <td> MCUSDK-14547
+    <td> XIP Flashing not supported in SBL JTAG Uniflash example
+    <td> SBL
+    <td> 10.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14502
+    <td> PMIC WDG QA Example not working on AM261x-LP E2 board
+    <td> PMIC
+    <td> 10.02.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14609
+    <td> FOTA Example Failure on AM261x SOM
+    <td> OptiFlash
+    <td> 10.02.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14610
+    <td> MCAN External Loopback Failure on AM261x SOM
+    <td> MCAN
+    <td> 10.02.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14611
+    <td> LIN External Loopback Failure on AM261x SOM
+    <td> LIN
+    <td> 10.02.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-14606
+    <td> USB Enumeration fails randomly
+    <td> USB
+    <td> 10.02.00 onwards
+    <td> -
+</tr>
 </table>
 
 ## Errata
