@@ -85,8 +85,8 @@ When using AM261X-LP E1 board,
 - input trigger pulse on GPIO 69 (configured as input) - HSEC connecter pin - 162 or connect it to GPIO 70 (Configured as output) - HSEC Connecter pin - 160
 - feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 12
 - feed analog input on ADC 1 Channel 1 - HSEC connecter pin - 14
-- feed analog input on ADC 2 Channel 0 - HSEC connecter pin - 31
-- feed analog input on ADC 2 Channel 1 - HSEC connecter pin - 33
+- feed analog input on ADC 2 Channel 0 - HSEC connecter pin - 25
+- feed analog input on ADC 2 Channel 1 - HSEC connecter pin - 27
 
 # Watch variables:
 - gAdc1Channel0Results - array of averaged Analog to Digital Converted samples on channel 0 of ADC 1

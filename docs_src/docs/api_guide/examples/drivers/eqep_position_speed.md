@@ -71,6 +71,11 @@ When using AM261x-SOM with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 - Connect J6 Pin 59 (ePWM0B) to J25 Pin 2 (eQEP2B)
 - Connect J2 Pin 40 (GPIO48) to J25 Pin 3 (eQEP2I)
 
+## AM261X-LP
+No external connection is required.
+- The PWM signal is passed internally via input XBAR to PWMXBAR to EQEPA/B
+
+Signal path: GPIO45/46/48 -> INPUTXBAR0/1/2 -> PWMXBAR0/1/2 -> EQEPA/B/I
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EQEP_POSITION_SPEED_COMBOS}
 

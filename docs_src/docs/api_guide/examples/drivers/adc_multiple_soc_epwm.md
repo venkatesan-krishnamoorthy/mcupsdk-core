@@ -26,9 +26,9 @@ The example does the below
 ## AM263PX-CC E2 or AM263X-CC E2 or AM261X-SOM E1
 When using AM263Px-CC E2 or AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog inputs to the following.
-    - ADC2_AIN0 - HSEC 31
-    - ADC2_AIN1 - HSEC 33
-    - ADC2_AIN2 - HSEC 37
+    - ADC2_AIN0 - HSEC 25
+    - ADC2_AIN1 - HSEC 27
+    - ADC2_AIN2 - HSEC 31
     - ADC1_AIN0 - HSEC 12
     - ADC1_AIN1 - HSEC 14
     - ADC1_AIN2 - HSEC 18

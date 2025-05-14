@@ -29,8 +29,8 @@
      - Feed Analog voltage on
          - ADC 1 Channel 0 : HSEC PIN 12
          - ADC 1 Channel 1 : HSEC PIN 14
-         - ADC 2 Channel 0 : HSEC PIN 31
-         - ADC 2 Channel 1 : HSEC PIN 33
+         - ADC 2 Channel 0 : HSEC PIN 25
+         - ADC 2 Channel 1 : HSEC PIN 27
 
 ## AM263x-CC E1
      - Connect loopback on GPIO 24, GPIO 23, i.e., HSEC PINS 87, 85.

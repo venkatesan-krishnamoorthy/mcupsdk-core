@@ -33,7 +33,7 @@ Watch  Variables
 ## AM263PX-CC E2 or AM263X-CC E2 or AM261X-SOM E1
  - Feed the External Volatage to the following
      - ADC1_AIN0 :   HSEC-PIN 12
-     - ADC2_AIN0 :   HSEC-PIN 31
+     - ADC2_AIN0 :   HSEC-PIN 25
 ## AM263X-CC E1
  - Feed the External Volatage to the following
      - ADC1_AIN0 :   HSEC-PIN 18
