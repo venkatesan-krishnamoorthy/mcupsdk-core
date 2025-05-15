@@ -388,6 +388,10 @@ typedef enum SOC_RcmPeripheralId_e
      */
     SOC_RcmPeripheralId_CPTS,
     /**
+     * \brief   Value specifying CPSW_5_50_250
+     */
+    SOC_RcmPeripheralId_CPSW_5_50_250,
+    /**
      * \brief   Value specifying GPMC
      */
     SOC_RcmPeripheralId_GPMC,

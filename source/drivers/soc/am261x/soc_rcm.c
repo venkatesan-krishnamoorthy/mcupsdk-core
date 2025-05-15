@@ -450,6 +450,31 @@ static uint16_t gCptsClkSrcValMap[] =
 
 /**
  * @brief
+ *  Mapping Array for CPSW_5_50_250
+ *
+ * @details
+ *  Mapping Array between Clock mode and Clock Mode Value for CPSW_5_50_250
+ */
+static uint16_t gCpswClkSrcValMap[] =
+{
+    [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x111U,
+    [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
+    [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
+    [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x666U,
+    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U,
+    [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
+};
+
+/**
+ * @brief
  *  Mapping Array for GPMC
  *
  * @details
@@ -1085,6 +1110,13 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcReg  = &(ptrMSSRCMRegs->ICSSM1_UART0_CLK_SRC_SEL);
             *clkdDivReg = &(ptrMSSRCMRegs->ICSSM1_UART_CLK_DIV_VAL);
             *clkSrcVal = gIcssmUartClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_CPSW_5_50_250:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->CPSW_5_50_250_CLK_MUX_CTRL);
+            *clkdDivReg = NULL; /* No Divisor register for CPSW */
+            *clkSrcVal = gCpswClkSrcValMap[clkSource];
             break;
         }
         case SOC_RcmPeripheralId_CPTS:
@@ -2368,25 +2400,43 @@ int32_t SOC_rcmSetPeripheralClock (SOC_RcmPeripheralId periphId,
     clkDivisor = SOC_rcmGetModuleClkDivVal(Finp, freqHz);
     SOC_rcmGetClkSrcAndDivReg (periphId, clkSource, &clkSrcVal, &ptrClkSrcReg, &ptrClkDivReg);
 
-    if ((ptrClkSrcReg != NULL) && (ptrClkDivReg != NULL) && (clkSrcVal != 0x888U))
+    if(periphId == SOC_RcmPeripheralId_CPSW_5_50_250)
     {
-        uint16_t            clkDivVal;
-
-        /* Create the Divider Value to be programmed */
-        clkDivVal = ((uint16_t)clkDivisor & 0xFU);
-        clkDivVal = (clkDivVal | (clkDivVal << 4U) | (clkDivVal << 8U));
-
-        /* Write the Divider Value */
-        *ptrClkDivReg = SOC_rcmInsert16 (*ptrClkDivReg, 11U, 0U, clkDivVal);
-
-        /* Write the Clock Source Selection Value */
-        *ptrClkSrcReg = SOC_rcmInsert16 (*ptrClkSrcReg, 11U, 0U, clkSrcVal);
-        retVal = SystemP_SUCCESS;
+        /* CPSW Clock doesn't have Sel and Div registers. It has Mux register which is passed as Sel. */
+        if ((ptrClkSrcReg != NULL) && (clkSrcVal != 0x888U))
+        {
+            /* Write the Clock Mux Value */
+            *ptrClkSrcReg = SOC_rcmInsert16 (*ptrClkSrcReg, 11U, 0U, clkSrcVal);
+            retVal = SystemP_SUCCESS;
+        }
+        else
+        {
+            /* Error */
+            retVal = SystemP_FAILURE;
+        }
     }
     else
     {
-        /* Error */
-        retVal = SystemP_FAILURE;
+        if ((ptrClkSrcReg != NULL) && (ptrClkDivReg != NULL) && (clkSrcVal != 0x888U))
+        {
+            uint16_t            clkDivVal;
+
+            /* Create the Divider Value to be programmed */
+            clkDivVal = ((uint16_t)clkDivisor & 0xFU);
+            clkDivVal = (clkDivVal | (clkDivVal << 4U) | (clkDivVal << 8U));
+
+            /* Write the Divider Value */
+            *ptrClkDivReg = SOC_rcmInsert16 (*ptrClkDivReg, 11U, 0U, clkDivVal);
+
+            /* Write the Clock Source Selection Value */
+            *ptrClkSrcReg = SOC_rcmInsert16 (*ptrClkSrcReg, 11U, 0U, clkSrcVal);
+            retVal = SystemP_SUCCESS;
+        }
+        else
+        {
+            /* Error */
+            retVal = SystemP_FAILURE;
+        }
     }
 
     return (retVal);
@@ -2698,6 +2748,11 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             {
                 ptrMSSRCMRegs->CPTS_CLK_GATE = CSL_MSS_RCM_CPTS_CLK_GATE_GATED_MASK;
             }
+            break;
+        }
+        case SOC_RcmPeripheralId_CPSW_5_50_250:
+        {
+            /* Do nothing since there is no GATE register */
             break;
         }
         case SOC_RcmPeripheralId_GPMC:
